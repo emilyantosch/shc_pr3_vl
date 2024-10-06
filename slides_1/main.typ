@@ -371,7 +371,7 @@ beschrieben:
   )[
 
     #figure(
-      image("../assets/img/2024_10_03_jdk_jre_compiler_rev01.png"), caption: [Der Aufbau der Java Toolchain],
+      image("../assets/img/2024_10_03_jdk_jre_compiler_rev01.png"), caption: [Der Aufbau der Java Toolchain#footnote(numbering: "*")[Application Programming Interface]],
     )
   ]
 ]

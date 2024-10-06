@@ -10,7 +10,7 @@
 
 #import "@preview/numbly:0.1.0": numbly
 
-#set text(lang: "de")
+#set text(lang: "de", font: "Roboto")
 #set heading(numbering: numbly("{1}.", default: "1.1"))
 
 #set align(left + top)
@@ -177,7 +177,206 @@ float b = apin1;
 #pinit-rect-from(height: 2em, pos: bottom, fill: rgb(0, 180, 255), 1)[Inkorrekter Typ]
 ]
 #slide[
-  #question[Welche Unterschiede sehen Sie zwischen C und Java, wenn es um Datentypen geht?]
+#question[Welche Unterschiede sehen Sie zwischen C und Java, wenn es um Datentypen geht?]
+- Keine Zusammengestzen Datentypen in Java.
+- Kein `unsigned` in Java.
+- Speichergrößen sind festgelegt und garantiert.
+- Zeichen werden mit 2 Byte kodiert.
+  - 65.536 Zeichen können dargestellt werden anstatt von 256.
+]
+== Literale
+#slide[
+  #memo[Ein *Literal* ist eine konstante, unveränderliche Zahl oder Zeichenfolge, die
+    direkt im Code steht.]
+  - Wenn Sie also einen bestimmten Wert direkt in Code schreiben, verwenden Sie
+    einen Literal.
+  - Dieser wird dann nicht von einer Variablen repräsentiert.
+]
+
+#slide[
+#question[Warum glauben Sie, dass der folgende Code nicht funktioniert?
+```java
+float point = 3.1416;
+    ```
+]
+#pause
+- Der Zahl ist eine feste Fließkommazahl, die von Java als *double* interpretiert
+  wird.
+- Wegen der Typkorrektheit wird der Wert nicht in eine *float* Variable
+  gespeichert. Der Java Compiler gibt einen Fehler aus.
+]
+
+#slide[
+#question[Wie würden Sie den Code korrigieren?]
+#pause
+- Sie können den Wert als *float* Literal schreiben:
+```java
+  float point = 3.1416f;
+```
+- Alternativ können Sie den Wert in eine *double* Variable speichern:
+```java
+  double point = 3.1416d;
+```
+]
+
+== Konstanten
+
+#slide[
+- Wir haben gerade bereits das Beispiel der Kreiszahl $pi$ gehabt.
+- In Java gibt es das Schlüsselwort ```final```, um Konstanten zu definieren.
+- Diese können dann nicht mehr verändert werden.
+
+```java
+  final double PI = 3.1416;
+```
+- Nachdem eine Konstante deklariert wurde, kann sie nicht mehr verändert werden.
+  Der folgende Code würde also einen Fehler erzeugen:
+
+```java
+  PI = 3;
+```
+]
+
+== Konsolenausgaben erzeugen
+
+#task[
+Wir wollen jetzt einmal eine Konsolenausgabe erzeugen:
+- Öffnen Sie IntelliJ IDEA und öffnen oder erstellen Sie eine neue ausführbare
+  Klasse.
+- Probieren Sie den folgenden Code:
+```java
+  int age = 24;
+  System.out.println(24);
+  System.out.println(age);
+  ```
+]
+#task[
+- Mithilfe des "+" Operators können Sie Text und Variablen kombinieren:
+
+```java
+  int age = 24;
+  System.out.println("Mein Alter ist " + 24);
+  System.out.println("Mein Alter ist " + age);
+  ```
+]
+#tip[
+- Geben Sie einmal in IntelliJ IDEA ```java sout``` ein und drücken Sie die
+  Tab-Taste. Das spart Zeit beim Schreiben von ```java System.out.println()```!
+]
+
+== Coding Style
+
+#question[Was ist ein *Coding Style*? Was sagt Ihnen der Begriff?]
+
+#pause
+- Der Coding Style ist eine Sammlung von Regeln, die bestimmen, wie Code
+  geschrieben werden sollte.
+- Einheitlicher Code ist leichter zu lesen und zu warten.
+
+#memo[Die Einhaltung des Coding Styles wird in der Klausur bewertet!]
+
+== Coding Style: Namenskonventionen
+
+- Alle Namen, und das gilt für alle Bezeichner, sind in der englischen Sprache zu
+  schreiben!
+- Folgende Namenskonventionen sollten eingehalten werden:
+  - Klassen: *CamelCase*
+  - Methoden und Variablen: *camelCase*
+  - Konstanten: *UPPER_CASE*
+  - Pakete: *lowercase*
+
+#tip[Aus meiner Erfahrung: Machen Sie Ihre Variablen so aussagekräftig wie möglich!
+  Dann darf der Name auch länger sein.]
+
+= Kommentare und Bezeichner
+
+== Zeichensatz
+
+- Wie bereits erwähnt, verwendet Java den Unicode-Zeichensatz.
+- Das heißt, es sind mehr Zeichen möglich (65.536 um genau zu sein).
+- So können Sie Ihre Kommentare ohne größere Einschränkungen auf Deutsch, Englisch
+  oder Chinesisch schreiben.
+- Ich würde Sie jedoch bitten, Ihre Kommentare in *Deutsch* oder *Englisch* zu
+  verfassen.
+
+#memo[Da Ihre Tastatur keine 65.536 Zeichen hat, können Sie die Zeichen auch kopieren
+und einfügen. Alternativ für #emoji.face.grin:
+```java
+System.out.println("\u{1F600}");
+```
+]
+
+== Kommentare
+
+#slide[
+
+  #question[Was denken Sie zu der folgenden Aussage? Warum sind Kommentare wichtig?]
+  #quotation[
+    #quote(attribution: [Viele Entwickler], block: true)[
+      Den Code lesbar machen? Wer soll das denn sonst lesen?
+    ]
+  ]
+
+]
+
+#slide[
+
+  - Kommentare sind wichtig, um den Code zu dokumentieren und die Wartbarkeit zu
+    verbessern.
+  - Sowohl Nutzer des Codes als auch die Entwickler werden den Code verstehen
+    müssen. Dafür sind Kommentare unerlässlich.
+
+  #memo[Nicht die Menge, sondern die Qualität der Kommentare ist entscheidend!
+    Kommentieren Sie immer direkt während Sie auch programmieren!]
+]
+
+#slide[
+#question[Was ist der Unterschied zwischen einem *Blockkommentar* und einem
+  *Zeilenkommentar*?]
+#pause
+- *Zeilenkommentare* beginnen mit ```//``` und enden am Ende der Zeile.
+- *Blockkommentare* beginnen mit ```/*``` und enden mit ```*/```.
+]
+
+#slide[
+- Beispiel für einen Zeilenkommentar:
+```java
+  // Dies ist ein Zeilenkommentar
+  int distance; // Euklidischer Abstand zwischen a und b
+```
+- Beispiel für einen Blockkommentar:
+```java
+  /* Die Berechnung des euklidischen Abstands läuft über folgende Schritte ab:
+   1. Berechnung der Differenz der Koordinaten
+   2. Quadrieren der Differenz
+   ...  */
+```
+]
+
+== Bezeichner
+
+- Alle Dinge, die sie in Java benennen, werden als *Bezeichner* bezeichnet. Viele
+  Dinge, die Sie schreiben brauchen einen Namen!
+
+#memo[
+- Beachten Sie folgende Regeln für Bezeichner:
+  - Erlaubt sind Buchstaben, Zahlen, Unterstriche und Dollarzeichen.
+  - Das erste Zeichen darf keine Zahl sein.
+  - Groß- und Kleinschreibung wird unterschieden.
+  - Keine Leerzeichen oder Schlüsselworte.
+  - Nicht die Literale `true`, `false` oder `null`.
+]
+
+#slide[
+- Alle reservierten Schlüsselworte in Java:
+#align(
+  center + horizon,
+)[
+
+#table(
+  columns: 4, `abstract`, `double`, `int`, `super`, `assert`, `else`, `interface`, `switch`, `boolean`, `enum`, `long`, `synchronized`, `break`, `extends`, `native`, `this`, `byte`, `final`, `new`, `throw`, `case`, `finally`, `package`, `throws`, `catch`, `float`, `private`, `transient`, `char`, `for`, `protected`, `try`, `class`, `goto`, `public`, `void`, `const`, `if`, `return`, `volatile`, `continue`, `implements`, `short`, `while`, `default`, `import`, `static`, ``, `do`, `instanceof`, `strictfp`, ``,
+)
+]
 ]
 
 = License Notice
