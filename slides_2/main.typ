@@ -379,6 +379,81 @@ System.out.println("\u{1F600}");
 ]
 ]
 
+#slide[
+
+  #question[Welche der Bezeichner sind aus Ihrer Sicht erlaubt und warum?]
+
+  ```java
+    int length;
+    int länge;
+    int maxLength;
+    int max_length;
+    int _max_length;
+    int max-length;
+    int !maxLength;
+
+    int 3dlength;
+    String öpnvKosten;
+    String €kosten;
+    String kostenin€
+    String €;
+    int long;
+    int c.o.s.t;
+    String @cost;
+  ```
+
+]
+
+= Operatoren
+
+== Operatoren
+
+- Es gibt die üblichen arithmetischen Operatoren. 
+- Generell werden Operatoren auch von links nach rechts ausgewertet.
+
+#figure(image("../assets/img/2024_10_08_arithmetische_operatoren_java_rev01.png"), caption: [Arithmetische Operatoren in Java])
+
+== Inkrement und Dekrement
+
+#slide[
+- Es gibt auch die gleichen Operatoren zum Inkrementieren und Dekrementieren wie in C.
+
+  #figure(image("../assets/img/2024_10_08_increment_decrement_operatoren_rev01.png"), caption: [Operatoren für das Inkrement und Dekrement in Java])
+]
+
+#slide[
+  #question[Zum Mitdenken: Was wird hier auf der Konsole erscheinen?]
+
+  ```java
+  int a = 1;
+	System.out.println("a   : " + a);
+	System.out.println("++a : " + ++a);
+	System.out.println("a++ : " + a++);
+	System.out.println("--a : " + --a);
+	System.out.println("a-- : " + a--);
+  ```
+
+]
+
+== Logische Operatoren
+
+- Es gibt auch die gleichen logischen Operatoren wie in C!
+
+#figure(image("../assets/img/2024_10_08_boolean_operatoren_rev01.png"), caption: [Logische Operatoren in Java])
+
+#slide[
+  #question[Zum Mitdenken: Was passiert hier?]
+
+  ```java
+  int a = 7, b = 4;
+	boolean parentheses = (a > b) == (a <= b);
+	boolean priorities = a > b == a <= b;
+	System.out.println(parentheses);
+	System.out.println(priorities);
+  ```
+]
+
+
 = License Notice
 
 == Attribution
