@@ -104,7 +104,6 @@
     - Variablen beschreiben *Zustand* des Objekts
     - Methoden beschreiben *Fähigkeiten* des Objekts
     - Bezeichnungen für Variablen: *Attribute*, *Objektvariablen*, *Instanzvariablen*
-
   ]
 ]
 
