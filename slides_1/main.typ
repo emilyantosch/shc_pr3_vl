@@ -3,6 +3,8 @@
 
 #import "@preview/fletcher:0.5.1" as flechter: diagram, node, edge
 
+#import "@preview/tiaoma:0.2.1"
+
 #import "@preview/gentle-clues:1.0.0": *
 #import "@preview/pinit:0.2.0": *
 #import "@preview/codly:1.0.0": *
@@ -68,11 +70,11 @@
 #info[Ich mach das zum ersten Mal, seien Sie also bitte nachsichtig.]
 == Vorlesungsablauf
 
-- Vorlesungen teilen sich in Termine am Dienstag und Donnerstag auf
-  - Am Anfang sind sehr viele Termine, die Sie auf das Praktikum vorbereiten sollen
-- Ich würde Sie bitten, sich an der Vorlesung aktiv zu beteiligen
+- Vorlesungen teilen sich in Termine am Dienstag und Donnerstag auf.
+  - Am Anfang sind sehr viele Termine, die Sie auf das Praktikum vorbereiten sollen.
+- Ich würde Sie bitten, sich an der Vorlesung aktiv zu beteiligen.
 - Es wird kleine Fragen und Aufgaben geben, die Sie live beantworten und
-  mitprogrammieren können
+  mitprogrammieren können.
 
 #memo[Falls Sie etwas nicht verstehen, fragen Sie bitte sofort! Ich wiederhole gerne
   Inhalte auf Deutsch oder Englisch!]
@@ -85,12 +87,13 @@
 - Außerdem sollten Sie dann Objektorientierte Programmierung beherrschen und die
   Unterschiede zu anderen Paradigmen in der Programmierung herausstellen können.
 - Den genauen Stoff können Sie außerhalb der Vorlesung auch im Modulhandbuch
-  nachlesen
+  nachlesen.
 
 == Vorraussetzungen
 
 - Sie brauchen eine Installation des *Java SDK*.
-  - Dafür habe ich Ihnen eine Anleitung geschrieben, die Sie im Moodle-Raum finden.
+  - Dafür habe ich Ihnen eine Anleitung geschrieben, die Sie im Moodle-Raum bzw.
+    SHCneo-Raum finden.
 - Außerdem wird die Vorlesung mit dem Tool *JetBrains IntelliJ* sein.
   - Dies ist, wie ich finde, eine sehr gute und einfache IDE für den Anfang.
   - Auch hierfür finden Sie eine Anleitung im Moodle.
@@ -152,9 +155,9 @@ beschrieben:
 - Um aus diesem ähnlichen Bauplan dann mehrere gleichartige Objekte zu erstellen,
   wird eine Klasse erstellt,
   - Sie enthält alle Eigenschaften, die wir gerade definiert haben, also zum
-    Beispiel Variablen
+    Beispiel Variablen.
   - Aus ihr lassen sich ganz verschiedene Objekte erstellen, die diese Eigenschaften
-    unterschiedlich gefüllt haben
+    unterschiedlich gefüllt haben.
 
 #example[Aus der Klasse *Student* lassen sich zum Beispiel die beiden Studenten *Max* und
   *Ines* erstellen, die beide unterschiedlich heißen und eine eigene
@@ -234,8 +237,8 @@ beschrieben:
 #slide[
   - Durch Vererbung lassen sich neue Klassen aus anderen Klassen erzeugen.
   - Dabei werden die Methoden und Attribute der Basisklasse übernommen und um
-    weiteren Code erweitert
-  - Keine duplizierter Code
+    weiteren Code erweitert.
+  - Keine duplizierter Code.
 ]
 
 #matrix-slide[
@@ -294,11 +297,11 @@ beschrieben:
 == Kompilieren
 
 1. Entwicklung
-  - Quelltext wird am PC geschrieben
-  - Compiler kompiliert Quelltext in einen *Bytecode*
+  - Quelltext wird am PC geschrieben.
+  - Compiler kompiliert Quelltext in einen *Bytecode*.
 2. Ausführung
-  - Bytecode wird auf *JVM* (Java Virtual Machine) ausgeführt
-  - Ausführung benötigt keine neue Kompilierung für die jeweilige Zielplatform
+  - Bytecode wird auf *JVM* (Java Virtual Machine) ausgeführt.
+  - Ausführung benötigt keine neue Kompilierung für die jeweilige Zielplatform.
 
 #slide[
   #align(
@@ -325,10 +328,9 @@ beschrieben:
   )[
 
     #figure(
-      image("../assets/img/2024_10_04_compiled_lang_principle_rev01.png"), caption: [Ausführung von kompilierten Sprachen],
+      image("../assets/img/2024_10_04_interpreted_lang_principle_rev01.png"), caption: [Ausführung von kompilierten Sprachen],
     )
   ]
-
 ]
 #slide[
   #align(
@@ -336,9 +338,10 @@ beschrieben:
   )[
 
     #figure(
-      image("../assets/img/2024_10_04_interpreted_lang_principle_rev01.png"), caption: [Ausführung von interpretierten Sprachen],
+      image("../assets/img/2024_10_04_compiled_lang_principle_rev01.png"), caption: [Ausführung von interpretierten Sprachen],
     )
   ]
+
 ]
 
 == Eigenschaften von Java
@@ -363,8 +366,15 @@ beschrieben:
 - Ich würde Ihnen IntelliJ IDEA von JetBrains als IDE empfehlen.
   - Dieses Tool wird auch in der Klausur verwendet werden.
   - Die IDE enthält auch das Java JDK, was sie zum Programmieren brauchen.
-
-- Wählen Sie die Community Edition auf #link("https://www.jetbrains.com/idea/download/?section=windows")
+#align(
+  center + horizon,
+)[
+  #tiaoma.barcode(
+    "https://www.jetbrains.com/idea/download/?section=windows", "QRCode", options: (scale: 3.0),
+  )
+]
+- Wählen Sie die Community Edition auf #link("https://www.jetbrains.com/idea/download/?section=windows"),
+  oder scannen Sie den QR-Code.
 #slide[
   #align(
     left + horizon,

@@ -381,9 +381,9 @@ System.out.println("\u{1F600}");
 
 #slide[
 
-  #question[Welche der Bezeichner sind aus Ihrer Sicht erlaubt und warum?]
+#question[Welche der Bezeichner sind aus Ihrer Sicht erlaubt und warum?]
 
-  ```java
+```java
     int length;
     int länge;
     int maxLength;
@@ -408,51 +408,465 @@ System.out.println("\u{1F600}");
 
 == Operatoren
 
-- Es gibt die üblichen arithmetischen Operatoren. 
+- Es gibt die üblichen arithmetischen Operatoren.
 - Generell werden Operatoren auch von links nach rechts ausgewertet.
 
-#figure(image("../assets/img/2024_10_08_arithmetische_operatoren_java_rev01.png"), caption: [Arithmetische Operatoren in Java])
+#figure(
+  image("../assets/img/2024_10_08_arithmetische_operatoren_java_rev01.png"), caption: [Arithmetische Operatoren in Java],
+)
 
 == Inkrement und Dekrement
 
 #slide[
-- Es gibt auch die gleichen Operatoren zum Inkrementieren und Dekrementieren wie in C.
+  - Es gibt auch die gleichen Operatoren zum Inkrementieren und Dekrementieren wie
+    in C.
 
-  #figure(image("../assets/img/2024_10_08_increment_decrement_operatoren_rev01.png"), caption: [Operatoren für das Inkrement und Dekrement in Java])
+    #figure(
+      image("../assets/img/2024_10_08_increment_decrement_operatoren_rev01.png"), caption: [Operatoren für das Inkrement und Dekrement in Java],
+    )
 ]
 
 #slide[
-  #question[Zum Mitdenken: Was wird hier auf der Konsole erscheinen?]
+#question[Zum Mitdenken: Was wird hier auf der Konsole erscheinen?]
 
-  ```java
+```java
   int a = 1;
-	System.out.println("a   : " + a);
-	System.out.println("++a : " + ++a);
-	System.out.println("a++ : " + a++);
-	System.out.println("--a : " + --a);
-	System.out.println("a-- : " + a--);
+  System.out.println("a   : " + a);
+  System.out.println("++a : " + ++a);
+  System.out.println("a++ : " + a++);
+  System.out.println("--a : " + --a);
+  System.out.println("a-- : " + a--);
   ```
 
+]
+
+== Vergleichsoperatoren
+
+- Es gibt auch die gleichen Vergleichsoperatoren wie in C!
+
+#figure(
+  image("../assets/img/2024_10_08_boolean_operatoren_rev01.png"), caption: [Vergleichsoperatoren in Java],
+)
+
+#slide[
+#question[Zum Mitdenken: Was passiert hier?]
+
+```java
+  int a = 7, b = 4;
+  boolean parentheses = (a > b) == (a <= b);
+  boolean priorities = a > b == a <= b;
+  System.out.println(parentheses);
+  System.out.println(priorities);
+  ```
 ]
 
 == Logische Operatoren
 
-- Es gibt auch die gleichen logischen Operatoren wie in C!
+- Das Ergebnis der logischen Operatoren ist immer ein Wahrheitswert, der in Java
+  als
+  `boolean` dargestellt wird.
 
-#figure(image("../assets/img/2024_10_08_boolean_operatoren_rev01.png"), caption: [Logische Operatoren in Java])
+#figure(
+  image("../assets/img/2024_10_09_logische_operatoren_rev01.png"), caption: [Logische Operatoren in Java],
+)
 
-#slide[
-  #question[Zum Mitdenken: Was passiert hier?]
-
-  ```java
-  int a = 7, b = 4;
-	boolean parentheses = (a > b) == (a <= b);
-	boolean priorities = a > b == a <= b;
-	System.out.println(parentheses);
-	System.out.println(priorities);
-  ```
+#memo[
+- Bei den logischen Operatoren wird der rechte Operand nicht ausgeführt, wenn das
+  Ergebnis bereits feststeht. Im folgenden Beispiel wird `a` nicht ausgewertet.
+- Beispiel: ```java (true || a)```
+- Das nennt man dann *Short Circuit*.
+- Wird dann interessant, wenn der rechte Operand bspw. eine Funktion/Methode ist.
 ]
 
+#question[Wieder zum Mitdenken: Was passiert im folgenden Code?]
+
+```java
+int a = 3, b = 4;
+System.out.println((++a == b) || (a++ > b));
+System.out.println("a = " + a);
+```
+
+== Zuweisungsoperatoren
+
+- Wie in C gitb es auch in Java Zuweisungsoperatoren. Diese können auch mit
+  anderen Operatoren kombiniert werden.
+- Der Platzhalter `<op>` steht unter anderem für `*, /, +` und `-`.
+
+#figure(
+  image("../assets/img/2024_10_09_zuweisungs_operatoren_rev01.png"), caption: [Zuweisungsoperatoren in Java],
+)
+
+#question[Ein letztes Mal: Was passiert in diesem Code?]
+
+```java
+int a = 1;
+a += 2;
+System.out.println(a);
+System.out.println(a *= --a);
+System.out.println(a *= -a++);
+System.out.println(a /= 10);
+```
+
+= Typkonvertierung
+
+== Typkonvertierung
+- Zur Erinnerung: Typkorrektheit verhindert, dass Variablen einen Wert bekommen,
+  der nicht ihrem Datentyp entspricht.
+- Das verhindert Fehler und macht den Code sicherer.
+
+#warning[Eine Variable, die vom Typ `int` ist passt allerdings in eine Variable vom Typ `byte`.
+Wie können Sie den Wert in `byte` von trotzdem in eine `int` Variable speichern?]
+
+#idea[Sie können einfach schreiben, dass Sie das explizit wollen!]
+
+```java
+int a = 80;
+byte b = (byte) a;
+System.out.println(b);
+```
+
+#slide[
+#question[Was passiert in dem folgenden Code?]
+
+```java
+double a = 128.38;
+int b = (int) a;
+byte c = (byte) a;
+System.out.println("double: " + a);
+System.out.println("int   : " + b);
+System.out.println("byte  : " + c);
+```
+]
+
+#question[
+Was passiert, wenn Sie den Wert von `128` in eine `byte` Variable speichern?
+]
+
+#pause
+
+- Da der Datentyp ```byte``` nur Werte von `-128` bis `127` speichern kann, wird
+  der Wert überlaufen.
+- Das Ergebnis wird eine negative Zahl sein. In diesem Fall wird es `-128` sein.
+
+== Implizite Typkonvertierung
+
+#memo[
+  - Prinzip der impliziten Typkonvertierung:
+    - Kein Datenverlust bei Zuweisung von einem kleineren in einen größeren Typ.
+    - Der Cast-Operator ist nicht notwendig.
+    - Es erfolgt eine automatische Konvertierung.
+]
+
+#example[
+- `short` (-32.768 bis 32.767) passt in `int` (-2.147.483.648 bis 2.147.483.647).
+```java
+short a = 71;
+int b = (int) a;
+int c = a;
+```
+]
+
+#question[
+  Zum Mitdenken: Welche der folgenden Zeilen werden kompilieren?
+]
+```java
+short a = 1024;
+long b = a;
+float c = b;
+```
+#slide[
+```java
+char d = 'A';
+short e = d;
+int f = d;
+```
+]
+
+#slide[
+
+#align(
+  left + horizon,
+)[
+
+  #figure(
+    image("../assets/img/2024_10_09_implizite_typkonvertierung_rev01.png"), caption: [Implizite Typkonvertierung in Java],
+  )
+]
+
+#memo[
+- Ganzzahlen `char` und `short` besitzen jeweils 2 Byte, `char` ist aber ein
+  *unsigned* Datentyp.
+  - Wertebereich char: 0 bis 65.535
+  - Wertebereich short: -32.768 bis 32.767
+- Nicht alle long-Werte in float darstellbar (Potenzieller Datenverlust!).
+]
+]
+
+= Kontrollstrukturen
+
+== if-Anweisung
+
+#memo[If-Anweisungen sind die einfachste Form der Kontrollstrukturen. Sie erlauben es,
+  Anweisungen nur auszuführen, wenn eine Bedingung erfüllt ist.]
+
+```java
+if (Bedingung) {
+  Anweisungen
+}
+```
+#slide[
+- Die Bedingung muss, anders als in C, immer ein `boolean` sein.
+- Anwesungen werden nur ausgeführt, wenn die Bedingung wahr (`true`) ist.
+- Bei nur einer Anweisung können die geschweiften Klammern weggelassen werden.
+```java
+int a = 4, b = 8;
+  int maximum = a;
+
+  if (b > maximum) {
+    maximum = b;
+  }
+```
+]
+
+== if-else-Anweisung
+
+Mittels einer `else`-Anweisung kann ein Block angegeben werden, der ausgeführt
+wird, wenn die Bedingung nicht erfüllt ist.
+
+```java
+if (Bedingung) {
+      Anweisungen 1
+    } else {
+      Anweisungen 2
+    }
+```
+
+#slide[
+Die Anweisung 2 im obigen Beispiel wird eben ausgeführt, wenn die Bedingung `false` ist.
+
+```java
+int a = 4, b = 8;
+  int maximum;
+
+  if (a > b) {
+    maximum = a;
+  } else {
+    maximum = b;
+  }
+```
+
+]
+
+== Der ?-Operator
+
+Für einfache Zuweisung mittels `if-else`-Anweisungen kann ein Ausdruck in dieser
+Form verwendet werden:
+```java
+(Bedingung) ? Ausdruck 1 : Ausdruck 2;
+```
+- Bedinung `true`: Ausdruck 1 wird eingesetzt
+- Bedingung `false`: Ausdruck 2 wird eingesetzt
+
+```java
+int a = 4, b = 8;
+int maximum = (a > b) ? a : b;
+```
+
+== if-else-Anweisung
+
+#task[
+- Gegeben ist eine Ganzzahl `weekDay` zwischen 1 und 7.
+- Es entspricht: 1 = Montag, 2 = Dienstag, 3 = Mittwoch usw.
+Erzeugen Sie in Abhängigkeit des Wertes folgende Konsolenausgaben:
+- Montag bis Freitag: "Arbeiten"
+- Samstag: "Einkaufen"
+- Sonntag: "Ausruhen"
+]
+
+#example[
+```java
+byte weekDay = 3;
+
+  if (weekDay <= 5) {
+    System.out.println("Arbeiten");
+  } else if (weekDay == 6) {
+    System.out.println("Einkaufen");
+  } else if (weekDay == 7) {
+    System.out.println("Ausruhen");
+  }
+```
+]
+
+== switch-Anweisung
+Mit der `switch`-Anweisung lassen sich `if-else`-Anweisungen vereinfachen.
+```java
+switch (Ausdruck) {
+    case Wert 1:
+    Anweisungen
+    break;
+    case Wert 2:
+    ...
+    default:
+    Anweisungen
+    }
+```
+#slide[
+
+- Ausdruck ist z.B. eine ganzzahlige Variable (außer Typ `long`) oder ein `String` (ab
+  Java 7).
+- Anweisungen, `break` und `default` sind optional.
+- Mehrere `case`-Sprungmarken direkt hintereinander sind erlaubt.
+- Sprung zu …
+  - `case`-Sprungmarke, falls diese den Wert von Ausdruck hat
+  - `default`, falls keine passende `case`-Sprungmarke
+  - Ende des `switch`-Blocks, falls keine passende `case`-Sprungmarke und kein `default`
+- Von `case`-Sprungmarke oder `default` weiter bis `break` oder Ende des
+  `switch`-Blocks
+]
+
+#slide[
+#task[Implementieren Sie eine Lösung für die Aufgabe 3 als `switch`-Anweisung]
+]
+#slide[
+```java
+switch (weekDay) {
+  case 1:
+  case 2:
+  case 3:
+  case 4:
+  case 5:
+      System.out.println("Arbeiten");
+      break;
+  case 6:
+      System.out.println("Einkaufen");
+      break;
+  case 7:
+      System.out.println("Ausruhen");
+      break;
+  default:
+      System.out.println("Den Tag kenn' ich nicht ...");
+  }
+```
+]
+
+== while-Schleife
+
+Mit der `while`-Schleife wird eine Anweisung so lange ausgeführt, wie die
+Bedingung `true` ist.
+
+```java
+while (Bedingung) {
+      Anweisungen
+    }
+```
+
+- Falls die Bedingung zu Beginn bereits false ist, wird die Anweisung nie
+  ausgeführt.
+- Auch *kopfgesteuerte* oder *abweisende* Schleife genannt.
+
+#slide[
+  #align(left + horizon)[]
+  #figure(
+    image("../assets/img/2024_10_09_while_loop_rev01.png"), caption: [while-Schleife in Java],
+  )
+]
+
+== do-while-Schleife
+
+Mit der `do-while`-Schleife wird eine Anweisung mindestens einmal ausgeführt.
+Wenn die Bedingung `true` ist, wird die Anweisung wieder ausgeführt.
+
+```java
+do {
+      Anweisungen
+    } while (Bedingung);
+```
+
+- Auch *fußgesteuerte* oder *nicht abweisende* Schleife genannt.
+
+#align(
+  left + horizon,
+)[
+  #figure(
+    image("../assets/img/2024_10_09_dowhile_loop_rev01.png"), caption: [do-while-Schleife in Java],
+  )
+]
+
+== for-Schleife
+
+Mit der `for`-Schleife können Sie eine Anweisung eine bestimmte Anzahl von Malen
+wiederholen.
+
+```java
+for (Init; Bedingung; Update) {
+      Anweisungen
+    }
+```
+
+- Falls Bedingung `false` ist, wird die Anweisung nie ausgeführt.
+- Init wird nur einmal ausgeführt, dafür aber immer.
+- Update wird nach jeder Iteration ausgeführt.
+#align(
+  left + horizon,
+)[
+  #figure(
+    image("../assets/img/2024_10_09_for_loop_rev01.png"), caption: [for-Schleife in Java],
+  )
+]
+
+== Sprunganweisungen
+
+Mittels Sprunganweisungen können Sie den Programmfluss steuern. `break` beendet
+die Schleife und `continue` springt zum nächsten Schleifendurchlauf.
+
+#figure(
+  image("../assets/img/2024_10_09_break_continue_loop_rev01.png"), caption: [Visualisierung von break und continue in Java],
+)
+
+#question[Was passiert in dem folgenden Code?]
+```java
+System.out.println("Break (bei i == 2):");
+for (int i = 0; i <= 4; i++) {
+  if (i == 2) {
+    break;
+  }
+  System.out.println("  i = " + i);
+}
+```
+
+#question[Was passiert in dem folgenden Code?]
+```java
+System.out.println("\nContinue (bei i == 2):");
+for (int i = 0; i <= 4; i++) {
+  if (i == 2) {
+    continue;
+  }
+  System.out.println("  i = " + i);
+}
+```
+
+== Coding Style
+
+- Wie bereits erwähnt, ist der Coding Style wichtig. Daher gibt es bei den
+  Kontrollstrukturen auch einen Coding Style.
+
+- Öffnende geschweifte Klammern werden in der gleichen Zeile wie die
+  Kontrollstruktur geschrieben (das gilt für alle öffnenden Klammern).
+- Nach einer schließenden geschweiften Klammer wird ein Zeilenumbruch gemacht. Bei `else` steht
+  die schließende Klammer in der gleichen Zeile.
+
+#example[
+```java
+int a = 4, b = 8;
+  int maximum;
+
+  if (a > b) {
+    maximum = a;
+  } else {
+    maximum = b;
+  }
+```
+]
 
 = License Notice
 
