@@ -478,12 +478,12 @@ int[] filter = new int[3];
   #example[
   Beispiele erlaubter und nicht erlaubter Indizes:
   ```java
-                            int[] filter = new int[3];
-                            filter[0] = -1;
-                            filter[2] = 4;
-                            filter[-1] = 1;
-                            filter[3] = 2;
-                              ```
+                              int[] filter = new int[3];
+                              filter[0] = -1;
+                              filter[2] = 4;
+                              filter[-1] = 1;
+                              filter[3] = 2;
+                                ```
   ]
   #figure(
     image("../assets/img/2024_10_16_filter_array_index_rev01.png"), caption: [Indizes des Arrays `filter`],
@@ -599,6 +599,12 @@ Statische Deklaration:
 #figure(
   image("../assets/img/2024_10_16_filter_array_dim_rev01.png"), caption: [Mehrdimensionales Array],
 )
+
+#slide[
+  #question[]
+
+]
+
 = License Notice
 
 == Attribution
