@@ -313,18 +313,22 @@ System.out.println(name);
 
 #slide[
 #question[Was wird ausgegeben?]
+  #text(size: 20pt)[
+
 ```java
   double wind = 21.4532;
   System.out.println(String.format("%2.2f km/h", wind));
   System.out.println(String.format("%8.2f km/h", wind));
   System.out.println(String.format("%08.2f km/h", wind));
   ```
+  ]
 #pause
 - Ausgabe:
   - 21,45 km/h
   - 21,45 km/h
   - 00021,45 km/h
 ]
+
 
 #slide[
   #memo[
@@ -343,9 +347,7 @@ System.out.println(name);
   System.out.println(String.format("%2.2f km/h", wind));
   ```
 - Ausgabe: 21,45 km/h
-
-#pause
-
+  #pause
 - Oben bei Ausgabe „deutsches Nachkomma“ statt „englischer Punkt“
 - Durch Lokalisierung vorgegeben
 ]
@@ -362,7 +364,7 @@ System.out.println(name);
 ]
 
 ]
-
+= Arrays
 == Arrays (Felder)
 
 - Arrays in C:
@@ -534,6 +536,8 @@ int[] filter = new int[3];
 
 #slide[
 #question[Was wird ausgegeben?]
+  #text(size: 18pt)[
+
 ```java
 public class ArrayDemo {
       static int[] createSortedArray(int a, int b) {
@@ -549,6 +553,7 @@ public class ArrayDemo {
       }
   }
   ```
+  ]
 ]
 
 #slide[
@@ -561,6 +566,7 @@ public class ArrayDemo {
 ]
 
 #slide[
+  #text(size: 18pt)[
 ```java
 public static void sort(int[] a) {
     int i = 0;
@@ -578,6 +584,7 @@ public static void sort(int[] a) {
     }
 }
   ```
+  ]
 ]
 
 = Mehrdimensionale Arrays
@@ -601,7 +608,258 @@ Statische Deklaration:
 )
 
 #slide[
-  #question[]
+  #question[Was wird ausgegeben?]
+
+  ```java
+  int[][] a = {{1,2}, {3,4}, {5,6}};
+
+	System.out.println(a.length);
+	System.out.println(a[2].length);
+
+	System.out.println(a[1][1]);
+	System.out.println(a[2][0]);
+  ```
+
+]
+#slide[
+#figure(image("../assets/img/2024_10_16_a_array_question_dim_rev01.png"), caption: [Mehrdimensionale Arrays mit Werten])
+]
+
+#slide[
+  #question[Was wird ausgegeben?]
+
+  ```java
+int[][] a = {{1,2}, {3,4}, {5,6}};
+int[] b = a[0];
+int c = b[1];
+
+b[1] = 7;
+System.out.println(a[0][1]);
+System.out.println(c);
+  ```
+]
+
+#slide[
+  #figure(image("../assets/img/2024_10_16_a_b_c_array_question_rev01.png"), caption: [Komplizierte mehrdimensionale Arrays])
+]
+
+#slide[
+- Mehrdimensionale Arrays müssen nicht rechteckig sein
+- Beispiel: Jeder Zeile eines zweidimensionalen Arrays eigenes Array zuweisen
+
+#task[Erstellen Sie eine Dreiecksmatrix mittels einer `for`-Schleife!]
+
+#pause
+
+#text(size: 18pt)[
+```java
+int[][] a = new int[3][];
+	for (int i = 0; i < a.length; i++) {
+	    a[i] = new int[i + 1];
+	}
+```
+]
+]
+#slide[
+  #figure(image("../assets/img/2024_10_17_triangle_array_rev01.png"), caption: [Mehrdimensionales Array in der Form eines Dreiecks])
+]
+
+= Listen
+
+== ArrayList
+
+#slide[
+- Arrays: Größe nach Erzeugung nicht mehr änderbar („semidynamisch“)
+- Listen: Elemente können hinzugefügt oder entfernt werden („dynamisch“)
+  - Datentyp zu speichernder Elemente in spitzen Klammern (siehe unten: String)
+]
+
+#slide[
+  #text(size: 18pt)[    
+```java
+public class ArrayListDemo {
+	    public static void main(String[] args) {
+	        ArrayList<String> names = new ArrayList<String>();
+	        names.add("Lena");
+	        names.add("Birgit");
+	        names.add("Jan");
+	        names.add(new String("Jan"));
+	    }
+	}
+```
+  ]
+]
+#slide[
+- Beispiele:
+  - Anzahl der Elemente (`size()`)
+  - Zugriff auf Elemente (`get()`)
+  - Abfrage, ob bestimmtes Element in Liste ist (`contains()`)
+  - Element aus Liste entfernen (`remove()`)
+]
+
+#slide[
+  #text(size: 18pt)[
+
+  ```java
+ArrayList<String> names = new ArrayList<String>();
+	String birgit = "Birgit";
+	names.add("Lena");
+	names.add(birgit);
+
+	for (int i = 0; i < names.size(); i++) {
+	    System.out.println(names.get(i));
+	}
+
+	if (names.contains(birgit)) {
+	    names.remove(birgit);
+	}
+```
+  ]
+]
+
+= foreach-Schleife
+
+== foreach-Schleife
+
+#slide[
+```java
+for (Datentyp Variable : Iterationsobjekt) {
+    Anweisungen
+}
+```
+
+- Motivation:
+  - Mitunter jedes Element z.B. eines Arrays oder einer Liste benötigt
+  - Aber: Position innerhalb des Arrays oder der Liste wird nicht benötigt
+  - Daher auch kein Schleifenzähler als Index benötigt
+]
+
+#slide[
+- Schleife iteriert vom ersten bis zum letzten Element durch Array (oder Liste):
+- Beim ersten Durchlauf hat Variable den Wert des 1. Elements
+- Beim zweiten Durchlauf hat Variable den Wert des 2. Elements und so weiter
+- Beim letzten Durchlauf hat Variable den Wert des letzten Elements
+]
+
+#slide[
+  #question[Was wird ausgegeben?]
+  ```java
+int[] a = {7, 1, 3, 8};
+
+	for (int element : a) {
+	    System.out.println("Element: " + element);
+	}
+  ```
+  #figure(image("../assets/img/2024_10_16_foreach_rev01.png"), caption: [Ergebnis der foreach-Schleife])
+]
+
+#slide[
+  #task[
+    - Erstellen Sie Folgendes unter Verwendung einer foreach-Schleife:
+    - Methode, die den Mittelwert der in einem Array enthaltenen Zahlen zurückgibt
+    - Programm, das die Methode verwendet
+  ]
+]
+
+#slide[
+  #text(size: 20pt)[
+  ```java
+static double average(double[] numbers) {
+	    double sum = 0.0;
+
+	    for(double number : numbers) {
+	        sum += number;
+	    }
+	    return sum / numbers.length;
+	}
+
+	public static void main(String[] args) {
+	    double[] a = {1.43, 2, .2, 6.32, 7.1, 8.1};
+	    System.out.println("Average = " + average(a));
+	}
+  ```
+  ]
+]
+
+= Wrapperklassen & `Math`-Klasse
+
+== Wrapperklassen
+
+- Primitive Datentypen:
+  - Speichern Wert (z.B. Ganzzahl) direkt
+  - Besitzen keine Methoden
+
+- Wrapperklassen:
+  - „Packen“ (to wrap) primitive Datentypen in Klassen ein
+  - Stellen Methoden (z.B. für Ganzzahlen) zur Verfügung
+
+#figure(image("../assets/img/2024_10_16_wrapper_rev01.png"), caption: [Wrapperklassen für primitive Datentypen])
+
+#slide[
+  #text(size: 22pt)[
+- Primitiven Datentypen in String umwandeln
+```java
+	int a = 7; 
+	Integer b = new Integer(a); 
+	String c = b.toString();
+```
+- Kürzere Alternative über Klassenmethode:
+```java
+	String a = Integer.toString(7);
+```
+- String in primitiven Datentypen umwandeln:
+```java
+	String a = "7";
+	int b = Integer.parseInt(a);
+```
+  ]
+]
+
+#slide[
+  #text(size: 22pt)[
+- Umwandlungen:
+  - Boxing: Umwandlung primitiver Datentyp in Objekt einer Wrapperklasse
+  - Unboxing: Umwandlung Objekt einer Wrapperklasse in primitiven Datentyp
+```java
+	Integer object = new Integer(24); //Boxing of int value
+	int noObject = object.intValue(); //Unboxing of object
+```
+
+- Autoboxing: Automatische Umwandlungen (beide Richtungen)
+```java
+	Integer object = 24; //Automatic boxing of int value
+	int noObject = object; //Automatic unboxing of object
+```
+  ]
+]
+
+#slide[
+  #figure(image("../assets/img/2024_10_16_wrapper_conversion_rev01.png"), caption: [Typumwandlung mit Wrapperklassen])
+]
+
+== `Math`-Klasse
+
+#slide[
+
+- Mathematische Konstanten: Eulerzahl e, Kreiszahl $pi$
+- Mathematische Funktionen (als Klassenmethoden), z.B.:
+  - Trigonometrische Funktionen
+  - Rundung
+  - Betrag
+  - Exponentialfunktion und Logarithmus
+  - Maximum und Minimum
+  - Wurzeln
+  - Zufallszahlen
+
+  #example[
+    ```java
+    double angleDeg = 127.5;
+    double angleRad = Math.toRadians(angleDeg);
+    System.out.printf("cos(%.2f) = %.2f\n", angleRad, Math.cos(angleRad));
+    ```
+  ]
+
+
 
 ]
 
