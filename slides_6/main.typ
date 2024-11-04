@@ -30,7 +30,7 @@
 }
 #show: university-theme.with(
   aspect-ratio: "16-9", config-info(
-    title: [Objektorientierte Programmierung in Java], subtitle: [Vorlesung 5 - Vererbung], author: [Emily Lucia Antosch], date: datetime.today().display("[day].[month].[year]"), institution: [HAW Hamburg],
+    title: [Objektorientierte Programmierung in Java], subtitle: [Vorlesung 6 - Abstrakte Elemente], author: [Emily Lucia Antosch], date: datetime.today().display("[day].[month].[year]"), institution: [HAW Hamburg],
   ),
 )
 
@@ -52,20 +52,20 @@
 
 == Wo sind wir gerade?
 
-- In der letzten Vorlesung ging es um Klassenbibliotheken
+- In der letzten Vorlesung ging es um Vererbung
 - Sie können nun
-  - einfache Klassenbibliotheken verwenden, um Strings oder Arrays zu manipulieren
-  - aus einem Array alle Items über eine `foreach`-Schleife auslesen
-  - mithilfe von Wrapperklassen Typumwandlungen durchführen,
-  - einfache mathematische Rechnung mithilfe der `Math`-Klasse ausführen.
-- Heute geht es weiter mit der *Vererbung*.
+  - einfache Vererbungslinien erzeugen und verwenden,
+  - Methoden aus der Basisklasse überlagern,
+  - die `equals()`-Methode verwenden, um Objekte miteinander zu vergleichen,
+  - Objekte über die jeweilige Basisklasse referenzieren
+- Heute geht es weiter mit den *Schnittstellen*.
 
 #slide[
   1. Imperative Konzepte
   2. Klassen und Objekte
   3. Klassenbibliothek
-  4. *Vererbung*
-  5. Schnittstellen
+  4. Vererbung
+  5. *Schnittstellen*
   6. Graphische Oberflächen
   7. Ausnahmebehandlung
   8. Eingaben und Ausgaben
@@ -74,1175 +74,498 @@
 
 == Das Ziel dieses Kapitels
 
-- Sie erzeugen neue Datentypen, indem Sie bestehende Klassen um zusätzliche
-  Eigenschaften erweitern, um beispielsweise duplizierten Quelltext zu vermeiden.
-- Sie verwenden Sichtbarkeits-Modifizierer, um die Attribute einer Klasse vor
-  direktem Zugriff von außen zu schützen.
+- Sie bilden gemeinsame Eigenschaften von Klassen ab, indem Sie Klassen um gemeinsame Schnittstellen (in Form von abstrakten Basisklassen oder Interfaces) erweitern.
+- Sie verbergen den Datentyp von Objekten, indem Sie Objekte beim Zugriff auf gemeinsame Eigenschaften unterschiedlicher Klassen über Schnittstellen referenzieren.
+- Sie sortieren eine Sammlung von Objekten gleichen Datentyps nach beliebigen Kriterie
 
-= Vererbung
-== Vererbung
+= Abstrakte Elemente & Methoden
+== Abstrakte Elemente
 #slide[
-  - Klasse übernimmt („erbt“) Variablen und Methoden einer vorhandener Klassen
-  - Ziel: Wiederverwendung existierender Klassen
-
-  - Beispiel und UML-Notation:
-    - Klasse A ist vorhanden
-    - Klasse B wird erstellt und erbt von A
-
-  - Begriffe:
-    - Klasse A: Superklasse (Basisklasse, Oberklasse)
-    - Klasse B: Subklasse (abgeleitete Klasse, Unterklasse)
-    - Vererbung: Ableitung, engl.: inheritance
-
-    #figure(
-      image("../assets/img/2024_10_20_vererbung_AB_rev01.png"), caption: [Einfaches Beispiel für Vererbung],
-    )
-]
-
-#slide[
-- Ableitung der Basisklasse mittels `extends`:
-```java
-class Klassenname extends Basisklasse {
-    Attribute
-    Methoden
-    }
-  ```
-#example[
-```java
-class A {
-      // ...
-  }
-
-  class B extends A {
-      // ...
-  }
-    ```
-]
-]
-
-#slide[
-  #text(
-    size: 20pt,
-  )[
-    #task[
-      - Erstellen Sie folgende Klassen:
-        - Person: Objekte beinhalten den Namen
-        - Pilot: Objekte beinhalten den Namen und die bisherigen Flugstunden
-        - Ausführbare Klasse, die ein Objekt Pilot erzeugt und den Namen ausgibt
-    ]
-  ]
-  #figure(
-    image(
-      "../assets/img/2024_10_20_vererbung_person_pilot_rev01.png", height: 40%,
-    ), caption: [Pilot erbt von Person],
-  )
-]
-
-#slide[
-#text(size: 16pt)[
-```java
-public class Person {
-      String name;
-  }
-
-  public class Pilot extends Person {
-      int flightHours;
-  }
-
-  public class PilotDemo {
-      public static void main(String[] args) {
-          Pilot pilot = new Pilot();
-
-          pilot.name = "Lukas Luft";
-          pilot.flightHours = 1482;
-          System.out.println("Name: " + pilot.name);
-      }
-  }
-  ```
-]
-]
-
-#slide[
-  #figure(
-    grid(
-      columns: 2, gutter: 1em, image("../assets/img/2024_10_20_vererbung_uml_person_pilot_rev01.png"), image("../assets/img/2024_10_20_vererbung_pilot_objekt_rev01.png"),
-    ), caption: [Vererbung von Attributen],
-  )
-]
-
-#slide[
-#let body = [
-  - Klasse B kann neue Variablen und Methoden hinzufügen
-
-  - Begriffe:
-    - Spezialisierung: Klasse B ist spezieller als Klasse A
-    - Generalisierung: Klasse A ist allgemeiner als Klasse B
-
-  - Beispiel:
-    - Klasse Pilot hat von Person geerbt und flightHours hinzugefügt
-    - Ein Pilot ist eine Person, d.h. Person ist allgemeiner als Pilot.
-]
-#let fig = figure(
-  grid(
-    columns: 1, rows: 2, gutter: 1em, image("../assets/img/2024_10_20_vererbung_AB_rev01.png"), image("../assets/img/2024_10_20_vererbung_uml_person_pilot_rev01.png"),
-  ),
-)
-
-#grid(columns: (80%, 20%), gutter: 1em, body, fig)
-```java
-  public class Person {
-      String name;
-  }
-
-  public class Pilot extends Person {
-      int flightHours;
-  }
-```
-]
-
-#slide[
-- Datenkapselung (information hiding): Variablen vor Zugriff von außen geschützt
-- Einschränkungen des Zugriffs auf Klassen, Variablen und Methoden durch
-  Modifizierer
-- Gedankenbild: „Sichtbarkeit“ (d.h. ist Element sichtbar bzw. bekannt?)
-
-  #figure(
-    image("../assets/img/2024_10_20_klassen_modifier_rev01.png"), caption: [Modifier für Klassen, Methoden und Attribute],
-  )
-  #question[Ist `private` als Modifier für Konstruktoren erlaubt?]
-]
-
-#slide[
-  #let body = [
-    - Klasse B erbt alle sichtbaren Variablen und Methoden der Klasse A
-    - Klasse B besitzt Variablen und Methoden von A und kann diese verwenden (so als
-      ob diese in Klasse B definiert worden wären)
-
-    - Beispiel:
-      - Objekt von Klasse Pilot nutzt Variable name der Basisklasse Person
-  ]
-  #let fig = figure(
-    grid(
-      columns: 1, rows: 2, gutter: 1em, image("../assets/img/2024_10_20_vererbung_AB_rev01.png"), image("../assets/img/2024_10_20_vererbung_uml_person_pilot_rev01.png"),
-    ),
-  )
-  #grid(columns: (80%, 20%), gutter: 1em, body, fig)
-]
-
-#slide[
-```java
-  public class PilotDemo {
-      public static void main(String[] args) {
-          Pilot pilot = new Pilot();
-
-          pilot.name = "Lukas Luft";
-          pilot.flightHours = 1482;
-          System.out.println("Name: " + pilot.name);
-      }
-  }
-```
-]
-#slide[
-  #question[
-    - Was meinen Sie, welche Bestandteile einer Klasse werden nicht vererbt?
-  ]
-
-  - Nicht an abgeleitete Klasse weitergegeben:
-    - Konstruktoren und Destruktoren
-    - Klassenvariablen und Klassenmethoden (Modifizierer static)
-    - Private Variablen und Methoden (Modifizierer private)
-]
-
-#slide[
-  - Hinweise:
-    - Statische Elemente nie vererbt, da an eine Klasse und nicht an konkretes Objekt
-      gebunden
-    - Private Elemente sind in Subklasse vorhanden, sie kann aber nicht direkt darauf
-      zugreifen
-]
-
-#slide[
-  - Subklassen können weitervererbt werden.
-  - Von einer Klasse können beliebig viele Subklassen abgeleitet werden.
-  - Das Erben von mehreren Basisklassen ist hingegen nicht möglich
-    (Mehrfachvererbung)
-
-    #figure(
-      image("../assets/img/2024_10_20_vererbung_strukturen_rev01.png", height: 50%), caption: [Mögliche Strukturen zur Vererbung],
-    )
-]
-
-#slide[
+  #text(size: 18pt)[
 #question[
-  - Was meinen Sie, welche Basisklasse besitzt Person?
-]
-#text(size: 20pt)[
-```java
-  public class Person {
-      String name;
-  }
-```
-]
-- Sie konnten es bisher nicht wissen:
-  - In Java ist eine Klasse Object definiert.
-  - Keine Basisklasse angegeben. Implizit von Object abgeleitet (extends Object)
-]
-
-#slide[
-  #figure(
-    image("../assets/img/2024_10_20_vererbung_uml_person_pilot_rev01.png"), caption: [Object als Superklasse von Person],
-  )
-]
-
-#slide[
-  - Wichtige Konsequenz:
-    - Object ist Basisklasse jeder Vererbungshierarchie
-    #figure(
-      image("../assets/img/2024_10_20_vererbung_object_klasse_rev01.png"), caption: [Object als Teil jeder Vererbung],
-    )
-]
-
-#slide[
-  #question[
-    - Was meinen Sie?
-      - Wie viele Klassen besitzen keine Basisklasse?
-      - Wie viele Klassen besitzen mehr als eine direkte Basisklasse?
-  ]
-]
-
-#slide[
-
-- Wichtige Konsequenz:
-- Jede Klasse erbt die in Object definierten Methoden (z. B. toString())
-- Beispiel:
-  #text(
-    size: 16pt,
-  )[
-  ```java
-                                                        public class Person {
-                                                          String name;
-                                                        }
-
-                                                        public class ObjectDemo {
-                                                          public static void main(String[] args) {
-                                                              Person person = new Person();
-
-                                                              person.name = "Lukas Luft";
-                                                              System.out.println(person.toString());
-                                                          }
-                                                        }
-                                                        ```
-  ]
-]
-
-#slide[
-  #text(
-    size: 20pt,
-  )[
-
-    #task[
-      - Implementieren Sie Klassen für geometrische Objekte Kreis, Rechteck und Quadrat.
-      - Verwenden Sie zunächst nur öffentliche Variablen.
-      - Implementieren Sie zunächst keine Methoden.
-    ]
-  ]
-  #figure(
-    image(
-      "../assets/img/2024_10_20_vererbung_geometrische_Formen_rev01.png", height: 40%,
-    ), caption: [Geometrische Formen als Objekte],
-  )
-]
-
-#slide[
-#text(size: 15pt)[
-```java
-  public class Circle {
-      public double x, y;
-      public double radius;
-  }
-
-  public class Rectangle {
-      public double x, y;
-      public double width, height;
-  }
-
-  public class Square {
-      public double x, y;
-      public double width;
-  }
-```
-#task[Erstellen Sie nun eine gemeinsame Basisklasse!]
-]
-]
-
-#slide[
-#let body = [
-#text(size: 18pt)[
-
-```java
-public class Shape {
-      public double x, y;
-  }
-
-  public class Circle extends Shape {
-      public double radius;
-  }
-
-  public class Rectangle extends Shape {
-      public double width, height;
-  }
-
-  public class Square extends Shape {
-      public double width;
-  }
-```
-]
-]
-#let fig = figure(image("../assets/img/2024_10_20_vererbung_geom_formen_baum_rev01.png"))
-#grid(columns: (80%, 20%), gutter: 0.5em, body, fig)
-]
-
-#slide[
-  #question[
-    - Welche Variablen sind in den jeweiligen Klassen deklariert?
-  ]
-  #task[
-    - Ergänzen Sie für die Klasse Circle einen Konstruktor!
-  ]
-]
-
-#slide[
-#text(
-  size: 15pt,
-)[
-```java
-  public class Shape {
-      public double x, y;
-  }
-
-  public class Circle extends Shape {
-      public double radius;
-
-      public Circle(double x, double y, double radius) {
-          this.x = x;
-          this.y = y;
-          this.radius = radius;
-      }
-  }
-```
-#memo[
-  - Beachte: Variablen x und y der Basisklasse werden wie „eigene“ Variablen
-    verwendet
-  - Verstecken Sie die Variablen der Klasse Shape durch den Modifizierer private.
-
-]
-
-]
-
-]
-
-#slide[
-#text(size: 15pt)[
-```java
-public class Shape {
-      private double x, y;
-  }
-
-  public class Circle extends Shape {
-      public double radius;
-
-      public Circle(double x, double y, double radius) {
-          this.x = x;
-          this.y = y;
-          this.radius = radius;
-      }
-  }
-```
-#error[
-  - Die Variablen x und y der Basisklasse sind in Circle nicht sichtbar.
-  - Fehler: Im Konstruktor der Klasse Circle sind x und y unbekannt.
-]
-]
-]
-
-#slide[
-#text(size: 15pt)[
-```java
-public class Shape {
-      private double x, y;
-
-      public void setX(double x) {
-          this.x = x;
-      }
-      // Zusätzlich Getter sowie entsprechende Methoden für y ...
-  }
-
-  public class Circle extends Shape {
-      public double radius;
-
-      public Circle(double x, double y, double radius) {
-          setX(x);
-          setY(y);
-          this.radius = radius;
-      }
-  }
-```
-]
-]
-
-= Instanziierung von Objekten
-== Erzeugung von Objekten
-
-#slide[
-  #let fig = figure(image("../assets/img/2024_10_20_vererbung_ABC_rev01.png"))
-
-  #let body = [
-    #text(
-      size: 18pt,
-    )[
-      - Klasse C enthält eigene Methoden sowie Methoden der Klassen A und B.
-      - Klasse C enthält eigene Variablen sowie Variablen der Klassen A und B.
-      #question[
-        - Was meinen Sie?
-          - Wie werden Methoden eines neuen Objektes der Klasse C erzeugt?
-          - Wie werden Variablen eines Objektes der Klasse C erzeugt und initialisiert?
-      ]
-      - Methoden:
-        - Werden nicht für jedes Objekt neu erzeugt, sondern sind für Klasse definiert
-
-      - Variablen:
-        - An Basisklasse der Vererbungshierarchie beginnen
-        - In jedem Schritt Variablen der entsprechenden (Basis-)Klasse erzeugen und
-          initialisieren
-        - Initialisierung über Konstruktor der jeweiligen (Basis-)Klasse
-
-    ]
+- Erinnern Sie sich an unsere geometrischen Objekte?
+- Was stört Sie am bisherigen Aufbau unserer Klassen?
+- Was ergibt keinen Sinn bzw. ist „unschön“?
 
   ]
-
-  #grid(columns: (85%, 15%), gutter: 0.5em, body, fig)
 ]
+  #pause
+  #figure(image("../assets/img/2024_10_23_geometrische_form_ohneAbstrakt_rev01.png", height: 50%), caption: [Überlagern der Methode aus Shape])
 
-#slide[
-
-  - Variablen für Objekte der Klasse C:
-    - Objekt enthält die in der Klasse C deklarierten Variablen
-    - Enthält zusätzlich von Klasse B geerbte Variablen
-    - Diese enthalten die von Klasse A geerbten Variablen
-
-    #figure(
-      image("../assets/img/2024_10_20_vererbung_ABC_aufbau_rev01.png"), caption: [Zusammensetzung des Objekts der Klasse C],
-    )
-]
-
-#slide[
-  - Neues Objekt der Klasse C:
-    - Vererbungshierarchie nach oben durchlaufen:
-    - Klasse C hat Basisklasse B: Aufruf, um Variablen von B zu erzeugen
-    - Klasse B hat Basisklasse A: Aufruf, um Variablen von A zu erzeugen
-
-  - Variablen „von innen nach außen“ erzeugen und initialisieren
-    (Konstruktorverkettung):
-    - Variablen von A erzeugen und über Konstruktor A() initialisieren
-    - Variablen von B erzeugen und über Konstruktor B() initialisieren
-    - Variablen von C erzeugen und über Konstruktor C() initialisieren
-]
-
-#slide[
-  #figure(
-    image("../assets/img/2024_10_20_vererbung_variablen_speicher_rev01.png"), caption: [Variablen der Klasse C im Speicher],
-  )
-]
-
-#slide[
-#let body = [
-
-#text(
-  size: 17pt,
-)[
-- Konstruktor der Basisklasse:
-  - Aufruf über super() als erste Anweisung im Konstruktor der abgeleiteten Klasse
-  - Fehlt super(…) wird der Standardkonstruktor der Basisklasse aufgerufen.
-
-```java
-  public class A {
-      double a;
-      // Standardkonstruktor wird automatisch erzeugt
-  }
-
-  public class B extends A {
-      double b;
-
-      public B(double b) {
-          super();    // Aufruf Standardkonstruktor Klasse A
-          this.b = b;
-      }
-  }
-```
-]
-]
-#let fig = figure(image("../assets/img/2024_10_20_vererbung_erzeugen_rev01.png"))
-#grid(columns: (85%, 15%), gutter: 0.25em, body, fig)
-]
-
-#slide[
-
-- Sie erinnern sich?
-  #text(
-    size: 18pt,
-  )[
-  ```java
-                                                                                public class Shape {
-                                                                                    private double x, y;
-                                                                                }
-
-                                                                                public class Circle extends Shape {
-                                                                                    public double radius;
-
-                                                                                    public Circle(double x, double y, double radius) {
-                                                                                        this.x = x;
-                                                                                        this.y = y;
-                                                                                        this.radius = radius;
-                                                                                    }
-                                                                                }
-                                                                              ```
-  ]
-  #task[
-    - Die Variablen x und y sind in Circle unbekannt.
-    - Lösen Sie das Problem durch Ergänzen eines Konstruktors für die Basisklasse
-      Shape.
-  ]
-]
-
-#slide[
-#text(
-  size: 16pt,
-)[
-
-```java
-  public class Shape {
-      private double x, y;
-
-      public Shape(double x, double y) {
-          this.x = x;
-          this.y = y;
-      }
-  }
-
-  public class Circle extends Shape {
-      public double radius;
-
-      public Circle(double x, double y, double radius) {
-          super(x, y);  // Passende Signatur zum Konstruktor der Basisklasse!
-          this.radius = radius;
-      }
-  }
-  ```
-]
-]
-
-#slide[
-  #task[
-    - Schützen Sie alle Attribute durch den Modifizierer private.
-    - Erzeugen Sie gegebenenfalls geeignete Getter und Setter.
-  ]
-
-  #figure(
-    image(
-      "../assets/img/2024_10_20_vererbung_uml_geom_formen_rev01.png", height: 40%,
-    ), caption: [Aufbau der Vererbung],
-  )
-]
-
-#slide[
-#text(size: 18pt)[
-```java
-public class Circle extends Shape {
-    private double radius;
-
-    public Circle(double x, double y, double radius) {
-        super(x, y);
-        this.radius = radius;
-    }
-
-    public double getRadius() {
-        return radius;
-    }
-
-    public void setRadius(double radius) {
-        this.radius = radius;
-    }
-}
-```
-]
-]
-
-= Referenzieren über die Basisklasse
-== Referenz Basisklasse
-
-#slide[
-#let body = [
-#text(size: 16pt)[
-
-- Betrachten wir folgende Vererbungslinie:
-```java
-  public class Person {
-      String name;
-
-      public Person(String name) {
-          this.name = name;
-      }
-  }
-
-  public class Pilot extends Person {
-      String airline;
-
-      public Pilot(String name, String airline) {
-          super(name);
-          this.airline = airline;
-      }
-  }
-```
-]
-]
-#let fig = figure(image("../assets/img/2024_10_20_vererbung_uml_person_pilot_rev01.png"))
-
-#grid(columns: (85%, 15%), gutter: 0.25em, body, fig)
-]
-
-#slide[
-#let body = [
-#text(
-  size: 18pt,
-)[
-
-- Was meinen Sie zu folgendem Programm?
-
-  ```java
-                                                  public class ReferenceDemo {
-                                                    public static void main(String[] args) {
-                                                      Pilot pilot = new Pilot("Birgit", "Winglet Airways");
-                                                      Person personRef = pilot;
-                                                      Object objectRef = pilot;
-
-                                                    System.out.println(personRef.name);
-                                                  }
-                                                }
-                                                    ```
-
-  #memo[
-    Es gibt nur ein Objekt (mit Datentyp Pilot). Objekt wird über Variablen mit
-    anderen Datentypen als Pilot referenziert
-  ]
-
-]
-]
-#let fig = figure(image("../assets/img/2024_10_20_vererbung_uml_person_pilot_rev01.png"))
-
-#grid(columns: (85%, 15%), gutter: 0.25em, body, fig)
-
-]
-
-#slide[
-
-  - Klasse Pilot erbt von Klasse Person und erweitert diese
-  - Pilot beinhaltet Person („Pilot is a Person“) Als Person referenzierbar
-  - Objekt wird hierdurch nicht verändert (d.h. Objekt bleibt vom Typ Pilot)!
-    #figure(
-      image("../assets/img/2024_10_20_vererbung_referenzen_rev01.png", height: 40%), caption: [Referenzen auf ein Objekt mit Basisklasse],
-    )
-]
-
-#slide[
-
-  - Allgemein:
-    - Objekte können wie Objekte ihrer Basisklassen behandelt werden.
-    - Objekte über Datentypen ihrer Basisklassen referenzierbar
-    - Referenzvariable kann nur auf Attribute und Methoden ihrer Klasse zugreifen
-]
-#slide[
-#text(size: 18pt)[
-
-#question[
-  - Welche Zugriffe auf Attribute sind zulässig und welche nicht?
-]
-```java
-  public static void main(String[] args) {
-      Pilot pilot = new Pilot("Birgit", "Winglet Airways");
-      Person personRef = pilot;
-      Object objectRef = pilot;
-
-      System.out.println(personRef.name);
-      System.out.println(personRef.airline);
-      System.out.println(objectRef.name);
-      System.out.println(objectRef.airline);
-  }
-```
-]
-]
-= Überlagern
-== Überlagern von Methoden
-#slide[
-
-#let body = [
-#text(
-  size: 16pt,
-)[
-- Klasse Person ist von Object abgeleitet und erbt daher toString() von Object und
-  definiert daher eine weitere toString()-Methode
-
-```java
-  public class Person {
-      private String name;
-
-      public Person(String name) {
-          this.name = name;
-      }
-
-      public String getName() {
-          return name;
-      }
-
-      public String toString() {
-          return name;
-      }
-  }
-```
-]
-]
-#let fig = figure(
-  image("../assets/img/2024_10_20_vererbung_person_toString_rot_rev01.png"),
-)
-
-#grid(columns: (80%, 20%), gutter: 0.25em, body, fig)
 ]
 
 #slide[
 
 #let body = [
-#text(size: 18pt)[
-- Klasse Pilot:
-  - Von Person abgeleitet und erbt daher toString() von Person
-  - Definiert noch eine toString()-Methode
+
+  #text(size: 16pt)[
+
+- Klasse wird durch Schlüsselwort abstract zu abstrakter Klasse
+- Effekt: Es können keine Objekte der Klasse erstellt werden.
+- Stattdessen:
+  - Klasse ableiten und in (konkreten = nicht abstrakten) Subklassen erweitern
+  - Objekte der Subklassen erstellen
 ```java
-  public class Pilot extends Person {
-      private String airline;
+	public abstract class A {
+	    // ...
+	}
 
-      public Pilot(String name, String airline) {
-          super(name);
-          this.airline = airline;
-      }
-
-      public String toString() {
-          return String.format("%s (%s)", getName(), airline);
-      }
-  }
-```
-]
-]
-#let fig = figure(
-  image(
-    "../assets/img/2024_10_20_vererbung_person_pilot_tostring_rot_rev01.png",
-  ),
-)
-
-#grid(columns: (80%, 20%), gutter: 0.25em, body, fig)
-
-]
-
-#slide[
-#text(size: 20pt)[
-#question[
-  Was wird ausgegeben?
-]
-```java
-public static void main(String[] args) {
-      Person person = new Person("Birgit Janssen");
-      System.out.println("person: " + person);
-      System.out.println("person.toString(): " + person.toString());
-
-      Pilot pilot = new Pilot("Jan Birgerson", "Winglet Airways");
-      System.out.println("pilot.toString(): " + pilot.toString());
-  }
-```
-]
-
-]
-#slide[
-#let body = [
-#text(
-  size: 18pt,
-)[
-- Ausgabe:
-  - `person`: Birgit Janssen
-  - `person.toString()`: Birgit Janssen
-  - `pilot.toString()`: Jan Birgerson (Winglet Airways)
-
-  #memo[
-    - Jeweils Methode der entsprechenden Klasse, nicht der Superklasse(n), ausgeführt
-    - Begriff: Methode der Superklasse durch neu definierte Methoden überlagert
-  ]
-]
-]
-
-#let fig = figure(image("../assets/img/2024_10_20_vererbung_toString_rev01.png"))
-#grid(columns: (80%, 20%), gutter: 0.25em, body, fig)
-]
-#slide[
-
-#let body = [
-#text(
-  size: 18pt,
-)[
-#question[
-- Was wird ausgegeben?
-]
-    ```java
-public static void main(String[] args) {
-    Pilot pilot = new Pilot("Jan Birgerson", "Winglet Airways");
-    Object objectRef = pilot;
-    Person personRef = pilot;
-
-    System.out.println("objectRef: " + objectRef.toString());
-    System.out.println("personRef: " + personRef.toString());
-}
-```
-      #pause
-- Ausgabe:
-	- `objectRef`: Jan Birgerson (Winglet Airways)
-	- `personRef`: Jan Birgerson (Winglet Airways)
-
-]
-]
-
-#let fig = figure(image("../assets/img/2024_10_20_vererbung_toString_rev01.png"))
-#grid(columns: (80%, 20%), gutter: 0.25em, body, fig)
-]
-#slide[
-  #memo[
-    Methode der entsprechenden Klasse ausgeführt, selbst bei Referenz über Superklasse(n)
-  ]
-]
-
-#slide[
-#let body = [
-#text(
-  size: 14pt,
-)[
-
-- Zugriff auf überlagerte Methoden der Basisklasse über Referenz super
-- Beispiel:
-```java
-	public class Pilot extends Person {
-	    // Instanzvariable, Konstruktor, toString() ...
-
-	    public String toStringOfSuperClass() {
-	        return super.toString();
-	    }
+	public class B extends A {
+	    // ...
 	}
 
 	public static void main(String[] args) {
-	    Pilot pilot = new Pilot("Jan Birgerson", "Winglet Airways");
-	    System.out.println("Pilot.toString(): " + pilot.toString());
-	    System.out.println("super.toString(): " + pilot.toStringOfSuperClass());
+	    A abstractObj = new A();
+	    B concreteObj = new B();
 	}
 ```
-      #pause
-- Ausgabe:
-	- `Pilot.toString()`: Jan Birgerson (Winglet Airways)
-	- `super.toString()`: Jan Birgerson
-]
-]
-
-#let fig = figure(image("../assets/img/2024_10_20_vererbung_toString_rev01.png"))
-#grid(columns: (80%, 20%), gutter: 0.25em, body, fig)
-
-]
-
-#slide[
-#let fig = figure(image("../assets/img/2024_10_20_vererbung_toString_rev01.png"))
-#let body = [
-#text(
-  size: 14pt,
-)[
-
-- Variablen mit Modifier final sind Konstanten.
-  - Wert kann nach erster Zuweisung nicht mehr geändert werden
-#question[
-- Was meinen Sie?
-  - Was bewirkt final für Klassen?
-  - Was bewirkt final für Methoden?
-]
-#pause
-- Klassen:
-  - Klasse mit Modifier final kann nicht abgeleitet werden
-  - Beispiel: Klasse String
-
-- Methoden:
-  - Methode mit Modifier final kann nicht in Subklasse überlagert werden
-#figure(image("../assets/img/2024_10_20_vererbung_final_rev01.png"), caption: [`final`-Schlüsselwort in der Vererbung])
-]
-]
-
-#grid(columns: (80%, 20%), gutter: 0.25em, body, fig)
-
-]
-
-#slide[
-
-- Überlagern von Methoden:
-  - Von der Basisklasse geerbte Methoden dürfen neu definiert werden.
-  - Begriffe: Überlagern (oder auch Überschreiben)
-  - Beim Aufruf wird die überlagernde Methode („neueste Version“) ausgeführt
-  - Aufruf der verdeckten Methode `name()` der Basisklasse über `super.name()`
-  - Modifier `final` unterbindet Überlagern in Subklassen
-
-- Überlagern von Attributen:
-  - Abgeleitete Klasse kann auf gleiche Weise Variablen der Basisklasse überlagern
-]
-
-#slide[
-  #text(size: 18pt)[
-  #question[
-- Welche Methoden hat Jason, die Katze?
-- Aus welchen Klassen stammt jeweils die Methoden-Definition?
-  ]
-  #figure(image("../assets/img/2024_10_20_vererbung_katze_frage_rev01.png", height: 60%))
-
-  ]
-]
-#slide[
-  #text(size: 18pt)[
-  #question[
-- Welche Methoden hat Jason, die Katze?
-- Aus welchen Klassen stammt jeweils die Methoden-Definition?
-  ]
-  #figure(image("../assets/img/2024_10_20_vererbung_katze_antwort_rev01.png", height: 60%))
-
-  ]
-]
-
-#slide[
-  #text(size: 18pt)[
-    #task[
-    - Ergänzen Sie Methoden `getArea()` zur Bestimmung der Fläche eines Objekts.
-    - Erstellen Sie folgendes ausführbares Programm:
-      - Speichert je ein Objekt `Circle`, `Rectangle` und `Square` in einer gemeinsamen Liste
-      - Bestimmt Summe der Flächeninhalte aus dieser Liste
     ]
-
   ]
-  #figure(image("../assets/img/2024_10_20_vererbung_uml_geom_formen_rev01.png", height: 50%))
-
+  #let fig = [
+  #align(center + horizon)[
+#figure(image("../assets/img/2024_10_23_abstrakte_klasse_rev01.png"))
+    ]
+  ]
+  #grid(columns: (70%, 30%), gutter: 0.25em, body, fig)
 ]
+
 #slide[
-  #text(size: 18pt)[
-Klasse `Circle`:
-```java
-	public double getArea() {
-	    return Math.PI * radius * radius;
-	}
-```
-Klasse `Rectangle`:
-```java
-	public double getArea() {
-	    return width * height;
-	}
-```
-Klasse `Square`:
-```java
-	public double getArea() {
-	    return width * width;
-	}
-```
+    #text(size: 18pt)[
+
+  #let top = [
+- Methode wird durch das Schlüsselwort abstract zur abstrakten Methode
+- Abstrakte Methode enthält nur die Deklaration, aber keine Implementierung
   ]
+  #let mid = [
+      #let left = [
+        ```java
+public abstract class ImageSource {
+	    String name;
+
+	    public abstract Image getNextImage();
+	}
+        ```
+      ]
+      #let right = figure(image("../assets/img/2024_10_23_abstrakte_methoden_rev01.png"))
+      #grid(columns: (60%, 40%), gutter: 0.05em, left, right)
+    ]
+    #let bot = [
+      #memo[
+- Abstrakte Methoden können nicht aufgerufen werden (existiert keine Implementierung!)
+- Gibt stattdessen vor, welche Methoden Subklassen besitzen müssen
+      ]
+    ]
+  #grid(rows: (auto, 30%, auto), gutter: 2.5em, top, mid, bot)
+]
 ]
 
 #slide[
   #text(size: 16pt)[
 
-- Ausführbares Programm:
+  #let body = [
+    
+- Klassen mit abstrakten Methoden müssen abstrakt sein.
+- Ansonsten könnten für Objekte nicht implementierte Methoden aufgerufen werden.
+- Vererbung:
+  - Abstrakte Methoden werden vererbt.
+  - Subklassen abstrakt, solange nicht alle abstrakten Methoden implementier
+
+```java
+	public abstract class ImageSource {
+	    String name;
+
+	    public abstract Image getNextImage();
+	}
+
+	public class Camera extends ImageSource {
+	    public Image getNextImage() {
+	        // ...
+	    }
+	}
+```
+  ]
+    #let fig = figure(image("../assets/img/2024_10_23_abstrakte_klasse_methode_rev01.png"))
+  #grid(columns: (80%, 20%), gutter: 0.25em, body, fig)
+  ]
+]
+
+#slide[
+  #figure(image("../assets/img/2024_10_24_abstrakt_klasse_methode_baum_rev01.png", height: 90%), caption: [Großer Overview über Abstrakte Klassen und Methoden])
+]
+
+#slide[
+  #task[
+- Verbessern Sie nun den Aufbau der Klassenstruktur.
+- Verwenden Sie hierfür abstrakte Elemente.
+  ]
+  #figure(image("../assets/img/2024_10_24_geom_form_ohne_erkl_rev01.png", height: 50%))
+]
+
+#slide[
+  #text(size: 18pt)[
+- Keine Objekte der Klasse Shape, sondern nur von konkreten geometrischen Formen
+- Alle Klassen für geometrischen Formen besitzen getArea().
+- Implementierung je nach Typ der geometrischen Form
+  #figure(image("../assets/img/2024_10_24_geom_formen_abst_impl_rev01.png", height: 60%), caption: [Abstrakte und implementierte Methoden])
+
+  ]
+]
+= Interfaces
+== Interfaces
+#slide[
+- Klassen (zur Erinnerung):
+  - Konkrete Klassen können keine abstrakten Methoden enthalten.
+  - Abstrakte Klassen können zusätzlich abstrakte Methoden enthalten.
+
+- Grundlegende Idee einer Schnittstelle:
+  - Deklariert lediglich abstrakte Methoden
+  - Gibt also vor, welche Methoden eine Klasse implementieren muss
+  - Enthält keine Variablen (Kein Objekt erzeugbar: keine Konstruktoren benötigt)
+  - Beschreiben oft Eigenschaften (z.B. Comparable, Cloneable, Scalable, …)
+]
+
+#slide[
+- Sichtbarkeit:
+  - Alle Methoden sind public abstract (auch wenn Modifier fehlen).
+  - Alle Attribute sind public static final (auch wenn Modifier fehlten).
+
+- Ab Java 8 auch implementierte Methoden:
+  - Default-Methoden: Vergleichbar mit herkömmlichen Methoden in einer Klasse
+  - Statische Methoden
+]
+
+#slide[
+  #figure(image("../assets/img/2024_10_24_abstufung_klas_abst_inter_rev01.png"), caption: [Abstufung zwischen Konkret, Abstrakt und Interface])
+]
+
+#slide[
+  #text(size: 20pt)[
+
+  #let body = [    
+- Deklaration einer Schnittstelle:
+```java
+	  Modifier interface Schnittstellenname {
+		Konstanten
+		Abstrakte Methoden
+		Default-Methoden und statische Methoden
+	  }
+```
+
+- Deklariere Methode `resize()`, um Größe eines Objektes zu ändern
+```java
+	public interface Scalable {
+	    void resize(double factor);
+	}
+```
+  ]
+  #let fig = figure(image("../assets/img/2024_10_24_scalable_interface_rev01.png"))
+  #grid(columns: (75%, 25%), gutter: 0.25em, body, fig)
+  ]
+]
+
+#slide[
+  #text(size: 16pt)[
+    #let body = [
+
+- Klassen implementieren Schnittstellen über das Schlüsselwort implements
+- Klasse erbt Elemente der Schnittstelle und implementiert abstrakte Methoden
+```java
+	public class Vector2D implements Scalable {
+	    private double x, y;
+
+	    public Vector2D(double x, double y) {
+	        this.x = x;
+	        this.y = y;
+	    }
+
+	    public void resize(double factor) {
+	        x *= factor;
+	        y *= factor;
+	    }
+	    // Weitere Methoden ...
+	}
+```
+    ]
+    #let fig = figure(image("../assets/img/2024_10_24_scalable_interface_vector_rev01.png"))
+    #grid(columns: (70%, 30%), gutter: 0.25em, body, fig)
+  ]
+]
+
+#slide[
+  #text(size: 18pt)[
+- Interface-Methode nicht implementiert: Methode bleibt abstrakt
+- Daher dann auch die Klasse abstrakt
+- Subklassen erst dann konkret, wenn alle abstrakten Methoden implementiert
+
+  ]
+
+  #figure(image("../assets/img/2024_10_24_scalable_interface_abstrakt_vector_rev01.png", height: 60%), caption: [Abstrakte Klassen und Interfaces])
+]
+
+#slide[
+  #text(size: 18pt)[
+    #let body = [
+
+- Zur Erinnerung: Mehrfachvererbung für Klassen nicht erlaubt
+- Aber: Implementierung beliebig vieler Schnittstellen (durch Kommas getrennt) erlaubt
+
+```java
+	interface Interface1 {
+	    // ...
+	}
+
+	interface Interface2 {
+	    // ...
+	}
+
+	class ClassA implements Interface1, Interface2 {
+	    // ...
+	}
+```
+    ]
+    #let fig = figure(image("../assets/img/2024_10_24_double_interface_rev01.png"))
+    #grid(columns: (80%, 20%), gutter: 0.25em, body, fig)
+  ]
+]
+
+#slide[
+  #text(size: 16pt)[
+Klasse GrayImage implementiert Scalable, Drawable und Rotateable
+```java
+	public class GrayImage implements Scalable, Drawable, Rotateable {
+	    // Attribute und Konstruktoren
+	    // Methoden der Schnittstellen
+	    // Weitere Methoden
+}
+```
+
+  #figure(image("../assets/img/2024_10_24_grayimage_interface_rev01.png", height: 50%), caption: [GrayImage-Beispiel])
+  ]
+]
+
+#slide[
+  #text(size: 16pt)[   
+    #let body = [
+
+- Schnittstellen können durch extends abgeleitet werden.
+- Für Schnittstellen ist Mehrfachvererbung erlaubt!
+
+```java
+	interface Interface1 {
+	    // ...
+	}
+
+	interface Interface2 {
+	    // ...
+	}
+
+	interface Interface3 extends Interface1, Interface2 {
+	    // ...
+	}
+
+	class ClassA implements Interface3 {
+	    // ...
+	}
+```
+    ]
+    #let fig = figure(image("../assets/img/2024_10_24_interface_vererbung_rev01.png"))
+    #grid(columns: (65%, 35%), gutter: 0.25em, body, fig)
+  ]
+]
+
+#slide[
+#text(size: 16pt)[
+    #let body = [
+- Genauso wie bei Basisklassen:
+  - Objekte über Datentypen ihrer implementierten Schnittstellen referenzierbar
+  - Referenzvariable kann nur auf Attribute und Methoden ihrer Schnittstelle zugreifen
+  #question[
+- Welche Zugriffe auf Attribute sind zulässig und welche nicht?
+  ]
+
+```java
+	public static void main(String[] args) {
+	    Vector2D classRef = new Vector2D(1, 3);
+	    Scalable interRef = classRef;
+
+	    classRef.resize(1.5);
+	    System.out.println(classRef.getX());
+	    interRef.resize(1.5);
+	    System.out.println(interRef.getX());
+	}
+```
+
+    ]
+    #let fig = figure(image("../assets/img/2024_10_24_scalable_vector_voll_rev01.png")) 
+    #grid(columns: (80%, 20%), gutter: 0.25em, body, fig)
+  ] 
+]
+
+#slide[
+  #text(size: 18pt)[
+  #task[
+- Erstellen Sie eine Schnittstelle Transformable mit folgenden Methoden:
+  - Verschieben
+  - Rotation um 90° (je eine Methode für Rotation nach links und nach rechts)
+  - Skalieren
+  - Implementieren Sie die Schnittstelle in allen Klassen geometrischer Formen
+  ]
+    #figure(image("../assets/img/2024_10_24_geom_form_ohne_erkl_rev01.png", height: 45%))
+  ]
+]
+
+= Vergleich (Interface `Comparable`)
+
+== Interface `Comparable`
+
+#slide[
+  #text(size: 18pt)[
+    #let body = [
+- Vergleich von Objekten (Welches ist „größer“, welches „kleiner“?)
+
+```java
+	public interface Comparable<Type> {
+	    public int compareTo(Type other);
+	}
+```
+- Verwendung:
+  - Schnittstelle in eigener Klasse implementieren
+  - Platzhalter Type durch eigenen Klassennamen ersetzen
+  - Rückgabewert wird wie folgt gedeutet:
+  #figure(image("../assets/img/2024_10_24_comparable_returnvalue_rev01.png"))
+    ]
+
+    #let fig = figure(image("../assets/img/2024_10_24_comparable_A_rev01.png"))
+    #grid(columns: (80%, 20%), gutter: 0.25em, body, fig)
+  ]
+]
+
+#slide[
+  #text(size: 15pt)[
+    #let body = [
+- Vergleich von Vektoren anhand des Betrages:
+```java
+	public class Vector2D implements Comparable<Vector2D> {
+	    double x, y;
+
+	    public double getAbs() {
+	        return Math.sqrt(x * x + y * y);
+	    }
+
+	    public int compareTo(Vector2D other) {
+	        if (getAbs() < other.getAbs()) {
+	            return -1;
+	        } else if (getAbs() > other.getAbs()) {
+	            return 1;
+	        } else {
+	            return 0;
+	        }
+	    }
+	}
+```
+    ]
+    #let fig = figure(image("../assets/img/2024_10_24_comparable_vector_rev01.png"))
+    #grid(columns: (80%, 20%), gutter: 0.25em, body, fig)
+  ]
+]
+
+#slide[
+  #text(size: 15pt)[
+    #let body = [
+- Listen über Klassenmethode `Collections.sort()` sortieren
+- Voraussetzung: Elemente in Liste implementieren Comparable
+- Methode `sort()` verwendet paarweise die Vergleichsmethode `compareTo()`
+```java
+	public static void main(String[] args) {
+	    ArrayList<Vector2D> vectors = new ArrayList<Vector2D>();
+	    vectors.add(new Vector2D(0, 5));
+	    vectors.add(new Vector2D(0, -1));
+	    vectors.add(new Vector2D(7, 8));
+	    vectors.add(new Vector2D(0, 0));
+
+	    Collections.sort(vectors);
+	    for (Vector2D vector : vectors) {
+	        System.out.println(vector.getAbs());
+	    }
+	}
+```
+
+
+    ]
+    #let fig = figure(image("../assets/img/2024_10_24_comparable_vector_rev01.png"))
+    #grid(columns: (80%, 20%), gutter: 0.25em, body, fig)
+  ]
+]
+
+#slide[
+  #text(size: 18pt)[
+  #task[
+- Implementieren Sie `Comparable<Type>` für geometrische Objekte.
+- Kriterium für den Vergleich ist die Fläche der Objekte.
+  ]
+  #figure(image("../assets/img/2024_10_24_geom_form_ohne_erkl_rev01.png", height: 50%))
+
+  ]
+]
+
+#slide[
+  #text(size: 18pt)[
+  #memo[
+- Nur die Klasse `Shape` muss `Comparable` implementieren.
+- Die übrigen Klassen erben die Schnittstelle und Implementierung.
+  ]
+  #figure(image("../assets/img/2024_10_24_comparable_shape_rev01.png", height: 50%))
+
+  ]
+]
+
+#slide[
+#text(size: 15pt)[
+- Implementierung in Shape:
+```java
+public abstract class Shape implements Comparable<Shape> {
+    // Attribute und andere Methoden ...
+
+    public int compareTo(Shape other) {
+        double thisArea = getArea();
+        double otherArea = other.getArea();
+
+        if (thisArea < otherArea) {
+            return -1;
+        } else if (thisArea > otherArea) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+}
+```
+  ]
+]
+
+#slide[
+  #text(size: 15pt)[
 ```java
 	public static void main(String[] args) {
 	    ArrayList<Shape> shapes = new ArrayList<Shape>();
-	    shapes.add(new Circle(2.0, 3.0, 1.0));
-	    shapes.add(new Rectangle(-1.0, 0.0, 3.5, 4.0));
-	    shapes.add(new Square(0.0, 0.0, 2.5));
+	    shapes.add(new Circle(0.0, 0.0, 2.0));
+	    shapes.add(new Circle(0.0, 0.0, 1.0));
+	    shapes.add(new Rectangle(0.0, 0.0, 10.0, 5.0));
+	    shapes.add(new Square(0.0, 0.0, 0.5));
 
-	    double sumArea = 0.0;
+	    System.out.println("Flächen (unsortiert):");
 	    for (Shape shape : shapes) {
-	        sumArea += shape.getArea();
+	        System.out.println(shape.getArea());
 	    }
 
-	    System.out.println("Overall area of shapes = " + sumArea);
-	}
-```
-- Methode `getArea()` muss auch in `Shape` implementiert sein
-- Wird allerdings nicht verwendet, sondern von Subklassen überlagert: Sehr unschön!
-- Wir werden später eine elegantere Lösung kennenlernen.
-
-  ]
-]
-
-= Polymorphismus
-== Polymorphismus
-
-#slide[
-- Die gute Nachricht:
-  - Nur ein neuer Begriff, ansonsten ist alles bereits bekannt
-  - Nein, wirklich. Ganz ehrlich. Echt wahr …
-
-- Polymorphismus:
-  - Wortlaut: „Vielgestaltigkeit“
-  - Methoden mit gleichem Namen können mehrere Gestalten annehmen.
-  - Sprich: Mehrere Implementierungen von Methoden mit gleichem Namen
-  - Typische Eigenschaft objektorientierter Sprachen
-
-]
-
-#slide[
-
-#question[
-- Wo ist uns das bereits begegnet?
-  ]
-  #pause
-  - Methoden gleichen Namens in derselben Klasse: Überladen
-  - Methoden gleichen Namens in Vererbungslinie: Überlagern (auch: Überschreiben)
-]
-
-#slide[
-  #let left = [
-    #text(size: 18pt)[
-    - Überladen (Overloading):
-      - Methoden in Klasse haben gleichen Namen
-      - Müssen unterschiedliche Signatur haben (d.h. unterschiedliche Parametertypen)
-      #figure(image("../assets/img/2024_10_20_vererbung_mathfunctions_rev01.png"), caption: [Klasse MathFunctions])
-
-    ]
-
-  ]
-  #let right = [
-    #text(size: 18pt)[
-- Überlagern / Überschreiben (Overriding):
-  - Methode in Vererbungslinie haben gleichen Namen
-  - Müssen gleiche Signatur haben (d.h. gleichen Namen und Parametertypen)
-
-  #figure(image("../assets/img/2024_10_20_vererbung_toString_rev01.png"), caption: [Vererbung von `toString()`])
-
-    ]
-  ]
-  #grid(columns: (50%, 50%), gutter: 0.25em, left, right)
-]
-= Vergleich von Objekten
-
-== Vergleichsoperator (==)
-
-#slide[
-  #question[
-- Klasse Point beinhalte die Variablen x und y
-- Was wird ausgegeben?
-
-  ]
-```java
-	Point a = new Point(1, 2);
-	Point b = new Point(7, 3);
-	System.out.println(a == b);
-```
-
-]
-
-#slide[
-  #question[
-- Und nun?
-  ]
-```java
-	Point a = new Point(1, 2);
-	Point b = new Point(1, 2);
-	System.out.println(a == b);
-```
-
-]
-
-#slide[
-  #question[
-- Und nun?
-```java
-	Point a = new Point(1, 2);
-	Point b = a;
-	System.out.println(a == b);
-```
-
-  ]
-]
-#slide[
-
-  #let body = [
-#text(size: 14pt)[
-- Vergleichsoperator vergleicht, ob Variablen denselben Inhalt haben
-  - Inhalt ist jeweils Referenz auf ein Objekt
-  - Vergleich nur dann wahr (true), wenn Variablen dasselbe Objekt referenzieren
-
-  #example[
-```java
-	Point a = new Point(1, 2);
-	Point b = new Point(1, 2);
-	Point c = new Point(7, 3);
-	Point d = a;
+	    Collections.sort(shapes);
+	    System.out.println("\nFlächen (sortiert):");
+	    for (Shape shape : shapes) {
+            System.out.println(shape.getArea());
+        }
+    }
 ```
   ]
-#error[
-- `a == b`: Verschiedene Objekte (mit gleichen Werten)
-- `a == c`: Verschiedene Objekte (und Werte)
-  ]
-
-#success[
-- `a == d`: Dasselbe Objekt: gleiche Referenz
-  ]
-    ]
-
-  ] 
-#let fig = figure(image("../assets/img/2024_10_20_vererbung_referenzen_point_rev01.png"))
-#grid(columns: (80%, 20%), gutter: 0.25em, body, fig)
-]
-
-== `equals()`-Methode
-#slide[
-#text(size: 22pt)[
-```java
-	public boolean equals(Object obj) {
-	    // Methodenrumpf
-	    // Rückgabe eines Wertes vom Typ boolean
-	}
-```
-
-- Vergleich, ob alle Variablen zweier referenzierter Objekte gleiche Werte haben
-- Methode ist bereits in Klasse Object definiert
-
-- Überlagern in eigenen Klassen:
-  - Klasse Object kann nicht wissen, welchen Variablen Sie in Subklassen hinzufügen
-  - Methode daher gegebenenfalls überlagern, um hinzugefügte Attribute zu vergleichen
-  - In IntelliJ IDEA ist das bequem über das Generate-Menü möglich.
-  ]
-]
-
-#slide[
-  #text(size: 20pt)[
-    #question[
-- Gegeben sei Klasse Point mit x- und y-Koordinate
-- Welches Ergebnis liefern die Vergleiche in der Tabelle?
-    ]
-  ]
-  #figure(image("../assets/img/2024_10_20_vererbung_referenzen_frage_rev01.png", height: 60%))
-]
-
-#slide[
-  #text(size: 20pt)[
-    #question[
-- Gegeben sei Klasse Point mit x- und y-Koordinate
-- Welches Ergebnis liefern die Vergleiche in der Tabelle?
-    ]
-  ]
-  #figure(image("../assets/img/2024_10_20_vererbung_referenzen_antwort_rev01.png", height: 60%))
 ]
 
 = License Notice
