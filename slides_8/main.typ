@@ -307,6 +307,316 @@ Exception in thread "main" java.lang.ArithmeticException: Division by zero at
 ]
 ]
 
+= Ausnahmen fangen
+== Ausnahmebehandlung
+
+
+#slide[
+#text(
+  size: 18pt,
+)[
+- Ausnahmen lassen sich fangen und behandeln:
+```java
+ try {
+     // Aweisungen ...
+ } catch (ExceptionTyp e) {
+     // Aweisungen ...
+ }
+```
+
+- Try-Block enthält Code, der Ausnahme werfen kann
+- Falls Ausnahme im try-Block geworfen wird:
+  1. Try-Block unmittelbar beendet
+  2. Catch-Block ausgeführt, sofern Ausnahmetyp (ExceptionType) passt
+  3. Programm läuft nach catch-Block weiter
+- Ausnahmetyp des catch-Blocks passt nicht  Ausnahme wird nicht gefangen!
+- Keine Ausnahme geworfen  Catch-Block wird übersprungen
+]
+]
+
+#slide[
+#text(
+  size: 18pt,
+)[
+- Vermeiden Sie den „Absturz“:
+  - Fangen Sie die geworfene Ausnahme!
+```java
+public class TryCatch {
+    public static void main(String[] args) {
+        int a = 3;
+        int b = 0;
+        printRatio(a, b);
+        System.out.println("Exiting main()");
+    }
+
+    public static void printRatio(int a, int b) {
+        int ratio = a / b;
+        System.out.println("Ratio = " + ratio);
+    }
+}
+```
+]
+]
+
+#slide[
+#text(
+  size: 18pt,
+)[
+- Bespiellösung:
+```java
+public static void printRatio(int a, int b) {
+    try {
+        int ratio = a / b;
+        System.out.println("Ratio = " + ratio);
+    } catch (ArithmeticException e) {
+        System.out.println("Exception caught in printRatio()");
+        System.out.println("e.getMessage(): " + e.getMessage());
+        System.out.println("e.toString(): " + e + "\n");
+    }
+    System.out.println("Exiting printRatio()");
+}
+```
+- Ausgewählte Methoden für Ausnahmeobjekte:
+  - `getMessage()`
+  - `printStackTrace()`
+  - `toString()`
+]
+]
+
+#slide[
+#text(
+  size: 18pt,
+)[
+  #question[
+Und nun?
+]
+```java
+public class TryCatchChain1 {
+    public static void main(String[] args) {
+        int ratio = getRatio(3, 0);
+        System.out.println("Ratio = " + ratio);
+        System.out.println("Exiting main()");
+    }
+
+    public static int getRatio(int a, int b) {
+        int ratio = 0;
+        try {
+            ratio = a / b;
+        } catch (ArithmeticException e) {
+            System.out.println("Exception caught in getRatio()");
+        }
+        System.out.println("Exiting getRatio()");
+        return ratio;
+    }
+}
+```
+]
+]
+
+#slide[
+#text(
+  size: 18pt,
+)[
+  #question[
+Und nun?
+]
+```java
+public class TryCatchChain2 {
+    public static void main(String[] args) {
+        try {
+            int ratio = getRatio(3, 0);
+            System.out.println("Ratio = " + ratio);
+        } catch (ArithmeticException e) {
+            System.out.println("Exception caught in main()");
+        }
+        System.out.println("Exiting main()");
+    }
+
+    public static int getRatio(int a, int b) {
+        int ratio = a / b;
+        System.out.println("Exiting getRatio()");
+        return ratio;
+    }
+}
+```
+]
+]
+
+#slide[
+#text(
+  size: 18pt,
+)[
+- Können mehrere Ausnahmearten auftreten, werden mehrere catch-Blöcke benötigt.
+- Ausnahmetypen der catch-Blöcke müssen sich unterscheiden
+- Es wird der erste passende catch-Block ausgeführt.
+```java
+ try {
+     // ...
+ } catch (ExceptionTyp1 e) {
+     // ...
+ } catch (ExceptionTyp2 e) {
+     // ...
+ } catch (ExceptionTyp3 e) {
+     // ...
+ }
+```
+]
+]
+
+#slide[
+#text(
+  size: 18pt,
+)[
+  #question[
+- Folgender Quelltext enthält zwei Fehlerquellen. Welche?
+- Welche Ausgabe erzeugt das Programm?
+]
+```java
+public class ExceptionTypes1 {
+    static int recursiveIncrease(int i) {
+        return recursiveIncrease(i + 1);
+    }
+
+    public static void main(String[] args) {
+        int[] a = new int[4];
+        try {
+            a[4] = recursiveIncrease(7);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Caught ArrayIndexOutOfBoundsException");
+        }
+        System.out.println("Exiting main()");
+    }
+}
+```
+]
+]
+
+#slide[
+#text(
+  size: 18pt,
+)[
+  #task[
+- Ändern Sie den vorherigen Quelltext derart, dass beide Fehlerquellen gefangen werden.
+]
+```java
+public class ExceptionTypes2 {
+    static int recursiveIncrease(int i) {
+        return recursiveIncrease(i + 1);
+    }
+
+    public static void main(String[] args) {
+        int[] a = new int[4];
+        try {
+            a[4] = recursiveIncrease(7);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Caught ArrayIndexOutOfBoundsException");
+        } catch (StackOverflowError e) {
+            System.out.println("Caught StackOverflowError");
+        }
+        System.out.println("Exiting main()");
+    }
+}
+```
+]
+]
+
+#slide[
+#text(
+  size: 18pt,
+)[
+  #question[
+- Hoppla, unten läuft etwas im catch-Block schief!
+- Wird die erneute Ausnahme behandelt? Was wird ausgegeben?
+]
+```java
+public class ExceptionTypes3 {
+    static int recursiveIncrease(int i) {
+        return recursiveIncrease(i + 1);
+    }
+
+    public static void main(String[] args) {
+        int[] a = new int[4];
+        try {
+            a[4] = 0;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            recursiveIncrease(7);
+        } catch (StackOverflowError e) {
+            System.out.println("Caught StackOverflowError");
+        }
+        System.out.println("Exiting main()");
+    }
+}
+```
+]
+]
+
+#slide[
+#text(
+  size: 18pt,
+)[
+- Ein catch-Block bezieht sich nur auf den zugehörigen try-Block.
+- Wirft catch-Block Ausnahme, wird diese nicht durch nachfolgende Blöcke gefangen
+#question[
+- Wie können wir die im catch-Block erzeugte Ausnahme fangen?
+]
+]
+]
+
+
+#slide[
+#text(
+  size: 18pt,
+)[
+- Quelltext, der Ausnahme erzeugt, in geschachteltem try-Block
+```java
+public static void main(String[] args) {
+    int[] a = new int[4];
+    try {
+        a[4] = 0;
+    } catch (ArrayIndexOutOfBoundsException e1) {
+        try {
+            recursiveIncrease(7);
+        } catch (StackOverflowError e2) {
+            System.out.println("Caught inner StackOverflowError");
+        }
+    } catch (StackOverflowError e) {
+        System.out.println("Caught outer StackOverflowError");
+    }
+    System.out.println("Exiting main()");
+}
+```
+]
+]
+
+#slide[
+#text(
+  size: 18pt,
+)[
+- Mitunter muss bestimmter Code auf jeden Fall ausgeführt werden.
+- Beispiel: Schließen geöffneter Dateien oder Datenströme
+
+- Optionaler finally-Block:
+  - Steht immer als letztes (d.h. nach try- und catch-Blöcken)
+  - Code wird am Ende des Konstruktes ausgeführt … wirklich immer … ganz ehrlich!
+```java
+ try {
+     // ...
+ } catch (ExceptionTyp1 e) {
+     // ...
+ } catch (ExceptionTyp2 e) {
+     // ...
+ } finally {
+     // Wird garantiert ausgeführt
+ }
+```
+
+
+
+
+]
+]
+
+
 = License Notice
 
 == Attribution
