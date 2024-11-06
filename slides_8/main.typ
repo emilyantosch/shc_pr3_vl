@@ -30,7 +30,7 @@
 }
 #show: university-theme.with(
   aspect-ratio: "16-9", config-info(
-    title: [Objektorientierte Programmierung in Java], subtitle: [Vorlesung 6 - Abstrakte Elemente], author: [Emily Lucia Antosch], date: datetime.today().display("[day].[month].[year]"), institution: [HAW Hamburg],
+    title: [Objektorientierte Programmierung in Java], subtitle: [Vorlesung 8 - Ausnahmebehandlung], author: [Emily Lucia Antosch], date: datetime.today().display("[day].[month].[year]"), institution: [HAW Hamburg],
   ),
 )
 
@@ -148,7 +148,7 @@ public class ProvokeException {
 
 #slide[
 #text(
-  size: 18pt,
+  size: 15pt,
 )[
 #memo[
   - Ausnahme wird auch als Oberbegriff für Ausnahmen und Fehler verwendet.
@@ -188,7 +188,7 @@ int code = Integer.parseInt("12a4");
     2. Ausnahme fangen:
       - Programmierer kann Ausnahme abfangen und behandeln
 
-    #figure(image("../assets/img/2024_11_04_programmfluss_throwable_rev01.png"))
+    #figure(image("../assets/img/2024_11_04_programmfluss_throwable_rev01.png", height: 50%))
 
   ]
 ]
@@ -256,7 +256,7 @@ public class ThrowException {
 ]
 
 #slide[
-#text(size: 18pt)[
+#text(size: 17pt)[
 - Beispiellösung:
 
 ```java
@@ -329,8 +329,8 @@ Exception in thread "main" java.lang.ArithmeticException: Division by zero at
   1. Try-Block unmittelbar beendet
   2. Catch-Block ausgeführt, sofern Ausnahmetyp (ExceptionType) passt
   3. Programm läuft nach catch-Block weiter
-- Ausnahmetyp des catch-Blocks passt nicht  Ausnahme wird nicht gefangen!
-- Keine Ausnahme geworfen  Catch-Block wird übersprungen
+- Ausnahmetyp des catch-Blocks passt nicht: Ausnahme wird nicht gefangen!
+- Keine Ausnahme geworfen: Catch-Block wird übersprungen
 ]
 ]
 
@@ -360,7 +360,7 @@ public class TryCatch {
 
 #slide[
 #text(
-  size: 18pt,
+  size: 17pt,
 )[
 - Bespiellösung:
 ```java
@@ -385,7 +385,7 @@ public static void printRatio(int a, int b) {
 
 #slide[
 #text(
-  size: 18pt,
+  size: 13pt,
 )[
   #question[
 Und nun?
@@ -397,7 +397,6 @@ public class TryCatchChain1 {
         System.out.println("Ratio = " + ratio);
         System.out.println("Exiting main()");
     }
-
     public static int getRatio(int a, int b) {
         int ratio = 0;
         try {
@@ -415,7 +414,7 @@ public class TryCatchChain1 {
 
 #slide[
 #text(
-  size: 18pt,
+  size: 13pt,
 )[
   #question[
 Und nun?
@@ -465,7 +464,7 @@ public class TryCatchChain2 {
 
 #slide[
 #text(
-  size: 18pt,
+  size: 14pt,
 )[
   #question[
 - Folgender Quelltext enthält zwei Fehlerquellen. Welche?
@@ -493,7 +492,7 @@ public class ExceptionTypes1 {
 
 #slide[
 #text(
-  size: 18pt,
+  size: 13pt,
 )[
   #task[
 - Ändern Sie den vorherigen Quelltext derart, dass beide Fehlerquellen gefangen werden.
@@ -522,7 +521,7 @@ public class ExceptionTypes2 {
 
 #slide[
 #text(
-  size: 18pt,
+  size: 13pt,
 )[
   #question[
 - Hoppla, unten läuft etwas im catch-Block schief!
@@ -533,7 +532,6 @@ public class ExceptionTypes3 {
     static int recursiveIncrease(int i) {
         return recursiveIncrease(i + 1);
     }
-
     public static void main(String[] args) {
         int[] a = new int[4];
         try {
@@ -565,7 +563,7 @@ public class ExceptionTypes3 {
 
 #slide[
 #text(
-  size: 18pt,
+  size: 17pt,
 )[
 - Quelltext, der Ausnahme erzeugt, in geschachteltem try-Block
 ```java
@@ -609,14 +607,236 @@ public static void main(String[] args) {
      // Wird garantiert ausgeführt
  }
 ```
+]
+]
 
+#slide[
+#text(
+  size: 13pt,
+)[
+    #question[
+- Was wird ausgegeben?
+    ]
+```java
+public class TryCatchFinally1 {
+    static int recursiveIncrease(int i) {
+        return recursiveIncrease(i + 1);
+    }
+    public static void main(String[] args) {
+        int[] a = new int[4];
+        try {
+            a[4] = 0;
+        } catch (ArrayIndexOutOfBoundsException e1) {
+            recursiveIncrease(7);
+            System.out.println("Caught ArrayIndexOutOfBoundsException");
+        } finally {
+            System.out.println("Finally");
+        }
+        System.out.println("Exiting main()");
+    }
+}
+```
+]
+]
 
+#slide[
+#text(
+  size: 13pt,
+)[
+    #question[
+- Was wird ausgegeben?
+    ]
+```java
+public class TryCatchFinally2 {
+    public static void main(String[] args) {
+    System.out.println("Ratio = " + getRatio(3, 0));
+    }
+    public static int getRatio(int a, int b) {
+        int ratio = 0;
+        try {
+            ratio = a / b;
+        } catch (ArithmeticException e) {
+            System.out.println("Exception caught in getRatio()");
+            return 0;
+        } finally {
+            System.out.println("Finally");
+        }
+        System.out.println("Exiting getRatio()");
+        return ratio;
+    } }
+```
+]
+]
 
+#slide[
+#text(
+  size: 13pt,
+)[
+- Regeln für Blöcke:
+  - Genau einen try-Block als ersten Block
+  - Keinen oder beliebig viele catch-Blöcke nach dem try-Block
+  - Keinen oder einen finally-Block als letzten Block
+  - Ein try-Block muss mindestens einen catch- oder finally-Block haben.
+
+- Folgender Aufbau ist zulässig:
+```java
+try {
+     // ...
+} finally {
+     // ...
+}
+```
+]
+]
+
+= Eigene Ausnahmen definieren
+== Eigene Ausnahmen
+
+#slide[
+#text(
+  size: 15pt,
+)[
+- Betrachten wir folgendes Programm:
+```java
+public class OwnException1 {
+    public static void main(String[] args) {
+        double x = 25.0; 
+        System.out.printf("sqrt(%f) = %f", x, squareRoot(x));
+    }
+
+    public static double squareRoot(double x) {
+        return Math.sqrt(x);
+    }
+}
+```
+#question[
+- Methode squareRoot() soll für negative Parameter eine Ausnahme werfen
+- Wie könnten wir einen eigenen Typ (z.B. NegativeParameterException) definieren?
+    ]
+]
+]
+
+#slide[
+#text(
+  size: 15pt,
+)[
+- Eigenen Ausnahmetyp durch Ableiten einer bestehenden Klasse
+- Erster Ansatz: Ableiten der Klasse Exception
+
+#figure(image("../assets/img/2024_11_05_vererbung_throwable_rev01.png", height: 60%))
 
 ]
 ]
 
+#slide[
+#text(
+  size: 15pt,
+)[
+- Ansatz erzeugt Fehlermeldung („Unbehandelte Ausnahme“)
+- Wieso denn das jetzt?!
 
+```java
+class NegativeParamException extends Exception {
+}
+
+public class OwnException2 {
+    public static void main(String[] args) {
+        double x = 25.0; 
+        System.out.printf("sqrt(%f) = %f", x, squareRoot(x));
+    }
+
+    public static double squareRoot(double x) {
+        if (x < 0.0) {
+            throw new NegativeParamException();
+        }
+        return Math.sqrt(x);
+    }
+}
+```
+]
+]
+#slide[
+#text(size: 17pt)[
+- Hintergrund:
+  - Ausnahmen müssen gefangen werden ODER
+  - Methode muss über throws deklarieren, dass sie einen Ausnahmetyp werfen kann.
+
+```java
+public class OwnException2 {
+    public static void main(String[] args) throws NegativeParamException {
+        double x = 25.0; 
+        System.out.printf("sqrt(%f) = %f", x, squareRoot(x));
+    }
+
+    public static double squareRoot(double x) throws NegativeParamException {
+        if (x < 0.0) {
+            throw new NegativeParamException();
+        }
+        return Math.sqrt(x);
+    }
+}
+```
+
+  ]
+]
+
+#slide[
+#text(size: 18pt)[
+- Dies gilt für alle Ausnahmetypen (d.h. Throwable und davon abgeleitet) außer für:
+  - Klasse RuntimeException 
+  - Von RuntimeException (direkt oder indirekt) abgeleitete Klassen
+    #figure(image("../assets/img/2024_11_05_vererbung_runtimeexception_rev01.png"))
+  ]
+]
+
+#slide[
+#text(size: 17pt)[
+
+```java
+class NegativeParamException extends RuntimeException {
+}
+
+public class OwnRuntimeException {
+    public static void main(String[] args) {
+        double x = 25.0; 
+        System.out.printf("sqrt(%f) = %f", x, squareRoot(x));
+    }
+
+    public static double squareRoot(double x) {
+        if (x < 0.0) {
+            throw new NegativeParamException();
+        }
+        return Math.sqrt(x);
+    }
+}
+```
+  ]
+]
+
+
+#slide[
+#text(size: 17pt)[
+
+- Beschreibung („message“) an Konstruktor der Basisklasse übergeben
+```java
+class MyException extends Exception {
+    public MyException(String message) {
+        super(message);
+    }
+}
+
+public class OwnExceptionWithMessage {
+    public static void main(String[] args) {
+        try {
+            throw new MyException("An exception just for fun :-) ...");
+        } catch (MyException e) {
+            System.out.println("Message: " + e.getMessage());
+        }
+    }
+}
+```
+  ]
+]
 = License Notice
 
 == Attribution
