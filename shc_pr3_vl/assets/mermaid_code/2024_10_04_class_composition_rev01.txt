@@ -1,0 +1,6 @@
+classDiagram
+    Gebäude <|-- Haus
+    Haus *-- Fenster
+    class Haus{
+      -Fenster fenster_eg
+    }
