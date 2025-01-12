@@ -54,7 +54,7 @@
 = Theoretischer Teil: 45min
 
 #task(points: 10, [Grundbegriffe], [
-    Erklären Sie die folgenden fünf Grundbegriffe aus der objektorientierten Programmierung:
+    Erklären Sie die folgenden fünf Grundbegriffe aus der objektorientierten Programmierung und geben Sie jeweils ein Beispiel an:
   - Attribut
   - Methode
   - Klasse
@@ -70,7 +70,7 @@
 ))
 
 #task([Konzepte der Objektorientieren Programmierung], [
-  Beschreiben Sie kurz, was die verschiedenen Begriffe und Konzepte in Java bzw. der Objektorientieren Programmierung bedeuten. 
+  Beschreiben Sie kurz, was die verschiedenen Begriffe und Konzepte in Java bzw. der objektorientieren Programmierung bedeuten. 
 ], [
     #subtask(points: 5)[
 Definieren Sie den Begriff „Polymorphismus“. Geben Sie ein Beispiel an, das zeigt, wie ein Polymorphismus in Java implementiert wird.\
@@ -120,7 +120,7 @@ Erklären Sie die Unterschiede zwischen einer abstrakten Klasse und einem Interf
 
 #pagebreak()
 #task(
-  [Beschreibung eines bestehenden Programms], extra: true, points: 10, [
+  [Beschreibung eines bestehenden Programms], points: 10, [
 
 In dem folgenden Programmcode wird ein einfaches Bibliothekssystem erzeugt. Beschreiben Sie, welche Funktionen mit dem Code abgedeckt werden. Welche Klassen und Methoden sind definiert? 
   Fällt Ihnen ein, wie Sie das Programm erweitern könnten?\
@@ -289,7 +289,7 @@ public class Main {
 
 = Praktischer Teil: 45min
 
-#task([Römisch zu Arabisch], [
+#task([Römisch zu Ganzzahl], [
     Die römischen Ziffern bestehen aus sieben verschiedenen Symbolen: I, V, X, L, C, D und M.
   #align(center + horizon)[
 #table(
@@ -317,7 +317,7 @@ Römische Ziffern werden normalerweise von links nach rechts in der Reihenfolge 
 - X kann vor L (50) und C (100) stehen, um 40 und 90 zu bilden. 
 - C kann vor D (500) und M (1000) stehen, um 400 und 900 zu bilden.
 
-Schreiben Sie ein Programm, welches Ihnen eine römische Zahl in eine arabische (numerische) Zahl umrechnet!
+Schreiben Sie ein Programm, welches Ihnen eine römische Zahl in eine ganze (numerische/integer) Zahl umrechnet!
 
   #tip[
     Sie werden durch den String iterieren müssen. Nutzen Sie dafür die Methode ```java String.getChar(int i)```, wobei hier i der Index ist, an dem Sie den Wert auslesen möchten. Beispiel:
@@ -328,14 +328,30 @@ Schreiben Sie ein Programm, welches Ihnen eine römische Zahl in eine arabische 
     \
   ]
 ], [
-    #subtask(points: 5)[
+    #subtask(points: 3)[
     Legen Sie ein neues Projekt an. Geben Sie dabei dem Projekt einen Namen, der Ihre Matrikelnummer und Ihren Namen enthält. 
     Erstellen Sie eine Klasse mit einer Methode, die einen entsprechenden Namen und Parameter sowie Rückgabewert enthält.
     ]
-    #subtask(points: 30)[
-      Implementieren Sie die Funktion, die oben angegeben ist. Schreiben Sie zudem eine `main`-Methode, welche die Methode gegen Testinput laufen lässt.
+    #subtask(points: 5)[
+      Überprüfen Sie den String auf eine ungültige Eingabe von Zeichen.
+      Legen Sie eine Variable an, die den Wert der römischen Zahl im numerischen Format enthält.
     ]
     #subtask(points: 5)[
+      Schreiben Sie eine `for`-Schleife, die durch den gegebenen String iteriert.
+    ]
+    #subtask(points: 10)[
+      Bauen Sie eine Logik ein, die den String auswertet und entscheidet, ob einer der sechs Sonderfälle eingetreten ist.
+    ]
+    #subtask(points: 5)[
+      Lassen Sie sich von der Methode einen Wert zurückgeben, der dem Wert der römischen Zahl im numerischen Format angibt.
+    ]
+    #subtask(points: 5)[
+      Schreiben Sie eine `main`-Methode, welche die Methode gegen Testinput laufen lässt.
+    ]
+    #subtask(points: 4)[
+      Achten Sie bei der Programmierung Ihrer Lösung auf die gängigen Coding Styles, die in der Vorlesung festgelegt worden sind.
+    ]
+    #subtask(points: 3)[
       Legen Sie Ihr Projekt auf der externen Festplatte ab, die Sie von der Klausuraufsicht zur Verfügung gestellt bekommen. Fragen Sie einfach, falls Sie Ihr Projekt ablegen möchten. Nachdem das Projekt abgelegt worden ist, gibt es keine weiteren Möglichkeiten, Änderungen zu machen. 
     ]
 

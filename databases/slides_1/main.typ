@@ -12,7 +12,7 @@
 
 #import "@preview/numbly:0.1.0": numbly
 
-#set text(lang: "de")
+#set text(lang: "en")
 #set heading(numbering: numbly("{1}.", default: "1.1"))
 
 #set align(left + top)
@@ -31,12 +31,17 @@
 }
 #show: university-theme.with(
   aspect-ratio: "16-9", config-info(
-    title: [Objektorientierte Programmierung in Java], subtitle: [Vorlesung 1 - Organisation und Einführung], author: [Emily Lucia Antosch], date: datetime.today().display("[day].[month].[year]"), institution: [HAW Hamburg],
+    title: [Databases], subtitle: [Lecture 1 - Organisation and Introduction to Databases], author: [Emily Lucia Antosch], date: datetime.today().display("[day].[month].[year]"), institution: [HAW Hamburg],
   ),
 )
 
+#set text(size: 20pt)
+
 #codly(
   languages: (
+    sql: (
+      name: text(font: "JetBrainsMono NFM", " SQL", weight: "bold"), icon: text(font: "JetBrainsMono NFM", "\u{e76e}", weight: "bold"), color: rgb("#2563eb"),
+    ),
     java: (
       name: text(font: "JetBrainsMono NFM", " Java", weight: "bold"), icon: text(font: "JetBrainsMono NFM", "\u{e738}", weight: "bold"), color: rgb("#CE412B"),
     ), c: (
@@ -51,416 +56,550 @@
 
 = Organisation
 
-== Das Ziel dieses Kapitels
+== Where are we right now?
 
-- Ich will mich bei Ihnen vorstellen und mit Ihnen den Ablauf dieses Moduls
-  besprechen.
-- Sie bekommen einen Überblick über die Voraussetzungen in diesem Modul und können
-  diese erfüllen.
-- Sie wissen, wie sich mich erreichen können.
+- This is the first chapter of "Databases" in this semester. Welcome!
+- Today, we'll be discussing 
+  - the way this lecture is going to work,
+  - what we are going to learn during this semester,
+  - and what databases are and why you learning about them!
 
-== Kurz zu mir
-
-- Emily Lucia Antosch, 24 Jahre alt
-- Bachelor in Elektro- und Informationstechnik
-- Zurzeit tätig als Anwendungsentwicklerin bei NVL
-- Nächste Station: Masterstudium Informatik
-- Mail: emilylucia.antosch\@haw-hamburg.de
-
-#info[Ich mach das zum ersten Mal, seien Sie also bitte nachsichtig.]
-== Vorlesungsablauf
-
-- Vorlesungen teilen sich in Termine am Dienstag und Donnerstag auf.
-  - Am Anfang sind sehr viele Termine, die Sie auf das Praktikum vorbereiten sollen.
-- Ich würde Sie bitten, sich an der Vorlesung aktiv zu beteiligen.
-- Es wird kleine Fragen und Aufgaben geben, die Sie live beantworten und
-  mitprogrammieren können.
-
-#memo[Falls Sie etwas nicht verstehen, fragen Sie bitte sofort! Ich wiederhole gerne
-  Inhalte auf Deutsch oder Englisch!]
-
-== Vorlesungsfokus
-
-- Wir wollen hier eine Brücke aus Ihren Vorkenntnissen bauen.
-- Am Ende der Vorlesung sollten Sie in der Lage sein, in Java einfache Programme
-  zu erstellen.
-- Außerdem sollten Sie dann Objektorientierte Programmierung beherrschen und die
-  Unterschiede zu anderen Paradigmen in der Programmierung herausstellen können.
-- Den genauen Stoff können Sie außerhalb der Vorlesung auch im Modulhandbuch
-  nachlesen.
-
-== Vorraussetzungen
-
-- Sie brauchen eine Installation des *Java SDK*.
-  - Dafür habe ich Ihnen eine Anleitung geschrieben, die Sie im Moodle-Raum bzw.
-    SHCneo-Raum finden.
-- Außerdem wird die Vorlesung mit dem Tool *JetBrains IntelliJ* sein.
-  - Dies ist, wie ich finde, eine sehr gute und einfache IDE für den Anfang.
-  - Auch hierfür finden Sie eine Anleitung im Moodle.
-
-= Einführung
-
-== Das Ziel dieses Kapitels
-
-- Sie sollen ihr bekanntes Wissen aus vorhergehenden Vorlesungen auf neue Inhalte
-  anwenden.
-- Sie kennen die grundlegenden Ideen der Objektorientierten Programmierung und
-  kennen den Unterschied zu der Programmierung in C.
-- Wir erstellen ein einfaches Programm in der Entwicklungsumgebung Intellij IDEA
-  und führen dieses aus.
-
-== Themenübersicht: Grundlagen
-
-Die ersten Vorlesungen beziehen sich auf die folgenden Prinzipien:
-
-1. Imperative Konzepte
-2. Klassen und Objekte
-3. Klassenbibliothek
-4. Vererbung
-5. Schnittstellen
-
-== Themenübersicht: Weiterführende Konzepte
-
-Aus den Grundlagen wollen wir dann weitere Konzepte ableiten:
-
-6. Graphische Oberflächen
-7. Ausnahmebehandlung
-8. Eingaben und Ausgaben
-9. Multithreading (Parallel Computing)
-
-== Objekte und Klassen
-
-In der echten Welt werden oft Dinge über ihre Eigenschaften bestimmt und
-beschrieben:
-
-- Ein Auto hat Eigenschaften wie
-  - einen Hersteller
-  - eine Farbe
-  - einen Verbrauch
-
-#idea[Mithilfe der Objektorientierten Programmierung können wir diesen intuitiven
-  Ansatz auch bei der Programmierung anwenden!]
 #slide[
-
-  #question[Über welche Eigenschaften könnten Sie zum Beispiel eine Person beschreiben? Wie
-    passt das vielleicht in den Programmierungskontext?]
-
-  #pause
-  - Für Studenten:
-    - Name, Anschrift, Immatrikulationsnummer
-  - Für Programme/Webseiten:
-    - Username, Passwort, Beitrittsdatum
+  1. *Introduction*
+  2. Basics
+  3. SQL 
+  4. Entity-Relationship-Model
+  5. Relationships
+  6. Constraints
+  7. More SQL
+  8. Subqueries & Views
+  9. Transactions
+  10. Database Applications
+  11. Integrity, Trigger & Security
 ]
 
-- Um aus diesem ähnlichen Bauplan dann mehrere gleichartige Objekte zu erstellen,
-  wird eine Klasse erstellt,
-  - Sie enthält alle Eigenschaften, die wir gerade definiert haben, also zum
-    Beispiel Variablen.
-  - Aus ihr lassen sich ganz verschiedene Objekte erstellen, die diese Eigenschaften
-    unterschiedlich gefüllt haben.
+== What is the goal of this chapter?
 
-#example[Aus der Klasse *Student* lassen sich zum Beispiel die beiden Studenten *Max* und
-  *Ines* erstellen, die beide unterschiedlich heißen und eine eigene
-  Immatrikulationsnummer haben.]
 #slide[
-  #align(
-    center + horizon,
-  )[
-    #figure(
-      diagram(
-        spacing: (100mm, 40mm), node-stroke: luma(80%), node((0.5, 0), [*Klasse Person*], name: <d>), node((0, 1), [*Ines*], name: <n>), node((1, 1), [*Max*], name: <e>), edge(<d>, ((), "|-", (0, 0.5)), ((), "-|", <n>), <n>, "-|>"), edge(<d>, ((), "|-", (0, 0.5)), ((), "-|", <e>), <e>, "-|>"), edge(
-          <e>, "<|-|>", <n>, stroke: teal, label: text(teal)[Gleiche Klasse, anderes Objekt], left,
-        ), edge(
-          (rel: (-25pt, 0pt), to: <n>), <d>, "-|>", bend: 40deg, stroke: orange, text(orange)[Objekt der Klasse], label-angle: auto,
-        ),
-      ), caption: [Relation zwischen Klassen und Objekten dieser Klasse],
-    )
+- I want to introduce myself to you and maybe also learn a bit about you!
+- I want to tell you about what is in store for you this semester
+]
+
+== About me
+#slide[
+- Emily Lucia Antosch, 24 
+- I did my bachelor's degree in Electrical Engineering
+- Software Engineer in the marine industry
+- Looking to start my master degree in the near future
+- Mail: #link("emilylucia.antosch@haw-hamburg.de")
+]
+
+== How is this lecture going to work?
+
+#slide[
+  //TODO: Add additional parts about how the lectures are going to work
+- I would like to kindly ask you to participate in the lectures ahead, it'll make the whole thing more fun.
+- All parts of this course will split into lectures and labs.
+
+#memo[I would ask you to please let me know if you find that you were not able to follow the lecture. I'm more than happy to repeat certain parts.]
+]
+
+== Moodle
+#slide[
+- Lecture material can be found at: #link("moodle.haw-hamburg.de")
+- Enrollment key: db_2025
+- The slides are also the script.
+- *Thus your notes are essential!*
+]
+
+== Labs
+
+#slide[
+  //TODO: Add time and date for the teams to be decided
+- Assignments should be worked on in teams
+  - Work in fixed teams of two. Division of the teams of two in lab on XXX
+  - Working together means discussing things, explaining each other, helping each other out
+  - Every team member must be ability to explain the solution of each assignment
+- For PVL (precondition for examination):
+  - Presence in all laboratories is obligatory!
+  In case of illness: Send a sick note and make up the Lab on another date
+  - All assignments for the labs must be successfully solved
+  - Each student must present at least two assignments on blackboard 
+]
+
+#slide[
+- Assignments are published before laboratory
+- Each laboratory consists of two parts:
+1. Upfront assignments
+  - Submitting the solutions Friday before lab date e.g., solution of lab on 06.05.2024 must be submitted until 03.05.2024 11:59 p.m. via moodle
+    - Only one submission per team of two
+    - No re-submission after a laboratory
+    - Submit only PDF-files
+2. Live assignments
+  - They can be solved in advance or during the Lab
+  - Discussion during the laboratory
+
+]
+
+#slide[
+- For each laboratory date
+  - Punctual participation
+  - Each team member must be able to explain the solution to all upfront assignments
+- You'll receive a yellow card for your first violation of the rules.
+- *In case of a second infringement: Exclusion from exercise!*
+- *Participation of all laboratory dates is mandatory, unexcused absence leads to immediate exclusion from the laboratory*
+]
+
+== First Lab
+#slide[
+  //TODO: Check data after dates and plan has been shared
+- Joint lab with all three lab groups
+- Attendance is mandatory!
+- Division of the teams of two to work on the lab assignments
+- Bring your own device *with a working PostgreSQL database*!
+- You do not have to submit solutions in moodle or implement the assignments in advance
+- Start time: 8:30 am
+- I strongly recommend that you look at and solve the assignments in advance! This will make the laboratory much more effective for you.
+]
+
+== Important people in this lecture
+#slide[
+- Emily Antosch: Lecture #link("mailto:emilylucia.antosch@haw-hamburg.de")
+- Julian Moldenhauer: Lab group 01 or group 2 #link("mailto:julian.moldenhauer@haw-hamburg.de")
+- Furkan Yildirim: Lab group 01 or group 2 #link("mailto:furkan.yildirim@haw-hamburg.de")
+- Ulrike Herster: Lecture and Lab group 03 #link("mailto:Ulrike.Herster@haw-hamburg.de")
+]
+
+== Focus of these lectures
+
+#slide[
+- At the end of this semester, you'll be able to
+  - create database systems to effectively store data.
+  - design complex databases solutions using Entity-Relationship-Models.
+  - secure your database with advanced and modern techniques.
+]
+
+== Requirements
+#slide[
+  #memo[
+You will need an installation of *PostgreSQL 16*. 
+  ]
+  - It's open source software and the main database system that will look at.
+  - Depending on your system and how you want to install PostgreSQL, there are multiple ways to go about it. There are detailed descriptions in the Moodle-Room for you to follow.
+- It's totally up to you, but I would suggest you also download pgAdmin4, becauses it allows you to use an UI to interact with your database. pgAdmin4 is also free.
+]
+
+== Who are you?
+#slide[
+  #question[
+  - Do you already have experience regarding databases?
+  - What is the expectation of this lecture?
+  - Do you have any wishes regarding the lecture and potentially also the exam?
+
   ]
 ]
 
-- Variablen und Funktionen werden also zu einer Klasse zusammengefasst.
-  - Es wird eine Menge an Variablen definiert.
-  - Für diese Variablen werden wiederum Funktionen eingeführt, die diese lesen und
-    ändern können.
+= Introduction to Databases 
 
-#memo[
-  - Variablen werden als *Attribute* bezeichnet.
-  - Die Werte dieser Variablen beschrieben den *Zustand* des Objekts.
-  - Funktionen werden als *Methoden* bezeichnet.
-]
-
-- Über sogennante UML Klassendiagramme lassen sich Klassen mit ihren *Attributen*
-  und *Methoden* beschreiben.
-
-#figure(
-  image("../assets/img/2024_10_03_class_person_explain_rev01.png"), caption: [UML Klassendiagramm],
-)
-
-== Datenkapselung
-
-- Mithilfe von Attributen und Methoden von Klassen lassen sich Daten kapseln.
-
-#figure(
-  image("./../assets/img/2024_10_03_data_capsulation_rev01.png", width: 80%), caption: [Datenkapselung durch Klassen],
-)<data-capsule>
-
-- Mithilfe von Attributen und Methoden von Klassen lassen sich Daten kapseln.
-  - Auf gekapselte Daten können nicht alle Teile des Programms zugreifen, was die
-    Sicherheit erhöht.
-  - Außerdem lassen sich so Attribute vor fehlerhaften Werten schützen.
-
+== Where are we right now?
 #slide[
-  #figure(image("../assets/img/2024_10_04_data_capsulation_checks_rev01.png"))
+ - You just learnt how this lecture is going to work and what you can expect going forward. 
+  - Next, we'll be discussing the basics of databases
 ]
 
 #slide[
-  #question[Wie ist das im Gegensatz dazu in C?]
-
-  #pause
-  - Die Datenstruktur (also das *struct*) muss für den Zugriff auf die Elemente
-    öffentlich gemacht werden.
-  - Die Daten werden nicht geschützt.
-  - Es gibt keine Zuordnung zwischen den Daten und den Funktionen.
+  1. Introduction
+  2. *Basics*
+  3. SQL 
+  4. Entity-Relationship-Model
+  5. Relationships
+  6. Constraints
+  7. More SQL
+  8. Subqueries & Views
+  9. Transactions
+  10. Database Applications
+  11. Integrity, Trigger & Security
 ]
 
-== Vererbung
+== What is the goal of this chapter?
 
 #slide[
-  - Durch Vererbung lassen sich neue Klassen aus anderen Klassen erzeugen.
-
-  #figure(
-    image("../assets/img/2024_10_04_class_inheritance_rev01.png", width: 35%),
-  )
-
+- Today, we'll be discussing 
+  - what databases are and why you learning about them,
+  - the history of databases,
+  - and the differences between databases and database management systems.
 ]
-
+== What is a Database?
 #slide[
-  - Durch Vererbung lassen sich neue Klassen aus anderen Klassen erzeugen.
-  - Dabei werden die Methoden und Attribute der Basisklasse übernommen und um
-    weiteren Code erweitert.
-  - Keine duplizierter Code.
-]
-
-#matrix-slide[
-  #align(
-    left + top,
-  )[
-    - Klassen können auch durch andere Klassen zusammengesetzt sein.
-    - Sowas nennt man dann *Komposition*.
-    - So wäre zum Beispiel die Klasse *Haus* zusammengesetzt aus zum Beispiel
-      *Fenstern*, *Wänden* und *Türen*.
-
-  ]
-][
-  #figure(
-    image("../assets/img/2024_10_04_class_composition_rev01.png", height: 80%), caption: [Komposition der Klasse *Haus*, die von *Gebäude* erbt],
-  )
-]
-
-== Ablauf eines Programms in Java
-
-1. Bei Programmstart wird eine besondere Methode *main* im _Hauptobjekt_ ausgeführt.
-2. In dieser Methode werden dann Objekte erzeugt und die *Referenzen* auf diese
-  Objekte in Variablen gespeichert.
-3. Über diese Variablen kann dann auf das jeweilige Objekt zugegriffen werden.
-4. Objekte in dem Programm können dann wiederum weitere Objekte erzeugen und
-  Methoden aufrufen.
-5. Sobald die *main*-Methode beendet wurde, endet das Programm.
-
-#figure(
-  image("../assets/img/2024_10_05_references_java_program_rev01.png"), caption: [Referenzen in der Lebenszeit eines Programms],
-)
-
-= Die Programmiersprache Java
-
-== Java vs. C
-
-#slide[
-  #task[Lassen Sie uns erst einmal ein paar einfache Aufgaben in der Programmiersprache
-    C schreiben:
-    - Summe der Zahlen 1 bis n über *for*-Schleife.
-    - Maximum zweier Zahlen über *if*-Anweisung.
-    - Maximum zweier Zahlen über die Funktion *getMax()* bestimmen.
+  #memo[
+    - A *database* refers to a set of data and how it it organized.
+    - Access is granted via a *database management system* (DBMS) consisting of integrated software that allows for interaction with one or databases and provides access to the data.
+    - Supports storage, manipulation, and querying of information.
   ]
 ]
 
-- Ich habe gute Nachrichten: Diesen Code hätten Sie auch in Java problemlos
-  ausführen können!
-- Die *Syntax*, also die Schlüsselworte und der Aufbau der Sprache, ist sehr nahe
-  an C und C++!
-- Deshalb wollen wir auf Ihre Vorkenntnis weiter aufbauen.
-
-#figure(
-  image("../assets/img/2024_10_04_java_origin_rev01.png", height: 40%), caption: [Die Einflüsse auf die Programmiersprache Java],
-)
-
-== Kompilieren
-
-1. Entwicklung
-  - Quelltext wird am PC geschrieben.
-  - Compiler kompiliert Quelltext in einen *Bytecode*.
-2. Ausführung
-  - Bytecode wird auf *JVM* (Java Virtual Machine) ausgeführt.
-  - Ausführung benötigt keine neue Kompilierung für die jeweilige Zielplatform.
 
 #slide[
-  #align(
-    left + horizon,
-  )[
-    #figure(
-      image("../assets/img/2024_10_04_jvm_principle_rev01.png"), caption: [Die Ausführung eines Programms mit der JVM],
-    )
+  #let body = [
+  - In essence:
+    - A database manages data logically and physically
+    - A DBMS offers tools for managing, editing and evaluating data
+  ]
+  //#grid(columns: (70%, 30%), gutter: 0.5em, body, fig)
+]
+
+== Database Management System (DBMS)
+#slide[
+  - Software system that manages databases.
+  - A DBMS provides a systematic approach of creating, updating, storing and retrieving data stored in a database.
+  - It enables the end user and programmers to share data, and it allows for data to be shared among multiple applications.
+  - It eliminates the need for data to be stored in new files and being propagated.
+]
+
+#slide[
+The essential functions of a DBMS:
+
+-   Storing, changing, and deleting data
+-   Managing metadata (data about the data)
+-   Keeping your data safe and secure
+-   Making sure your data is correct and consistent
+-   Allowing multiple users to work with the data at the same time (transactions)
+-   Optimizing queries (finding the fastest way to get the data you need)
+-   Enabling triggers (automatic actions when certain events happen) and stored procedures (pre-written SQL code)
+-   Providing key metrics about the DBMS technology and how it's running
+]
+
+== Database Examples
+#slide[
+- Customer Relationship Management (keeping track of your customers)
+- Controlling and Accounting (managing your finances)
+- Merchandise Management System (organizing your products)
+- Enterprise Resource Planning (managing your entire business)
+- Content Management Systems (managing your website content)
+]
+== History of the Database
+#slide[
+- In the 1960s, people used files to store data. This wasn't ideal because files are designed for specific applications, and it was a lot of work to manage them. 
+- In the 1970s, Edgar F. Codd, who worked at IBM, came up with the idea of relational databases. 
+- He developed the first relational database system called "System R." 
+- Oracle took Codd's ideas and made SQL (Structured Query Language) a big success. 
+- IBM followed with their own SQL databases (SQL/DS and DB2). 
+- Today, relational databases are the most common type of database. 
+]
+
+== Why even use a DB?
+#slide[
+- What are the alternatives for storing data? 
+- Text files, MS Excel, MS Access, etc. 
+- What are the disadvantages of these alternatives? 
+]
+
+#slide[
+Disadvantages of alternatives like text files, Excel, and Access:
+
+-   *Data organization* Can be tricky to structure your data properly. 
+   
+-   *Data types:* Limited options for different kinds of data. 
+   
+-   *Large datasets:* Can't handle huge amounts of data efficiently. 
+   
+-   *Data validation:* Hard to make sure the data is accurate. 
+   
+-   *Security:* Not very secure. 
+   
+-   *Performance & querying:* Can be slow to search and get the data you need. 
+   
+-   *Backup & maintenance:* Can be difficult to back up and maintain your data. 
+   
+-   *Sharing:* Can be hard to share the data with others. 
+   
+-   *Performance with large datasets:* Access can struggle with thousands of entries. 
+   
+-   *Concurrency & control features:* Limited ability for multiple users to work with the data at the same time. 
+]
+
+== Database vs. Spreadsheet
+#slide[
+
+
+- It's easy to accidentally change data in spreadsheets. 
+- It's hard to repeat old analyses on new data in spreadsheets. 
+- Spreadsheets are slow with large datasets. 
+- It's difficult to share huge spreadsheets. 
+]
+
+== SQL Database vs. MS Excel: What are they best used for?
+#slide[
+
+Databases are good for:
+
+- Larger datasets (databases can handle a lot more data than Excel)
+   
+- Organization/structure (databases are stricter about how data is organized)
+   
+- Collaborative work (databases are better for teams working together)
+   
+- Preparing data for analysis in other software
+
+Excel is good for:
+
+- Smaller datasets (Excel can slow down with large datasets)
+   
+- Manually entering data
+   
+- Flexible structure (Excel is more forgiving about how data is organized)
+   
+- Creating graphs and visualizations
+   
+- Consistent reports or calculations
+   
+- Built-in spell check and other helpful tools
+   
+- Working independently 
+]
+
+== Database vs. MS Access
+#slide[
+
+|Aspect|DB|MS Excel|MS Access|Note|
+|:---|:---|:---|:---|:---|
+|Initial training||++|+|Initial training is necessary. E.g., separation of the presentation and editing of data from processing and storage|
+|Large data sets|++||+|Access has performance problems with several thousand entries|
+|Access by multiple users|++|+++|Multiple users can access the database simultaneously|
+|Database Design|++|-|+|The direct display of tables leads to denormalized tables|
+|Platform independence|++|-|-|Access limited to Windows|
+|Application development|-|++|++|A SQL database can never stand alone|
+|Integration with MS Office||++|++||
+]
+
+== Database vs. MS Access: Technical Comparison
+#slide[
+
+
+|Aspect|mySQL|MS Access|
+|:---|:---|:---|
+|Database Size|16 terabytes|2 GB|
+|Simultaneous users|32.767 users|255 users|
+|Number of objects|2.147483.647 objects per database|32.768 objects per database|
+]
+
+== Different DB-Models
+
+#slide[
+- Relational model 
+
+- Hierachical model  
+
+- Network model 
+
+- Object relational model 
+
+- Object oriented model  
+
+- XML-based model 
+]
+
+== RDBMS vs. ODBMS
+#slide[
+- RDBMS (Relational Database Management System) and ODBMS (Object-Oriented Database Management System) are two ways to manage data. 
+- RDBMS stores data in tables with rows and columns, kind of like a spreadsheet. 
+- ODBMS stores data as objects, which can be more complex and have their own properties and methods. 
+]
+
+== Relational Database Market 2020
+#slide[
+
+In 2020, the majority of the database market was dominated by SQL databases (Relational Databases). NoSQL databases held a smaller portion of the market share. 
+
+Source: #link("https://www.industryarc.com/Report/19213/relational-database-market.html")
+]
+
+== Most Popular Databases 2024
+//TODO: Include 2024 Developer Survey by StackOverflow
+#slide[
+  #align(center + horizon)[
+  #figure(image("../assets/img/2025_01_09_stackoverflow_most_admired_db.png", height: 80%), caption: [Most admired databases (Source: StackOverflow Developer Survey 2024)])
   ]
 ]
 
 #slide[
-
-  - Unterschiede in anderen Programmiersprachen, die kompiliert oder interpretiert
-    sind:
-    - *Kompilierte Sprachen* müssen für jede Zielplattform neu kompiliert werden.
-    - *Interpretierte Sprachen* müssen durch einen eigenen Interpreter auf der
-      Zielplattform selbst interpretiert werden.
-]
-
-#slide[
-  #align(
-    left + horizon,
-  )[
-
-    #figure(
-      image("../assets/img/2024_10_04_interpreted_lang_principle_rev01.png"), caption: [Ausführung von kompilierten Sprachen],
-    )
-  ]
-]
-#slide[
-  #align(
-    left + horizon,
-  )[
-
-    #figure(
-      image("../assets/img/2024_10_04_compiled_lang_principle_rev01.png"), caption: [Ausführung von interpretierten Sprachen],
-    )
-  ]
-
-]
-
-== Eigenschaften von Java
-
-#question[Wenn Sie eine neue Sprache entwicklen könnten, was wäre Ihnen wichtig? Was
-  würden Sie an C/C++ ändern?]
-#pause
-- Java
-  - Objektorientierte Sprache (also Klassen, Objekte und Vererbung)
-  - Plattformunabhängig (über *JVM*)
-  - Stark typisiert (feste Typen wie *int* und *String*)
-  - Robust (also Garbage Collector)
-
-#slide[
-  #question[Welches ist die bessere Programmiersprache: C oder Java?]
-]
-
-= Das erste Programm
-
-== IDE
-
-- Ich würde Ihnen IntelliJ IDEA von JetBrains als IDE empfehlen.
-  - Dieses Tool wird auch in der Klausur verwendet werden.
-  - Die IDE enthält auch das Java JDK, was sie zum Programmieren brauchen.
-#align(
-  center + horizon,
-)[
-  #tiaoma.barcode(
-    "https://www.jetbrains.com/idea/download/?section=windows", "QRCode", options: (scale: 3.0),
-  )
-]
-- Wählen Sie die Community Edition auf #link("https://www.jetbrains.com/idea/download/?section=windows"),
-  oder scannen Sie den QR-Code.
-#slide[
-  #align(
-    left + horizon,
-  )[
-
-    #figure(
-      image("../assets/img/2024_10_03_jdk_jre_compiler_rev01.png"), caption: [Der Aufbau der Java Toolchain#footnote(numbering: "*")[Application Programming Interface]],
-    )
+  #align(center + horizon)[
+  #figure(image("../assets/img/2025_01_09_stackoverflow_most_popular_db.png", height: 80%), caption: [Most popular technologies (Source: StackOverflow Developer Survey 2024)])
   ]
 ]
 
-#task[
-  - Vorbereitung:
-    1. Öffnen Sie zuerst ein Verzeichnis, in dem Sie die Dateien zu Programmieren
-      ablegen werden.
-    2. Öffnen Sie IntelliJ IDEA.
-  - Projekt anlegen:
-    1. File > New > Project auswählen.
-    2. Vergeben Sie einen Namen und einen Ort.
-    3. Wählen Sie Java und IntelliJ und das entsprechende JDK
-    4. Auf "Create" klicken
+== Database Design
+#slide[
+To design a database, you typically follow these steps:
+
+1.  *Requirements:* Figure out what you need the database to do. 
+2.  *Conceptual Database Design:* Come up with a high-level plan for your database using an ER Model (Entity-Relationship Model). This is like a rough sketch of your database. 
+3.  *Logical Database Design:* Refine your plan and choose a specific type of database (like a relational database). You'll also use a more formal model here, like the Relational Model. 
+4.  *Physical Database Design:* Get into the technical details of how the data will be stored and organized. 
+5.  *Database Implementation:* Build the actual database using SQL (Structured Query Language). 
 ]
 
 #slide[
-  #task[
-    - Paket erstellen
-      1. Rechtsklick auf src
-      2. New > Package auswählen
-      3. Name eintragen
-    - Klasse erstellen
-      1. Rechtsklick auf Paket
-      2. New > Java Class wählen
-  ]
+-   *Conceptual Design:* A high-level plan for the database. This is where you use the ER Model to map out the entities (things) and their relationships. 
+-   *Logical Design:* A more detailed, formal plan. Here, you use the Relational Model to structure the database into tables and relationships. 
+-   *Implementation & Usage:* Building and using the database. This is where you use SQL to create the database and work with the data. 
 ]
 
-== Das erste Programm
-#align(
-  left + horizon,
-)[
+== Example: Contact List
+#slide[
+-   *What things exist in the real world?* (e.g., people, houses) 
+-   *What properties do they have?* (e.g., names, addresses, phone numbers) 
+-   *How do they relate to each other?* (e.g., people live in houses) 
+]
 
-```java
-public static void main(String[] args){
-  System.out.println("Hello World!");
-}
+#slide[
+*Option 1: Conceptual design with a Class Diagram*
+
+-   You can use a class diagram to model your database conceptually. 
+-   This involves defining classes (like blueprints) for the things in your database (e.g., a Person class, a House class). 
+-   Each class has properties (attributes) to describe those things (e.g., a Person has a name, a House has an address). 
+-   You also define relationships between the classes (e.g., a Person "lives in" a House). 
+]
+
+#slide[
+*Option 2: Conceptual design with ER Model*
+
+- You can also use an ER Model (Entity-Relationship Model) for the conceptual design. 
+- This is a more visual way to model your database, where you use boxes to represent entities (things) and diamonds to represent relationships between them. 
+- Each entity has attributes (properties) that describe it. 
+- You also indicate how many entities can be related to each other (cardinalities). 
+]
+
+#slide[
+1. *Conceptual design: Class diagram vs. ERM*
+    - You can easily translate a class diagram into an ERM. 
+    - There are a few differences between ERMs and Class Diagrams: 
+        - ERMs don't have methods (actions). 
+        - ERMs allow for multivalued attributes (attributes that can have multiple values).
+]
+
+= SQL: Structured Query Language 
+== What is SQL?
+#slide[
+
+    - Standard language for managing relational databases
+    - Used for querying, updating, and managing data
+]
+== Basic SQL Commands
+#slide[
+    - SELECT: Retrieve data
+    - INSERT: Add new records
+    - UPDATE: Modify existing records
+    - DELETE: Remove records
+]
+== SQL Example: SELECT Statement
+
+#slide[
+```sql
+SELECT Name, Major
+FROM Students
+WHERE GPA > 3.5;
 ```
-#idea[Tragen Sie den Code in die gerade erstellte Datei ein. Wenn Sie schon soweit
-  sind, programmieren Sie gerne mit!]
 ]
-
-== Anwendungen in Java
-
-Eine Java-Datei kann ausgeführt werden, wenn sie eine öffentliche (*public*)
-Klasse hat: ```java public class MyApplication {...}``` \
-
-#pause
-
-Die Klasse muss außerdem den gleichen Namen wie die Datei haben, also bspw.
-`MyApplication.java` \
-
-#pause
-
-Die Klasse besitzt die Methode: ```java public static void main(String[] args)``` \
-
+== SQL Example: INSERT Statement
 #slide[
-//#align(left + horizon)[
-#v(3.5em)
-```java
-  public class pin1MyApplipin3cationpin2 {
-    public static void pin4mapin5in(String[] args) {
-      System.out.println("Hello World!");
-  }
-}
+```sql
+INSERT INTO Students (Student_ID, Name, Major, GPA)
+VALUES (104, 'David', 'Biology', 3.7);
 ```
-#pause
-#pinit-rect-from(3, pos: top)[Dieser Name ist frei wählbar.]
-#pause
-#pinit-rect-from(
-  5, pos: bottom, fill: rgb(180, 10, 10),
-)[Diese Methode muss immer main heißen.]
-//]
+] 
+
+= Database Design 
+== Steps in Database Design
+#slide[
+    - Requirements Analysis
+    - Conceptual Design
+    - Logical Design
+    - Physical Design
+    - Implementation and Testing
 ]
-= Literatur
-== Literaturempfehlungen
-- Einige Bücher, die Ihnen vielleicht im Verlauf der Veranstaltung helfen könnten:
-  - D. Abts: Grundkurs JAVA, Springer-Vieweg
-  - H.-P. Habelitz: Programmieren lernen mit Java, Rheinwerk Computing
+
+== Entity-Relationship (ER) Model
+  #slide[
+    - Conceptual representation of data
+    - Entities: Objects or concepts
+    - Attributes: Properties of entities
+    - Relationships: Connections between entities
+ ER Diagram Example [Diagram placeholder: Simple ER diagram showing entities like Student, Course, and Instructor with relationships]
+] 
+
+= Normalization 
+== What is Normalization?
+#slide[
+
+    - Process of organizing data to minimize redundancy
+    - Improves data integrity and reduces anomalies
+]
+
+== Normal Forms
+#slide[
+
+    - First Normal Form (1NF)
+    - Second Normal Form (2NF)
+    - Third Normal Form (3NF)
+    - Boyce-Codd Normal Form (BCNF)
+
+]
+
+
+== Benefits of Normalization
+#slide[
+    - Eliminates data redundancy
+    - Ensures data consistency
+    - Simplifies data maintenance
+    - Facilitates database design
+]
+
+
+= Transaction Management 
+== What is a Transaction?
+#slide[
+
+    - A sequence of database operations
+    - Treated as a single unit of work
+]
+
+== ACID Properties
+#slide[
+    - Atomicity: All-or-nothing execution
+    - Consistency: Database remains in a valid state
+    - Isolation: Transactions execute independently
+    - Durability: Committed changes are permanent
+]
+
+== Transaction States
+#slide[
+    Active
+    Partially Committed
+    Committed
+    Failed
+    Aborted
+
+]
+
+= Conclusion 
+== Key Takeaways
+#slide[
+
+    - Databases are essential for efficient data management
+    - Relational model is widely used in database systems
+    - SQL is the standard language for database operations
+    - Proper database design is crucial for performance and integrity
+    - Understanding transactions ensures data consistency and reliability
+]
+== Next Steps
+  #slide[
+    Explore advanced SQL queries
+    Study database indexing and optimization
+    Learn about database security and access control
+    Practice designing and implementing databases
+
+  ]
 
 = License Notice
 
