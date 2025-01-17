@@ -64,6 +64,7 @@
   - what we are going to learn during this semester,
   - and what databases are and why you learning about them!
 
+
 #slide[
   1. *Introduction*
   2. Basics
@@ -79,15 +80,16 @@
 ]
 
 == What is the goal of this chapter?
-
 #slide[
 - I want to introduce myself to you and maybe also learn a bit about you!
-- I want to tell you about what is in store for you this semester
+- I want to tell you about what is in store for you this semester.
+- We'll also discuss the structure of the course, including assignments and exams.
+- The importance of participation and collaboration in class.
 ]
 
 == About me
 #slide[
-- Emily Lucia Antosch, 24 
+- Emily Lucia Antosch
 - I did my bachelor's degree in Electrical Engineering
 - Software Engineer in the marine industry
 - Looking to start my master degree in the near future
@@ -182,7 +184,7 @@
 == Requirements
 #slide[
   #memo[
-You will need an installation of *PostgreSQL 16*. 
+You will need an installation of *PostgreSQL 16*.
   ]
   - It's open source software and the main database system that will look at.
   - Depending on your system and how you want to install PostgreSQL, there are multiple ways to go about it. There are detailed descriptions in the Moodle-Room for you to follow.
@@ -195,7 +197,6 @@ You will need an installation of *PostgreSQL 16*.
   - Do you already have experience regarding databases?
   - What is the expectation of this lecture?
   - Do you have any wishes regarding the lecture and potentially also the exam?
-
   ]
 ]
 
@@ -204,7 +205,9 @@ You will need an installation of *PostgreSQL 16*.
 == Where are we right now?
 #slide[
  - You just learnt how this lecture is going to work and what you can expect going forward. 
-  - Next, we'll be discussing the basics of databases
+ - Next, we'll be discussing the basics of databases and the differences to database management systems.
+ - We'll learn about the history of databases
+ - And we'll find out, why we should be using databases in the first place.
 ]
 
 #slide[
@@ -229,6 +232,8 @@ You will need an installation of *PostgreSQL 16*.
   - the history of databases,
   - and the differences between databases and database management systems.
 ]
+
+
 == What is a Database?
 #slide[
   #memo[
@@ -237,7 +242,7 @@ You will need an installation of *PostgreSQL 16*.
     - Supports storage, manipulation, and querying of information.
   ]
 ]
-
+== Difference between data and information
 
 #slide[
   #let body = [
@@ -509,106 +514,13 @@ VALUES (104, 'David', 'Biology', 3.7);
 ```
 ] 
 
-= Database Design 
-== Steps in Database Design
-#slide[
-    - Requirements Analysis
-    - Conceptual Design
-    - Logical Design
-    - Physical Design
-    - Implementation and Testing
-]
-
-== Entity-Relationship (ER) Model
-  #slide[
-    - Conceptual representation of data
-    - Entities: Objects or concepts
-    - Attributes: Properties of entities
-    - Relationships: Connections between entities
- ER Diagram Example [Diagram placeholder: Simple ER diagram showing entities like Student, Course, and Instructor with relationships]
-] 
-
-= Normalization 
-== What is Normalization?
-#slide[
-
-    - Process of organizing data to minimize redundancy
-    - Improves data integrity and reduces anomalies
-]
-
-== Normal Forms
-#slide[
-
-    - First Normal Form (1NF)
-    - Second Normal Form (2NF)
-    - Third Normal Form (3NF)
-    - Boyce-Codd Normal Form (BCNF)
-
-]
-
-
-== Benefits of Normalization
-#slide[
-    - Eliminates data redundancy
-    - Ensures data consistency
-    - Simplifies data maintenance
-    - Facilitates database design
-]
-
-
-= Transaction Management 
-== What is a Transaction?
-#slide[
-
-    - A sequence of database operations
-    - Treated as a single unit of work
-]
-
-== ACID Properties
-#slide[
-    - Atomicity: All-or-nothing execution
-    - Consistency: Database remains in a valid state
-    - Isolation: Transactions execute independently
-    - Durability: Committed changes are permanent
-]
-
-== Transaction States
-#slide[
-    Active
-    Partially Committed
-    Committed
-    Failed
-    Aborted
-
-]
-
-= Conclusion 
-== Key Takeaways
-#slide[
-
-    - Databases are essential for efficient data management
-    - Relational model is widely used in database systems
-    - SQL is the standard language for database operations
-    - Proper database design is crucial for performance and integrity
-    - Understanding transactions ensures data consistency and reliability
-]
-== Next Steps
-  #slide[
-    Explore advanced SQL queries
-    Study database indexing and optimization
-    Learn about database security and access control
-    Practice designing and implementing databases
-
-  ]
 
 = License Notice
 
 == Attribution
 
-- This work is shared under the CC BY-NC-SA 4.0 License and the respective Public
-  License
+- This work is shared under the CC BY-NC-SA 4.0 License and the respective Public License.
 - #link("https://creativecommons.org/licenses/by-nc-sa/4.0/")
-- This work is based off of the work Prof. Dr. Marc Hensel.
+- This work is based off of the work by Prof. Dr. Ulrike Herster.
 - Some of the images and texts, as well as the layout were changed.
-- The base material was supplied in private, therefore the link to the source
-  cannot be shared with the audience.
+- The base material was supplied in private, therefore the link to the source cannot be shared with the audience.
