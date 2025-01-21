@@ -59,8 +59,8 @@
   - Methode
   - Klasse
   - Objekt
-  - Vererbung\
-  #box(height: 70%, width: 100%, stroke: color.black)[]
+  - Vererbun\
+  #box(height: 30%, width: 100%, stroke: color.black)[]
 ], [], (
     (2, [Attribut als Variable oder Eigenschaft einer Klasse/Objekt.]),
     (2, [Methode als Funktion oder Fähigkeit einer Klasse/Objekt.]),
@@ -74,7 +74,7 @@
 ], [
     #subtask(points: 5)[
 Definieren Sie den Begriff „Polymorphismus“. Geben Sie ein Beispiel an, das zeigt, wie ein Polymorphismus in Java implementiert wird.\
-    #box(height: 85%, width: 100%, stroke: color.black)[]
+    #box(height: 80%, width: 100%, stroke: color.black)[]
     ]
     #subtask(points: 5)[
 Erklären Sie die Unterschiede zwischen einer abstrakten Klasse und einem Interface in Java. Nennen Sie jeweils ein Beispiel für den Einsatz.\

@@ -60,7 +60,7 @@
   - Klasse
   - Objekt
   - Vererbung\
-  #box(height: 70%, width: 100%, stroke: color.black)[]
+  #box(height: 65%, width: 100%, stroke: color.black)[]
 ], [], (
     (2, [Attribut als Variable oder Eigenschaft einer Klasse/Objekt.]),
     (2, [Methode als Funktion oder Fähigkeit einer Klasse/Objekt.]),
