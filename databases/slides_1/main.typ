@@ -267,20 +267,19 @@ The essential functions of a DBMS:
 == In essence: DB vs DBMS
 #slide[
   #let body = [
-  - In essence:
+    #heading(numbering: none)[In Essence]
     - A database manages data logically and physically
     - A DBMS offers tools for managing, editing and evaluating data
-  ]
-  //#grid(columns: (70%, 30%), gutter: 0.5em, body, fig)
-]
 
-== Database Examples
-#slide[
+    #heading(numbering: none)[Database Examples]
 - Customer Relationship Management (CRM) (keeping track of your customers)
 - Controlling and Accounting (managing your finances)
 - Merchandise Management System (organizing your products)
 - Enterprise Resource Planning (ERP) (managing your entire business e.g. SAP)
 - Content Management Systems (CMS) (managing your website content e.g. WordPress)
+  ]
+  #let fig = figure(image("../assets/img/slides_01/2024_12_31_s1_rdmbs_db_rev01.png"))
+  #grid(columns: (70%, 30%), gutter: 0.5em, body, fig)
 ]
 
 == Difference between data and information
@@ -296,7 +295,7 @@ The essential functions of a DBMS:
     - Information is able to actively serve us by providing insight in how decisions should be made.
   ]
   #grid(columns: (auto, auto), gutter: 0.5em, data, information)
-  #figure(image("../assets/img/2025_01_19_data_vs_info_rev01.png"))
+  #figure(image("../assets/img/slides_01/2025_01_19_data_vs_info_rev01.png"))
 ]
 
 == History of the Database
@@ -311,9 +310,11 @@ The essential functions of a DBMS:
 
 == Why even use a DB?
 #slide[
-- What are the alternatives for storing data?
-- Text files, MS Excel, MS Access, etc.
-- What are the disadvantages of these alternatives?
+  #question[
+    - What are the alternatives for storing data?
+  ]
+  #pause
+  #figure(image("../assets/img/slides_01/2025_01_24_data_storage_rev01.png"))
 ]
 
 #slide[
@@ -339,16 +340,15 @@ Disadvantages of alternatives like text files, Excel, and Access:
 - It's difficult to share huge spreadsheets.
 ]
 
-== SQL Database vs. MS Excel: What are they best used for?
+== Database vs. Excel: What are they best used for?
 #slide[
-Databases are good for:
-
+  #heading(numbering: none)[Databases are good for:]
 - Larger datasets (databases can handle a lot more data than Excel)
 - Organization/structure (databases are stricter about how data is organized)
 - Collaborative work (databases are better for teams working together)
 - Preparing data for analysis in other software
 
-Excel is good for:
+  #heading(numbering: none)[Excel is good for:]
 - Smaller datasets (Excel can slow down with large datasets)
 - Manually entering data
 - Flexible structure (Excel is more forgiving about how data is organized)
@@ -360,9 +360,8 @@ Excel is good for:
 
 == Database vs. Excel vs. MS Access
 #slide[
-
-  #table(columns: (auto, auto, auto, auto, auto), inset: 0.25em)[
-    [Aspect], [DB], [MS Excel], [MS Access], [Comment]
+  #table(columns: (auto, auto, auto, auto, auto), inset: 0.25em,
+    table.header([*Aspect*], [*DB*], [*MS Excel*], [*MS Access*], [*Comment*]),
     [Initial Training], [], [++], [+], [Initial Training is necessary, since presentation and editing data is separated.],
     [Large data sets], [++], [], [+], [Access has performance problems starting from several thousand entries.],
     [Access by multiple Users], [++], [], [+], [Using a database together is easy and works out-of-the-box.],
@@ -370,28 +369,28 @@ Excel is good for:
     [Platform Independence], [++], [+], [], [While DBMS work on any system, MS products are limited to Windows and MacOS.],
     [Application Development], [+], [+], [+], [While you can't really develop applications using SQL only, the other two choices aren't preferable either.],
     [Integration with MS Office], [], [++], [++], [],
-  ]
+)  
 ]
 
 == Database vs. MS Access: Technical Comparison
 #slide[
-  #table(columns: (auto, auto, auto), inset: 0.25em)[
-    [Aspect], [DB], [MS Excel],
+  #table(columns: (auto, auto, auto), inset: 0.25em,
+    table.header([*Aspect*], [*DB*], [*MS Access*]),
     [Database Size], [16TB], [2GB],
     [Simultaneous users], [32.767 users], [255 users],
     [Number of objects], [2.147483.647 objects per database], [32.768 objects per database]
-  ]
+  ) 
 ]
 
 == Different DB-Models
 #slide[
   There are a number of different database models available. These include:
-- Relational model
-- Hierachical model
-- Network model
-- Object relational model
-- Object oriented model
-- XML-based model
+  - Relational model 
+  - Hierarchical model
+  - Network model
+  - Object relational model
+  - Object oriented model
+  - XML-based model
 ]
 
 == RDBMS vs. ODBMS
@@ -410,13 +409,13 @@ Excel is good for:
 == Most Popular Databases 2024
 #slide[
   #align(center + horizon)[
-  #figure(image("../assets/img/2025_01_09_stackoverflow_most_admired_db.png", height: 80%), caption: [Most admired databases (Source: StackOverflow Developer Survey 2024)])
+  #figure(image("../assets/img/slides_01/2025_01_09_stackoverflow_most_admired_db.png", height: 80%), caption: [Most admired databases (Source: StackOverflow Developer Survey 2024)])
   ]
 ]
 
 #slide[
   #align(center + horizon)[
-  #figure(image("../assets/img/2025_01_09_stackoverflow_most_popular_db.png", height: 80%), caption: [Most popular technologies (Source: StackOverflow Developer Survey 2024)])
+  #figure(image("../assets/img/slides_01/2025_01_09_stackoverflow_most_popular_db.png", height: 80%), caption: [Most popular technologies (Source: StackOverflow Developer Survey 2024)])
   ]
 ]
 
