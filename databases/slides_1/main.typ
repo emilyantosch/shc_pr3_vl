@@ -243,7 +243,7 @@ You will need an installation of *PostgreSQL 16*.
 ]
 
 
-== What is a Database Management System (DBMS)
+== What is a Database Management System (DBMS)?
 #slide[
   - Software system that manages databases.
   - A DBMS provides a systematic approach of creating, updating, storing and retrieving data stored in a database.
@@ -301,11 +301,12 @@ The essential functions of a DBMS:
 == History of the Database
 #slide[
 - In the 1960s, people used files to store data. This wasn't ideal because files are designed for specific applications, and it was a lot of work to manage them.
-- In the 1970s, Edgar F. Codd, who worked at IBM, came up with the idea of relational databases.
+- In the 1970s, Edgar F. Codd, came up with the idea of relational databases.
 - He developed the first relational database system called "System R."
 - Oracle took Codd's ideas and made SQL (Structured Query Language) a big success.
 - IBM followed with their own SQL databases (SQL/DS and DB2).
 - Today, relational databases are the most common type of database.
+  #figure(image("../assets/img/2024_12_31_s1_db_inventor_rev01.png", height: 50%))
 ]
 
 == Why even use a DB?
