@@ -19,12 +19,12 @@
 }
 
 #show: university-theme.with(
-  aspect-ratio: "16-9", 
+  aspect-ratio: "16-9",
   config-info(
-    title: [Databases], 
-    subtitle: [Lecture 2], 
-    author: [Emily Lucia Antosch], 
-    date: datetime.today().display("[day].[month].[year]"), 
+    title: [Databases],
+    subtitle: [Lecture 2: SQL - Structured Query Language],
+    author: [Emily Lucia Antosch],
+    date: datetime.today().display("[day].[month].[year]"),
     institution: [HAW Hamburg],
   ),
 )
@@ -51,6 +51,34 @@
   ),
 )
 
-#title-slide(authors: ([Emily Lucia Antosch]))
+#title-slide(authors: [Emily Lucia Antosch])
 
-// Content will go here - please provide the content from slides_02.pdf so I can help format it properly
+= SQL: Structured Query Language
+== What is SQL?
+#slide[
+  - Standard language for managing relational databases
+  - Used for querying, updating, and managing data
+]
+== Basic SQL Commands
+#slide[
+  - SELECT: Retrieve data
+  - INSERT: Add new records
+  - UPDATE: Modify existing records
+  - DELETE: Remove records
+]
+== SQL Example: SELECT Statement
+
+#slide[
+  ```sql
+  SELECT Name, Major
+  FROM Students
+  WHERE GPA > 3.5;
+  ```
+]
+== SQL Example: INSERT Statement
+#slide[
+  ```sql
+  INSERT INTO Students (Student_ID, Name, Major, GPA)
+  VALUES (104, 'David', 'Biology', 3.7);
+  ```
+]

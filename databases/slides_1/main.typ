@@ -23,15 +23,32 @@
 }
 #let pinit-rect-from(height: 2em, pos: bottom, fill: rgb(0, 180, 255), point-pin, body) = {
   pinit-point-from(
-    fill: fill, pin-dx: 0em, pin-dy: if pos == bottom { 0em } else { -0.6em }, body-dx: 0pt, body-dy: if pos == bottom { -1.7em } else { -1.6em }, offset-dx: 0em, offset-dy: if pos == bottom { 1.2em + height } else { -0.6em - height }, point-pin, rect(inset: 0.5em, stroke: (bottom: 0.12em + fill), {
-      set text(fill: fill)
-      body
-    }),
+    fill: fill,
+    pin-dx: 0em,
+    pin-dy: if pos == bottom { 0em } else { -0.6em },
+    body-dx: 0pt,
+    body-dy: if pos == bottom { -1.7em } else { -1.6em },
+    offset-dx: 0em,
+    offset-dy: if pos == bottom { 1.2em + height } else { -0.6em - height },
+    point-pin,
+    rect(
+      inset: 0.5em,
+      stroke: (bottom: 0.12em + fill),
+      {
+        set text(fill: fill)
+        body
+      },
+    ),
   )
 }
 #show: university-theme.with(
-  aspect-ratio: "16-9", config-info(
-    title: [Databases], subtitle: [Lecture 1 - Organisation and Introduction to Databases], author: [Emily Lucia Antosch], date: datetime.today().display("[day].[month].[year]"), institution: [HAW Hamburg],
+  aspect-ratio: "16-9",
+  config-info(
+    title: [Databases],
+    subtitle: [Lecture 1 - Organisation and Introduction to Databases],
+    author: [Emily Lucia Antosch],
+    date: datetime.today().display("[day].[month].[year]"),
+    institution: [HAW Hamburg],
   ),
 )
 
@@ -40,16 +57,24 @@
 #codly(
   languages: (
     sql: (
-      name: text(font: "JetBrainsMono NFM", " SQL", weight: "bold"), icon: text(font: "JetBrainsMono NFM", "\u{e76e}", weight: "bold"), color: rgb("#2563eb"),
-    ), java: (
-      name: text(font: "JetBrainsMono NFM", " Java", weight: "bold"), icon: text(font: "JetBrainsMono NFM", "\u{e738}", weight: "bold"), color: rgb("#CE412B"),
-    ), c: (
-      name: text(font: "JetBrainsMono NFM", " C", weight: "bold"), icon: text(font: "JetBrainsMono NFM", "\u{e61e}", weight: "bold"), color: rgb("#5612EC"),
+      name: text(font: "JetBrainsMono NFM", " SQL", weight: "bold"),
+      icon: text(font: "JetBrainsMono NFM", "\u{e76e}", weight: "bold"),
+      color: rgb("#2563eb"),
+    ),
+    java: (
+      name: text(font: "JetBrainsMono NFM", " Java", weight: "bold"),
+      icon: text(font: "JetBrainsMono NFM", "\u{e738}", weight: "bold"),
+      color: rgb("#CE412B"),
+    ),
+    c: (
+      name: text(font: "JetBrainsMono NFM", " C", weight: "bold"),
+      icon: text(font: "JetBrainsMono NFM", "\u{e61e}", weight: "bold"),
+      color: rgb("#5612EC"),
     ),
   ),
 )
 
-#title-slide(authors: ([Emily Lucia Antosch]))
+#title-slide(authors: [Emily Lucia Antosch])
 
 #outline(depth: 1)
 
@@ -292,7 +317,11 @@
     - Content Management Systems (CMS) (managing your website content e.g. WordPress)
   ]
   #let fig = figure(image("../assets/img/slides_01/2024_12_31_s1_rdmbs_db_rev01.png"))
-  #grid(columns: (70%, 30%), gutter: 0.5em, body, fig)
+  #grid(
+    columns: (70%, 30%),
+    gutter: 0.5em,
+    body, fig,
+  )
 ]
 
 == Difference between data and information
@@ -309,7 +338,11 @@
     - Information is able to actively serve us by providing insight in how decisions
       should be made.
   ]
-  #grid(columns: (auto, auto), gutter: 0.5em, data, information)
+  #grid(
+    columns: (auto, auto),
+    gutter: 0.5em,
+    data, information,
+  )
   #figure(image("../assets/img/slides_01/2025_01_19_data_vs_info_rev01.png"))
 ]
 
@@ -324,7 +357,8 @@
   - Today, relational databases are the most common type of database.
     #figure(
       image(
-        "../assets/img/slides_01/2024_12_31_s1_db_inventor_rev01.png", height: 50%,
+        "../assets/img/slides_01/2024_12_31_s1_db_inventor_rev01.png",
+        height: 50%,
       ),
     )
 ]
@@ -384,15 +418,49 @@
 == Database vs. Excel vs. MS Access
 #slide[
   #table(
-    columns: (auto, auto, auto, auto, auto), inset: 0.25em, table.header([*Aspect*], [*DB*], [*MS Excel*], [*MS Access*], [*Comment*]), [Initial Training], [], [++], [+], [Initial Training is necessary, since presentation and editing data is separated.], [Large data sets], [++], [], [+], [Access has performance problems starting from several thousand entries.], [Access by multiple Users], [++], [], [+], [Using a database together is easy and works out-of-the-box.], [Database Design], [++], [], [+], [It's way easier to design a data storage solution by profiting off dedicated
-      features.], [Platform Independence], [++], [+], [], [While DBMS work on any system, MS products are limited to Windows and MacOS.], [Application Development], [+], [+], [+], [While you can't really develop applications using SQL only, the other two choices aren't preferable either.], [Integration with MS Office], [], [++], [++], [],
+    columns: (auto, auto, auto, auto, auto),
+    inset: 0.25em,
+    table.header([*Aspect*], [*DB*], [*MS Excel*], [*MS Access*], [*Comment*]),
+    [Initial Training],
+    [],
+    [++],
+    [+],
+    [Initial Training is necessary, since presentation and editing data is separated.],
+
+    [Large data sets], [++], [], [+], [Access has performance problems starting from several thousand entries.],
+    [Access by multiple Users], [++], [], [+], [Using a database together is easy and works out-of-the-box.],
+    [Database Design],
+    [++],
+    [],
+    [+],
+    [It's way easier to design a data storage solution by profiting off dedicated
+      features.],
+
+    [Platform Independence],
+    [++],
+    [+],
+    [],
+    [While DBMS work on any system, MS products are limited to Windows and MacOS.],
+
+    [Application Development],
+    [+],
+    [+],
+    [+],
+    [While you can't really develop applications using SQL only, the other two choices aren't preferable either.],
+
+    [Integration with MS Office], [], [++], [++], [],
   )
 ]
 
 == Database vs. MS Access: Technical Comparison
 #slide[
   #table(
-    columns: (auto, auto, auto), inset: 0.25em, table.header([*Aspect*], [*DB*], [*MS Access*]), [Database Size], [16TB], [2GB], [Simultaneous users], [32.767 users], [255 users], [Number of objects], [2.147483.647 objects per database], [32.768 objects per database],
+    columns: (auto, auto, auto),
+    inset: 0.25em,
+    table.header([*Aspect*], [*DB*], [*MS Access*]),
+    [Database Size], [16TB], [2GB],
+    [Simultaneous users], [32.767 users], [255 users],
+    [Number of objects], [2.147483.647 objects per database], [32.768 objects per database],
   )
 ]
 
@@ -418,25 +486,25 @@
 
 == Most Popular Databases 2024
 #slide[
-  #align(
-    center + horizon,
-  )[
+  #align(center + horizon)[
     #figure(
       image(
-        "../assets/img/slides_01/2025_01_09_stackoverflow_most_admired_db.png", height: 80%,
-      ), caption: [Most admired databases (Source: StackOverflow Developer Survey 2024)],
+        "../assets/img/slides_01/2025_01_09_stackoverflow_most_admired_db.png",
+        height: 80%,
+      ),
+      caption: [Most admired databases (Source: StackOverflow Developer Survey 2024)],
     )
   ]
 ]
 
 #slide[
-  #align(
-    center + horizon,
-  )[
+  #align(center + horizon)[
     #figure(
       image(
-        "../assets/img/slides_01/2025_01_09_stackoverflow_most_popular_db.png", height: 80%,
-      ), caption: [Most popular technologies (Source: StackOverflow Developer Survey 2024)],
+        "../assets/img/slides_01/2025_01_09_stackoverflow_most_popular_db.png",
+        height: 80%,
+      ),
+      caption: [Most popular technologies (Source: StackOverflow Developer Survey 2024)],
     )
   ]
 ]
@@ -536,8 +604,8 @@
   #figure(image("../assets/img/slides_01/2025_01_18_erm_vs_class_rev01.png"))
 ]
 
-#slide[ 
-  #figure(image("../assets/img/slides_01/2025_01_18_table_definiton_example_rev01.png")) 
+#slide[
+  #figure(image("../assets/img/slides_01/2025_01_18_table_definiton_example_rev01.png"))
 ]
 
 
@@ -549,16 +617,36 @@
 #slide[
   - Creating the tables with the correct columns:
   ```sql
-CREATE TABLE Person( SSN  CHAR(9) NOT NULL , FirstName VARCHAR(15) NOT NULL , LastName VARCHAR(15) NOT NULL, Mobile VARCHAR(30), PhoneWork VARCHAR(30), Birthdate DATE, PRIMARY KEY ( SSN )); 
+  CREATE TABLE Person( SSN  CHAR(9) NOT NULL , FirstName VARCHAR(15) NOT NULL , LastName VARCHAR(15) NOT NULL, Mobile VARCHAR(30), PhoneWork VARCHAR(30), Birthdate DATE, PRIMARY KEY ( SSN ));
   ```
 ]
 
 #slide[
-  - Selecting data from the database:
+  - Selecting the first and last name from the table `Person` where the `LastName` is Miller:
   ```sql
-SELECT FirstName, LastName FROM Person WHERE LastName = ‘Miller’; 
-
-SELECT FirstName, LastName FROM Person P, lives_in L, House H WHERE Phone = ‘0044 20  7946 0000’ AND H.Address = L.Address AND L.SSN = P.SSN ; 
+    SELECT
+      FirstName,
+      LastName
+    FROM
+      Person
+    WHERE
+      LastName = ‘Miller’;
+  ```
+]
+#slide[
+  - Selecting the first and last name from the table `Person`, joined with the tables `Lives_In` and `House` with filters for different columns:
+  ```sql
+  SELECT
+    FirstName,
+    LastName
+  FROM
+    Person P,
+    lives_in L,
+    House H
+  WHERE
+    Phone = ‘0044 20  7946 0000’
+    AND H.Address = L.Address
+    AND L.SSN = P.SSN;
   ```
 ]
 
@@ -566,35 +654,33 @@ SELECT FirstName, LastName FROM Person P, lives_in L, House H WHERE Phone = ‘0
   #question[
     - What are the disadvantages of this approach?
   ]
-  #figure(image("../assets/img/slides_01/2025_01_18_denormalized_rev01.png"))
-]
-
-#slide[
-  - Selecting data from the database:
-  ```sql
-SELECT FirstName, LastName FROM Person WHERE LastName = ‘Miller’; 
-
-SELECT FirstName, LastName FROM Person P, lives_in L, House H WHERE Phone = ‘0044 20  7946 0000’ AND H.Address = L.Address AND L.SSN = P.SSN ; 
-  ```
+  #figure(image("../assets/img/slides_01/2025_01_18_denormalized_rev01.png", height: 70%))
 ]
 
 == Development Cycle
 #slide[
-  #let left = [
-1. Design database by logic  
- - What must be in the database? 
-2. Design database for system
-  - How should the data be saved? 
-3. Develop database applications
-  - How is the data processed?  
-4. Fill database 
-  - How to insert the data? 
-5. Maintain database
-  - the database runs and runs and runs… 
-]
-  #let right = figure(image("../assets/img/slides_01/2025_02_03_dev_cycle_rev01.png"))
+  #align(horizon)[
+    #let left = [
+      1. Design database by logic
+        - What must be in the database?
+      2. Design database for system
+        - How should the data be saved?
+      3. Develop database applications
+        - How is the data processed?
+      4. Fill database
+        - How to insert the data?
+      5. Maintain database
+        - the database runs and runs and runs…
+    ]
+    #let right = figure(image("../assets/img/slides_01/2025_02_03_dev_cycle_rev01.png"))
 
-  #grid(columns: (auto, auto), gutter: 0.25em, left, right)
+    #grid(
+      columns: (auto, auto),
+      gutter: 0.25em,
+      left, right,
+    )
+  ]
+
 ]
 
 #slide[
@@ -605,44 +691,78 @@ SELECT FirstName, LastName FROM Person P, lives_in L, House H WHERE Phone = ‘0
 
 #slide[
   #let left = [
-- The *external schemas* describe the different external views of the data 
-  and there may be many external  schemas for a given database 
-- The *conceptual schema* describes all the data items and relationships between them, together with integrity  constraints  
-  - There is only one conceptual schema per database 
-- The *internal schema* at the lowest level contains definitions of the stored records, the methods of representation, the data fields, and indexes 
-  - There is only one internal schema per database 
+    - The *external schemas* describe the different external views of the data
+      and there may be many external schemas for a given database
+    - The *conceptual schema* describes all the data items and relationships between them, together with integrity constraints
+      - There is only one conceptual schema per database
+    - The *internal schema* at the lowest level contains definitions of the stored records, the methods of representation, the data fields, and indexes
+      - There is only one internal schema per database]
+  #let right = [
+    #align(horizon)[
+      #figure(image("../assets/img/slides_01/2025_02_03_ansi_sparc_concept_rev01.png", height: auto))
+    ]
   ]
-  #let right = figure(image("../assets/img/slides_01/"))
+
+  #grid(
+    columns: (auto, auto),
+    gutter: 0.25em,
+    left, right,
+  )
 ]
 
-= SQL: Structured Query Language
-== What is SQL?
 #slide[
-  - Standard language for managing relational databases
-  - Used for querying, updating, and managing data
+  #figure(image("../assets/img/slides_01/2025_02_03_ansi_sparc_overview_rev01.png"))
 ]
-== Basic SQL Commands
-#slide[
-  - SELECT: Retrieve data
-  - INSERT: Add new records
-  - UPDATE: Modify existing records
-  - DELETE: Remove records
-]
-== SQL Example: SELECT Statement
 
+== Data Independence
 #slide[
-```sql
-SELECT Name, Major
-FROM Students
-WHERE GPA > 3.5;
-```
+  - Database Systems (and its data) must be accessible for a long time
+    - Example: Insurance Company (decades)
+    - Often longer than the lifetime of applications, operating systems and hardware
+  - Need for data Independence
+    - Avoid tight coupling of applications, data and operating system
+    - Physical data Independence
+    - Logical data independence
 ]
-== SQL Example: INSERT Statement
+
+== Data Independence - Physical Data Independence
 #slide[
-```sql
-INSERT INTO Students (Student_ID, Name, Major, GPA)
-VALUES (104, 'David', 'Biology', 3.7);
-```
+  - *Definition*: Ability to modify the physical storage structures or locations of data without affecting the logical view of the data.
+
+  - *Examples*:
+    - Changing underlying hardware, file systems, storage devices, or relocating the database to a different server without affecting applications.
+    - Physical implementation details (e.g., storage format, indexing methods) are hidden from the application layer.
+
+  - *Benefits*:
+    - Ease of adapting to changing technology or infrastructure without rewriting application code.
+    - Allows performance optimization without altering application's logical data access methods.
+
+]
+
+== Data Independence - Logical Data Independence
+#slide[
+  *Definition*: Ability to change the logical schema (table structures, relationships, and attributes) without impacting the applications that use the database.
+
+  - *Examples*:
+    - Adding a new column to a table or modifying table relationships without requiring application code changes.
+
+  - *Benefits*:
+    - Flexibility to adapt database schema to evolving business requirements without disrupting applications.
+    - Simplifies data model changes and maintains data consistency.
+
+]
+
+== Data Independence
+#slide[
+  #memo[
+    Applications are robust against changes in the database or operational environment if data independence is maintained.
+  ]
+
+]
+
+== Homework
+#memo[
+  Install a DBMS on your home computer (preferred: PostgreSQL, MariaDB, mySQL, Oracle)!
 ]
 
 = License Notice
