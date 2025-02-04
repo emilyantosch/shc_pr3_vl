@@ -444,8 +444,8 @@
 == Why PostgreSQL
 #slide[
   - Why PostgreSQL instead of MySQL, SQLite or Oracle?
-    - SQLite is easy but limited in its feature set
-    - Oracle is used in many enterprises, but it's not free
+    - SQLite is easy but limited in its feature set.
+    - Oracle is used in many enterprises, but it's not free.
     - MySQL is also a very valid option, but I like PostgresQL more.
 ]
 
@@ -466,6 +466,10 @@
 ]
 
 #slide[
+  #figure(image("../assets/img/slides_01/2025_01_18_detail_db_design_rev01.png"))
+]
+
+#slide[
   - *Conceptual Design:* A high-level plan for the database. This is where you use
     the ER Model to map out the entities (things) and their relationships.
   - *Logical Design:* A more detailed, formal plan. Here, you use the Relational
@@ -474,11 +478,19 @@
     SQL to create the database and work with the data.
 ]
 
+#slide[
+  #figure(image("../assets/img/slides_01/2025_01_18_db_design_rev01.png"))
+]
+
 == Example: Contact List
 #slide[
   - *What things exist in the real world?* (e.g., people, houses)
   - *What properties do they have?* (e.g., names, addresses, phone numbers)
   - *How do they relate to each other?* (e.g., people live in houses)
+]
+
+#slide[
+  #figure(image("../assets/img/slides_01/2025_01_18_database_example_contacts_rev01.png"))
 ]
 
 #slide[
@@ -490,6 +502,8 @@
     has a name, a House has an address).
   - You also define relationships between the classes (e.g., a Person "lives in" a
     House).
+
+  #figure(image("../assets/img/slides_01/2025_01_18_class_diagram_example_rev01.png"))
 ]
 
 #slide[
@@ -505,12 +519,100 @@
 ]
 
 #slide[
+  #figure(image("../assets/img/slides_01/2025_01_18_er_diagram_example_rev01.png"))
+]
+
+
+#slide[
   1. *Conceptual design: Class diagram vs. ERM*
     - You can easily translate a class diagram into an ERM.
     - There are a few differences between ERMs and Class Diagrams:
       - ERMs don't have methods (actions).
       - ERMs allow for multivalued attributes (attributes that can have multiple
         values).
+]
+
+#slide[
+  #figure(image("../assets/img/slides_01/2025_01_18_erm_vs_class_rev01.png"))
+]
+
+#slide[ 
+  #figure(image("../assets/img/slides_01/2025_01_18_table_definiton_example_rev01.png")) 
+]
+
+
+#slide[
+  #figure(image("../assets/img/slides_01/2025_01_18_full_table_overview_rev01.png"))
+]
+
+
+#slide[
+  - Creating the tables with the correct columns:
+  ```sql
+CREATE TABLE Person( SSN  CHAR(9) NOT NULL , FirstName VARCHAR(15) NOT NULL , LastName VARCHAR(15) NOT NULL, Mobile VARCHAR(30), PhoneWork VARCHAR(30), Birthdate DATE, PRIMARY KEY ( SSN )); 
+  ```
+]
+
+#slide[
+  - Selecting data from the database:
+  ```sql
+SELECT FirstName, LastName FROM Person WHERE LastName = ‘Miller’; 
+
+SELECT FirstName, LastName FROM Person P, lives_in L, House H WHERE Phone = ‘0044 20  7946 0000’ AND H.Address = L.Address AND L.SSN = P.SSN ; 
+  ```
+]
+
+#slide[
+  #question[
+    - What are the disadvantages of this approach?
+  ]
+  #figure(image("../assets/img/slides_01/2025_01_18_denormalized_rev01.png"))
+]
+
+#slide[
+  - Selecting data from the database:
+  ```sql
+SELECT FirstName, LastName FROM Person WHERE LastName = ‘Miller’; 
+
+SELECT FirstName, LastName FROM Person P, lives_in L, House H WHERE Phone = ‘0044 20  7946 0000’ AND H.Address = L.Address AND L.SSN = P.SSN ; 
+  ```
+]
+
+== Development Cycle
+#slide[
+  #let left = [
+1. Design database by logic  
+ - What must be in the database? 
+2. Design database for system
+  - How should the data be saved? 
+3. Develop database applications
+  - How is the data processed?  
+4. Fill database 
+  - How to insert the data? 
+5. Maintain database
+  - the database runs and runs and runs… 
+]
+  #let right = figure(image("../assets/img/slides_01/2025_02_03_dev_cycle_rev01.png"))
+
+  #grid(columns: (auto, auto), gutter: 0.25em, left, right)
+]
+
+#slide[
+  #figure(image("../assets/img/slides_01/2025_01_18_dev_process_rev01.png"))
+]
+
+== ANSI-SPARC Architecture
+
+#slide[
+  #let left = [
+- The *external schemas* describe the different external views of the data 
+  and there may be many external  schemas for a given database 
+- The *conceptual schema* describes all the data items and relationships between them, together with integrity  constraints  
+  - There is only one conceptual schema per database 
+- The *internal schema* at the lowest level contains definitions of the stored records, the methods of representation, the data fields, and indexes 
+  - There is only one internal schema per database 
+  ]
+  #let right = figure(image("../assets/img/slides_01/"))
 ]
 
 = SQL: Structured Query Language
