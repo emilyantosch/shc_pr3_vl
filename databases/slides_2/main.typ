@@ -53,32 +53,415 @@
 
 #title-slide(authors: [Emily Lucia Antosch])
 
+= Introduction
+
+== Where are we right now?
+
+- Last time, we looked at the bare basics of databases and why we should use databases at all.
+- Today, we'll be discussing
+  - working with the main language of databases: SQL,
+  - how to create a small relational database in PostgreSQL,
+  - simple design pattern that we will build upon in the future!
+
+#slide[
+  1. Introduction
+  2. Basics
+  3. *SQL*
+  4. Entity-Relationship-Model
+  5. Relationships
+  6. Constraints
+  7. More SQL
+  8. Subqueries & Views
+  9. Transactions
+  10. Database Applications
+  11. Integrity, Trigger & Security
+]
+
+== What is the goal of this chapter?
+#slide[
+  - At the end of this lesson, you should be able to
+    - create a small database example using an installation of PostgreSQL,
+    - create, update, remove and delete elements from your database (CRUD)
+    - use simple design patterns to design a good database.
+]
+
+
 = SQL: Structured Query Language
 == What is SQL?
 #slide[
   - Standard language for managing relational databases
   - Used for querying, updating, and managing data
 ]
-== Basic SQL Commands
-#slide[
-  - SELECT: Retrieve data
-  - INSERT: Add new records
-  - UPDATE: Modify existing records
-  - DELETE: Remove records
-]
-== SQL Example: SELECT Statement
 
 #slide[
-  ```sql
-  SELECT Name, Major
-  FROM Students
-  WHERE GPA > 3.5;
-  ```
+  - SQL comes in different flavours, depending on the DBMS you use it in.
+    - You'll find that some small things work differently in PostgreSQL, mySQL and SQLite.
+    - However once you know one flavour, you can easily navigate writing code in another.
 ]
-== SQL Example: INSERT Statement
+
+== How can we use SQL right now?
 #slide[
+  - Depending on your installation of SQL and your OS, you have different ways to use SQL.
+
+  - In our case, we have installed PostgreSQL, which leaves us with multiple options:
+    - Interacting with your database can be done using the CLI (command-line interface).
+    - You can use Postgres' own database manager called pgAdmin.
+    - In your editor of choice, you can most likely install a database interface to connect to your database (VSCode, JetBrains, NeoVim).
+]
+
+#slide[
+  #question[
+    - Since passing this lecture requires you to install a DBMS on your system, I would like to ask you:
+      - What OS are you using?
+      - What Editor are you using?
+      - Do you think you need help with installing a DBMS?
+  ]
+]
+
+== Basic SQL Commands
+#slide[
+  - `CREATE`: Create a database element, like a table or view
+  - `SELECT`: Retrieve data from an element
+  - `INSERT`: Add new records or rows into a table
+  - `UPDATE`: Modify existing records or rows in a table
+  - `DELETE`: Remove records or rows from a table
+]
+
+= First Steps
+== SQL: Step-by-Step Walkthrough
+
+#slide[
+  #heading(numbering: none)[`CREATE`-Statement]
+  - To begin working with SQL, make sure to connect to your database in order to run your commands.
+  - Next, let's create a table, the most basic building block of our database:
   ```sql
-  INSERT INTO Students (Student_ID, Name, Major, GPA)
-  VALUES (104, 'David', 'Biology', 3.7);
+  CREATE TABLE EMP
+  (
+    _ID INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    NAME TEXT NOT NULL, 
+    DEPARTMENT TEXT, 
+    SALARY INT DEFAULT 0
+  );
   ```
 ]
+
+#slide[
+  #heading(numbering: none)[`CREATE`-Statement]
+  Let's look at the `_ID` column a little more in detail:
+  ```sql
+  _ID INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY
+  ```
+  - `_ID`: Name of the column
+
+  #question[
+    If you're wondering why I named the identifier of the table `_ID` and not `ID`: I do this in order to denote that the identifier is an internal value to the database and will not be shown to the user!
+  ]
+]
+
+#slide[
+  #heading(numbering: none)[`CREATE`-Statement]
+  Let's look at the `_ID` column a little more in detail:
+  ```sql
+  _ID INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY
+  ```
+  - `INTEGER`: The data type of the column. We'll explore data types a more in-depth very shortly
+]
+
+#slide[
+  #heading(numbering: none)[`CREATE`-Statement]
+  Let's look at the `_ID` column a little more in detail:
+  ```sql
+  _ID INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY
+  ```
+  - `PRIMARY KEY`: This denotes that is column is used to unique identify each row of the table. This column has a unique value for each row. We'll look more closely at PKs (primary keys) in the near future.
+]
+
+#slide[
+  #heading(numbering: none)[`CREATE`-Statement]
+  Let's look at the `_ID` column a little more in detail:
+  ```sql
+  _ID INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY
+  ```
+  - `GENERATED ALWAYS AS IDENTITY`: In order to achieve this, we'll let PostgreSQL auto generate the identifier for us.
+]
+
+#slide[
+  #heading(numbering: none)[`CREATE`-Statement]
+  - You might have noticed, that each of the columns of a table has a data type.
+  - Data types, like in conventional programming, denote what type of data the column can contain.
+  #example[
+    - `INTEGER`: Integer number data (`int` in C)
+    - `REAL`: Real number data (`double` in C)
+    - `TEXT`: String data (`char[]` in C)
+    - `DATE`: Dedicated date type (no direct equivalent in C)
+  ]
+]
+
+#slide[
+  #heading(numbering: none)[`CREATE`-Statement]
+  - Furthermore, columns can be defined as `NULL` or `NOT NULL`. This defines if the column can be left empty or not.
+  - Also, by using `DEFAULT` you can define the default value of a column if let empty.
+]
+
+#slide[
+  #heading(numbering: none)[`INSERT`-Statement]
+  - Next, we need some form of data that our table can hold.
+  - Let's insert three employees. I'll show you the easiest method to do so:
+  ```sql
+  INSERT INTO EMP
+  (
+    _ID,
+    NAME, 
+    DEPARTMENT, 
+    SALARY
+  )
+  VALUES
+  (
+    100,
+    'Max Power',
+    'HR',
+    3500
+  );
+  ```
+  - Alternatively you also use a `SELECT`-Statement, but more on that later!
+]
+
+#slide[
+  #heading(numbering: none)[`INSERT`-Statement]
+  ```sql
+  INSERT INTO EMP
+  (
+    _ID,
+    NAME, 
+    DEPARTMENT, 
+    SALARY
+  )
+  VALUES
+  (
+    101,
+    'Tim Maxwell',
+    'Engineering',
+    5000
+  );
+  ```
+]
+
+#slide[
+  #heading(numbering: none)[`INSERT`-Statement]
+  ```sql
+  INSERT INTO EMP
+  (
+    _ID,
+    NAME, 
+    DEPARTMENT, 
+    SALARY
+  )
+  VALUES
+  (
+    102,
+    'Rachel Smith',
+    'IT',
+    5500
+  );
+  ```
+]
+
+
+#slide[
+  #heading(numbering: none)[`SELECT`-Statement]
+  - Now, we want to look at the data we just inserted into our database: 
+  ```sql
+  SELECT
+    _ID,
+    NAME,
+    DEPARTMENT,
+    SALARY
+  FROM
+    EMP;
+  ```
+  #tip[
+    - Alternatively you can use `\*` to select all columns of the table:
+  ```sql
+  SELECT
+    *
+  FROM
+    EMP;
+  ```
+  ]
+]
+
+#slide[
+  #heading(numbering: none)[`UPDATE`-Statement]
+  - Let's say we want to update the salary of an employee. Maybe they got a raise?
+  ```sql
+  UPDATE emp
+  SET
+  SALARY = 6000
+  WHERE NAME = 'Max Power';
+  ```
+]
+
+#slide[
+  #heading(numbering: none)[`WHERE`-Clause]
+  - You may have noticed in the last example, that we used the keyword `WHERE`.
+  - It's one of the most important keywords, that you won't be able to live without. 
+  - It defines conditions for the query to be executed.
+  ```sql
+  SELECT 
+    *
+  FROM 
+    EMP
+  WHERE 
+    SALARY <= 5000;
+  ```
+]
+
+#slide[
+  #heading(numbering: none)[`DELETE`-Statement]
+  - Now that we know about the `WHERE`-Clause, we can also use it to delete a record in the table. 
+  - Let's say one of the employees has left the company:
+  ```sql
+  DELETE FROM EMP
+  WHERE NAME = 'Rachel Smith';
+  ```
+]
+
+#slide[
+  #heading(numbering: none)[CRUD]
+  - Using our knowledge, we are now able to design very simple databases!
+]
+
+== Altering our database
+#slide[
+  #heading(numbering: none)[`ALTER`-Statement]
+  #question[
+  - But what if our data changes? How can we adapt our database to suit our needs?
+  ]
+  - Answer: The `ALTER`-Statement!
+]
+
+#slide[
+  #heading(numbering: none)[`ALTER`-Statement]
+  - Using the alter statement, we can add and remove columns, as well as change their data type.
+]
+
+#slide[
+  #heading(numbering: none)[`ALTER`-Statement]
+  - Let's say we want to record, when our employees have joined the company.
+  ```sql
+  ALTER TABLE EMP
+  ADD JOIN_DATE TEXT;
+  ```
+]
+
+#slide[
+  #heading(numbering: none)[`ALTER`-Statement]
+  - Oh, darn, we have assigned the wrong data type! The `DATE` data type is a better fit for this column.
+  - Let's correct our mistake.
+  ```sql
+  ALTER TABLE EMP
+  MODIFY COLUMN JOIN_DATE DATE;
+  ```
+]
+
+#slide[
+  #heading(numbering: none)[`ALTER`-Statement]
+  - And now, the `DEPARTMENT` of each employee is meant to be stored in a different table. We'll remove it for now.
+  ```sql
+  ALTER TABLE EMP
+  DROP COLUMN JOIN_DATE;
+  ```
+]
+
+#slide[
+  #heading(numbering: none)[`DROP`-Statement]
+  - In the last example, you saw how we can delete a column from a table, by using the `DROP` statement. 
+  - We can also apply this to tables:
+  ```sql
+  DROP TABLE EMP;
+  ```
+  #memo[
+    If there is no problem with the deletion, this will delete the table and all of the records inside!
+  ]
+]
+
+= DML: Data Manipulation Language
+
+= SQL: Advanced features
+== SELECT without a table
+#slide[
+  - Sometimes, you might want to select data, such as the current date, without accessing a table.
+  - In PostgreSQL you can just write:
+  ```sql
+  SELECT NOW();
+  ```
+  ```
+  OUTPUT: 2023-04-15 13:56:51.120277+02
+  ```
+  #memo[
+    - In some other flavours, there is a dummy table called `dual`. They serve the same purpose!
+  ]
+]
+
+== WHERE clause
+#slide[
+  #info[
+    - We discussed the `WHERE`-clause earlier:
+      - It contains logical operators to filter the query.
+      - The `WHERE`-clause is optional.
+  ]
+  #heading(numbering: none)[Querying `NULL` values]
+  ```sql
+  WHERE a IS NULL;
+  WHERE a IS NOT NULL;
+  ```
+]
+
+#slide[
+  #heading(numbering: none)[Using `BETWEEN`]
+  #example[
+    Let's say you want to query for all your employees between the ages of 18 and 21.
+  ]
+  ```sql
+  WHERE age >= 18 AND age <= 21;
+  WHERE age BETWEEN 18 AND 21;
+  ```
+
+  #heading(numbering: none)[Using `IN`]
+  #example[
+    Let's say you want to check if the person entering data into the form is one of three special employees.
+  ]
+  ```sql
+  WHERE _ID = 102 OR _ID = 304 OR _ID = 201;
+  WHERE _ID IN (102, 304, 201);
+  ```
+  - The `IN`-clause checks whether a value is part of a set.
+  - Improves the readability of the code!
+]
+
+#slide[
+  #heading(numbering: none)[String Patterns using `LIKE`]
+  #example[
+    Imagine you only save the full name of each employee. Now you want to query of all employees, whose last name is Smith.
+  ]
+  ```sql
+  WHERE NAME LIKE '%SMITH';
+  ```
+  - `%`: Replaces an arbitrary number of letters and numbers
+  - `_`: Replaces a single character
+  - `\`: Escapes one of the wildcard characters (`AB\_CD` #sym.arrow.r `AB_CD`)
+
+  #heading(numbering: none)[Using `IN`]
+  #example[
+    Let's say you want to check if the person entering data into the form is one of three special employees.
+  ]
+  ```sql
+  WHERE _ID = 102 OR _ID = 304 OR _ID = 201;
+  WHERE _ID IN (102, 304, 201);
+  ```
+  - The `IN`-clause checks whether a value is part of a set.
+  - Improves the readability of the code!
+]
+
+
+== GROUP BY & HAVING
