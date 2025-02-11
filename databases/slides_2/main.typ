@@ -451,17 +451,118 @@
   - `_`: Replaces a single character
   - `\`: Escapes one of the wildcard characters (`AB\_CD` #sym.arrow.r `AB_CD`)
 
-  #heading(numbering: none)[Using `IN`]
-  #example[
-    Let's say you want to check if the person entering data into the form is one of three special employees.
-  ]
-  ```sql
-  WHERE _ID = 102 OR _ID = 304 OR _ID = 201;
-  WHERE _ID IN (102, 304, 201);
+  ```sql`
+  'abc' LIKE 'abc' -> TRUE
+  'abc' LIKE 'a%' -> TRUE
+  'abc' LIKE '_b_' -> TRUE
+  'abc' LIKE 'b' -> FALSE
   ```
-  - The `IN`-clause checks whether a value is part of a set.
-  - Improves the readability of the code!
+
 ]
 
+#slide[
+  #heading(numbering: none)[Comparison with `DATE`]
+  #example[
+    Let's say you want to congratulate all employees who have started in the founding year of your company. Let's take 2018 as an example.
+  ]
+  ```sql
+  WHERE JOIN_DATE >= '2018-01-01' AND JOIN_DATE <= '2018-12-31';
+  WHERE JOIN_DATE BETWEEN '2018-01-01' AND '2018-12-31';
+  WHERE JOIN_DATE::TEXT LIKE '2018%';
+  ```
+  #memo[
+    The example of date comparisons are DBMS dependant. Example for Oracle:
+    ```sql
+    WHERE JOIN_DATE >= TO_DATE('2018-01-01', 'yyyy.mm.dd') AND JOIN_DATE <= TO_DATE('2018-12-31', 'yyyy.mm.dd')
+    ```
+  ]
+]
 
+== Sorting query results
+#slide[
+  #heading(numbering: none)[Using `ORDER BY`]
+  - The results of queries are sets, meaning they have no order applied to them
+  - Using `ORDER BY`, you can impose an order on the result of a query
+  - You can order by more than one column.
+  ```sql
+  SELECT
+    NAME
+  FROM
+    EMP
+  ORDER BY
+    _ID;
+  ```
+  #memo[
+    You can change the direction of the sort by using `ASC` (ascending) and `DESC` (descending).
+    ```sql
+    ORDER BY _ID ASC;
+    ORDER BY _ID DESC;
+    ```
+  ]
+]
+
+== Aggregate Functions
+#slide[
+  #heading(numbering: none)[Using Aggregate Functions]
+  - Using aggregate functions, you can analyze your data and create summaries of the shape of your data.
+  - For instance, you can count the number of rows that match your condition or simply return the maximum value of a set of values.
+  ```sql
+  SELECT
+    COUNT(NAME)
+  FROM
+    EMP
+  WHERE 
+    NAME LIKE '%SMITH'
+  ORDER BY
+    _ID;
+  ```
+  #memo[
+    You can change the direction of the sort by using `ASC` (ascending) and `DESC` (descending).
+    ```sql
+    ORDER BY _ID ASC;
+    ORDER BY _ID DESC;
+    ```
+  ]
+]
+
+#slide[
+  #heading(numbering: none)[Using Aggregate Functions]
+  ```sql
+  SELECT COUNT(∗) FROM Book; -> 4
+  SELECT COUNT(PNr) FROM Book; -> 3
+  SELECT COUNT(DISTINCT PNr) FROM Book; -> 2
+  SELECT MIN(Price), MAX(Price) FROM Book; -> 9.99
+  SELECT SUM(Price) FROM Book; -> 64.87
+  SELECT AVG(Price) FROM Book; -> 16.22
+  ```
+]
+//TODO: Add additional examples as per template slide 06
 == GROUP BY & HAVING
+#slide[
+  #heading(numbering: none)[Using `GROUP BY`]
+- Grouping is used to create subgroups of tuples before summarization
+  - partition the relation into nonoverlapping subsets (or groups) of tuples
+  - Using a grouping attribute
+  - Grouping attribute should appear in the SELECT clause
+  - If NULLs exist in the grouping attribute, then a separate group is created for all tuples with a  NULL value 
+  #example[
+    For each department, we want to retrieve the department number, the number of employees in  the department, and their average salary.
+  ]
+  ```sql
+  SELECT
+    DEPARTMENT, COUNT(*), AVG(SALARY)
+  FROM EMP
+  GROUP BY DEPARTMENT;
+  ```
+]
+
+#slide[
+  #heading(numbering: none)[Using `HAVING`]
+  - `HAVING` provides a condition on the summary information regarding the group of tuples associated with each value of the grouping attributes
+  - Only the groups that satisfy the condition are retrieved in the result of the query
+  - `HAVING` clause appears in conjunction with `GROUP BY` clause
+  #info[
+    - Selection conditions in `WHERE` clause limit the tuples
+    - `HAVING` clause serves to choose whole groups 
+  ]
+]
