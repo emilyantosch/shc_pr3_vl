@@ -138,8 +138,8 @@
   CREATE TABLE EMP
   (
     _ID INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    NAME TEXT NOT NULL, 
-    DEPARTMENT TEXT, 
+    NAME TEXT NOT NULL,
+    DEPARTMENT TEXT,
     SALARY INT DEFAULT 0
   );
   ```
@@ -210,17 +210,11 @@
   ```sql
   INSERT INTO EMP
   (
-    _ID,
-    NAME, 
-    DEPARTMENT, 
-    SALARY
+    _ID, NAME, DEPARTMENT, SALARY
   )
   VALUES
   (
-    100,
-    'Max Power',
-    'HR',
-    3500
+    100, 'Max Power', 'HR', 3500
   );
   ```
   - Alternatively you also use a `SELECT`-Statement, but more on that later!
@@ -231,17 +225,11 @@
   ```sql
   INSERT INTO EMP
   (
-    _ID,
-    NAME, 
-    DEPARTMENT, 
-    SALARY
+    _ID, NAME, DEPARTMENT, SALARY
   )
   VALUES
   (
-    101,
-    'Tim Maxwell',
-    'Engineering',
-    5000
+    101, 'Tim Maxwell', 'Engineering', 5000
   );
   ```
 ]
@@ -251,17 +239,11 @@
   ```sql
   INSERT INTO EMP
   (
-    _ID,
-    NAME, 
-    DEPARTMENT, 
-    SALARY
+    _ID, NAME, DEPARTMENT, SALARY
   )
   VALUES
   (
-    102,
-    'Rachel Smith',
-    'IT',
-    5500
+    102, 'Rachel Smith', 'IT', 5500
   );
   ```
 ]
@@ -269,24 +251,33 @@
 
 #slide[
   #heading(numbering: none)[`SELECT`-Statement]
-  - Now, we want to look at the data we just inserted into our database: 
+  - Now, we want to look at the data we just inserted into our database:
   ```sql
   SELECT
-    _ID,
-    NAME,
-    DEPARTMENT,
-    SALARY
+    _ID, NAME, DEPARTMENT, SALARY
   FROM
     EMP;
   ```
+  #align(center + horizon)[
+    #table(
+      align: center,
+      columns: (auto, auto, auto, auto, auto),
+      table.header([`ROW_NUM`], [`_ID`], [`NAME`], [`DEPARTMENT`], [`SALARY`]),
+      [1], [100], [Max Power], [HR], [3500],
+      [2], [101], [Tim Maxwell], [Engineering], [5000],
+      [3], [102], [Rachel Smith], [IT], [5500],
+    )
+  ]
+]
+#slide[
   #tip[
-    - Alternatively you can use `\*` to select all columns of the table:
-  ```sql
-  SELECT
-    *
-  FROM
-    EMP;
-  ```
+    - Alternatively you can use `*` to select all columns of the table:
+    ```sql
+    SELECT
+      *
+    FROM
+      EMP;
+    ```
   ]
 ]
 
@@ -299,31 +290,58 @@
   SALARY = 6000
   WHERE NAME = 'Max Power';
   ```
+  #align(center + horizon)[
+    #table(
+      align: center,
+      columns: (auto, auto, auto, auto, auto),
+      table.header([`ROW_NUM`], [`_ID`], [`NAME`], [`DEPARTMENT`], [`SALARY`]),
+      [1], [100], [Max Power], [HR], [6000],
+      [2], [101], [Tim Maxwell], [Engineering], [5000],
+      [3], [102], [Rachel Smith], [IT], [5500],
+    )
+  ]
 ]
 
 #slide[
   #heading(numbering: none)[`WHERE`-Clause]
   - You may have noticed in the last example, that we used the keyword `WHERE`.
-  - It's one of the most important keywords, that you won't be able to live without. 
+  - It's one of the most important keywords, that you won't be able to live without.
   - It defines conditions for the query to be executed.
   ```sql
-  SELECT 
+  SELECT
     *
-  FROM 
+  FROM
     EMP
-  WHERE 
+  WHERE
     SALARY <= 5000;
   ```
+  #align(center + horizon)[
+    #table(
+      align: center,
+      columns: (auto, auto, auto, auto, auto),
+      table.header([`ROW_NUM`], [`_ID`], [`NAME`], [`DEPARTMENT`], [`SALARY`]),
+      [2], [101], [Tim Maxwell], [Engineering], [5000],
+    )
+  ]
 ]
 
 #slide[
   #heading(numbering: none)[`DELETE`-Statement]
-  - Now that we know about the `WHERE`-Clause, we can also use it to delete a record in the table. 
+  - Now that we know about the `WHERE`-Clause, we can also use it to delete a record in the table.
   - Let's say one of the employees has left the company:
   ```sql
   DELETE FROM EMP
   WHERE NAME = 'Rachel Smith';
   ```
+  #align(center + horizon)[
+    #table(
+      align: center,
+      columns: (auto, auto, auto, auto, auto),
+      table.header([`ROW_NUM`], [`_ID`], [`NAME`], [`DEPARTMENT`], [`SALARY`]),
+      [1], [100], [Max Power], [HR], [3500],
+      [2], [101], [Tim Maxwell], [Engineering], [5000],
+    )
+  ]
 ]
 
 #slide[
@@ -335,7 +353,7 @@
 #slide[
   #heading(numbering: none)[`ALTER`-Statement]
   #question[
-  - But what if our data changes? How can we adapt our database to suit our needs?
+    - But what if our data changes? How can we adapt our database to suit our needs?
   ]
   - Answer: The `ALTER`-Statement!
 ]
@@ -369,13 +387,13 @@
   - And now, the `DEPARTMENT` of each employee is meant to be stored in a different table. We'll remove it for now.
   ```sql
   ALTER TABLE EMP
-  DROP COLUMN JOIN_DATE;
+  DROP COLUMN DEPARTMENT;
   ```
 ]
 
 #slide[
   #heading(numbering: none)[`DROP`-Statement]
-  - In the last example, you saw how we can delete a column from a table, by using the `DROP` statement. 
+  - In the last example, you saw how we can delete a column from a table, by using the `DROP` statement.
   - We can also apply this to tables:
   ```sql
   DROP TABLE EMP;
@@ -451,7 +469,7 @@
   - `_`: Replaces a single character
   - `\`: Escapes one of the wildcard characters (`AB\_CD` #sym.arrow.r `AB_CD`)
 
-  ```sql`
+  ```sql `
   'abc' LIKE 'abc' -> TRUE
   'abc' LIKE 'a%' -> TRUE
   'abc' LIKE '_b_' -> TRUE
@@ -511,7 +529,7 @@
     COUNT(NAME)
   FROM
     EMP
-  WHERE 
+  WHERE
     NAME LIKE '%SMITH'
   ORDER BY
     _ID;
@@ -540,21 +558,21 @@
 == GROUP BY & HAVING
 #slide[
   #heading(numbering: none)[Using `GROUP BY`]
-- Grouping is used to create subgroups of tuples before summarization
-  - partition the relation into nonoverlapping subsets (or groups) of tuples
-  - Using a grouping attribute
-  - Grouping attribute should appear in the SELECT clause
-  - If NULLs exist in the grouping attribute, then a separate group is created for all tuples with a  NULL value 
-  #example[
-    For each department, we want to retrieve the department number, the number of employees in  the department, and their average salary.
-  ]
-  ```sql
-  SELECT
-    DEPARTMENT, COUNT(*), AVG(SALARY)
-  FROM EMP
-  GROUP BY DEPARTMENT;
-  ```
-]
+  - Grouping is used to create subgroups of tuples before summarization
+    - partition the relation into nonoverlapping subsets (or groups) of tuples
+    - Using a grouping attribute
+    - Grouping attribute should appear in the SELECT clause
+    - If NULLs exist in the grouping attribute, then a separate group is created for all tuples with a NULL value
+    #example[
+      For each department, we want to retrieve the department number, the number of employees in the department, and their average salary.
+    ]
+    ```sql
+    SELECT
+      DEPARTMENT, COUNT(*), AVG(SALARY)
+    FROM EMP
+    GROUP BY DEPARTMENT;
+    ```
+]hkkkk:w
 
 #slide[
   #heading(numbering: none)[Using `HAVING`]
@@ -563,6 +581,82 @@
   - `HAVING` clause appears in conjunction with `GROUP BY` clause
   #info[
     - Selection conditions in `WHERE` clause limit the tuples
-    - `HAVING` clause serves to choose whole groups 
+    - `HAVING` clause serves to choose whole groups
+  ]
+]
+
+#slide[
+  #heading(numbering: none)[Using `HAVING`]
+  - Imagine you have a whole lot of employees in your company and you want to find the name and amount of employees per department, but only take into account those department that have 10 or more employees.
+  ```sql
+  SELECT NAME, count(*) as emp_amount
+  FROM EMP
+  GROUP BY DEPARTMENT
+  HAVING count(*) >= 10;
+  ```
+]
+
+#slide[
+  #heading(numbering: none)[Using `HAVING`]
+  - Let's say you wanna retrieve all projects in your company that have more than 2 employees working on it. The PROJECTS table contains all projects and the EMP_PROJECT_RESPONSIBILITY matches employees to projects.
+  ```sql
+  SELECT p.PROJECT_NUM, p.PROJECT_NAME, count(*) as emp_amount
+  FROM PROJECTS p
+  LEFT JOIN EMP_PROJECT_RESPONSIBILITY e ON e.project_id = p._id
+  GROUP BY p.PROJECT_NUM, p.PROJECT_NAME
+  HAVING count(*) > 2;
+  ```
+]
+
+#slide[
+  #heading(numbering: none)[Using `HAVING`]
+  #info[
+    - When using groups, only two types of things are allowed in a `SELECT`-clause:
+      - Aggregate Functions
+      - Columns contained in a `GROUP BY`-statement
+    - And while `HAVING` allows aggregate functions, `WHERE` does not.
+  ]
+]
+
+== Special Features
+#slide[
+  #heading(numbering: none)[Special Features not covered]
+  - `ANY` and `SOME`
+  - `ALL` in comparisons of a `WHERE`-clause
+  - `EXISTS` in a `WHERE`-clause
+  - `UNIQUE` in a `WHERE`-clause
+  - Nested queries
+]
+
+#slide[
+  #heading(numbering: none)[Assignment]
+  - How many students are studying CS?
+  - List all course names and how often they have been taught.
+  - For each section taught by Professor Anderson, retrieve the course number, semester, year and number of students who took the section.
+]
+
+== Query: Summary
+#slide[
+  ```sql
+    SELECT <attribute and function list>
+    FROM <table list>
+  [ WHERE <condition> ]
+  [ GROUP BY <grouping attribute(s)> ]
+  [ HAVING <group condition> ]
+  [ ORDER BY <attribute list> ];
+  ```
+]
+
+== Query: Execution Order
+#slide[
+  - Order of Execution:
+    - `FROM` (cartesian product, `JOIN`)
+    - `WHERE` (selection)
+    - `GROUP BY` (grouping)
+    - `HAVING` (condition on group)
+    - `ORDER BY` (sorting)
+    - `SELECT` (projection)
+  #info[
+    - The optimizer might build a different execution order if that would speed up the query.
   ]
 ]
