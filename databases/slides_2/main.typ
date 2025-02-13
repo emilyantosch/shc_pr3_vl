@@ -414,14 +414,19 @@
 #slide[
   #heading(numbering: none)[What is joining two tables?]
   - More often than not, the magic of SQL happens when you join two tables together.
-  - This is done using the SQL statement `JOIN`, which combines two tables either 
+  - This is done using the SQL statement `JOIN`, which combines two tables either
   by building the cartesian product or by connecting them based on certain criteria.
   - There are multiple types of joins available, which we will explore in the following slides.
   #memo[
     It can be difficult to wrap your head around, how different tables will end up looking after a join:
-      1. Don't fret, this is a difficult subject!
-      2. It is often very useful to try different types of joins and to look at the entire result of the unfiltered query.
+    1. Don't fret, this is a difficult subject!
+    2. It is often very useful to try different types of joins and to look at the entire result of the unfiltered query.
   ]
+]
+
+#slide[
+  #heading(numbering: none)[Overview]
+  #figure(image("../assets/img/slides_02/20250213_join_overview_rev01.png", height: 90%))
 ]
 
 #slide[
@@ -439,12 +444,74 @@
 ]
 
 #slide[
-  #heading(numbering: none)[`LEFT JOIN`]
-  - In practice, this is one of the most used join types. 
-  #memo[
-    While you also use just a `JOIN` and also just a comma to also execute an inner join, I ask you to always write `INNER JOIN` as it is by far easier to read what you are actually doing.
+  #let left = [
+    #heading(numbering: none)[`LEFT (OUTER) JOIN`]
+    - In practice, this is one of the most used join types. This join type will retain all rows of the left (main) table, while appending the rows of the right to that.
+    - If a row on the left table cannot be matched to a row in the right table, then the values of the right table will be left empty with the columns still attached.
+    ```sql
+    SELECT * FROM CUSTOMERS c
+    LEFT JOIN BOOKS b ON c._ID = b.BORROWER_ID;
+    ```
+    #info[
+      - You will also find the name `LEFT OUTER JOIN`, but I'll keep using `LEFT JOIN`.
+    ]
   ]
+  #let right = figure(image("../assets/img/slides_02/2025_01_21_book_cust_rev01.png"))
+  #grid(
+    columns: (70%, 30%),
+    gutter: 0.25em,
+    left, right,
+  )
 ]
+
+#slide[
+  #let left = [
+    #heading(numbering: none)[`RIGHT (OUTER) JOIN`]
+    - This join type does the same as the `LEFT JOIN` but for the right-hand table instead.
+    ```sql
+    SELECT * FROM CUSTOMERS c
+    RIGHT JOIN BOOKS b ON c._ID = b.BORROWER_ID;
+    ```
+
+    #info[
+      You will, similarly to the previous example, find the term `RIGHT OUTER JOIN`.
+    ]
+  ]
+  #let right = figure(image("../assets/img/slides_02/2025_01_21_book_cust_rev01.png"))
+  #grid(
+    columns: (70%, 30%),
+    gutter: 0.25em,
+    left, right,
+  )
+]
+
+#slide[
+  #let left = [
+    #heading(numbering: none)[`FULL (OUTER) JOIN`]
+    - This join type combines the `LEFT JOIN` and `RIGHT JOIN` and selects all records from both tables, even if there are rows that do not match.
+    ```sql
+    SELECT * FROM CUSTOMERS c
+    FULL JOIN BOOKS b ON c._ID = b.BORROWER_ID;
+    ```
+    #info[
+      You can also achieve the same behaviour by using `UNION` on two queries, one with a `LEFT JOIN` and the other with a `RIGHT JOIN`.
+      ```sql
+      SELECT * FROM CUSTOMERS c
+      LEFT JOIN BOOKS b ON c._ID = b.BORROWER_ID;
+      UNION
+      SELECT * FROM CUSTOMERS c
+      RIGHT JOIN BOOKS b ON c._ID = b.BORROWER_ID;
+      ```
+    ]
+  ]
+  #let right = figure(image("../assets/img/slides_02/2025_01_21_book_cust_rev01.png"))
+  #grid(
+    columns: (70%, 30%),
+    gutter: 0.25em,
+    left, right,
+  )
+]
+
 
 = SQL: Advanced features
 == SELECT without a table

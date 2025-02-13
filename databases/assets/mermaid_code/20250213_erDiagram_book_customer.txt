@@ -1,0 +1,11 @@
+erDiagram
+    CUSTOMER ||--o{ BOOKS : borrows
+    CUSTOMER {
+        int _ID
+        string name
+        int age
+    }
+    BOOKS {
+        int BORROWER_ID
+        string title
+    }
