@@ -120,11 +120,15 @@
 
 == Basic SQL Commands
 #slide[
-  - `CREATE`: Create a database element, like a table or view
-  - `SELECT`: Retrieve data from an element
-  - `INSERT`: Add new records or rows into a table
-  - `UPDATE`: Modify existing records or rows in a table
-  - `DELETE`: Remove records or rows from a table
+  #align(center + horizon)[
+    #idea[
+      - `CREATE`: Create a database element, like a table or view
+      - `SELECT`: Retrieve data from an element
+      - `INSERT`: Add new records or rows into a table
+      - `UPDATE`: Modify existing records or rows in a table
+      - `DELETE`: Remove records or rows from a table
+    ]
+  ]
 ]
 
 = First Steps
@@ -404,6 +408,43 @@
 ]
 
 = DML: Data Manipulation Language
+
+= The `JOIN` statement
+== Joining tables
+#slide[
+  #heading(numbering: none)[What is joining two tables?]
+  - More often than not, the magic of SQL happens when you join two tables together.
+  - This is done using the SQL statement `JOIN`, which combines two tables either 
+  by building the cartesian product or by connecting them based on certain criteria.
+  - There are multiple types of joins available, which we will explore in the following slides.
+  #memo[
+    It can be difficult to wrap your head around, how different tables will end up looking after a join:
+      1. Don't fret, this is a difficult subject!
+      2. It is often very useful to try different types of joins and to look at the entire result of the unfiltered query.
+  ]
+]
+
+#slide[
+  #heading(numbering: none)[`(INNER) JOIN`]
+  - The simplest form of joining two tables is the `INNER JOIN`.
+  - Only rows that match the condition defined in the join are returned.
+  ```sql
+    SELECT *
+    FROM EMP e
+    INNER JOIN DEPARTMENT d ON e.DEPARTMENT_ID = d._ID;
+  ```
+  #memo[
+    While you also use just a `JOIN` and also just a comma to also execute an inner join, I ask you to always write `INNER JOIN` as it is by far easier to read what you are actually doing.
+  ]
+]
+
+#slide[
+  #heading(numbering: none)[`LEFT JOIN`]
+  - In practice, this is one of the most used join types. 
+  #memo[
+    While you also use just a `JOIN` and also just a comma to also execute an inner join, I ask you to always write `INNER JOIN` as it is by far easier to read what you are actually doing.
+  ]
+]
 
 = SQL: Advanced features
 == SELECT without a table
