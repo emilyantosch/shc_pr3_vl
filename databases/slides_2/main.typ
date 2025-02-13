@@ -613,7 +613,7 @@
     FROM EMP
     GROUP BY DEPARTMENT;
     ```
-]hkkkk:w
+]
 
 #slide[
   #heading(numbering: none)[Using `HAVING`]
