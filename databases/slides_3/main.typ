@@ -472,7 +472,40 @@
 
 #slide[
   #heading(numbering: none)[RM: The math behind it]
-  //TODO: Continue here with page 126
+  - A relation (or relational state) $r$ of the relation schema $R(A_1, A_2, ..., A_n$), also denoted by $r(R)$, is a set of $m$-tuples
+  #align(center)[
+    $r = (t_1, t_2, ..., t_m)$
+  ]
+  - Each $n$-tuple $t$ is an ordered list of $n$ values $t = <v_1, v_2, ..., v_n>$, where each value $v_1$, $1 lt.eq i lt.eq n$, is an element of $"dom"(A_i)$ or is a special `NULL` value.
+  - The $i^"th"$ value in tuple $t$, which corresponds to the attribute $A_i$, is referred to as $t[A_i]$ or $t.A_i$ (or $t[i]$ if we use the positional notation).
+]
+
+#slide[
+  #heading(numbering: none)[RM: The math behind it]
+  #memo[
+    - A relation is a set of rows.
+      - meaning: no order, no row number
+      - no duplicates
+  ]
+]
+
+#slide[
+  #heading(numbering: none)[RM: The math behind it]
+  //TODO: Image wechseln
+  #figure(image("../assets/img/slides_03/2024_12_31_s1_db_inventor_rev01.png"))
+]
+
+#slide[
+  #heading(numbering: none)[RM: The math behind it]
+  - A relation (or relational state) $r(R)$ is a mathematical relation of degree $n$ on the domains $"dom"(A_1), "dom"(A_2), ..., "dom"(A_n)$, which is a subset of the Cartesian product (denoted by $times$) of the domains that define $R$:
+  #align(center)[
+    $r(R) subset.eq ("dom"(A_1) times "dom"(A_2) times ... times "dom"(A_n))$
+  ]
+  - If $|D|$ is the total number of values in a domain $D$, the total number of tuples in the Cartesian product is
+  #align(center)[
+    $|"dom"(A_1)| times |"dom"(A_2)| times ... times |"dom"(A_n)|$
+  ]
+
 ]
 
 = License Notice
