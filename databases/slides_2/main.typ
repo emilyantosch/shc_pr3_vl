@@ -437,7 +437,7 @@
 #slide[
   #heading(numbering: none)[`DROP`-Statement]
   - Delete named schema elements, e.g., tables, constraints, schema, indexes, triggers
-  - `DROP` needs to observe referential integrity, in order to drop tables in correct order 
+  - `DROP` needs to observe referential integrity, in order to drop tables in correct order
   - Two drop behavior options:
     #sym.arrow CASCADE
     #sym.arrow RESTRICT
@@ -447,19 +447,19 @@
 
 #slide[
   #heading(numbering: none)[`DROP`-Statement: Syntax]
-  - Syntax: 
+  - Syntax:
   ```sql
-  DROP TABLE < relationname > [( CASCADE | RESTRICT )] 
+  DROP TABLE < relationname > [( CASCADE | RESTRICT )]
   ```
 
   #example[
     ```sql
-    DROP TABLE Dependent RESTRICT; 
+    DROP TABLE Dependent RESTRICT;
     ```
-    #sym.arrow The table is dropped only if it is not referenced in any constraint or view or by another element 
+    #sym.arrow The table is dropped only if it is not referenced in any constraint or view or by another element
 
     ```sql
-    DROP TABLE Dependent CASCADE; 
+    DROP TABLE Dependent CASCADE;
     ```
     #sym.arrow The table is dropped even if there are references 436 S
   ]
@@ -473,7 +473,7 @@
 
   #example[
     ```sql
-    ALTER TABLE COMPANY.Employee DROP COLUMN Address CASCADE; 
+    ALTER TABLE COMPANY.Employee DROP COLUMN Address CASCADE;
     ```
   ]
 ]
@@ -487,48 +487,48 @@
 
    ALTER TABLE COMPANY.Employee DROP CONSTRAINT EMPSUPERFK CASCADE; -- Drop all constraints that depend on EMPSUPERFK
   ```
-  ]
+]
 ]
 
 == Index
 #slide[
   #heading(numbering: none)[Using `INDEX`]
-- Internal structure to increase speed of queries
-- Speed up the search for and retrieval of records (access paths)
-  #sym.arrow But slow down inserts and updates
-  #sym.arrow Memory consumption!
-- Earlier versions of SQL had commands for creating indexes, but these were removed because they were not at the conceptual schema level 
-- Many systems still have the CREATE INDEX commands. 
-```sql
-CREATE [ UNIQUE ] INDEX <name> ON < table > ( < column > [ , . . . ] ) 
-```
+  - Internal structure to increase speed of queries
+  - Speed up the search for and retrieval of records (access paths)
+    #sym.arrow But slow down inserts and updates
+    #sym.arrow Memory consumption!
+  - Earlier versions of SQL had commands for creating indexes, but these were removed because they were not at the conceptual schema level
+  - Many systems still have the CREATE INDEX commands.
+  ```sql
+  CREATE [ UNIQUE ] INDEX <name> ON < table > ( < column > [ , . . . ] )
+  ```
 ]
 
 #slide[
   #heading(numbering: none)[When to use `INDEX`]
 
-- Column is used often for searches or sorting 
-- Many different values, `NULL` seldom
-- Many rows in table 
-- More reads than writes on data 
-- Might be used as join condition 
-- RDBMS must check value for referential integrity 
-- Column is an FK 
-- Referenced column (PK) usually already has an index 
+  - Column is used often for searches or sorting
+  - Many different values, `NULL` seldom
+  - Many rows in table
+  - More reads than writes on data
+  - Might be used as join condition
+  - RDBMS must check value for referential integrity
+  - Column is an FK
+  - Referenced column (PK) usually already has an index
 ]
 
 == More Objects
 #slide[
   #heading(numbering: none)[More Database Objects]
 
-  - DB Objects can be `CREATE`d, `ALTER`ed, `DROP`ped 
-  - `USER`, `ROLE` 
-    - DB users and groups 
+  - DB Objects can be `CREATE`d, `ALTER`ed, `DROP`ped
+  - `USER`, `ROLE`
+    - DB users and groups
   ```sql
     CREATE USER user [ IDENTIFIED BY [PASSWORD] ’ passwd ’ ] [ , user [ IDENTIFIED BY [PASSWORD] ’ passwd ’ ] ];
   ```
-  - VIEW 
-    - User view on table (external layer) 
+  - VIEW
+    - User view on table (external layer)
   ```sql
     CREATE OR REPLACE VIEW view [SELECT ... FROM ...];
   ```
@@ -537,65 +537,65 @@ CREATE [ UNIQUE ] INDEX <name> ON < table > ( < column > [ , . . . ] )
   ]
 ]
 
-#slide[ 
+#slide[
   #heading(numbering: none)[`USER` and `ROLE`]
-- Example: User 
-  - Either owner of a relation or the DBA can grant (or revoke) selected users the privileges to use a SQL statement (e.g., `SELECT`, `INSERT`, `DELETE`) 
-  ```sql
-  CREATE USER ‘student' IDENTIFIED BY ‘123’;
-  GRANT ALL PRIVILEGES ON COMPANY.Employee TO ‘student’;
+  - Example: User
+    - Either owner of a relation or the DBA can grant (or revoke) selected users the privileges to use a SQL statement (e.g., `SELECT`, `INSERT`, `DELETE`)
+    ```sql
+    CREATE USER ‘student' IDENTIFIED BY ‘123’;
+    GRANT ALL PRIVILEGES ON COMPANY.Employee TO ‘student’;
 
-  REVOKE DROP ON COMPANY.Employee FROM ‘student’;
-  SHOW GRANTS FOR student; 
-  ```
+    REVOKE DROP ON COMPANY.Employee FROM ‘student’;
+    SHOW GRANTS FOR student;
+    ```
 ]
 
 #slide[
   #heading(numbering: none)[More examples]
-- `TABLESPACE` 
-  #sym.arrow Grouping of tables based on physical storage 
-- `SYNONYM` 
-  #sym.arrow Alias name for tables, views, sequences 
-- `FUNCTION`, PROCEDURE 
-  #sym.arrow Stored Procedure, Persistent Stored Module (PSM)
-- `TRIGGER` 
-  #sym.arrow Active rule for certain events 
+  - `TABLESPACE`
+    #sym.arrow Grouping of tables based on physical storage
+  - `SYNONYM`
+    #sym.arrow Alias name for tables, views, sequences
+  - `FUNCTION`, PROCEDURE
+    #sym.arrow Stored Procedure, Persistent Stored Module (PSM)
+  - `TRIGGER`
+    #sym.arrow Active rule for certain events
 ]
 
 = DML: Data Manipulation Language
 == Simple Data Manipulation
 #slide[
   #heading(numbering: none)[`INSERT`, `UPDATE`, `DELETE`]
-- INSERT, UPDATE, DELETE 
-  - All operations work on a set of tuples 
-    - Special case(!): work on one tuple 
-  - Example for modifications of sets of tuples: 
-    - Increase the wage of all employees by 10
-    - Delete stock with price below 1€
-    - Set the academic title of some students to ’BSc’ 
+  - INSERT, UPDATE, DELETE
+    - All operations work on a set of tuples
+      - Special case(!): work on one tuple
+    - Example for modifications of sets of tuples:
+      - Increase the wage of all employees by 10
+      - Delete stock with price below 1€
+      - Set the academic title of some students to ’BSc’
 ]
 
 == Transactions in a nutshell
 #slide[
   #heading(numbering: none)[What is a transaction?]
-- Start a transaction 
-  #sym.arrow While some DBMS (e.g. PostgreSQL) need to explicitly start a transaction, some others (e.g. Oracle) do not 
-- After starting a transaction, you can make changes to the db that stay local to your session. 
-- Whenever you feel ready, you can use `COMMIT;` to commit those changes to the database.
-- If you make a mistake, you can use `ROLLBACK;` while in a transaction to undo your changes.
-#memo[
-  If you forget to explicitly commit your changes, you will lose those changes when quitting the transaction.
+  - Start a transaction
+    #sym.arrow While some DBMS (e.g. PostgreSQL) need to explicitly start a transaction, some others (e.g. Oracle) do not
+  - After starting a transaction, you can make changes to the db that stay local to your session.
+  - Whenever you feel ready, you can use `COMMIT;` to commit those changes to the database.
+  - If you make a mistake, you can use `ROLLBACK;` while in a transaction to undo your changes.
+  #memo[
+    If you forget to explicitly commit your changes, you will lose those changes when quitting the transaction.
   ]
 ]
 == Inserting into tables
 #slide[
   #heading(numbering: none)[`INSERT`-statement]
-```sql
- INSERT INTO < table > [ ( < column > [ , … ] ) ] VALUES ( < expression > [ , ...] );
-```
-- The column list is optional 
-  - If omitted, values list must match table’s attributes 
-  - If given, we don’t have to specify values for all columns. Other columns will get the `DEFAULT` value (or `NULL`).
+  ```sql
+   INSERT INTO < table > [ ( < column > [ , … ] ) ] VALUES ( < expression > [ , ...] );
+  ```
+  - The column list is optional
+    - If omitted, values list must match table’s attributes
+    - If given, we don’t have to specify values for all columns. Other columns will get the `DEFAULT` value (or `NULL`).
 ]
 
 #slide[
@@ -605,12 +605,12 @@ CREATE [ UNIQUE ] INDEX <name> ON < table > ( < column > [ , . . . ] )
     - tuples returned by a query
   #example[
     ```sql
-  INSERT INTO EMPLOYEE VALUES ( ‘Arthur’ , ‘C’, ‘Brown’ , 323232323,  ‘1970−12−31’, ‘London’, ‘m’, 45000, 3334455555, 5 );
-  INSERT INTO EMPLOYEE ( first_name, last_name, emp_num, superior_num, dept_num) VALUES ( ‘Andi’ , ’Red’, 343434343, 333445555, 5);
+    INSERT INTO EMPLOYEE VALUES ( ‘Arthur’ , ‘C’, ‘Brown’ , 323232323,  ‘1970−12−31’, ‘London’, ‘m’, 45000, 3334455555, 5 );
+    INSERT INTO EMPLOYEE ( first_name, last_name, emp_num, superior_num, dept_num) VALUES ( ‘Andi’ , ’Red’, 343434343, 333445555, 5);
     ```
   ]
   #info[
-      You may define what columns to fill. You must fill all `NOT NULL` columns.
+    You may define what columns to fill. You must fill all `NOT NULL` columns.
   ]
 ]
 
@@ -618,18 +618,22 @@ CREATE [ UNIQUE ] INDEX <name> ON < table > ( < column > [ , . . . ] )
   #heading(numbering: none)[`INSERT`-statement]
   #let left = [
     #example[
-    ```sql
-    INSERT INTO Book  VALUES ( 1 , 1 , 4712 , ’DBS’ );
-    INSERT INTO Book  VALUES ( 2 , 2 , 9991 , ‘DB1‘);
-    COMMIT;
-    INSERT INTO Book  VALUES ( 3 , NULL , 4242 , ’Hitch’ );
-    ROLLBACK;
-    INSERT INTO Book ( BNr, ISBN , Title ) VALUES ( 3 , 4242, ‘Hitchhiker‘);
-    ```
+      ```sql
+      INSERT INTO Book  VALUES ( 1 , 1 , 4712 , ’DBS’ );
+      INSERT INTO Book  VALUES ( 2 , 2 , 9991 , ‘DB1‘);
+      COMMIT;
+      INSERT INTO Book  VALUES ( 3 , NULL , 4242 , ’Hitch’ );
+      ROLLBACK;
+      INSERT INTO Book ( BNr, ISBN , Title ) VALUES ( 3 , 4242, ‘Hitchhiker‘);
+      ```
     ]
   ]
   #let right = figure(image("../assets/img/slides_02/20250215_insert_const_tuple_rev01.png"))
-  #grid(columns: (auto, auto), gutter: 0.25em, left, right)
+  #grid(
+    columns: (auto, auto),
+    gutter: 0.25em,
+    left, right,
+  )
 ]
 
 #slide[
@@ -646,39 +650,39 @@ CREATE [ UNIQUE ] INDEX <name> ON < table > ( < column > [ , . . . ] )
 
 #slide[
   #heading(numbering: none)[Date formats]
-- Inserting dates into the DB requires to use the format that depends on the flavor of DBMS 
-  ```sql
-   UPDATE Person SET birthdate = ’2008−12−31’ 
-  ```
-- A date-function can also be used:
- ```sql
-  INSERT INTO Person (name, birthdate) VALUES (’Anna’, ’02−FEB−1955’);
-  INSERT INTO Person (name, birthdate) VALUES (’Anna’, TO_DATE(’02.02.1955’));
-  INSERT INTO Person (name, birthdate) VALUES (’Anna’, TO_DATE( ’02−02−1955’, ’DD−MM−YYYY’));
-  ``` 
+  - Inserting dates into the DB requires to use the format that depends on the flavor of DBMS
+    ```sql
+     UPDATE Person SET birthdate = ’2008−12−31’
+    ```
+  - A date-function can also be used:
+    ```sql
+    INSERT INTO Person (name, birthdate) VALUES (’Anna’, ’02−FEB−1955’);
+    INSERT INTO Person (name, birthdate) VALUES (’Anna’, TO_DATE(’02.02.1955’));
+    INSERT INTO Person (name, birthdate) VALUES (’Anna’, TO_DATE( ’02−02−1955’, ’DD−MM−YYYY’));
+    ```
 ]
 
 #slide[
   #heading(numbering: none)[Constraints]
-- All modifications need to observe constraints: 
-  - Domain Constraints meaning the data types must match 
-    - If type conversion are implicit or are required to be explicit is vendor-specific 
-  - Entity Integrity, so whether or not the Primary Key value is not null and unique 
-  - Referential Integrity (Foreign Key), so if the master table has a row that matches the referenced data
-  - Semantical Integrity (check constraints) 
+  - All modifications need to observe constraints:
+    - Domain Constraints meaning the data types must match
+      - If type conversion are implicit or are required to be explicit is vendor-specific
+    - Entity Integrity, so whether or not the Primary Key value is not null and unique
+    - Referential Integrity (Foreign Key), so if the master table has a row that matches the referenced data
+    - Semantical Integrity (check constraints)
 ]
 
 == Updating table data
 #slide[
   #heading(numbering: none)[`UPDATE`-statement]
-```sql
- UPDATE < table > SET < column > = < expression >  [ WHERE < condition >];
-```
-- Used to modify attribute values of one or more selected tuples
-- Can modify only tuples of one table at a time
-- `WHERE`-clause is optional and if left out updates all tuples of the table
-#info[    
-  Updating a primary key value may propagate to the foreign key values of tuples in other relations if such a referential triggered action is specified in the referential integrity constraints of the DDL.
+  ```sql
+   UPDATE < table > SET < column > = < expression >  [ WHERE < condition >];
+  ```
+  - Used to modify attribute values of one or more selected tuples
+  - Can modify only tuples of one table at a time
+  - `WHERE`-clause is optional and if left out updates all tuples of the table
+  #info[
+    Updating a primary key value may propagate to the foreign key values of tuples in other relations if such a referential triggered action is specified in the referential integrity constraints of the DDL.
   ]
 ]
 
@@ -689,17 +693,17 @@ CREATE [ UNIQUE ] INDEX <name> ON < table > ( < column > [ , . . . ] )
     UPDATE Employee SET salary = salary ∗ 1.1;
     UPDATE Person SET email = NULL WHERE email IS NOT NULL;
   ```
-  ]
+]
 ]
 
 == Deleting table data
 #slide[
   #heading(numbering: none)[`DELETE`-statement]
-  - Removes tuples from a relation, the relation stays in the database 
+  - Removes tuples from a relation, the relation stays in the database
   ```sql
-   DELETE FROM < table > [WHERE < condition >] 
+   DELETE FROM < table > [WHERE < condition >]
   ```
-  - Again, the `WHERE`-clause is optional and, if left out, will delete all tuples! 
+  - Again, the `WHERE`-clause is optional and, if left out, will delete all tuples!
   #memo[
     It is imperative to observe the referential integrity!
   ]
@@ -708,15 +712,19 @@ CREATE [ UNIQUE ] INDEX <name> ON < table > ( < column > [ , . . . ] )
 #slide[
   #heading(numbering: none)[`DELETE`-statement]
   #let left = [
-    - Insert a new student `<‘Johnson’, 25, 1,‘Math’>` into the database. 
-    - Change the class of `STUDENT` ‘Smith’ to 2. 
-    - Insert a new course: `<‘Knowledge Engineering’, ‘CS4390’, 3, ‘CS’>`. 
-    - Delete the record for the student whose name is ‘Smith’ and whose student number is 17. 
+    - Insert a new student `<‘Johnson’, 25, 1,‘Math’>` into the database.
+    - Change the class of `STUDENT` ‘Smith’ to 2.
+    - Insert a new course: `<‘Knowledge Engineering’, ‘CS4390’, 3, ‘CS’>`.
+    - Delete the record for the student whose name is ‘Smith’ and whose student number is 17.
   ]
   #let right = [
-    #figure(image("../assets/img/slides_02/20250211_cs_assignment_rev01.png")) 
+    #figure(image("../assets/img/slides_02/20250211_cs_assignment_rev01.png"))
   ]
-  #grid(columns: (auto, auto), gutter: 0.25em, left, right)
+  #grid(
+    columns: (auto, auto),
+    gutter: 0.25em,
+    left, right,
+  )
 ]
 
 
@@ -724,40 +732,44 @@ CREATE [ UNIQUE ] INDEX <name> ON < table > ( < column > [ , . . . ] )
 = Queries: An in-depth look
 == What are queries?
 #slide[
-- Ad-hoc-formula: No programs, requests!
-- Descriptiveness: "What do I want", not "How do I get it"
-- Set-orientation: Much data at once, not only a single tuple
-- Seclusion: All results are relations again and can be queried again
-- Adequate: All data model constructs are supported
-- Orthogonal: There are view independent commands that can be combined
+  - Ad-hoc-formula: No programs, requests!
+  - Descriptiveness: "What do I want", not "How do I get it"
+  - Set-orientation: Much data at once, not only a single tuple
+  - Seclusion: All results are relations again and can be queried again
+  - Adequate: All data model constructs are supported
+  - Orthogonal: There are view independent commands that can be combined
 ]
 
 == What is a good Query Language?
 #slide[
-- Performant: The language is transformable, so that the user may use simple queries that are substituted into fast ones (with the same result!).
-- Efficient: Each operation can be executed efficiently.
-- Secure: All queries lead to finite result sets in finite time.
-- Complete: Everything that is requestable, can be formulated by a query.
-- Definitive: The same request on the same data always yields the same result.
+  - Performant: The language is transformable, so that the user may use simple queries that are substituted into fast ones (with the same result!).
+  - Efficient: Each operation can be executed efficiently.
+  - Secure: All queries lead to finite result sets in finite time.
+  - Complete: Everything that is requestable, can be formulated by a query.
+  - Definitive: The same request on the same data always yields the same result.
 ]
 
 == Queries in SQL
 #slide[
   #let left = [
-  #heading(numbering: none)[DML: Data Manipulation Language]
-  ```sql
-    INSERT INTO (...) VALUES (...);
-    DELETE FROM ...;
-    UPDATE ... SET ...;
-  ```
+    #heading(numbering: none)[DML: Data Manipulation Language]
+    ```sql
+      INSERT INTO (...) VALUES (...);
+      DELETE FROM ...;
+      UPDATE ... SET ...;
+    ```
   ]
   #let right = [
-  #heading(numbering: none)[DQL: Data Query Language]
-  ```sql
-    SELECT ... FROM ...;
-  ```
+    #heading(numbering: none)[DQL: Data Query Language]
+    ```sql
+      SELECT ... FROM ...;
+    ```
   ]
-  #grid(columns: (auto, auto), gutter: 0.25em, left, right)
+  #grid(
+    columns: (auto, auto),
+    gutter: 0.25em,
+    left, right,
+  )
   #memo[
     - DQL is only used to retrieve data that is already there.
     - It does not modify data.
@@ -771,19 +783,19 @@ CREATE [ UNIQUE ] INDEX <name> ON < table > ( < column > [ , . . . ] )
     SQL allows, in contrast to the Relational Model, a table to have two or more tuples to be identical in all of their attributes.
     This makes SQL tables multi sets by design.
   ]
-  - There are ways to enforce tables to follow certain rules using SQL constraints. 
+  - There are ways to enforce tables to follow certain rules using SQL constraints.
   - We'll check these out later in the lecture.
 ]
 
 #slide[
   #heading(numbering: none)[Query Syntax]
   ```sql
-  SELECT [ DISTINCT | ALL ] < attribute_list > 
-  FROM < table list > 
-  [ WHERE < condition > ] 
-  [ <group by clause > ] [ <having clause > ] 
-  [ UNION [ ALL ] < query specification> ] 
-  [ < order by clause > ] 
+  SELECT [ DISTINCT | ALL ] < attribute_list >
+  FROM < table list >
+  [ WHERE < condition > ]
+  [ <group by clause > ] [ <having clause > ]
+  [ UNION [ ALL ] < query specification> ]
+  [ < order by clause > ]
   ```
 ]
 
@@ -794,21 +806,21 @@ CREATE [ UNIQUE ] INDEX <name> ON < table > ( < column > [ , . . . ] )
     FROM <table list>
     WHERE <condition>
   ```
-- `<attribute list>` is a list of attribute names (columns) whose values are to be retrieved by the query
-- `<table list>` is a list of the relation names (e.g.,tables) required to process the query
-- `<condition>` is an optional conditional (Boolean) expression that identifies the tuples to be retrieved by the query
+  - `<attribute list>` is a list of attribute names (columns) whose values are to be retrieved by the query
+  - `<table list>` is a list of the relation names (e.g.,tables) required to process the query
+  - `<condition>` is an optional conditional (Boolean) expression that identifies the tuples to be retrieved by the query
 ]
 
 #slide[
   #heading(numbering: none)[Examples]
   #example[
     ```sql
-    SELECT Bdate, Address 
-    FROM Employee 
+    SELECT Bdate, Address
+    FROM Employee
     WHERE Fname = ‘John’ AND Minit = ‘B’ AND Lname = ‘Smith’;
 
-    SELECT Fname, Lname, Address 
-    FROM Employee, Department 
+    SELECT Fname, Lname, Address
+    FROM Employee, Department
     WHERE Dname = ‘Research’ AND Dnumber = Dno;
     ```
   ]
@@ -819,32 +831,32 @@ CREATE [ UNIQUE ] INDEX <name> ON < table > ( < column > [ , . . . ] )
 
 #slide[
   #heading(numbering: none)[Attribute List]
-    - The `<attribute list>` represents the selected columns, whose values are supposed to be retrieved. 
+  - The `<attribute list>` represents the selected columns, whose values are supposed to be retrieved.
+  ```sql
+  SELECT NAME, SALARY
+  FROM EMP
+  ```
+  - Using the `*`, you can select all columns at once.
+  #info[
+    You can also use aggregate functions, arithmetic expressions as well as constants in your queries:
     ```sql
-    SELECT NAME, SALARY 
-    FROM EMP 
+      SELECT 'Hello World!' as HELLO_WORLD FROM EMP;
     ```
-    - Using the `*`, you can select all columns at once.
-    #info[
-      You can also use aggregate functions, arithmetic expressions as well as constants in your queries:
-      ```sql
-        SELECT 'Hello World!' as HELLO_WORLD FROM EMP;
-      ```
-    ]
+  ]
 ]
 
 #slide[
   #heading(numbering: none)[Attribute List]
-    - When the column names are unambiguous, you can just write their name
-    - If the same column could be attributed to multiple columns, you need to write the table or table alias in front of the name:
-    ```sql
-    SELECT d._ID, e.NAME, e.SALARY as sal
-    FROM EMP e
-    LEFT JOIN DEPARTMENT d ON d._ID = e.DEPARTMENT_ID
-    ```
-    #info[
-      As seen in the previous example, both tables and attributes can be given an alias either by using `AS` or by simply writing the alias after the table name.
-    ]
+  - When the column names are unambiguous, you can just write their name
+  - If the same column could be attributed to multiple columns, you need to write the table or table alias in front of the name:
+  ```sql
+  SELECT d._ID, e.NAME, e.SALARY as sal
+  FROM EMP e
+  LEFT JOIN DEPARTMENT d ON d._ID = e.DEPARTMENT_ID
+  ```
+  #info[
+    As seen in the previous example, both tables and attributes can be given an alias either by using `AS` or by simply writing the alias after the table name.
+  ]
 ]
 
 #slide[
@@ -868,8 +880,8 @@ CREATE [ UNIQUE ] INDEX <name> ON < table > ( < column > [ , . . . ] )
     SELECT * FROM EMP, DEPT;
     ```
   #memo[
-  - If there is more than one table, then the resulting relation is the Cartesian Product of all of these tables.
-    - This may lead to very huge result list if used without a `<condition>`!
+    - If there is more than one table, then the resulting relation is the Cartesian Product of all of these tables.
+      - This may lead to very huge result list if used without a `<condition>`!
   ]
 ]
 
@@ -882,8 +894,8 @@ CREATE [ UNIQUE ] INDEX <name> ON < table > ( < column > [ , . . . ] )
     ```
   #info[
     The `WHERE`-clause is *optional*:
-      - If left out #sym.arrow retrieves all tuples 
-      - If there is two or more relations in the `<table list>` #sym.arrow SQL selects the Cartesian Product
+    - If left out #sym.arrow retrieves all tuples
+    - If there is two or more relations in the `<table list>` #sym.arrow SQL selects the Cartesian Product
   ]
 ]
 
@@ -891,12 +903,12 @@ CREATE [ UNIQUE ] INDEX <name> ON < table > ( < column > [ , . . . ] )
   #heading(numbering: none)[WHERE: Logic Basics]
   - The `WHERE`-clause allows you to compare two expressions
     - Comparison is done using: `<`, `>`, `<=`, `>=`, `=`, `<>`
-    - Both literals and columns are allowed 
+    - Both literals and columns are allowed
     ```sql
     SELECT * FROM USERS WHERE age >= 18;
     SELECT * FROM USERS WHERE NAME <> 'Miller';
     ```
-    - Checking for `NULL`: `IS (NOT) NULL` 
+    - Checking for `NULL`: `IS (NOT) NULL`
     - Logical Operators like `AND`, `OR` and `NOT` can add more nuance to the `WHERE`-clause.
     ```sql
     SELECT * FROM USERS WHERE age >= 18 AND NAME <> 'Miller';
@@ -906,7 +918,7 @@ CREATE [ UNIQUE ] INDEX <name> ON < table > ( < column > [ , . . . ] )
 #slide[
   #heading(numbering: none)[WHERE: `NULL`]
   #question[
-  - What is `42 < NULL`?
+    - What is `42 < NULL`?
   ]
   - Comparisons with `NULL` are never true
   - Therefore, we need a third boolean state #sym.arrow `TRUE`, `FALSE` and `NULL`
@@ -926,7 +938,7 @@ CREATE [ UNIQUE ] INDEX <name> ON < table > ( < column > [ , . . . ] )
   #figure(image("../assets/img/slides_02/20250214_boolean_table_rev01.png"))
 ]
 
-== Set Operations 
+== Set Operations
 #slide[
   #heading(numbering: none)[Set Operations]
   - SQL allows for some of the basic set operations:
@@ -936,8 +948,8 @@ CREATE [ UNIQUE ] INDEX <name> ON < table > ( < column > [ , . . . ] )
 
   #info[
     Set Operations apply only to union-compatible relations:
-      - the two relations need to have the same number of attributes
-      - each corresponding set of attributes has the same domain
+    - the two relations need to have the same number of attributes
+    - each corresponding set of attributes has the same domain
   ]
 ]
 
@@ -945,7 +957,7 @@ CREATE [ UNIQUE ] INDEX <name> ON < table > ( < column > [ , . . . ] )
   #heading(numbering: none)[Set Operations: Example]
   ```sql
     (SELECT DISTINCT USER_NAME FROM USERS WHERE age >= 18)
-    UNION 
+    UNION
     (SELECT DISTINCT USER_NAME FROM USERS WHERE LAST_NAME = 'Miller');
   ```
   #question[
@@ -967,16 +979,20 @@ CREATE [ UNIQUE ] INDEX <name> ON < table > ( < column > [ , . . . ] )
 #slide[
   #heading(numbering: none)[Assignment]
   #let left = [
-    - Retrieve the names of all students with Class 2 majoring in  “CS” (computer science). 
-    - Retrieve the names of all courses taught by Professor King in  2007 and 2008. 
-    - For each section taught by Professor King, retrieve the  course number, semester, year, and name of students who  took the section.
-    - Retrieve the name and transcript of each student with  Class 2 majoring in CS. A transcript includes course name, course number, credit  hours, semester, year, and grade for each course completed  by the student. 
+    - Retrieve the names of all students with Class 2 majoring in “CS” (computer science).
+    - Retrieve the names of all courses taught by Professor King in 2007 and 2008.
+    - For each section taught by Professor King, retrieve the course number, semester, year, and name of students who took the section.
+    - Retrieve the name and transcript of each student with Class 2 majoring in CS. A transcript includes course name, course number, credit hours, semester, year, and grade for each course completed by the student.
   ]
   #let right = [
     #figure(image("../assets/img/slides_02/20250211_cs_assignment_rev01.png"))
   ]
 
-  #grid(columns: (auto, auto), gutter: 0.25em, left, right)
+  #grid(
+    columns: (auto, auto),
+    gutter: 0.25em,
+    left, right,
+  )
 ]
 
 
@@ -1361,3 +1377,15 @@ CREATE [ UNIQUE ] INDEX <name> ON < table > ( < column > [ , . . . ] )
     - The optimizer might build a different execution order if that would speed up the query.
   ]
 ]
+
+= License Notice
+
+== Attribution
+
+- This work is shared under the CC BY-NC-SA 4.0 License and the respective Public
+  License.
+- #link("https://creativecommons.org/licenses/by-nc-sa/4.0/")
+- This work is based off of the work by Prof. Dr. Ulrike Herster.
+- Some of the images and texts, as well as the layout were changed.
+- The base material was supplied in private, therefore the link to the source
+  cannot be shared with the audience.
