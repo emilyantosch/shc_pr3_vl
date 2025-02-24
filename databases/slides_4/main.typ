@@ -35,6 +35,11 @@
 
 #codly(
   languages: (
+    sql: (
+      name: text(font: "JetBrainsMono NFM", " SQL", weight: "bold"),
+      icon: text(font: "JetBrainsMono NFM", "\u{e76e}", weight: "bold"),
+      color: rgb("#2563eb"),
+    ),
     java: (
       name: text(font: "JetBrainsMono NFM", " Java", weight: "bold"), icon: text(font: "JetBrainsMono NFM", "\u{e738}", weight: "bold"), color: rgb("#CE412B"),
     ), c: (
