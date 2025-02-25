@@ -505,8 +505,314 @@
   #align(center)[
     $|"dom"(A_1)| times |"dom"(A_2)| times ... times |"dom"(A_n)|$
   ]
-
 ]
+
+#slide[
+  #heading(numbering: none)[RM: The math behind it]
+  - Ordering of tuples
+    - A relation is defined as a set of tuples
+    - Thus, tuples in a relation do not have any order
+    - In a file, records are physically stored on disk and thus have an order
+
+  - Ordering of values within tuples
+    - An $n$-tuple is an ordered list of $n$ values, so the ordering of values in a tuple is important
+]
+
+#slide[
+  #heading(numbering: none)[Relations and Values]
+  - Values and `NULL`s in tuples
+    - Each value in a tuple is an atomic value.
+    - Hence, composite (and multivalued) attributes are not allowed.
+    - This model is something called the _flat relational model_.
+    #sym.arrow multivalued attributes must be represented by separate relations, and composite
+    are represented only by their simple component attributes in the basic relational model
+    - `NULL` values are used for values that may be unknown or may not apply to a tuple
+  - Relations may represent entity types and relationship types from ERM.
+  #figure(image("../assets/img/slides_03/20250224_value_null_tuples_rev01.png"))
+]
+
+#slide[
+  #heading(numbering: none)[Notation]
+  - A relational schema $R$ of degree $n$ is denoted by $R$ $(A_1, A_2, ..., A_n)$
+  - The uppercase letters $Q$, $R$, $S$ denote relational names
+  - The lowercase letters $q$, $r$, $s$ denote relation states
+  - The letters $t$, $u$, $v$ denote tuples
+  - In general, the name of a relation schema such as `BOOK` also indicates the current set of tuples in that relation (the current relation state) whereas `STUDENT`(`Name`, `Ssn`, ...) refers only to the relation schema
+  - An attribute $A$ can be qualified with the relation's name $R$ to which it belongs by using the dot notation $R.A$ - for example, `BOOK.title`
+  - An $n$-tuple $t$ in a relation $r(R)$ is denoted by $t = <v_1, v_2, ..., v_n>$
+  - $t[A_i]$ and $t.A_i$ refer to the value $v_i$ in $t$.
+  - $t[A_u, A_w, ..., A_z]$ and $t.(A_u, A_w, ..., A_z)$ refer to a subtuple in $t$
+]
+
+#slide[
+  #heading(numbering: none)[Constraints]
+  Three categories
+  1. Constraints that are inherent in the data model
+  #sym.arrow _inherent model-based constraints or implicit constraints_
+  Example: no duplicate tuples in a relation
+  2. Constraints that can be directly expressed in schemas of the data model
+  #sym.arrow _schema-based constraints or explicit constraints_
+  Example: Domain constraints, *key constraints*, constraints on NULL, entity integrity constraints and referential integrity constraints
+  3. Constraints that cannot be directly expressed in the schemas of the data model, and hence must be expressed and enforced by the application programs
+  #sym.arrow _application-based or semantic constraints or business rules_
+]
+
+#slide[
+  #heading(numbering: none)[Constraints - Keys]
+  #text(size: 24pt)[
+    - There are subsets of attributes of a relation schema R with the property that no two tuples in any relation state 𝑟of 𝑅should have the same combination of values for these attributes $t_1["SK"] eq.not t_2["SK"]$.
+    - Any such set of attributes SK is called a super key of a relation #sym.arrow A super key specifies a uniqueness constraint.
+    - A minimal super key, that is, a superkey from which we cannot remove any attributes and still have the uniqueness constraint in condition 1 hold, is called candidate key.
+    - For every relation, one of the candidate keys is chosen as the primary key of the relation
+  ]
+]
+
+#slide[
+  #heading(numbering: none)[Constraints - Key Attributes]
+  #let left = [
+    #text(size: 24pt)[
+      - *Super Key*: An attribute or a set of attributes that uniquely identifies a tuple within a relation.
+      - *Candidate Key (CK)*: A super key, so that no proper subset is a super key within the relationship.
+      - *Primary Key (PK)*: The candidate key that is selected to identify tuples uniquely within the relation; The candidate keys which are not selected as PKs are called "Alternate Keys".
+    ]
+  ]
+  #let right = [
+    #figure(image("../assets/img/slides_03/20250224_sk_ck_pk_rev01.png"))
+  ]
+  #grid(
+    columns: (auto, 40%),
+    gutter: 0.25em,
+    left, right,
+  )
+]
+
+#slide[
+  #heading(numbering: none)[Constraints - Key Attributes]
+  - Primary Key
+    - Also called _Entity Integrity Constraint_
+    - PK values must be unique and cannot be `NULL`!
+    - Notation: #underline()[underlined]
+  #figure(image("../assets/img/slides_03/20250224_isbn_example_rev01.png"))
+]
+
+#slide[
+  #heading(numbering: none)[Constraints - Artificial Keys]
+  #text(size: 24pt)[
+    - PNo is an example for an artificial key
+    - Also called: surrogate key, technical key
+    - Key is an attribute not natural for the entity
+    - Many RDBMS offer identity/serial data types:
+      - Number
+      - Automatically inserted values
+      - Values taken from sequences
+    - In most cases, business keys are needed, too!
+      - A business key is a natural key, i.e., something unique about each tuple
+      - Artificial key should be no excuse for not defining unique attributes!
+    - Artificial Keys may evolve to business keys
+      - ISBN, Social Security Number / Passport Number
+  ]
+]
+
+#slide[
+  #heading(numbering: none)[Database Design]
+  #figure(image("../assets/img/slides_03/20250224_impl_rev01.png"))
+]
+
+#slide[
+  #heading(numbering: none)[Physical Database Design]
+  - Physical Database Design
+    - The primary goal of physical database design is data processing efficiency (as costs for computer technology are decreasing).
+    - Implementation of the logical database design in a concrete schema by using SQL including the relational database schema and external views.
+]
+
+#slide[
+  #heading(numbering: none)[Codd's Twelve Rules]
+  #let left = [
+    - Define the criteria for a DBMS to be a relational DBMS (RDBMS)
+    - Very strict (maybe too strict?)
+    - None of the popular DBMS fulfils all rules
+      - Especially rules 6, 9, 10, 11, and 12 are difficult to fulfill
+      - Therefore, many manufacturers describe their database as relational if it meets only some of the most important criteria
+  ]
+  #let right = [
+    #figure(image("../assets/img/slides_03/2024_12_31_s1_db_inventor_rev01.png"))
+  ]
+  #grid(
+    columns: (auto, auto),
+    gutter: 0.25em,
+    left, right,
+  )
+]
+
+#slide[
+  #heading(numbering: none)[Codd's Twelve Rules]
+  #figure(image("../assets/img/slides_03/20250224_rules_db_design_rev01.png"))
+]
+
+
+#slide[
+  #heading(numbering: none)[SQL History]
+  - SQL may commercial be considered one of the major reasons
+  for the commercial success relational databases
+  - SEQUEL: In 1981, SEQUEL was designed and implemented at IBM Research as the interface
+  for an experimental relational database system called SYSTEM R
+  - SQL-86 or SQL1: developed by ANSI and ISO
+    - Standardized data types, query syntax
+    - `BOOLEAN`, structured types (classes), recursive queries, ...
+  - SQL-92 or SQL2
+    - `BLOBS`, `VARCHAR`, `DATE`, `TIME`, `TIMESTAMP`
+    - consistence checks
+    - modifications of data structures
+]
+
+#slide[
+  #heading(numbering: none)[SQL History]
+  - SQL-1999 or SQL3
+    - User defined types, object concepts (analogues to classes,…)
+  - SQL:2003
+    - Java: SQLJ + JDBC
+    - Stored Procedures (PSM)
+    - sequence generator, auto-generated values, MERGE
+  - SQL-2008
+    - SQL:2008: `TRUNCATE TABLE`, XML/XQuery support,...
+  - SQL:2011
+    - improved support for temporal databases, Roles, OLAP-Supporting
+    - requests: `ROLLUP`, `GROUPING SETS`, `CUBE`
+]
+
+#slide[
+  #heading(numbering: none)[SQL Basics]
+  - SQL has facilities for
+    - Defining views on the database
+    - Specifying security and authorization
+    - Defining integrity constraints
+    - Specifying transaction controls
+  - It also has rules for embedding SQL statements into a general-purpose programming
+  language such as Java, COBOL, or C/C++
+]
+
+
+
+#slide[
+  #heading(numbering: none)[SQL Basics]
+  - Interactive
+    - SQL*PLUS, psql, ... GUI: sqldeveloper, pgadmin, squirrel SQL...
+  - Embedded SQL
+    - SQL commands embedded in 3GL (C, Java)
+    - Native libraries (vendor specific)
+  - ODBC (Open Database Connectivity)
+    - very popular in MS Windows
+    - but can be used under Unix, too
+  - JDBC (Java Database Connectivity)
+    - Part of the standard Java API
+]
+
+#slide[
+  #heading(numbering: none)[SQL Basics - SQL commands]
+  #let left = [
+    ```sql
+      CREATE VIEW
+      DROP VIEW
+    ```
+    ```sql
+      CREATE database
+      DROP database
+      OPEN database
+    ```
+    ```sql
+      CREATE domain
+      DROP domain
+      OPEN domain
+    ```
+  ]
+  #let right = [
+    #figure(image("../assets/img/slides_03/20250224_conceptual_schema_rev01.png", height: 90%))
+  ]
+  #grid(
+    columns: (auto, auto),
+    gutter: 0.25em,
+    left, right,
+  )
+]
+
+#slide[
+  #heading(numbering: none)[SQL Basics]
+  - SQL Keywords: case insensitive
+  - Convention: Upper Case (e.g., `SELECT`, `UPDATE`)
+  - Commands end with ;
+  (when entered interactively)
+  - Comments:
+    - line comment: −− this is a comment
+    - multiline comment: ```/* comment */```
+]
+
+#slide[
+  #heading(numbering: none)[SQL Basics]
+  #figure(image("../assets/img/slides_03/20250224_relational_sql_rev01.png"))
+]
+
+#slide[
+  #heading(numbering: none)[SQL Basics]
+  - Syntax Definition: BNF (Backus-Naur Form)
+  #figure(image("../assets/img/slides_03/20250224_symbol_semantics_rev01.png"))
+]
+
+#slide[
+  #heading(numbering: none)[SQL Basics]
+  - Syntax Definition: BNF (Backus-Naur Form)
+  #figure(image("../assets/img/slides_03/20250224_digit_hexit_rev01.png"))
+]
+
+#slide[
+  #heading(numbering: none)[Create Schema]
+  - A schema
+    - groups together tables and other constructs that belong to the same database application
+    - is identified by a schema name
+    - includes an authorization identifier and descriptors for each element
+  - A schema is essentially a namespace
+  - Schema elements include tables, constraints, views, domains, and other constructs (such as authorization grants) that describe the schema
+]
+
+#slide[
+  #heading(numbering: none)[Create Schema]
+  - Syntax:
+    ```sql
+    CREATE [ OR REPLACE ]
+    { DATABASE | SCHEMA }
+    [ IF NOT EXISTS ]
+    db_name
+    [ create_specification ] ...
+    ```
+  - Example:
+  ```sql
+  CREATE SCHEMA COMPANY;
+  ```
+  - Attention: User must be authorized to create schema and schema elements
+]
+
+#slide[
+  #heading(numbering: none)[Create Table]
+  - A new relation with a name, its attributes and initial constraints
+  - Each attribute is defined by a name, a data type and constraints (e.g., `NOT NULL`)
+  - Following the attributes, the primary key, entity integrity, and referential integrity constraint can be specified(alternatively, they can be specified with `ALTER TABLE`)
+  - All relations created by `CREATE TABLE` are called base tables, i.e., the relation and its tuples are created and stored as a file by the DBMS
+]
+
+#slide[
+  #heading(numbering: none)[Create Table]
+  - Syntax for creating an empty table:
+    ```sql
+    CREATE TABLE <relationname>
+    (<column> <type> [ DEFAULT expr]
+    [ [NOT] NULL ] [ colconstraint ] *
+    [,{<column> <type> [ DEFAULT expr ]
+    [ [NOT] NULL ] [ colconstraint ] *
+    | <tableconstraint> } ] *
+    );
+    ```
+]
+
+
 
 = License Notice
 == Attribution
