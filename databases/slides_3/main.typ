@@ -560,7 +560,7 @@
 #slide[
   #heading(numbering: none)[Constraints - Keys]
   #text(size: 24pt)[
-    - There are subsets of attributes of a relation schema R with the property that no two tuples in any relation state 𝑟of 𝑅should have the same combination of values for these attributes $t_1["SK"] eq.not t_2["SK"]$.
+    - There are subsets of attributes of a relation schema R with the property that no two tuples in any relation state $r$ of $R$ should have the same combination of values for these attributes $t_1["SK"] eq.not t_2["SK"]$.
     - Any such set of attributes SK is called a super key of a relation #sym.arrow A super key specifies a uniqueness constraint.
     - A minimal super key, that is, a superkey from which we cannot remove any attributes and still have the uniqueness constraint in condition 1 hold, is called candidate key.
     - For every relation, one of the candidate keys is chosen as the primary key of the relation
@@ -812,7 +812,192 @@
     ```
 ]
 
+#slide[
+  #heading(numbering: none)[Mapping of ERM to Relational Model]
+  #text(size: 22pt)[
+    Seven steps are involved in mapping the ERM to the RM:
+    1. Mapping of regular entity types
+    2. Mapping of weak entity types
+    3. Mapping of binary 1:1 relationships
+    4. Mapping of binary 1:n relationships
+    5. Mapping of binary m:n relationships
+    6. Mapping of multivalued attributes
+    7. Mapping of n-ary relationships
+    #info[
+      We will only look at step 1 here!
+    ]
 
+  ]
+]
+
+#slide[
+  #heading(numbering: none)[Mapping: Step 1]
+  - For each regular (strong) entity type $E$ in the ER schema, create a relation $R$ that includes all the simple attributes of $E$
+  - Include only the simple component attributes of a composite attribute
+  - Choose one of the key attributes of $E$ as the primary key for $R$
+  - If the chosen key of $E$ is a composite, then the set of simple attributes that form it will together form the primary key of $R$
+]
+
+#slide[
+  #heading(numbering: none)[Mapping: Step 1]
+  #figure(image("../assets/img/slides_03/20250226_mapping_1_rev01.png"))
+]
+
+#slide[
+  #heading(numbering: none)[Mapping: Step 1]
+  #example[
+    ```sql
+    CREATE TABLE COMPANY.Employee ... ;
+    or
+    USE DATABASE COMPANY ;
+    CREATE TABLE Employee ... ;
+    ```
+  ]
+]
+
+#slide[
+  #heading(numbering: none)[Create Table `EMP`]
+  #figure(image("../assets/img/slides_03/20250226_emp_table_creation_rev01.png"))
+]
+
+
+#slide[
+  #heading(numbering: none)[Data Types: Overview]
+  - Numeric
+  - Strings
+  - Temporal
+  - SQL-99: `CLOB`, `BLOB`, `BOOLEAN`
+]
+
+
+
+#slide[
+  #heading(numbering: none)[Data Types: Numeric]
+  - Numeric
+    - Integer: ```sql INTEGER``` or ```sql INT```, ```sql SMALLINT```, ```sql BIGINT```
+    - Floating-point: ```sql FLOAT``` or ```sql REAL```, ```sql DOUBLE PRECISION```
+  - Formatted numbers: `DECIMAL(i,j)` or `NUMERIC(i,j)` where
+  - `i` #sym.arrow precision (total number of decimal digits)
+  - `j` #sym.arrow (digits after the decimal point)
+  - Example:
+    - `DECIMAL` (10,2) : values up to 99,999,999.99
+    - `NUMERIC` (9,2) : 1746352.32
+    - `NUMERIC` (6) : not possible
+]
+
+
+#slide[
+  #heading(numbering: none)[Data Types: Character]
+  - Fixed length:
+    - `CHARACTER(n)` or `CHAR(n)`
+    - fills up with spaces if not full length is used
+  - Variable length:
+    - CHARACTER `VARYING(n)` or `CHAR VARYING(n)` or `VARCHAR(n)`
+    - Oracle: `VARCHAR2(n)`
+    - Example: `VARCHAR(15)`
+  - Value is placed between apostrophes, e.g., ‘abc’
+  - `CHARACTER SET` / `CHARSET` has to be defined or standard charset of DBMS is used → e.g., `UNICODE UTF-8`
+]
+
+#slide[
+  #heading(numbering: none)[Data Types: Date and Time]
+  - `DATE` (10 positions): `YYYY‐MM‐DD`
+  - `TIME` (8 positons): `HH:MM:SS`
+  - `DATETIME`: `YYYY‐MM‐DD HH:MM:SS`
+  - `TIMESTAMP`: `YYYY‐MM‐DD HH:MM:SS.ssssss`
+  - Example:
+  ```sql
+    DATE ‘2008‐09‐27’
+    TIME ‘09:12:47’
+    TIMESTAMP [(precision)] [WITH TIME ZONE]
+  ```
+]
+
+#slide[
+  #heading(numbering: none)[Data Types: Additional]
+  - `CLOB`: Character Large Object
+    - Very long texts
+    - in KB, MB, GB
+  - `BLOB`: Binary Large Object
+    - Long Binary Data (e.g, pictures, video)
+  - `BOOLEAN`
+]
+
+#slide[
+  #heading(numbering: none)[Data Types: Additional]
+  #figure(image("../assets/img/slides_03/20250226_sqlserver_oracle_types_rev01.png"))
+]
+
+#slide[
+  #heading(numbering: none)[Primary Keys]
+  - PK identifies every tuple uniquely
+  - Entity Integrity
+  - One PK for each table
+  - PK is (implicit)
+    - `NOT NULL`
+    - `UNIQUE` (no duplicates)
+]
+
+#slide[
+  #heading(numbering: none)[Constraint Syntax]
+  - As Column Constraint(Only if the primary key is one single attribute (not combined)):
+  ```sql
+  [ CONSTRAINT <constraintname> ] PRIMARY KEY
+  ```
+  - As Table Constraint:
+    ```sql
+    [ CONSTRAINT <constraintname>] PRIMARY KEY
+    ( <column>[ , <column>] * )
+    ```
+]
+
+
+#slide[
+  #heading(numbering: none)[Column Constraint Example]
+  Example Column Constraint:
+
+  ```sql
+  CREATE TABLE Department
+  (
+    Dname VARCHAR(15) NOT NULL,
+    Dnumber INT PRIMARY KEY,
+    Mgr_ssn CHAR(9) NOT NULL,
+    Mgr_start_date DATE
+  );
+  ```
+]
+
+#slide[
+  #heading(numbering: none)[Table Constraint Example]
+  Example Table Constraint:
+  ```sql
+  CREATE TABLE Department
+  (
+    Dname VARCHAR(15) NOT NULL,
+    Dnumber INT NOT NULL,
+    Mgr_ssn CHAR(9) NOT NULL,
+    Mgr_start_date DATE,
+    PRIMARY KEY ( Dnumber )
+  );
+  ```
+
+]
+
+== Homework
+#slide[
+  #heading(numbering: none)[Company Example]
+  #text(size: 24pt)[
+    - Create for every entity type with its attributes a relation in your DB
+    - Insert some sample data in the relations
+    - Write some queries to retrieve the data, e.g.,
+      - Get all female employees
+      - Get all projects located in Hamburg
+    - Think about your own, individual example (e.g. contact list)
+      - Create for every entity type with its attributes a relation in your DB
+      - Insert some sample data in the relations
+      - Write some queries to retrieve the data
+  ]
+]
 
 = License Notice
 == Attribution
