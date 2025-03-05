@@ -108,11 +108,26 @@
 ]
 
 
+:%s/- /- /g
+:%s/- /- /g
+:%s/ - / - /g
+
+
 = Relationships
 == Relationship Types
-
-= License Notice
-
+#slide[
+  #heading(numbering: none)[Basics]
+  - Describe relationships between entity types characterized by a verb
+  - Often 2 naming possibilities:
+    - teaches vs. is taught by
+    - Relationship has always two (or more) directions
+  - May have attributes
+  - Number of participating entity types (degree):
+    1. Unary relationship type (e.g., Employee supervises another employee)
+    2. Binary relationship type (e.g., Employee works for one department)
+    3. Ternary relationship type (e.g., Lecturer recommends books for one specific course)
+    4. Higher degrees...
+]
 == Attribution
 
 - This work is shared under the CC BY-NC-SA 4.0 License and the respective Public
