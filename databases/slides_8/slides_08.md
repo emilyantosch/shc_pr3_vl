@@ -1,163 +1,273 @@
-#import "@preview/touying:0.5.2": *
-#import themes.university: *
+![](_page_0_Picture_0.jpeg)
 
-#import "@preview/fletcher:0.5.1" as flechter: diagram, node, edge
-#import "@preview/wrap-it:0.1.0": wrap-content
+Source: https://en.itpedia.nl/2017/11/26/wat-is-een-database/
 
-#import "@preview/gentle-clues:1.0.0": *
-#import "@preview/pinit:0.2.0": *
-#import "@preview/codly:1.0.0": *
-#show: codly-init.with()
+**DATABASES**
 
-#import "@preview/numbly:0.1.0": numbly
+Prof. Dr. Ulrike Herster Hamburg University of Applied Sciences
 
-#set text(lang: "en", font: "Roboto", size: 18pt)
-#set heading(numbering: numbly("{1}.", default: "1.1"))
+![](_page_0_Picture_4.jpeg)
 
-#set align(left + top)
+# **COPYRIGHT**
 
-#show raw: it => {
-  show regex("pin\d"): it => pin(eval(it.text.slice(3)))
-  it
-}
-#let pinit-rect-from(height: 2em, pos: bottom, fill: rgb(0, 180, 255), point-pin, body) = {
-  pinit-point-from(
-    fill: fill, pin-dx: 0em, pin-dy: if pos == bottom { 0em } else { -0.6em }, body-dx: 0pt, body-dy: if pos == bottom { -1.7em } else { -1.6em }, offset-dx: 0em, offset-dy: if pos == bottom { 1.2em + height } else { -0.6em - height }, point-pin, rect(inset: 0.5em, stroke: (bottom: 0.12em + fill), {
-      set text(fill: fill)
-      body
-    }),
-  )
-}
-#show: university-theme.with(
-  aspect-ratio: "16-9", config-info(
-    title: [Databases], subtitle: [Lecture 8 - Views and Transactions], author: [Emily Lucia Antosch], date: datetime.today().display("[day].[month].[year]"), institution: [HAW Hamburg],
-  ),
-)
+![](_page_1_Picture_1.jpeg)
 
-#codly(
-  languages: (
-    sql: (
-      name: text(font: "JetBrainsMono NFM", " SQL", weight: "bold"),
-      icon: text(font: "JetBrainsMono NFM", "\u{e76e}", weight: "bold"),
-      color: rgb("#2563eb"),
-    ),
-    java: (
-      name: text(font: "JetBrainsMono NFM", " Java", weight: "bold"), icon: text(font: "JetBrainsMono NFM", "\u{e738}", weight: "bold"), color: rgb("#CE412B"),
-    ), c: (
-      name: text(font: "JetBrainsMono NFM", " C", weight: "bold"), icon: text(font: "JetBrainsMono NFM", "\u{e61e}", weight: "bold"), color: rgb("#5612EC"),
-    ),
-  ),
-)
+The publication and sharing of slides, images and sound recordings of this course is not permitted
 
-#title-slide(authors: ([Emily Lucia Antosch]))
+© Professor Dr. Ulrike Herster
 
-#outline(depth: 1)
+The slides and assignments are protected by copyright. The use is only permitted in relation with the course of study. It is not permitted to forward or republish it in other places (e.g., on the internet).
 
-= Introduction
+**Databases, © Ulrike Herster, partially © Elmasri "Fundamentals of Database Systems – For personal use only** .
 
-== Where are we right now?
-#slide[
-- Last time, we looked at the basics of subqueries and views
-- Today, we'll be discussing
-  - how we can expand our knowledge of views,
-  - how we can use transactions to increase the safety of our data manipulation statements
-  - how transactions are executed.
-]
+![](_page_1_Picture_6.jpeg)
 
-#slide[
-  1. Introduction
-  2. Basics
-  3. SQL
-  4. Entity-Relationship-Model
-  5. Relationships
-  6. Constraints
-  8. *Subqueries & Views*
-  9. *Transactions*
-  10. Database Applications
-  11. Integrity, Trigger & Security
-]
+# **ORGANIZATION OUR JOURNEY IN THIS SEMESTER**
 
-== What is the goal of this chapter?
-#slide[
-  - At the end of this lesson, you should be able to
-    - create views in PostgresQL and use them effectively and 
-    - use transactions to make safe changes, that can be undone if necessary.
-]
+![](_page_2_Picture_1.jpeg)
 
-= Repetition
-== Relational Algebra
-#slide[
-#heading(numbering: none)[Basics]
- - SQL is the What, while the Relational Algebra is the How!
+- Integrity, Trigger & Security
+- Database Applications
+- Transactions
+- Subqueries & Views
+- **More SQL**
+- Notations & Guidelines
+- Constraints
+- Relationships
+- Simple Entities and Attributes
+- Basics
+
+2 Source: Foto von Justin Kauffman auf Unsplash
+
+![](_page_2_Picture_13.jpeg)
+
+![](_page_2_Picture_14.jpeg)
+
+# **MORE SQL RELATIONAL ALGEBRA**
+
+![](_page_3_Picture_1.jpeg)
+
+3
+
+ SQL What! Relational Algebra How!
+
 - In mathematics an algebra is a values range combined with defined operations
 - *Relational Algebra*: The values range is the content of the database; operations are functions to calculate the query results a set of operations for the relational model
 - *Relational Calculus*: Descriptive approach that is based on mathematical logic
 	- higher-level declarative language for specifying relational queries,
 	- e.g., no order of operations, only what information the result should contain
-]
 
-#slide[
-#heading(numbering: none)[Operations]
-  #figure(image("../assets/img/slides_08/20250309_operation_sel_proj_rev01.png"))
-]
+Source: Elmasri, Fundamentals of
 
-#slide[
-#heading(numbering: none)[Operations]
-  #figure(image("../assets/img/slides_08/20250309_operation_union_inter_rev01.png"))
-]
+Database Systems, Page 145ff
 
-== Subqueries
-#slide[
-#heading(numbering: none)[Basics]
-- `SELECT` returns relation: a (multi-)set
-- Result of `SELECT` can be included in query
-	- `WHERE` clause
-		- also, for `UPDATE`, `DELETE`
-	- `HAVING` clause
-	- `FROM` clause
-- `SELECT` clause (in column list)
-- So, we have two (or more) `SELECT`s:
-	- Outer `SELECT`
-	- Nested (or inner) `SELECT`: *subquery*
-]
+# **MORE SQL RELATIONAL ALGEBRA: OPERATIONS**
 
-#slide[
-#heading(numbering: none)[Operations in `WHERE`]
-  #figure(image("../assets/img/slides_08/20250309_in_all_any_exists_rev01.png"))
-]
+![](_page_4_Picture_1.jpeg)
 
-#slide[
-#heading(numbering: none)[In `FROM`]
-- `SELECT` returns a new relation
+| O<br>t<br>i<br>p<br>e<br>r<br>a<br>o<br>n      | P<br>r<br>p<br>o<br>s<br>e<br>u                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | N<br>t<br>t<br>i<br>o<br>a<br>o<br>n                                                                                                                                                                                                                               |
+|------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| S<br>l<br>i<br>t<br>e<br>e<br>c<br>o<br>n      | S<br>l<br>l<br>l<br>l<br>h<br>i<br>f<br>h<br>l<br>i<br>d<br>i<br>i<br>t<br>t<br>t<br>t<br>t<br>t<br>t<br>t<br>e<br>e<br>c<br>s<br>a<br>u<br>p<br>e<br>s<br>a<br>s<br>a<br>s<br>y<br>e<br>s<br>e<br>e<br>c<br>o<br>n<br>c<br>o<br>n<br>o<br>n<br>f<br>l<br>t<br>i<br>�<br>�<br>r<br>o<br>m<br>a<br>r<br>e<br>a<br>o<br>n                                                                                                                                                                                     | ሺ<br>ሻ<br>�<br>�<br>�<br>�ழ<br>௜௢<br>௜<br>௜௢<br>௟௘<br>ௗ<br>௧<br>௧<br>வ<br>௦௘<br>௖<br>௡<br>௖௢<br>௡<br>௡                                                                                                                                                             |
+| P<br>j<br>t<br>i<br>r<br>o<br>e<br>c<br>o<br>n | f<br>P<br>d<br>l<br>t<br>i<br>i<br>t<br>h<br>l<br>t<br>h<br>t<br>t<br>i<br>b<br>t<br>r<br>o<br>u<br>c<br>e<br>s<br>a<br>n<br>e<br>w<br>r<br>e<br>a<br>o<br>n<br>w<br>o<br>n<br>y<br>s<br>o<br>m<br>e<br>o<br>e<br>a<br>r<br>u<br>e<br>s<br>f<br>d<br>d<br>l<br>i<br>t<br>t<br>l<br>�<br>�<br>o<br>a<br>n<br>r<br>e<br>m<br>o<br>e<br>s<br>p<br>c<br>a<br>e<br>p<br>e<br>s<br>v<br>u<br>u<br>,                                                                                                               | ሺ<br>ሻ<br>�<br>�<br>�<br>�<br>௜<br>௜௦<br>௕௨<br>௟<br>௧<br>௧௥<br>௧௘<br>௧<br>ழ<br>வ<br>௔                                                                                                                                                                              |
+| R<br>i<br>e<br>n<br>a<br>m<br>n<br>g           | C<br>l<br>i<br>t<br>h<br>l<br>t<br>l<br>t<br>i<br>t<br>o<br>m<br>n<br>n<br>e<br>r<br>e<br>s<br>r<br>e<br>a<br>o<br>n<br>g<br>e<br>s<br>n<br>e<br>n<br>a<br>m<br>e<br>u<br>u<br>w                                                                                                                                                                                                                                                                                                                            | ሺ<br>ሻ<br>�<br>�<br>�<br>�<br>௜<br>௕௨<br>௧<br>௧௥<br>௧௘<br>௡௘<br>௡௔<br>௠<br>௘<br>௔<br>௡௔<br>௠<br>௘<br>௪<br>←                                                                                                                                                        |
+| J<br>i<br>o<br>n                               | f<br>f<br>P<br>d<br>l<br>l<br>b<br>i<br>t<br>i<br>t<br>l<br>d<br>�<br>�<br>�<br>�<br>r<br>o<br>u<br>c<br>e<br>s<br>a<br>c<br>o<br>m<br>n<br>a<br>o<br>n<br>s<br>o<br>u<br>p<br>e<br>s<br>r<br>o<br>m<br>a<br>n<br>ଵ<br>ଶ<br>f<br>t<br>h<br>t<br>t<br>i<br>t<br>h<br>j<br>i<br>d<br>i<br>t<br>i<br>a<br>s<br>a<br>s<br>y<br>e<br>o<br>n<br>c<br>o<br>n<br>o<br>n                                                                                                                                             | �<br>�<br>�<br>�<br>⋈<br>௝<br>௜௡<br>ௗ<br>௜<br>௜௢<br>ଵ<br>ଶ<br>ழ<br>௧<br>வ<br>௢<br>௖௢<br>௡<br>௡                                                                                                                                                                     |
+| E<br>i<br>j<br>i<br>q<br>u<br>o<br>n           | f<br>f<br>P<br>d<br>l<br>l<br>t<br>h<br>b<br>i<br>t<br>i<br>t<br>l<br>d<br>�<br>�<br>r<br>o<br>u<br>c<br>e<br>s<br>a<br>e<br>c<br>o<br>m<br>n<br>a<br>o<br>n<br>s<br>o<br>u<br>p<br>e<br>s<br>r<br>o<br>m<br>a<br>n<br>ଵ<br>t<br>h<br>t<br>t<br>i<br>f<br>j<br>i<br>d<br>i<br>t<br>i<br>i<br>t<br>h<br>l<br>l<br>i<br>t<br>�<br>�<br>a<br>s<br>a<br>s<br>a<br>o<br>n<br>c<br>o<br>n<br>o<br>n<br>o<br>n<br>e<br>q<br>a<br>y<br>w<br>y<br>u<br>y<br>ଶ<br>i<br>c<br>o<br>m<br>p<br>a<br>r<br>s<br>o<br>n<br>s | �<br>�<br>�<br>�<br>∗ழ<br>௝<br>௜௡<br>ௗ<br>௜<br>௜௢<br>ଵ<br>ଶ<br>௧<br>வ<br>௢<br>௖௢<br>௡<br>௡                                                                                                                                                                         |
+|                                                |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | S<br>E<br>l<br>i,<br>F<br>d<br>l<br>f<br>t<br>o<br>u<br>r<br>c<br>e<br>:<br>m<br>a<br>s<br>r<br>u<br>n<br>a<br>m<br>e<br>n<br>a<br>s<br>o<br>D<br>b<br>S<br>P<br>1<br>4<br>5<br>f<br>f<br>t<br>t<br>a<br>a<br>a<br>s<br>e<br>y<br>s<br>e<br>m<br>s,<br>a<br>g<br>e |
+
+**Databases, © Ulrike Herster, partially © Elmasri "Fundamentals of Database Systems – For personal use only**
+
+![](_page_4_Picture_4.jpeg)
+
+# **MORE SQL RELATIONAL ALGEBRA: OPERATIONS**
+
+![](_page_5_Picture_1.jpeg)
+
+| O<br>i<br>t<br>p<br>e<br>r<br>a<br>o<br>n                                    | P<br>u<br>r<br>p<br>o<br>s<br>e                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | N<br>i<br>t<br>t<br>o<br>a<br>o<br>n |
+|------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------|
+| U<br>i<br>n<br>o<br>n                                                        | P<br>d<br>l<br>i<br>h<br>i<br>l<br>d<br>l<br>l<br>h<br>l<br>i<br>t<br>t<br>t<br>t<br>t<br>�<br>�<br>�<br>�<br>r<br>o<br>c<br>e<br>s<br>a<br>r<br>e<br>a<br>o<br>n<br>a<br>n<br>c<br>e<br>s<br>a<br>e<br>p<br>e<br>s<br>n<br>o<br>r<br>o<br>r<br>u<br>u<br>u<br>ଵ<br>ଶ<br>b<br>h<br>d<br>d<br>b<br>i<br>i<br>b<br>l<br>t<br>t<br>t<br>�<br>�<br>�<br>�<br>�<br>�<br>�<br>�<br>o<br>a<br>n<br>;<br>a<br>n<br>m<br>u<br>s<br>e<br>u<br>n<br>o<br>n<br>c<br>o<br>m<br>p<br>a<br>e<br>ଵ<br>ଶ<br>ଵ<br>ଶ                                                                       | �<br>�<br>�<br>�<br>∪<br>ଵ<br>ଶ      |
+| I<br>i<br>t<br>t<br>n<br>e<br>r<br>s<br>e<br>c<br>o<br>n                     | P<br>d<br>l<br>i<br>h<br>i<br>l<br>d<br>l<br>l<br>h<br>l<br>i<br>b<br>h<br>d<br>t<br>t<br>t<br>t<br>t<br>t<br>�<br>�<br>r<br>o<br>c<br>e<br>s<br>a<br>r<br>e<br>a<br>o<br>n<br>a<br>n<br>c<br>e<br>s<br>a<br>e<br>p<br>e<br>s<br>n<br>o<br>a<br>n<br>u<br>u<br>u<br>ଵ<br>d<br>t<br>b<br>i<br>t<br>i<br>b<br>l<br>�<br>�<br>�<br>�<br>�<br>�<br>;<br>a<br>n<br>m<br>u<br>s<br>e<br>u<br>n<br>o<br>n<br>c<br>o<br>m<br>p<br>a<br>e<br>ଶ<br>ଵ<br>ଶ                                                                                                                         | �<br>�<br>�<br>�<br>∩<br>ଶ<br>ଵ      |
+| S<br>D<br>i<br>f<br>f<br>t<br>e<br>e<br>r<br>e<br>n<br>c<br>e                | P<br>d<br>l<br>i<br>h<br>i<br>l<br>d<br>l<br>l<br>h<br>l<br>i<br>h<br>t<br>t<br>t<br>t<br>t<br>t<br>t<br>�<br>�<br>r<br>o<br>u<br>c<br>e<br>s<br>a<br>r<br>e<br>a<br>o<br>n<br>a<br>n<br>c<br>u<br>e<br>s<br>a<br>e<br>u<br>p<br>e<br>s<br>n<br>a<br>a<br>r<br>e<br>ଵ<br>t<br>i<br>d<br>t<br>b<br>i<br>t<br>i<br>b<br>l<br>�<br>�<br>�<br>�<br>�<br>�<br>n<br>o<br>n<br>;<br>a<br>n<br>m<br>u<br>s<br>e<br>u<br>n<br>o<br>n<br>c<br>o<br>m<br>p<br>a<br>e<br>ଶ<br>ଵ<br>ଶ                                                                                                | �<br>�<br>�<br>�<br>െ<br>ଵ<br>ଶ      |
+| C<br>t<br>i<br>P<br>d<br>t<br>a<br>r<br>e<br>s<br>a<br>n<br>r<br>o<br>u<br>c | f<br>P<br>d<br>l<br>t<br>i<br>t<br>h<br>t<br>h<br>t<br>h<br>t<br>t<br>i<br>b<br>t<br>d<br>�<br>�<br>r<br>o<br>u<br>c<br>e<br>s<br>a<br>r<br>e<br>a<br>o<br>n<br>a<br>a<br>s<br>e<br>a<br>r<br>u<br>e<br>s<br>o<br>a<br>n<br>ଵ<br>d<br>i<br>l<br>d<br>t<br>l<br>l<br>l<br>i<br>b<br>l<br>b<br>i<br>t<br>i<br>f<br>�<br>�<br>a<br>n<br>n<br>c<br>e<br>s<br>a<br>s<br>p<br>e<br>s<br>a<br>p<br>o<br>s<br>s<br>e<br>c<br>o<br>m<br>n<br>a<br>o<br>n<br>s<br>o<br>u<br>u<br>ଶ<br>l<br>f<br>d<br>t<br>�<br>�<br>�<br>�<br>u<br>p<br>e<br>s<br>r<br>o<br>m<br>a<br>n<br>ଵ<br>ଶ | �<br>�<br>�<br>�<br>ൈ<br>ଵ<br>ଶ      |
+
+Source: Elmasri, Fundamentals of
+
+![](_page_5_Picture_4.jpeg)
+
+![](_page_5_Picture_6.jpeg)
+
+# **ORGANIZATION OUR JOURNEY IN THIS SEMESTER**
+
+![](_page_6_Picture_1.jpeg)
+
+- Integrity, Trigger & Security
+- Database Applications
+- Transactions
+- **Subqueries & Views**
+- More SQL
+- Notations & Guidelines
+- Constraints
+- Relationships
+- Simple Entities and Attributes
+
+ **only**
+
+Basics
+
+6 Source: Foto von Justin Kauffman auf Unsplash
+
+![](_page_6_Picture_13.jpeg)
+
+![](_page_6_Picture_14.jpeg)
+
+**Databases, © Ulrike Herster, partially© Elmasri"FundamentalsofDatabase Systems –Forpersonal use**
+
+## **SUBQUERIES AND VIEWS SUBQUERIES**
+
+![](_page_7_Picture_1.jpeg)
+
+- **SELECT** returns relation: a (multi-)set
+- Result of **SELECT** can be included in query
+	- **WHERE** clause
+		- also, for **UPDATE**, **DELETE**
+	- **HAVING** clause
+	- **FROM** clause
+
+- **SELECT** clause (in column list)
+- So, we have two (or more) **SELECT**s:
+	- Outer **SELECT**
+	- Nested (or inner) **SELECT**: *subquery*
+
+**Databases, © Ulrike Herster, partially © Elmasri "Fundamentals of Database Systems – For personal use only**
+
+![](_page_7_Picture_13.jpeg)
+
+### **SUBQUERIES AND VIEWS SUBQUERIES – OPERATORS IN WHERE**
+
+### **IN**
+
+| SELECT E.Fname, E.Lname |  |                                 |                       |  |
+|-------------------------|--|---------------------------------|-----------------------|--|
+| FROM   EMPLOYEE AS E    |  |                                 |                       |  |
+|                         |  | WHERE E.Ssn IN (    SELECT Essn |                       |  |
+|                         |  |                                 | FROM   DEPENDENT AS D |  |
+|                         |  |                                 | WHERE E.Sex = D.Sex ) |  |
+
+### **=**
+
+| SELECT *                             |  |  |  |
+|--------------------------------------|--|--|--|
+| IFROM V                              |  |  |  |
+| WHERE x = ( SELECT MAX(x) FROM y ) ; |  |  |  |
+
+### **ANY**
+
+## **ALL**
+
+|       | SELECT Lname, Fname |          |  |
+|-------|---------------------|----------|--|
+| FROM  | EMPLOYEE            |          |  |
+| WHERE | Salary > ALL        |          |  |
+|       | ( SELECT            | Salary   |  |
+|       | FROM                | EMPLOYEE |  |
+|       | WHERE               | Dno=5) ; |  |
+|       |                     |          |  |
+
+## **EXISTS**
+
+### **NOT EXISTS**
+
+| SELECT Fname, Lname |  |  |                             |                   |  |
+|---------------------|--|--|-----------------------------|-------------------|--|
+| FROM EMPLOYEE       |  |  |                             |                   |  |
+|                     |  |  | WHERE NOT EXISTS ( SELECT * |                   |  |
+|                     |  |  |                             | FROM  DEPENDENT   |  |
+|                     |  |  |                             | MHERE Ssn=Essn ); |  |
+
+![](_page_8_Picture_13.jpeg)
+
+**Databases, © Ulrike Herster, partially © Elmasri "Fundamentals of Database Systems – For personal use only**
+
+![](_page_8_Picture_15.jpeg)
+
+Repetition
+
+### **SUBQUERIES AND VIEWS SUBQUERIES – IN FROM**
+
+![](_page_9_Picture_1.jpeg)
+
+- **SELECT** returns a new relation
 - ... so, we can select values from it
 - Necessary: give a name to the relation
-- Example: Alias name `newtab_b`
+- Example: Alias name newtab\_b
 
-```sql SELECT tab_a.x , newtab_b.y FROM tab_a , (SELECT v1, v2 FROM tab_b) AS newtab_b;```
-]
+**SELECT** tab\_a.x , newtab\_b.y **FROM** tab\_a , (**SELECT** v1, v2 **FROM** tab\_b) **AS** newtab\_b ;
 
-#slide[
-#heading(numbering: none)[Assignment]
-  #let left = [
+![](_page_9_Picture_7.jpeg)
+
+![](_page_9_Picture_8.jpeg)
+
+## **SUBQUERIES AND VIEWS SUBQUERIES: ASSIGNMENT**
+
 - Suppose that we want the department name number of employees in each department whose departments have an average income of more than 30,000 \$. How can we specify this query in SQL?
 - Retrieve the names of all employees with the smallest salary.
 - Retrieve the names of all employees whose supervisor's supervisor has ssn '888665555'.
 - Retrieve the names of employees who make at least \$10,000 more than the employee who is paid the least in the company.
-  ]
-  #let right = [
-    #figure(image("../assets/img/slides_08/20250309_emp_dept_ep_workson_rev01.png"))
-  ]
-  #grid(columns: (auto, auto), gutter: 0.25em, left, right)
-]
 
-== Views
-#slide[
-#heading(numbering: none)[ANSI-SPARC]
-  #figure(image("../assets/img/slides_08/20250309_ansi_sparc_arch_rev01.jpeg"))
-]
+| Fname    | Minit | Lname   | Ssn       | Bdate      | Address                       | Sex | Salary | Super ssn | Dno |
+|----------|-------|---------|-----------|------------|-------------------------------|-----|--------|-----------|-----|
+| John     | B     | Smith   | 123456789 | 1965-01-09 | M<br>731 Fondren, Houston, TX |     | 30000  | 333445555 | 5   |
+| Franklin |       | Wong    | 333445555 | 1955-12-08 | M<br>638 Voss, Houston, TX    |     | 40000  | 888665555 | 5   |
+| Alicia   | J     | Zelaya  | 999887777 | 1968-01-19 | 3321 Castle, Spring, TX       | F   | 25000  | 987654321 | 4   |
+| Jennifer | S     | Wallace | 987654321 | 1941-06-20 | 291 Berry, Bellaire, TX       | F   | 43000  | 888665555 | 4   |
+| Ramesh   | K     | Narayan | 666884444 | 1962-09-15 | 975 Fire Oak, Humble, TX      | M   | 38000  | 333445555 | 5   |
+| Joyce    | A     | English | 453453453 | 1972-07-31 | 5631 Rice, Houston, TX        | F   | 25000  | 333445555 | 5   |
+| Ahmad    | V     | Jabbar  | 987987987 | 1969-03-29 | 980 Dallas, Houston, TX       | M   | 25000  | 987654321 | 4   |
+| James    | E     | Borg    | 888665555 | 1937-11-10 | 450 Stone, Houston, TX        | M   | 55000  | NULL      | 1   |
 
-#slide[
-#heading(numbering: none)[Basics]
+| Dname          | Dnumber | Mgr_ssn   | Mgr_start_date |  |
+|----------------|---------|-----------|----------------|--|
+| Research       | 5       | 333445555 | 1988-05-22     |  |
+| Administration | য       | 987654321 | 1995-01-01     |  |
+| Headquarters   |         | 888665555 | 1981-06-19     |  |
+
+| Dnumber | Dlocation |  |  |
+|---------|-----------|--|--|
+| 1       | Houston   |  |  |
+| A       | Stafford  |  |  |
+| 5       | Bellaire  |  |  |
+| 5       | Sugarland |  |  |
+| 5       | Houston   |  |  |
+
+| l u<br>p<br>er<br>so<br>na | se<br>on | ly |  |  |  |
+|----------------------------|----------|----|--|--|--|
+
+| Pname           | Pnumber | Plocation | Dnum |  |
+|-----------------|---------|-----------|------|--|
+| ProductX        | 1       | Bellaire  | 5    |  |
+| ProductY        | 2       | Sugarland | 5    |  |
+| ProductZ        | 3       | Houston   | 5    |  |
+| Computerization | 10      | Stafford  | র্ব  |  |
+| Reorganization  | 20      | Houston   | 1    |  |
+| Newbenefits     | 30      | Stafford  | র্ব  |  |
+
+|  |  | 10 |
+|--|--|----|
+|  |  |    |
+|  |  |    |
+|  |  |    |
+
+## **SUBQUERIES AND VIEWS VIEWS – RECAP: THE ANSI-SPARC ARCHITECTURE**
+
+![](_page_11_Picture_1.jpeg)
+
+![](_page_11_Figure_2.jpeg)
+
+Source: www.wikipedia.org 11
+
+## **SUBQUERIES AND VIEWS VIEWS – BASICS**
+
+![](_page_12_Picture_1.jpeg)
+
 - User or application specific views on data
 - Only relevant portions of the data
 - A *view* in SQL terminology is a single table that is derived from other tables Other tables can be *base tables* or previously defined views
@@ -166,39 +276,35 @@
 
 - Limits the possible update operations
 - No limitations on querying a view
-]
 
-#slide[
-#heading(numbering: none)[Example]
+12 Source: Elmasri, Fundamentals of Database Systems, Page 115ff
 
-```sql
-CREATE VIEW vPerson AS
-SELECT Name , Id , BirthDate FROM person;
-```
-#figure(image("../assets/img/slides_08/20250309_vPerson_rev01.jpeg", height: auto))
+![](_page_12_Picture_10.jpeg)
+
+![](_page_12_Picture_11.jpeg)
+
+## **SUBQUERIES AND VIEWS VIEWS – CREATE**
+
+![](_page_13_Picture_1.jpeg)
+
+ Example:
+
+**CREATE VIEW** vPerson **AS**
+
+> **SELECT** Name , Id , BirthDate **FROM** person ;
+
+> > **vPerson Name Id BirthDate**
 
 Can rename columns in view:
 
-```sql
-CREATE VIEW vPerson (lname, pnr, bd) AS
-SELECT Name , Id , BirthDate FROM person;
-```
-]
+![](_page_13_Picture_7.jpeg)
 
-= Views
-== Updating Views
-#slide[
-#heading(numbering: none)[Basics]
-  - Views are Relations, just like tables!
-  - Should make no difference to users
-  - Question: **Can we modify the view's data?** Depends on type of view!
-]
+![](_page_13_Picture_9.jpeg)
 
-= Views
-== Updating Views
+ Views are Relations ... just like tables
 
-
-
+- Should make no difference to users
+- Question: **Can we modify the view's data?** Depends on type of view!
 
 ![](_page_14_Picture_4.jpeg)
 
@@ -1105,11 +1211,3 @@ Source: https://docs.oracle.com/cd/B19306\_01/server.102/b14239/concepts.htm#i10
 698 Source: https://www.tutorialcup.com/ dbms/transaction-control-language.htm
 
 ![](_page_65_Picture_9.jpeg)
-= License Notice
-== Attribution
-- This work is shared under the CC BY-NC-SA 4.0 License and the respective Public License.
-- #link("https://creativecommons.org/licenses/by-nc-sa/4.0/")
-- This work is based off of the work by Prof. Dr. Ulrike Herster.
-- Some of the images and texts, as well as the layout were changed.
-- The base material was supplied in private, therefore the link to the source
-  cannot be shared with the audience.

@@ -30,7 +30,7 @@
 }
 #show: university-theme.with(
   aspect-ratio: "16-9", config-info(
-    title: [Objektorientierte Programmierung in Java], subtitle: [Vorlesung 6 - Abstrakte Elemente], author: [Emily Lucia Antosch], date: datetime.today().display("[day].[month].[year]"), institution: [HAW Hamburg],
+    title: [Databases], subtitle: [Lecture 7 - Subqueries and Views], author: [Emily Lucia Antosch], date: datetime.today().display("[day].[month].[year]"), institution: [HAW Hamburg],
   ),
 )
 
@@ -877,8 +877,7 @@ SELECT Fname, Lname FROM EMPLOYEE WHERE EXISTS ( SELECT * FROM DEPENDENT WHERE S
 = License Notice
 == Attribution
 
-- This work is shared under the CC BY-NC-SA 4.0 License and the respective Public
-  License.
+- This work is shared under the CC BY-NC-SA 4.0 License and the respective Public License.
 - #link("https://creativecommons.org/licenses/by-nc-sa/4.0/")
 - This work is based off of the work by Prof. Dr. Ulrike Herster.
 - Some of the images and texts, as well as the layout were changed.
