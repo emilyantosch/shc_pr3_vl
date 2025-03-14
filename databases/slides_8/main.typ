@@ -191,377 +191,250 @@ SELECT Name , Id , BirthDate FROM person;
 #heading(numbering: none)[Basics]
   - Views are Relations, just like tables!
   - Should make no difference to users
-  - Question: **Can we modify the view's data?** Depends on type of view!
+  #question[
+  Can we modify the view's data?
+  ]
+- Depends on type of view!
 ]
 
-= Views
-== Updating Views
+#slide[
+#heading(numbering: none)[Basics]
+  #figure(image("../assets/img/slides_08/20250309_emp_proj_workson_rev01.png"))
+  ```sql
+UPDATE v_WORKS_ON1
+SET Pname = "Project2"
+WHERE Lname= "Borg"
+AND Fname= "James"
+AND Pname= "Project2";
+  ```
+]
 
+#slide[
+#heading(numbering: none)[Basics]
+  - Possibility 1
+  ```sql
+    UPDATE WORKS_ON SET
+    Pno= SELECT Pnumber FROM PROJECT
+    WHERE Pname= "Project2")
+    WHERE Essn IN (SELECT Ssn FROM
+    EMPLOYEE WHERE Lname= "Borg" AND Fname= "James")
+    AND Pno = ( SELECT Pnumber FROM PROJECT WHERE Pname= "Project1");
+  ```
+]
 
+#slide[
+#heading(numbering: none)[Basics]
+  - Possibility 2
+  ```sql
+  UPDATE PROJECT
+  SET Pname = "Project2"
+  WHERE Pname = "Project1";
+  ```
+]
 
-
-![](_page_14_Picture_4.jpeg)
-
-![](_page_14_Picture_5.jpeg)
-
-Example: **EMPLOYEE Lname Ssn … PROJECT Pname Pnumber … WORKS\_ON Essn Pno Hours WORKS\_ON1 Fname Lname Pname Hours**
-
-## **UPDATE** v\_WORKS\_ON1
-
-- **SET** Pname = "Project2"
-- **WHERE** Lname= "Borg"
-	- **AND** Fname= "James"
-	- **AND** Pname= "Project2";
-
-648 Source: Elmasri, Fundamentals of Database Systems, Page 115ff
-
-![](_page_15_Picture_8.jpeg)
-
-![](_page_15_Picture_9.jpeg)
-
-Example:
-
- Possible update 1 (*Query Modification)*:
-
-![](_page_16_Figure_3.jpeg)
-
-![](_page_16_Picture_4.jpeg)
-
-![](_page_16_Picture_5.jpeg)
-
-Example:
-
- Possible update 2 (*View Materialization)*:
-
-**UPDATE** PROJECT
-
-- **SET** Pname = "Project2"
-- **WHERE** Pname = "Project1";
-
-650 Source: Elmasri, Fundamentals of Database Systems, Page 115ff
-
-![](_page_17_Picture_7.jpeg)
-
-![](_page_17_Picture_8.jpeg)
-
+#slide[
+#heading(numbering: none)[Basics]
 - Classify views based on the select:
 	- *Projection View*
-		- **SELECT** a, b, c …
+		- ```sql SELECT a, b, c ...```
 	- *Selection View*
-		- … **WHERE** < condition > …
+		- ```sql ... WHERE <condition> ...```
 	- *Join View*
-
-- … **FROM** tab\_a **JOIN** tab\_b …
-- *Aggregation View*
-	- **SELECT MAX**(x) …
+    - ```sql FROM tab_a JOIN tab_b ...```
+  - *Aggregation View*
+    - ```sql SELECT MAX(x) ...```
 - Other types and combinations exist
+]
 
-![](_page_18_Picture_11.jpeg)
-
-### *Projection View*
-
-Example:
-
-- … **AS SELECT** a , b , c **FROM** …
-- Manipulations can be transformed to base table quite easily
-
-![](_page_19_Picture_5.jpeg)
-
-**Databases, © Ulrike Herster, partially © Elmasri "Fundamentals of Database Systems – For personal use only**
-
-![](_page_19_Picture_7.jpeg)
-
-- *Selection View*
-	- Example:
-
+#slide[
+#heading(numbering: none)[Basics]
+- Projection View
+  #example[
+```sql
+... AS SELECT a , b , c FROM ...
 ```
+  ]
+- Manipulations can be transformed to base table quite easily
+- Problems:
+  - INSERT
+    - NOT NULL columns in base table
+  - DELETE
+    - Problem if projection does not contain primary key
+  - In general: Can violate integrity constraints of base table
+]
+
+#slide[
+#heading(numbering: none)[Basics]
+- *Selection View*
+  #example[
+```sql
 CREATE VIEW v_top AS SELECT * FROM employee WHERE salary > 20000;
 ```
-## Problem:
-
-- Update can move tuples out of selection condition
-- So, the update looks like a delete!
-- Example: **UPDATE** v\_top **SET** salary = 100;
-
-This phenomenon is called "*tuple migration*"
-
-653
-
+  ]
+- Problem:
+  - Update can move tuples out of selection condition
+  - So, the update looks like a delete!
+  #example[
+```sql
+UPDATE v_top SET salary = 100;
 ```
-Join View
- Example:
+  ]
+- This phenomenon is called "*tuple migration*"
+]
+
+
+#slide[
+#heading(numbering: none)[Basics]
+- *Join View*
+#example[
+```sql
   CREATE VIEW v_depman AS
      SELECT *
      FROM employee , department
      WHERE employee.ssn = department.mgr_ssn ;
 ```
-- Data manipulation cannot be transformed to base tables in general case! **DELETE FROM** v\_depman **WHERE** id =11;
-- Transformation to base tables employee and department? **DELETE FROM** employee ? **DELETE FROM** department ?
-
-**Databases, © Ulrike Herster, partially © Elmasri "Fundamentals of Database Systems – For personal use only**
-
-![](_page_21_Picture_5.jpeg)
-
- *Aggregation View*
-
+]
+- Data manipulation cannot be transformed to base tables in general case!
+```sql
+DELETE FROM v_depman WHERE id =11;
 ```
-Example:
+- Transformation to base tables employee and department? 
+```sql
+DELETE FROM employee?
+DELETE FROM department?
+```
+]
+
+#slide[
+#heading(numbering: none)[Basics]
+ - *Aggregation View*
+#example[
+```sql
 CREATE VIEW v_astats AS
   SELECT MAX(i) , MIN(i) , COUNT(*)
   FROM a ;
 ```
+]
 - Update of the aggregated columns not possible!
-- Note: Aggregation may depend on other columns (**GROUP BY**)
+  #info[
+Aggregation may depend on other columns (`GROUP BY`)
+  ]
+]
 
-![](_page_22_Picture_5.jpeg)
-
-655
-
- A view with a single defining table is updatable if 
-
-- the view attributes contain the primary key of the base relation,
-- as well as all attributes with the NOT NULL constraint that have a default value specified
-- Views defined on multiple tables using joins are only updatable in special cases E.g., **INSERT** and **UPDATE** for Join Views, if join condition is based on PK-FK
+#slide[
+#heading(numbering: none)[Basics]
+- A view with a single defining table is updatable if 
+  - the view attributes contain the primary key of the base relation,
+  - as well as all attributes with the NOT NULL constraint that have a default value specified
+- Views defined on multiple tables using joins are only updatable in special cases 
+  - E.g., INSERT and UPDATE for Join Views, if join condition is based on PK-FK
 - Views defined using grouping and aggregate functions are not updatable
+]
 
-656 Source: Elmasri, Fundamentals of Database Systems, Page 115ff
 
-![](_page_23_Picture_8.jpeg)
+#slide[
+#heading(numbering: none)[Basics]
+- Oracle and standard SQL allow certain options at end of **VIEW** definition:
+  - `WITH READ ONLY;`
+    - Read only view, no data manipulation allowed
+  -  `WITH CHECK OPTION;`
+    - Updates leading to tuple migration are denied
+]
 
- Oracle and standard SQL allow certain options at end of **VIEW** definition:
-
-… **WITH READ ONLY** ;
-
-- Read only view, no data manipulation allowed
-- … **WITH CHECK OPTION**;
-	- Updates leading to tuple migration are denied
-
-![](_page_24_Picture_6.jpeg)
-
-## **SUBQUERIES AND VIEWS GENERATED TABLES**
-
-- Syntax: **CREATE TABLE** <name> **AS SELECT** …
+#slide[
+#heading(numbering: none)[Generated Tables]
+  ```sql
+CREATE TABLE <name> AS SELECT
+  ```
 - Can create new table based on query
 - New table is independent from old table
 - Use cases:
 	- Copy table
 	- Copy parts of table
-- Attention: New table does not have all constraints of the parent table!
+  #memo[
+New table does not have all constraints of the parent table!
+  ]
+]
+#slide[
+#heading(numbering: none)[Generated Tables]
+  #example[
+```sql
+INSERT INTO Underpaid ( lname , fname ) 
+  SELECT lname , fname **FROM** Employee WHERE salary < 1000 ;
+```
+  ]
+- `WHERE` clause belongs to `SELECT`
+]
 
-![](_page_25_Picture_8.jpeg)
-
-## **SUBQUERIES AND VIEWS GENERATED TABLES**
-
-Example from before:
-
-**INSERT INTO** Underpaid ( lname , fname ) **SELECT** lname , fname **FROM** Employee **WHERE** salary < 1000 ;
-
-**WHERE** clause belongs to **SELECT**
-
-![](_page_26_Picture_4.jpeg)
-
+#slide[
+#heading(numbering: none)[Views: Assignment]
+  #let left = [
 - Create a view that has the department name, manager name, and manager salary for every department.
 - Create a view that has the project name, controlling department name, number of employees, and total hours worked per week on the project for each project.
 - Create a view that has the project name, controlling department name, number of employees, and total hours worked per week on the project for each project with more than one employee working on it.
+  ]
+  #let right = [
+     #figure(image("../assets/img/slides_08/20250309_emp_dept_ep_workson_rev01.png")) 
+  ]
+  #grid(columns: (auto, auto), gutter: 0.25em, left, right)
+]
 
-| Fname    | Minit | Lname   | Ssn       | Bdate      | Address                  | Sex | Salary | Super ssn | Dno |
-|----------|-------|---------|-----------|------------|--------------------------|-----|--------|-----------|-----|
-| John     | B     | Smith   | 123456789 | 1965-01-09 | 731 Fondren, Houston, TX | M   | 30000  | 333445555 | 5   |
-| Franklin |       | Wong    | 333445555 | 1955-12-08 | 638 Voss, Houston, TX    | M   | 40000  | 888665555 | 5   |
-| Alicia   |       | Zelaya  | 999887777 | 1968-01-19 | 3321 Castle, Spring, TX  | F   | 25000  | 987654321 | 4   |
-| Jennifer | S     | Wallace | 987654321 | 1941-06-20 | 291 Berry, Bellaire, TX  | F   | 43000  | 888665555 | 4   |
-| Ramesh   | K     | Narayan | 666884444 | 1962-09-15 | 975 Fire Oak, Humble, TX | M   | 38000  | 333445555 | 5   |
-| Joyce    | A     | English | 453453453 | 1972-07-31 | 5631 Rice, Houston, TX   | F   | 25000  | 333445555 | 5   |
-| Ahmad    | V     | Jabbar  | 987987987 | 1969-03-29 | 980 Dallas, Houston, TX  | M   | 25000  | 987654321 | 4   |
-| James    | E     | Borg    | 888665555 | 1937-11-10 | 450 Stone, Houston, TX   | M   | 55000  | INULL     | 1   |
+#slide[
+#heading(numbering: none)[Views: Assignment]
+  #let left = [
 
-| Dname          | Dnumber | Mgr_ssn   | Mgr_start_date |  |
-|----------------|---------|-----------|----------------|--|
-| Research       | 5       | 333445555 | 1988-05-22     |  |
-| Administration | য       | 987654321 | 1995-01-01     |  |
-| Headquarters   | 1       | 888665555 | 1981-06-19     |  |
+Consider the following view `v_DEPT_SUMMARY` defined on the `COMPANY` database:
+    ```sql
+CREATE VIEW v_DEPT_SUMMARY (DNO, COUNT_EMPS, SUM_SALARY, AVG_SALARY) AS 
+SELECT Dno, COUNT(*), SUM(Salary), AVG(Salary) FROM EMPLOYEE GROUP BY Dno;
+    ```
+  ]
+  #let right = [
+     #figure(image("../assets/img/slides_08/20250309_emp_dept_ep_workson_rev01.png")) 
+  ]
+  #grid(columns: (auto, auto), gutter: 0.25em, left, right)
+]
 
-| DEPT_LOCATIONS |  |
-|----------------|--|
-|----------------|--|
-
-| Dnumber | Dlocation |  |  |
-|---------|-----------|--|--|
-| 1       | Houston   |  |  |
-| 4       | Stafford  |  |  |
-| 5       | Bellaire  |  |  |
-| 5       | Sugarland |  |  |
-| 5       | Houston   |  |  |
-
-| l u<br>p<br>er<br>so<br>na | se<br>on | ly |
-|----------------------------|----------|----|
-|                            |          |    |
-
-| Pname           | Pnumber | Plocation | Dnum |  |
-|-----------------|---------|-----------|------|--|
-| ProductX        | 1       | Bellaire  | 5    |  |
-| ProductY        | 2       | Sugarland | 5    |  |
-| ProductZ        | 3       | Houston   | 5    |  |
-| Computerization | 10      | Stafford  | 4    |  |
-| Reorganization  | 20      | Houston   | 1    |  |
-| Newbenefits     | 30      | Stafford  | র্ব  |  |
-
-|  |  | 66<br>0 |
-|--|--|---------|
-|  |  |         |
-|  |  |         |
-|  |  |         |
-
-Consider the following view v\_DEPT\_SUMMARY defined on the COMPANY database:
-
-**CREATE VIEW** v\_DEPT\_SUMMARY (DNO, COUNT\_EMPS, SUM\_SALARY, AVG\_SALARY) **AS SELECT** Dno, **COUNT**(\*), **SUM**(Salary), **AVG**(Salary) **FROM** EMPLOYEE **GROUPBY**Dno;
-
-| Fname    | Minit | Lname   | Ssn       | Bdate      | Address                  | Sex | Salary | Super ssn | Dno |
-|----------|-------|---------|-----------|------------|--------------------------|-----|--------|-----------|-----|
-| John     | B     | Smith   | 123456789 | 1965-01-09 | 731 Fondren, Houston, TX |     | 30000  | 333445555 | 5   |
-| Franklin |       | Wong    | 333445555 | 1955-12-08 | 638 Voss, Houston, TX    | M   | 40000  | 888665555 | 5   |
-| Alicia   |       | Zelaya  | 999887777 | 1968-01-19 | 3321 Castle, Spring, TX  | E   | 25000  | 987654321 | 4   |
-| Jennifer | S     | Wallace | 987654321 | 1941-06-20 | 291 Berry, Bellaire, TX  | F   | 43000  | 888665555 | 4   |
-| Ramesh   | K     | Narayan | 666884444 | 1962-09-15 | 975 Fire Oak, Humble, TX | M   | 38000  | 333445555 | 5   |
-| Joyce    | A     | English | 453453453 | 1972-07-31 | 5631 Rice, Houston, TX   | E   | 25000  | 333445555 | 5   |
-| Ahmad    | V     | Jabbar  | 987987987 | 1969-03-29 | 980 Dallas, Houston, TX  | M   | 25000  | 987654321 | 4   |
-| James    | E     | Borg    | 888665555 | 1937-11-10 | 450 Stone, Houston, TX   | M   | 55000  | NULL      | 1   |
-
-| Dnumber<br>Dname |   | Mar ssn   | Mgr_start_date |  |  |
-|------------------|---|-----------|----------------|--|--|
-| Research         | 5 | 333445555 | 1988-05-22     |  |  |
-| Administration   | ঘ | 987654321 | 1995-01-01     |  |  |
-| Headquarters     | 1 | 888665555 | 1981-06-19     |  |  |
-
-|  |  |  |  |  |  | DEPT_LOCATIONS |  |
-|--|--|--|--|--|--|----------------|--|
-|  |  |  |  |  |  |                |  |
-
-| Dnumber | Dlocation |
-|---------|-----------|
-| 1       | Houston   |
-| 4       | Stafford  |
-| 5       | Bellaire  |
-| 5       | Sugarland |
-| 5       | Houston   |
-
-| l u<br>p<br>er<br>so<br>na | se<br>on | ly |  |
-|----------------------------|----------|----|--|
-|                            |          |    |  |
-
-|  | PROJECT |  |
-|--|---------|--|
-|  |         |  |
-
-| Pname           | Pnumber | Plocation | Onum |  |
-|-----------------|---------|-----------|------|--|
-| ProductX        | 1       | Bellaire  | 5    |  |
-| ProductY        | 2       | Sugarland | 5    |  |
-| ProductZ        | 3       | Houston   | 5    |  |
-| Computerization | 10      | Stafford  | র্ব  |  |
-| Reorganization  | 20      | Houston   | 1    |  |
-| Newbenefits     | 30      | Stafford  | ব    |  |
-
-|  |  | 66<br>1 |
-|--|--|---------|
-|  |  |         |
-|  |  |         |
-|  |  |         |
-
+#slide[
+#heading(numbering: none)[Views: Assignment]
 Describe the semantics oft he following SQL -statements. State which of the following queries and updates would be allowed on the view. If a query or update would be allowed, show what the corresponding query or update on the base relations would look like, and give its result when applied to the database.
+```sql
+SELECT * FROM v_DEPT_SUMMARY;
+SELECT DNO, COUNT_EMPS FROM V_DEPT_SUMMARY WHERE SUM_SALARY > 100000;
+SELECT DNO, AVG_SALARY FROM V_DEPT_SUMMARY WHERE COUNT_EMPS > (SELECT COUNT_EMPS FROM V_DEPT_SUMMARY WHERE DNO=4);
+UPDATE v_DEPT_SUMMARY SET DNO=3 WHERE DNO=4;
+DELETE FROM v\_DEPT\_SUMMARY WHERE COUNT\_EMPS > 4;
+```
+]
 
-- **1. SELECT \* FROM** v\_DEPT\_SUMMARY**;**
-- **2. SELECT** DNO, COUNT\_EMPS **FROM** v\_DEPT\_SUMMARY **WHERE** SUM\_SALARY > 100000;
-- **3. SELECT** DNO, AVG\_SALARY **FROM** v\_DEPT\_SUMMARY **WHERE** COUNT\_EMPS >
 
-**(SELECT** COUNT\_EMPS **FROM** v\_DEPT\_SUMMARY **WHERE** DNO=4);
+#slide[
+#heading(numbering: none)[Views: Assignment]
+  #let left = [
+    ```sql
+CREATE VIEW v_DEPT_SUMMARY (DNO, COUNT_EMPS, SUM_SALARY, AVG_SALARY)
+AS SELECT Dno, COUNT(*), SUM(Salary), AVG(Salary)
+FROM EMPLOYEE GROUP BY Dno;
 
-- **4. UPDATE** v\_DEPT\_SUMMARY **SET** DNO=3 **WHERE** DNO=4;
-- **5. DELETE FROM** v\_DEPT\_SUMMARY **WHERE** COUNT\_EMPS > 4;
+SELECT * FROM v_DEPT_SUMMARY;
+SELECT DNO, COUNT_EMPS FROM v_DEPT_SUMMARY WHERE SUM_SALARY > 100000;
+SELECT DNO, AVG_SALARY FROM v_DEPT_SUMMARY WHERE COUNT_EMPS >
+(SELECT COUNT_EMPS FROM v_DEPT_SUMMARY WHERE DNO=4);
 
-![](_page_29_Picture_8.jpeg)
+UPDATE v_DEPT_SUMMARY SET DNO=3 WHERE DNO=4;
+DELETE FROM v_DEPT_SUMMARY WHERE COUNT_EMPS > 4;
+    ```
+  ]
+  #let right = [
+     #figure(image("../assets/img/slides_08/20250309_emp_dept_ep_workson_rev01.png")) 
+  ]
+  #grid(columns: (auto, auto), gutter: 0.25em, left, right)
+]
 
-- **CREATE VIEW** v\_DEPT\_SUMMARY (DNO, COUNT\_EMPS, SUM\_SALARY, AVG\_SALARY) **AS SELECT** Dno, **COUNT**(\*), **SUM**(Salary), **AVG**(Salary) **FROM** EMPLOYEE **GROUPBY**Dno;
-- **1. SELECT \* FROM** v\_DEPT\_SUMMARY**;**
-
-- **2. SELECT** DNO, COUNT\_EMPS **FROM** v\_DEPT\_SUMMARY **WHERE** SUM\_SALARY > 100000;
-- **3. SELECT** DNO, AVG\_SALARY **FROM** v\_DEPT\_SUMMARY **WHERE** COUNT\_EMPS >
-
-**(SELECT** COUNT\_EMPS **FROM** v\_DEPT\_SUMMARY **WHERE** DNO=4);
-
-- **4. UPDATE** v\_DEPT\_SUMMARY **SET** DNO=3 **WHERE** DNO=4;
-- **5. DELETE FROM** v\_DEPT\_SUMMARY **WHERE** COUNT\_EMPS > 4;
-
-| Fname    | Minit | Lname   | Ssn       | Bdate      | Address                  | Sex | Salary | Super_ssn | Dno |
-|----------|-------|---------|-----------|------------|--------------------------|-----|--------|-----------|-----|
-| John     | B     | Smith   | 123456789 | 1965-01-09 | 731 Fondren, Houston, TX | M   | 30000  | 333445555 | 5   |
-| Franklin |       | Wong    | 333445555 | 1955-12-08 | 638 Voss, Houston, TX    | M   | 40000  | 888665555 | 5   |
-| Alicia   | J     | Zelaya  | 999887777 | 1968-01-19 | 3321 Castle, Spring, TX  | F   | 25000  | 987654321 | 4   |
-| Jennifer | S     | Wallace | 987654321 | 1941-06-20 | 291 Berry, Bellaire, TX  | F   | 43000  | 888665555 | 4   |
-| Ramesh   | K     | Narayan | 666884444 | 1962-09-15 | 975 Fire Oak, Humble, TX | M   | 38000  | 333445555 | 5   |
-| Joyce    | A     | English | 453453453 | 1972-07-31 | 5631 Rice, Houston, TX   | B   | 25000  | 333445555 | 5   |
-| Ahmad    | V     | Jabbar  | 987987987 | 1969-03-29 | 980 Dallas, Houston, TX  | M   | 25000  | 987654321 | 4   |
-| James    | E     | Borg    | 888665555 | 1937-11-10 | 450 Stone, Houston, TX   | M   | 55000  | INULL     | 1   |
-
-| Dname          | Dnumber | Mgr_ssn   | Mgr_start_date |  |
-|----------------|---------|-----------|----------------|--|
-| Research       | 5       | 333445555 | 1988-05-22     |  |
-| Administration | বা      | 987654321 | 1995-01-01     |  |
-| Headquarters   | 1       | 888665555 | 1981-06-19     |  |
-
-| Dnumber | Dlocation |  |  |
-|---------|-----------|--|--|
-| 1       | Houston   |  |  |
-| বা      | Stafford  |  |  |
-| 5       | Bellaire  |  |  |
-| 5       | Sugarland |  |  |
-| 5       | Houston   |  |  |
-
-|      | Essn      | Pno | Hours |           |       | Pname           |     | Pnumber | Plocation  |      |
-|------|-----------|-----|-------|-----------|-------|-----------------|-----|---------|------------|------|
-|      | 123456789 | 1   | 32.5  |           |       | ProductX        |     | 1       | Bellaire   |      |
-|      | 123456789 | 2   | 7.5   |           |       | ProductY        |     | 2       | Sugarland  |      |
-|      | 666884444 | 3   | 40.0  |           |       | ProductZ        |     | 3       | Houston    |      |
-|      | 453453453 | 1   | 20.0  |           |       | Computerization |     | 10      | Stafford   |      |
-|      | 453453453 | 2   | 20.0  |           |       | Reorganization  |     | 20      | Houston    |      |
-|      | 333445555 | 2   | 10.0  |           |       | Newbenefits     |     | 30      | Stafford   |      |
-|      | 333445555 | 3   | 10.0  |           |       |                 |     |         |            |      |
-|      | 333445555 | 10  | 10.0  | DEPENDENT |       |                 |     |         |            |      |
-|      | 333445555 | 20  | 10.0  | Essn      |       | Dependent name  | Sex | Bdate   |            | Rel: |
-|      | 999887777 | 30  | 30.0  | 333445555 | Alice |                 | F   |         | 1986-04-05 | Da   |
-|      | 999887777 | 10  | 10.0  | 333445555 |       | Theodore        | M   |         | 1983-10-25 | So   |
-|      | 987987987 | 10  | 35.0  | 333445555 | Joy   |                 | E   |         | 1958-05-03 | Sp   |
-|      | 987987987 | 30  | 5.0   | 987654321 | Abner |                 | M   |         | 1942-02-28 | Sp   |
-| =4); | 987654321 | 30  | 20.0  | 123456789 |       | Michael         | M   |         | 1988-01-04 | So   |
-|      | 987654321 | 20  | 15.0  | 123456789 | Alice |                 | E   |         | 1988-12-30 | Da   |
-|      | 888665555 | 20  | NULL  | 123456789 |       | Elizabeth       | F   |         | 1967-05-05 | Sp   |
-|      |           |     |       |           |       |                 |     |         |            |      |
-
-![](_page_30_Picture_16.jpeg)
-
-**Databases, © Ulrike Herster, partially © Elmasri "Fundamentals of Database Systems – For personal use only**
-
-# **ORGANIZATION OUR JOURNEY IN THIS SEMESTER**
-
-![](_page_31_Picture_1.jpeg)
-
-- Integrity, Trigger & Security
-- Database Applications
-- **Transactions**
-- Subqueries & Views
-- More SQL
-- Notations & Guidelines
-- Constraints
-- Relationships
-- Simple Entities and Attributes
-- Basics
-
-664 Source: Foto von Justin Kauffman auf Unsplash
-
-![](_page_31_Picture_13.jpeg)
-
-# **TRANSACTIONS BASICS**
-
+= Transactions
+== Basics
+#slide[
+#heading(numbering: none)[Operations]
 - A transaction bundles several operations into one logical unit
 	- Unit of Work
 
@@ -571,90 +444,86 @@ Describe the semantics oft he following SQL -statements. State which of the foll
 	- Choose and reserve room
 	- Payment
 	- Final booking of the hotel room
+]
 
-![](_page_32_Picture_9.jpeg)
-
-# **TRANSACTIONS BASICS**
-
- DBMS allow
-
-- many users &
-- concurrent access
+#slide[
+#heading(numbering: none)[Concurrency]
+- DBMS allow
+  - many users &
+  - concurrent access
 - May lead to funny results if actions interfere
-- Example:
-	- Donald and Daisy withdraw money from their shared bank account
-
-![](_page_33_Picture_7.jpeg)
-
-![](_page_33_Picture_8.jpeg)
-
-## **TRANSACTIONS BASICS - DBMS LANGUAGES: SQL - TCL**
-
-![](_page_34_Figure_1.jpeg)
-
-**TCL** for performing or rollbacking of changes in the database that we made using DML commands
-
-- **SET TRANSACTION**
-- **COMMIT** To persist the changes made by DML commands in database
-- **ROLLBACK** To rollback the changes made to the database
-- **SAVEPOINTS**
-
-### Source: https://beginnersbook.com 667
-
-![](_page_34_Picture_8.jpeg)
-
-# **TRANSACTIONS ACID**
-
+  #example[
+	Donald and Daisy withdraw money from their shared bank account
+  ]
+]
+#slide[
+#heading(numbering: none)[Languages]
+#let left = [
+TCL for performing or rollbacking of changes in the database that we made using DML commands
+- `BEGIN`
+- `COMMIT` To persist the changes made by DML commands in database
+- `ROLLBACK` To rollback the changes made to the database
+- `SAVEPOINTS`
+]
+#let right = [
+#figure(image("../assets/img/slides_08/20250309_dbms_lang_rev01.jpeg"))
+]
+#grid(columns: (auto, auto), gutter: 0.25em, left, right)
+]
+#slide[
+#heading(numbering: none)[ACID]
 - Key features of transactions
-	- *Atomicity*: Transaction is executed in whole or not at all
-	- *Consistency*: State of the DB is consistent before and after a transaction
-	- *Isolation*: Transactions do not interfere with other concurrent transactions
-	- *Durability*: Changes are stored permanently in the database and will not get lost
+	- *#text(blue)[A]tomicity*: Transaction is executed in whole or not at all
+	- *#text(blue)[C]onsistency*: State of the DB is consistent before and after a transaction
+	- *#text(blue)[I]solation*: Transactions do not interfere with other concurrent transactions
+	- *#text(blue)[D]urability*: Changes are stored permanently in the database and will not get lost
+]
 
-![](_page_35_Picture_6.jpeg)
-
-## **TRANSACTIONS ACID - ATOMICITY**
-
+#slide[
+#heading(numbering: none)[ACID - Atomicity]
 - A transaction can consist of many operations
-	- **SELECT**
+	- `SELECT`
 
-- **INSERT**, **UPDATE**, **DELETE**
-- Note: statements for data definition (e.g., **CREATE TABLE**) usually outside transaction!
+- `INSERT`, `UPDATE`, `DELETE`
+- Note: statements for data definition (e.g., `CREATE TABLE`) usually outside transaction!
 - Single operations are always atomic
 	- Not trivial when looking at the implementation!
 - In a transaction, all operations or none are performed
+]
 
-![](_page_36_Picture_8.jpeg)
-
-## **TRANSACTIONS ACID - ATOMICITY**
-
+#slide[
+#heading(numbering: none)[ACID - Atomicity]
 - Begin of Transaction (*BoT*)
 	- SQL99: **START TRANSACTION**
-	- Oracle: transaction is started automatically
-- Commit a transaction: **COMMIT;**
+	- PostgresQL: 
+  ```sql
+	  BEGIN;
+	```
+- Commit a transaction: `COMMIT;`
 	- All operations are made persistent
 	- All changes are visible to other users
-- Rollback transaction: **ROLLBACK;**
+- Rollback transaction: `ROLLBACK;`
 	- DB is in state at *BoT* again
+]
 
-![](_page_37_Picture_9.jpeg)
-
-## **TRANSACTIONS ACID - ATOMICITY**
-
-## Autocommit
-
-- On some systems:
-- Single operations are committed automatically
-- Called **autocommit** mode
+#slide[
+#heading(numbering: none)[ACID - Atomicity]
+- Autocommit
+  - On some systems:
+  - Single operations are committed automatically
+  - Called `autocommit` mode
 - May be turned off
 	- ... by disabling it
 	- ... by explicitly starting a transaction
-	- Note: Method depends on the system!
+  #info[
+    Method depends on system!
+  ]
+]
 
-![](_page_38_Picture_9.jpeg)
+#slide[
+#heading(numbering: none)[ACID - Consistency]
 
-## **TRANSACTIONS ACID - CONSISTENCY**
-
+]
 - DB: in consistent state before transaction Also, in consistent state after transaction
 - Integrity constraints assure that
 - Constraints can be defined as
