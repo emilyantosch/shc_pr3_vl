@@ -380,6 +380,7 @@
         New table does not have all constraints of the parent table!
       ]
 ]
+
 #slide[
   #heading(numbering: none)[Generated Tables]
   #example[
@@ -474,7 +475,7 @@
   - A transaction bundles several operations into one logical unit
     - Unit of Work
 
-  - Includes one or more database access operations E.g., **INSERT**, **DELETE**, **UPDATE**, **SELECT**
+  - Includes one or more database access operations E.g., `INSERT`, `DELETE`, `UPDATE`, `SELECT`
   - Operations must be executed all or none
   - Example: Order a hotel room over the internet
     - Choose and reserve room
