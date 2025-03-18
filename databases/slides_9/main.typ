@@ -386,62 +386,58 @@
 = Integrity, Trigger and Security
 == Basics
 
-## **INTEGRITY, TRIGGER & SECURITY INTEGRITY CONSTRAINTS**
+#slide[
+#heading(numbering: none)[Integrity Constraints]
+#let left = [
+- Static Constraints
+  - Conditions on states
+  - Conditions must be fulfilled before and after operations
+  - Used until now
+    - Primary Key
+    - Foreign Key
+    - `UNIQUE`, `NOT NULL`, `CHECK`
+]
+#let right = [
+- Dynamic Constraints (*Assertions*)
+  - Integrity conditions that affect multiple tables
+  - Conditions on state transitions 
 
- Static Constraints
+    #example[
+     status of order #sym.arrow new #sym.arrow payed #sym.arrow processing #sym.arrow shipped
+    ]
+]
+  #grid(columns: (auto, auto), gutter: 0.25em, left, right)
+]
 
-- Conditions on states
-- Conditions must be fulfilled before and after operations
-- Used until now
-	- Primary Key
-	- Foreign Key
-	- **UNIQUE**, **NOT NULL**, **CHECK**
 
-Dynamic Constraints (*Assertions*)
-
-- Integrity conditions that affect multiple tables
-- Conditions on state transitions Example: status of order
-
-new payed processing shipped
-
-![](_page_29_Picture_12.jpeg)
-
-**Databases, © Ulrike Herster, partially © Elmasri "Fundamentals of Database Systems – For personal use only**
-
-## **INTEGRITY, TRIGGER & SECURITY INTEGRITY CONSTRAINTS**
-
+#slide[
+#heading(numbering: none)[Integrity Constraints]
 - Assertions have been part of the SQL since SQL-92 (DDL)
 - Not supported by most DBMS (e.g., MySQL, Postgres and Oracle)
-- If the concept of assertions is to be simulated **TRIGGER**
+- If the concept of assertions is to be simulated `TRIGGER`
 - Concept:
 	- Whenever anything is modified in the database, the assertion checks its condition
-	- If the **SELECT**-statement gives a non-empty result, the operation that has triggered the assertion is denied
+	- If the `SELECT`-statement gives a non-empty result, the operation that has triggered the assertion is denied
+]
 
-![](_page_30_Picture_7.jpeg)
+#slide[
+#heading(numbering: none)[Integrity Constraints - ECA]
+#let left = [
+  - ECA rules
+    - on event (E)
+    - under certain conditions (C)
+    - perform actions (A)
+]
+#let right = [
+#figure(image("../assets/img/slides_09/20250309_action_event_cond_rev01.png", height: auto))
+]
+  #grid(columns: (auto, auto), gutter: 0.25em, left, right)
+]
 
-## **INTEGRITY, TRIGGER & SECURITY TRIGGER – ECA RULE**
 
-#### *ECA* rules
-
-![](_page_31_Figure_2.jpeg)
-
-765 Quelle: https://dev.acquia.com/blog/drupal-8-module-of-the-week/ drupal-8-module-of-the-week-rules/15/06/2016/15681
-
-**Databases, © Ulrike Herster, partially © Elmasri "Fundamentals of Database Systems – For personal use only**
-
-## **INTEGRITY, TRIGGER & SECURITY TRIGGER**
-
-![](_page_32_Picture_1.jpeg)
-
-Source: https://www.youtube.com/ watch?v=gpthfJnvzY8
-
-**Databases, © Ulrike Herster, partially © Elmasri "Fundamentals of Database Systems – For personal use only**
-
-![](_page_32_Picture_4.jpeg)
-
-## **INTEGRITY, TRIGGER & SECURITY TRIGGER – SYNTAX IN MYSQL**
-
-```
+#slide[
+#heading(numbering: none)[Trigger Syntax]
+```sql
 CREATE
    [DEFINER = user]
    TRIGGER trigger_name
@@ -453,38 +449,37 @@ trigger_time: { BEFORE | AFTER }
 trigger_event: { INSERT | UPDATE | DELETE }
 trigger_order: { FOLLOWS | PRECEDES } other_trigger_name
 ```
-![](_page_33_Picture_3.jpeg)
+]
 
-## **INTEGRITY, TRIGGER & SECURITY TRIGGER – EXCURSION: DELIMITER**
-
-- A MySQL client program such as MySQL Workbench or mysql program uses the delimiter (";") to separate statements and executes each statement separately
+#slide[
+#heading(numbering: none)[Excursion Delimiter]
+- A PostgresQL client program such as pgadmin or psql program uses the delimiter (";") to separate statements and executes each statement separately
 - However, a stored procedure consists of multiple statements separated by a semicolon (";")
-- If you use a MySQL client program to define a stored procedure that contains semicolon characters, the MySQL client program will not treat the whole stored procedure as a single statement, but many statements.
+- If you use a PostgresQL client program to define a stored procedure that contains semicolon characters, the PostgresQL client program will not treat the whole stored procedure as a single statement, but many statements.
 - Therefore, you must redefine the delimiter temporarily so that you can pass the whole stored procedure to the server as a single statement.
 - To redefine the default delimiter, you use the delimiter command
+]
 
-768 Source: https://www.mysqltutorial.org/ mysql-stored-procedure/mysql-delimiter/
+#slide[
+#heading(numbering: none)[Excursion Delimiter]
 
-![](_page_34_Picture_8.jpeg)
+- In short: A delimiter is a separator between commands
+  #example[
 
-## **INTEGRITY, TRIGGER & SECURITY TRIGGER – EXCURSION: DELIMITER**
-
-- Shortly: A delimiter is a separator between commands
-- For example:
-
-```
+```sql
 delimiter |
 …
 |
 delimiter ;
 ```
+    
  In the code block between "delimiter" and "delimiter;" the delimiter is changed to "|" (instead of ";")
+  ]
+]
 
-![](_page_35_Picture_5.jpeg)
-
-#### **INTEGRITY, TRIGGER & SECURITY TRIGGER – EXAMPLE IN MYSQL**
-
-```
+#slide[
+#heading(numbering: none)[Excursion Delimiter: Example]
+```sql
 delimiter |
 CREATE TRIGGER SALARY_VIOLATION
 BEFORE INSERT ON EMPLOYEE
@@ -499,149 +494,83 @@ FOR EACH ROW
        END IF;
 END;
 |
-delimiter;Source: Elmasri, Fundamentals ofDatabase Systems
+delimiter;
 ```
-![](_page_36_Picture_2.jpeg)
+]
 
-770
-
-**Databases, © Ulrike Herster, partially © Elmasri "Fundamentals of Database Systems – For personal use only**
-
-## **INTEGRITY, TRIGGER & SECURITY TRIGGER – SYNTAX IN ORACLE**
-
-```
-CREATE [OR REPLACE] TRIGGER trigger_name
-{BEFORE | AFTER } triggering_event ON table_name
-[FOR EACH ROW]
-[FOLLOWS | PRECEDES another_trigger]
-[ENABLE/DISABLE]
-```
-
-```
- [WHEN condition]
-```
-## **DECLARE**
-
-declaration statements
-
-## **BEGIN**
-
-executable statements
-
-## **EXCEPTION**
-
-exception\_handling statements
-
-**END**;
-
-**Databases, © Ulrike Herster, partially © Elmasri "Fundamentals of Database Systems – For personal use only**
-
-![](_page_37_Picture_11.jpeg)
-
-## **INTEGRITY, TRIGGER & SECURITY TRIGGER – EVENTS**
-
+#slide[
+#heading(numbering: none)[Events]
 - Triggers can react on events
-	- DML: **INSERT**, **UPDATE**, **DELETE**
+	- DML: `INSERT`, `UPDATE`, `DELETE`
 		- Most common trigger types
-	- DDL: **CREATE**, **ALTER**, **DROP**
+	- DDL: `CREATE`, `ALTER`, `DROP`
 	- DB: startup, shutdown, logon of a user
-- No **COMMIT** triggers
+- No `COMMIT` triggers
+]
 
-![](_page_38_Picture_7.jpeg)
-
-**Databases, © Ulrike Herster, partially © Elmasri "Fundamentals of Database Systems – For personal use only**
-
-## **INTEGRITY, TRIGGER & SECURITY TRIGGER – TYPES**
-
+#slide[
+#heading(numbering: none)[Types]
 - Time of execution, relative to event
-	- **BEFORE**
-	- **AFTER**
+	- `BEFORE`
+	- `AFTER`
 
-- **INSTEAD OF**
+- `INSTEAD OF`
 - Statement trigger
 	- Once per statement
 	- Even if no row is affected!
 	- Default trigger type
 - Row trigger
-
 - For every affected row
-- Syntax: **FOR EACH ROW**
+- Syntax: `FOR EACH ROW`
+]
 
-![](_page_39_Picture_12.jpeg)
+#slide[
+#heading(numbering: none)[Order of Trigger]
 
-![](_page_39_Picture_13.jpeg)
-
-**Databases, © Ulrike Herster, partially © Elmasri "Fundamentals of Database Systems – For personal use only**
-
-## **INTEGRITY, TRIGGER & SECURITY TRIGGER – ORDER OF TRIGGER EXECUTION**
-
- Before Statement Trigger (once!)
-
+- Before Statement Trigger (once!)
 - For every row affected:
 	- Before row trigger
 	- DML operation
 	- Immediate integrity checks
 	- After row trigger
 - After Statement Trigger (once!)
+]
 
-![](_page_40_Picture_8.jpeg)
+#slide[
+#heading(numbering: none)[Transition Variables]
+- Row triggers can access old and new tuples 
+  - PostgresQL
+    - `:old` or `old` #sym.arrow `NULL` for `INSERT`
+    - `:new` or `new` #sym.arrow `NULL` for `DELETE`
+- Oracle
+  - `NEW` and `OLD`
+  - Before row triggers:
+    - Can even modify new!
+]
 
-## **INTEGRITY, TRIGGER & SECURITY TRIGGER – TRANSITION VARIABLES**
-
-- Row triggers can access old and new tuples MySQL
-	- :old or oldNULLfor **INSERT**s
-
- :new or new NULL for **DELETE**s
-
- Oracle
-
-- NEW and OLD
-- Before row triggers:
-	- Can even modify new!
-
-![](_page_41_Picture_8.jpeg)
-
-## **INTEGRITY, TRIGGER & SECURITY TRIGGER – USE CASES**
-
+#slide[
+#heading(numbering: none)[Use Cases]
 - Constraints on state transitions
 - Audit
-
-- When was a record last modified?
-- Integrity checks with error correction Change :**new**
+  - When was a record last modified?
+- Integrity checks with error correction 
+  - Change `:new`
 - Maintain redundant data
-- Updateable views **INSTEAD OF**
+- Updateable views 
+  - `INSTEAD OF`
+]
 
-![](_page_42_Picture_7.jpeg)
+#slide[
+#heading(numbering: none)[Trigger: Example]
+- Audit insertion of new persons
+  ```sql
+DROP TRIGGER IF EXISTS emp_insert; 
+CREATE TRIGGER emp_insert AFTER INSERT ON employee 
+FOR EACH ROW 
+INSERT INTO EMPLOYEE_LOG (ESSN, INSERT_DATE) VALUES ( NEW.ssn , NOW() ) ; 
+  ```
+]
 
-### **INTEGRITY, TRIGGER & SECURITY TRIGGER – EXAMPLE IN MYSQL**
-
-Example: Audit insertion of new persons
-
-```
-DROP TRIGGER IF EXISTS emp_insert;
-```
-
-```
-CREATE TRIGGER emp_insert
-```
-**AFTER INSERT ON** employee
-
-```
-FOR EACH ROW
-```
-
-```
-INSERT INTO EMPLOYEE_LOG (ESSN, INSERT_DATE)
-```
-
-```
-VALUES ( NEW.ssn , NOW() ) ;
-```
-![](_page_43_Picture_8.jpeg)
-
-![](_page_43_Picture_9.jpeg)
-
-![](_page_43_Picture_10.jpeg)
 
 ### **INTEGRITY, TRIGGER & SECURITY TRIGGER – EXAMPLE IN ORACLE**
 
