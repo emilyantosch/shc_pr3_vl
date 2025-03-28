@@ -129,8 +129,51 @@
     follow the lecture. I'm more than happy to repeat certain parts.]
 ]
 
+== Use of AI in this lecture
+#slide[
+  #heading(numbering: none)[Opportunities]
+  #let left = [
+    - *Breaking Down Complex Concepts*
+      - Simplify intricate ideas into easy-to-understand language
+      - Provide step-by-step explanations for difficult topics
+      - Offer analogies and real-world examples to make abstract concepts concrete
+
+    - *Providing Practical Examples*
+      - Generate code snippets and practical implementations
+      - Create sample projects and workflows
+      - Demonstrate use cases across different industries
+
+    - *Offering Interactive Learning Experiences*
+      - Engage in conversational practice to reinforce learning
+      - Ask questions and receive immediate feedback
+      - Solve problems collaboratively with the AI
+  ]
+  #let right = [
+    #figure(image("../assets/img/slides_01/20250325_chatgpt_logo_rev01.png"))
+    #figure(image("../assets/img/slides_01/20250325_claude_logo_rev01.png"))
+  ]
+]
+#slide[
+  #heading(numbering: none)[Challenges]
+  - *Hallucinations and Inaccuracy*: AI models can sometimes generate incorrect or misleading information (often called "hallucinations"), requiring careful verification of the provided answers.
+    - This is especially problematic when learning something new where you may not have the expertise to identify errors.
+  - *Lack of Contextual Understanding*: AI may struggle with nuanced concepts or the specific context of your learning goals.
+    - It can provide technically correct answers that aren't relevant to your particular situation or level of understanding.
+  - *Dependency and Reduced Critical Thinking*: Over-reliance on AI can hinder the development of problem-solving skills and critical thinking.
+    - Don't become a passive recipient of information! Rather,actively engage with the material and the learning process.
+  - *Difficulty with Complex or Abstract Concepts*: While AI excels at pattern recognition, it can struggle with explaining complex or abstract concepts in a way that is easy to understand, especially without sufficient prompting or clarification.
+]
+
+#slide[
+  #heading(numbering: none)[AI in the exam]
+  #align(center + horizon)[
+    Please remember that the use of AI is not permitted during the exam. There is a zero-tolerance-policy regarding cheating. *Please keep in mind that your are the person solving the problems and not the AI!*
+  ]
+]
+
 == Moodle
 #slide[
+  #heading(numbering: none)[Lecture Material]
   - Lecture material can be found at: #link("moodle.haw-hamburg.de")
   - Enrollment key: db_2025
   - The slides are also the script.
@@ -138,17 +181,14 @@
 ]
 
 == Labs
-
 #slide[
-  //TODO: Add time and date for the teams to be decided
   - Assignments should be worked on in teams
-    - Work in fixed teams of two. Division of the teams of two in lab on XXX
-    - Working together means discussing things, explaining each other, helping each
-      other out
+    - Work in fixed teams of two. You need to enter your group into the Moodle room before the first lab.
+    - Working together means discussing things, explaining each other, helping each other out!
     - Every team member must be ability to explain the solution of each assignment
   - For PVL (precondition for examination):
     - Presence in all laboratories is obligatory!
-    In case of illness: Send a sick note and make up the Lab on another date
+    - In case of illness: Send a sick note and make up the Lab on another date
     - All assignments for the labs must be successfully solved
     - Each student must present at least two assignments on blackboard
 ]
@@ -157,14 +197,15 @@
   - Assignments are published before laboratory
   - Each laboratory consists of two parts:
   1. Upfront assignments
-    - Submitting the solutions Friday before lab date e.g., solution of lab on
-      06.05.2024 must be submitted until 03.05.2024 11:59 p.m. via moodle
-      - Only one submission per team of two
-      - No re-submission after a laboratory
-      - Submit only PDF-files
-  2. Live assignments
-    - They can be solved in advance or during the Lab
-    - Discussion during the laboratory
+    - Submitting the solutions by Saturday 23:59 before the lab date!
+    - Failure to do so will have consequences.
+    - Only one submission per team of two
+    - No re-submission after a laboratory
+    - Submit only PDF-files
+  #example[
+    Solution of lab on 05.05.2025 must be submitted by the 03.05.2024 23:59 via Moodle.
+  ]
+  2. Presentation of solutions to the lecturers and the group.
 ]
 
 #slide[
