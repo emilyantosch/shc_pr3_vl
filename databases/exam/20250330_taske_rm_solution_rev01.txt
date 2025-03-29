@@ -1,0 +1,166 @@
+University Management System - Relational Model
+Relations with Attributes, Keys, and Constraints
+STUDENT
+
+student_id: VARCHAR(10) [PK]
+name: VARCHAR(100) [NOT NULL]
+date_of_birth: DATE
+email: VARCHAR(100) [UNIQUE, NOT NULL]
+phone: VARCHAR(20)
+address: VARCHAR(200)
+enrollment_date: DATE [NOT NULL]
+program_id: INTEGER [FK → PROGRAM.program_id]
+status: VARCHAR(20) [CHECK IN ('active', 'inactive', 'graduated', 'on_leave')]
+
+FACULTY
+
+faculty_id: VARCHAR(10) [PK]
+name: VARCHAR(100) [NOT NULL]
+position: VARCHAR(50) [NOT NULL]
+hire_date: DATE [NOT NULL]
+email: VARCHAR(100) [UNIQUE, NOT NULL]
+phone: VARCHAR(20)
+dept_id: VARCHAR(10) [FK → DEPARTMENT.dept_id]
+specialty: VARCHAR(100)
+is_tenured: BOOLEAN
+
+DEPARTMENT
+
+dept_id: VARCHAR(10) [PK]
+name: VARCHAR(100) [UNIQUE, NOT NULL]
+budget: DECIMAL(12,2) [NOT NULL]
+location: VARCHAR(100)
+chair_id: VARCHAR(10) [FK → FACULTY.faculty_id] [NULL allowed]
+established_date: DATE
+
+PROGRAM
+
+program_id: INTEGER [PK]
+name: VARCHAR(100) [NOT NULL]
+degree_level: VARCHAR(20) [CHECK IN ('bachelor', 'master', 'doctoral', 'certificate')]
+dept_id: VARCHAR(10) [FK → DEPARTMENT.dept_id] [NOT NULL]
+required_credits: INTEGER [NOT NULL]
+description: TEXT
+
+COURSE
+
+course_id: VARCHAR(10) [PK]
+title: VARCHAR(200) [NOT NULL]
+credits: INTEGER [NOT NULL, CHECK > 0]
+level: VARCHAR(20) [CHECK IN ('undergraduate', 'graduate')]
+dept_id: VARCHAR(10) [FK → DEPARTMENT.dept_id] [NOT NULL]
+description: TEXT
+
+SECTION
+
+section_id: INTEGER [PK]
+course_id: VARCHAR(10) [FK → COURSE.course_id] [NOT NULL]
+semester: VARCHAR(10) [NOT NULL, CHECK IN ('fall', 'spring', 'summer', 'winter')]
+year: INTEGER [NOT NULL]
+faculty_id: VARCHAR(10) [FK → FACULTY.faculty_id]
+room_id: INTEGER [FK → ROOM.room_id]
+capacity: INTEGER [NOT NULL]
+schedule: VARCHAR(100) [NOT NULL]
+start_date: DATE [NOT NULL]
+end_date: DATE [NOT NULL]
+
+ENROLLMENT
+
+student_id: VARCHAR(10) [PK, FK → STUDENT.student_id]
+section_id: INTEGER [PK, FK → SECTION.section_id]
+grade: VARCHAR(2)
+enrollment_date: DATE [NOT NULL]
+status: VARCHAR(20) [CHECK IN ('enrolled', 'dropped', 'completed', 'incomplete')]
+
+BUILDING
+
+building_id: INTEGER [PK]
+name: VARCHAR(100) [UNIQUE, NOT NULL]
+address: VARCHAR(200) [NOT NULL]
+year_built: INTEGER
+facilities: TEXT
+
+ROOM
+
+room_id: INTEGER [PK]
+building_id: INTEGER [FK → BUILDING.building_id] [NOT NULL]
+room_number: VARCHAR(10) [NOT NULL]
+capacity: INTEGER [NOT NULL]
+room_type: VARCHAR(20) [CHECK IN ('lecture', 'lab', 'seminar', 'office')]
+has_multimedia: BOOLEAN
+
+PROGRAM_REQUIREMENT
+
+requirement_id: INTEGER [PK]
+program_id: INTEGER [FK → PROGRAM.program_id] [NOT NULL]
+course_id: VARCHAR(10) [FK → COURSE.course_id] [NOT NULL]
+requirement_type: VARCHAR(20) [CHECK IN ('core', 'elective', 'prerequisite')]
+
+DEPARTMENT_BUDGET_HISTORY
+
+history_id: INTEGER [PK]
+dept_id: VARCHAR(10) [FK → DEPARTMENT.dept_id] [NOT NULL]
+fiscal_year: INTEGER [NOT NULL]
+budget_amount: DECIMAL(12,2) [NOT NULL]
+approval_date: DATE [NOT NULL]
+
+Normalization Analysis
+The relational model is designed to achieve Third Normal Form (3NF) by ensuring:
+
+First Normal Form (1NF)
+
+All attributes contain atomic values
+No repeating groups
+Primary key identified for each relation
+
+
+Second Normal Form (2NF)
+
+All non-key attributes are fully dependent on the primary key
+No partial dependencies
+Composite keys (like in ENROLLMENT) properly handled
+
+
+Third Normal Form (3NF)
+
+No transitive dependencies
+Non-key attributes depend only on the primary key, not on other non-key attributes
+For example, SECTION.capacity depends only on SECTION.section_id, not on SECTION.room_id
+
+
+
+Functional Dependencies
+Key functional dependencies include:
+
+STUDENT: student_id → name, date_of_birth, email, phone, address
+FACULTY: faculty_id → name, position, hire_date, email, phone, dept_id
+DEPARTMENT: dept_id → name, budget, location, chair_id
+COURSE: course_id → title, credits, level, dept_id
+SECTION: section_id → course_id, semester, year, faculty_id, room_id
+ENROLLMENT: {student_id, section_id} → grade, enrollment_date, status
+ROOM: room_id → building_id, room_number, capacity
+
+Design Decisions
+
+Circular References:
+
+DEPARTMENT has chair_id referencing FACULTY
+FACULTY has dept_id referencing DEPARTMENT
+This circular dependency is resolved by allowing NULL for chair_id initially
+
+
+Additional Tables:
+
+PROGRAM_REQUIREMENT added to model the courses required for each program
+DEPARTMENT_BUDGET_HISTORY added to track budget changes over time
+
+
+Composite Keys:
+
+ENROLLMENT uses a composite primary key of student_id and section_id to represent the many-to-many relationship
+
+
+Status Fields:
+
+Added status fields to STUDENT and ENROLLMENT to track active states
+These use CHECK constraints to limit values to valid o

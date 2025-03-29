@@ -1,0 +1,126 @@
+-- Task E.3
+-- Create tables
+
+-- DEPARTMENT table
+CREATE TABLE department (
+    dept_id VARCHAR(10) PRIMARY KEY,
+    name VARCHAR(100) UNIQUE NOT NULL,
+    budget DECIMAL(12,2) NOT NULL,
+    location VARCHAR(100),
+    chair_id VARCHAR(10), -- FK to faculty will be added later due to circular reference
+    established_date DATE
+);
+
+-- FACULTY table
+CREATE TABLE faculty (
+    faculty_id VARCHAR(10) PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    position VARCHAR(50) NOT NULL,
+    hire_date DATE NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    phone VARCHAR(20),
+    dept_id VARCHAR(10) REFERENCES department(dept_id) ON DELETE SET NULL,
+    specialty VARCHAR(100),
+    is_tenured BOOLEAN
+);
+
+-- Now add the circular reference from department to faculty
+ALTER TABLE department 
+ADD CONSTRAINT fk_department_chair 
+FOREIGN KEY (chair_id) REFERENCES faculty(faculty_id) ON DELETE SET NULL;
+
+-- PROGRAM table
+CREATE TABLE program (
+    program_id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    degree_level VARCHAR(20) CHECK (degree_level IN ('bachelor', 'master', 'doctoral', 'certificate')),
+    dept_id VARCHAR(10) NOT NULL REFERENCES department(dept_id) ON DELETE CASCADE,
+    required_credits INTEGER NOT NULL,
+    description TEXT
+);
+
+-- STUDENT table
+CREATE TABLE student (
+    student_id VARCHAR(10) PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    date_of_birth DATE,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    phone VARCHAR(20),
+    address VARCHAR(200),
+    enrollment_date DATE NOT NULL,
+    program_id INTEGER REFERENCES program(program_id) ON DELETE SET NULL,
+    status VARCHAR(20) CHECK (status IN ('active', 'inactive', 'graduated', 'on_leave'))
+);
+
+-- COURSE table
+CREATE TABLE course (
+    course_id VARCHAR(10) PRIMARY KEY,
+    title VARCHAR(200) NOT NULL,
+    credits INTEGER NOT NULL CHECK (credits > 0),
+    level VARCHAR(20) CHECK (level IN ('undergraduate', 'graduate')),
+    dept_id VARCHAR(10) NOT NULL REFERENCES department(dept_id) ON DELETE CASCADE,
+    description TEXT
+);
+
+-- BUILDING table
+CREATE TABLE building (
+    building_id SERIAL PRIMARY KEY,
+    name VARCHAR(100) UNIQUE NOT NULL,
+    address VARCHAR(200) NOT NULL,
+    year_built INTEGER,
+    facilities TEXT
+);
+
+-- ROOM table
+CREATE TABLE room (
+    room_id SERIAL PRIMARY KEY,
+    building_id INTEGER NOT NULL REFERENCES building(building_id) ON DELETE CASCADE,
+    room_number VARCHAR(10) NOT NULL,
+    capacity INTEGER NOT NULL,
+    room_type VARCHAR(20) CHECK (room_type IN ('lecture', 'lab', 'seminar', 'office')),
+    has_multimedia BOOLEAN,
+    UNIQUE (building_id, room_number)
+);
+
+-- SECTION table
+CREATE TABLE section (
+    section_id SERIAL PRIMARY KEY,
+    course_id VARCHAR(10) NOT NULL REFERENCES course(course_id) ON DELETE CASCADE,
+    semester VARCHAR(10) NOT NULL CHECK (semester IN ('fall', 'spring', 'summer', 'winter')),
+    year INTEGER NOT NULL,
+    faculty_id VARCHAR(10) REFERENCES faculty(faculty_id) ON DELETE SET NULL,
+    room_id INTEGER REFERENCES room(room_id) ON DELETE SET NULL,
+    capacity INTEGER NOT NULL,
+    schedule VARCHAR(100) NOT NULL,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    CHECK (start_date < end_date)
+);
+
+-- ENROLLMENT table
+CREATE TABLE enrollment (
+    student_id VARCHAR(10) REFERENCES student(student_id) ON DELETE CASCADE,
+    section_id INTEGER REFERENCES section(section_id) ON DELETE CASCADE,
+    grade VARCHAR(2),
+    enrollment_date DATE NOT NULL,
+    status VARCHAR(20) CHECK (status IN ('enrolled', 'dropped', 'completed', 'incomplete')),
+    PRIMARY KEY (student_id, section_id)
+);
+
+-- PROGRAM_REQUIREMENT table
+CREATE TABLE program_requirement (
+    requirement_id SERIAL PRIMARY KEY,
+    program_id INTEGER NOT NULL REFERENCES program(program_id) ON DELETE CASCADE,
+    course_id VARCHAR(10) NOT NULL REFERENCES course(course_id) ON DELETE CASCADE,
+    requirement_type VARCHAR(20) CHECK (requirement_type IN ('core', 'elective', 'prerequisite'))
+);
+
+-- DEPARTMENT_BUDGET_HISTORY table
+CREATE TABLE department_budget_history (
+    history_id SERIAL PRIMARY KEY,
+    dept_id VARCHAR(10) NOT NULL REFERENCES department(dept_id) ON DELETE CASCADE,
+    fiscal_year INTEGER NOT NULL,
+    budget_amount DECIMAL(12,2) NOT NULL,
+    approval_date DATE NOT NULL,
+    UNIQUE (dept_id, fiscal_year)
+);

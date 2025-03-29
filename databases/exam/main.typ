@@ -1,10 +1,12 @@
-#import "@preview/grape-suite:1.0.0": exercise, colors
+
+#import "@preview/grape-suite:2.0.0": exercise, colors
 #import "@preview/gentle-clues:1.0.0": *
 #import exercise: project, task, subtask
 #import colors: *
 
 #import "@preview/codly:1.0.0": *
 #show: codly-init.with()
+
 
 #codly(
   languages: (
@@ -13,12 +15,17 @@
     ), c: (
       name: text(font: "JetBrainsMono NFM", " C", weight: "bold"), icon: text(font: "JetBrainsMono NFM", "\u{e61e}", weight: "bold"), color: rgb("#5612EC"),
     ),
+    sql: (
+      name: text(font: "JetBrainsMono NFM", " SQL", weight: "bold"),
+      icon: text(font: "JetBrainsMono NFM", "\u{e76e}", weight: "bold"),
+      color: rgb("#2563eb"),
+    ),
   ),
 )
 
 #show: project.with(
-    type: [Klausur],
-    suffix-title: [Objektorientiere Programmierung],
+    type: [Exam],
+    suffix-title: [Databases],
 
     show-point-distribution-in-tasks: true,
     show-namefield: true,
@@ -31,322 +38,228 @@
     solutions-as-matrix: true,
 
     university: [HAW Hamburg],
-    institute: [SHC - Fakultät TI],
-    seminar: [Objektorientiere Programmierung in Java],
+    institute: [HAW - TI IE4],
+    seminar: [Databases],
 
-    task-type: [Aufgabe],
-    extra-task-type: [Extraaufgabe],
+    task-type: [Tasks],
+    extra-task-type: [Extra tasks],
 
-    solution-matrix-task-header: [Aufgabe],
-    solution-matrix-achieved-points-header: [Erreichte Punkte],
+    solution-matrix-task-header: [Task],
+    solution-matrix-achieved-points-header: [Achieved Points],
 
-    distribution-header-point-value: [Punkte],
-    distribution-header-point-grade: [Wert],
+    distribution-header-point-value: [Points],
+    distribution-header-point-grade: [Value],
 
-    message: (points-sum, extrapoints-sum) => [Insgesamt sind #points-sum + #extrapoints-sum P. erreichbar. Sie haben #box(line(stroke: purple, length: 1cm)) P. von #points-sum P. erreicht.],
+    message: (points-sum, extrapoints-sum) => [In total, you can achieve #points-sum + #extrapoints-sum points. You have achieved #box(line(stroke: purple, length: 1cm)) P. of #points-sum points.],
 
-    solutions-title: [Lösungsvorschläge],
-    timefield: (time) => [Zeit: #time min.],
+    solutions-title: [Suggestion for the Solution],
+    timefield: (time) => [Time: #time min.],
 
-    grade-scale: (([sehr gut], 0.9), ([gut], 0.8), ([befriedigend], 0.7), ([ausreichend], 0.6), ([n.b.], 0.59))
+    grade-scale: (([A], 0.9), ([B], 0.8), ([C], 0.7), ([D], 0.6), ([E], 0.51), ([F], 0.50))
 )
 
-= Theoretischer Teil: 45min
+#set heading(numbering: none)
 
-#task(points: 10, [Grundbegriffe], [
-    Erklären Sie die folgenden fünf Grundbegriffe aus der objektorientierten Programmierung:
-  - Attribut
-  - Methode
-  - Klasse
-  - Objekt
-  - Vererbun\
-  #box(height: 30%, width: 100%, stroke: color.black)[]
-], [], (
-    (2, [Attribut als Variable oder Eigenschaft einer Klasse/Objekt.]),
-    (2, [Methode als Funktion oder Fähigkeit einer Klasse/Objekt.]),
-    (2, [Klasse als Bauplan für ein oder mehr Objekte]),
-    (2, [Objekt als Instanz einer Klasse]),
-    (2, [Vererbung als Möglichkeit, Code zu organisieren. Weitergabe von Methoden und Attributen.]),
-))
+#task(points: 40, [
+  Film Festival Management System
+],
+[
+- *Context*: Design a system to manage an international film festival with multiple venues, screenings, films, directors, actors, and ticket sales.
 
-#task([Konzepte der Objektorientieren Programmierung], [
-  Beschreiben Sie kurz, was die verschiedenen Begriffe und Konzepte in Java bzw. der Objektorientieren Programmierung bedeuten. 
+- *Requirements*:
+  1. Track films with attributes including title, release year, country, language, genre, and runtime
+  2. Associate films with directors, producers, and cast members
+  3. Manage multiple festival venues with different seating capacities
+  4. Schedule film screenings across venues with no conflicts
+  5. Handle ticket reservations and sales with different pricing tiers
+  6. Track festival attendees and their ticket purchases
+  7. Generate reports on attendance, popularity, and revenue
+
+- *Deliverables*: Complete ERD with all entities, relationships, cardinalities, and a normalized relational schema\
+  #box(height: 60%, width: 100%, stroke: color.black)[]
+], [], ())
+
+#task(
+  [
+    Normalization
+  ],
+  [
+    Consider the following schema:
+    ```sql
+CREATE TABLE bookstore (
+    order_id INT,
+    order_date DATE,
+    customer_id INT,
+    customer_name VARCHAR(100),
+    customer_email VARCHAR(100),
+    customer_address TEXT,
+    customer_phone VARCHAR(20),
+    book_id INT,
+    book_title VARCHAR(200),
+    book_author VARCHAR(100),
+    book_publisher VARCHAR(100),
+    book_isbn VARCHAR(20),
+    book_category VARCHAR(50),
+    book_price DECIMAL(10, 2),
+    quantity INT,
+    payment_method VARCHAR(50),
+    card_number VARCHAR(20),
+    card_expiry VARCHAR(7),
+    shipping_method VARCHAR(50),
+    shipping_cost DECIMAL(10, 2),
+    discount_code VARCHAR(20),
+    discount_percentage DECIMAL(5, 2),
+    PRIMARY KEY (order_id, book_id)
+);
+    ```
+  #v(80%)
 ], [
-    #subtask(points: 5)[
-Definieren Sie den Begriff „Polymorphismus“. Geben Sie ein Beispiel an, das zeigt, wie ein Polymorphismus in Java implementiert wird.\
-    #box(height: 80%, width: 100%, stroke: color.black)[]
-    ]
-    #subtask(points: 5)[
-Erklären Sie die Unterschiede zwischen einer abstrakten Klasse und einem Interface in Java. Nennen Sie jeweils ein Beispiel für den Einsatz.\
+  #subtask(points: 4)[
+    Describe what the type of data the schema contains and what the context of the schema most likely is. Give an example for both aspects.\
     #box(height: 40%, width: 100%, stroke: color.black)[]
+  ]
+  #subtask(points: 4)[
+    What is the problem with this schema? What kinds of issues does this type of schema have? How would you try to combat that? Give an example for an improvement!\
+    #box(height: 47%, width: 100%, stroke: color.black)[]
+  ]
+  #subtask(points: 22)[
+    Improve the schema! Explain your decisions and implement at least 3 improvements for the schema in SQL.\
+    #box(height: 90%, width: 100%, stroke: color.black)[]
+  ]
+  ], (
+  (
+    4, 
+    [
+      1. Book data: Title, Publisher, Author
+      2. Discount data: Code, Percentage
+      3. Customer data: Name, Email, Address
+      4. Shipping data: Costs, Method
     ]
-    #subtask(points: 5)[
-    Warum ist es gut, wenn Daten gekapselt werden? Und wie wird diese Datenkapselung erzeugt? Erklären Sie dies und geben Sie ein Beispiel.\
-    #box(height: 45%, width: 100%, stroke: color.black)[]
+  ),
+  (
+    4, 
+    [
+      1. Data Redundancy: Customer information is repeated for each book in an order
+      2. Update Anomalies: Changing a customer's address requires updating multiple rows
+      3. Insertion Anomalies: Cannot add a book without an order
+      4. Deletion Anomalies: Deleting an order could lose book information
     ]
-], (
-    (5, [Eine Methode in unterschiedlichen Klassen mit unterschiedlichen Implementierungen existieren kann, während sie den gleichen Methodennamen und die gleiche Signatur trägt. Überladen und Überschreiben.]),
-    (5, [Eine abstrakte Klasse ist eine Klasse, die nicht instanziiert werden kann. Ein Interface ist eine Sammlung aus abstrakten Methoden.]),
-    (5, [Klarheit und Struktur, Sicherheit, Wartbarkeit. Kapselung mittels `private`, sowie Getter und Setter.]),
+  ),
+  (
+    22, 
+    [
+      1. Data Redundancy: Customer information is repeated for each book in an order
+      2. Update Anomalies: Changing a customer's address requires updating multiple rows
+      3. Insertion Anomalies: Cannot add a book without an order
+      4. Deletion Anomalies: Deleting an order could lose book information
+    ]
+  ),
+)
+)
+
+#task(points: 10, [General Terms of Databases], [
+    Explain the following five terms that we encountered during the lecture in 2-3 sentences and give an example for each:
+    - Normalization
+    - Transaction
+    - ACID
+    - Selection
+    - Projection\
+  #box(height: 75%, width: 100%, stroke: color.black)[]
+], [], (
+    (2, [Normalization is the systematic process of organizing database tables to minimize redundancy and dependency by dividing larger tables into smaller ones and defining relationships between them. It involves applying a series of rules (normal forms) that progressively eliminate anomalies and ensure data integrity.]),
+    (2, [A transaction is a logical unit of work that contains one or more database operations (read, write, update, delete) which must be executed as a single atomic entity. Transactions ensure that the database remains in a consistent state by either committing all operations if successful or rolling back all changes if any operation fails.]),
+    (2, [ACID is an acronym representing the four essential properties that guarantee reliable processing of database transactions: Atomicity (all operations complete or none do), Consistency (data remains valid according to defined rules), Isolation (concurrent transactions don't interfere), and Durability (committed changes survive system failures). These properties collectively ensure database integrity even during system failures, concurrent access, and other potential disruptions.]),
+    (2, [Selection is a relational algebra operation that produces a horizontal subset of a relation by filtering rows based on a specified condition. It returns only those tuples from a relation that satisfy the given predicate, maintaining the original schema while reducing the number of records.]),
+    (2, [Projection is a relational algebra operation that creates a vertical subset of a relation by extracting specified columns and eliminating duplicates. It reduces the number of attributes in the result set while preserving all distinct rows based on the selected columns.]),
 ))
 
-#task(points: 16, [Wahr oder Falsch], [
-  Entscheiden Sie bei den folgenden Aussagen, ob Sie richtig oder falsch sind:
+#task(points: 16, [True or False], [
+  For the following statements, decide whether each one is true or false and make a cross or checkmark in the respective column. For any correct answer, your point total will be increased by 2 points. For any wrong answer, your point total will be reduced by 2 points. You can receive negative points for this problem!
+
 #table(
   columns: (auto, auto, auto),
   inset: 10pt,
   align: horizon,
   table.header(
-    [*Frage*], [*Wahr*], [*Falsch*],
+    [*Statement*], [*True*], [*False*],
   ),
-    [Eine Klasse kann von mehreren anderen Klassen erben.], [], [],
-    [Vererbung und Komposition sind zwei Worte für die selbe Sache.], [], [],
-    [Eine Referenz auf ein Objekt muss immer von genau der selben Klasse sein wie das Objekt selbst.], [], [],
-    [Mit ```java public Auto()``` definieren Sie einen Konstruktor für die Klasse ```java Auto```.], [], [],
-    [Eine Klasse kann mehrere Interfaces implementieren.], [], [],
-    [Mit dem Schlüsselwort ```java impl``` können Sie definieren, dass eine Klasse ein Interface implementiert.], [], [],
-    [Mit dem Ausdruck ```java let number : i32 = 0;``` definieren Sie eine Variable mit dem Namen ```java number``` und dem Wert `0`.], [], [], 
-    [Der Hauptvorteil der Datenkapselung ist es, dass Sie Daten vor unerlaubten Zugriff schützen.], [], []
+    [The SQL keyword `HAVING` is used to filter records before they are grouped by the `GROUP BY` clause.], [], [],
+    [Denormalization is always a poor design choice as it introduces data redundancy.], [], [],
+    [The ACID properties (Atomicity, Collaboration, Iteration, Durability) are primarily relevant to transactions in databases because they describe how transactions are supposed to be.], [], [],
+    [In an Entity-Relationship Diagram, a weak entity can exist independently of its identifying relationship.], [], [],
+    [A relation is in Third Normal Form (3NF) if it is in Second Normal Form (2NF) and no non-prime attribute is transitively dependent on the primary key.], [], [],
+    [A composite primary key can never contain a foreign key as one of its components.], [], [],
+    [Database indexes always improve query performance regardless of the database size or query patterns.], [], [], 
+    [In PostgreSQL, a materialized view stores the query results physically and must be manually refreshed to update its data.], [], []
 )
 ], [], (
-    (2, [Falsch]),
-    (2, [Falsch]),
-    (2, [Falsch]),
-    (2, [Wahr]),
-    (2, [Wahr]),
-    (2, [Falsch]),
-    (2, [Wahr]),
+    (2, [False]),
+    (2, [False]),
+    (2, [False]),
+    (2, [True]),
+    (2, [False]),
+    (2, [False]),
+    (2, [True]),
 ))
+#v(80%)
 
-#pagebreak()
-#task(
-  [Beschreibung eines bestehenden Programms], extra: true, points: 10, [
+#task([University Management System Database Project],
+[
+== Project Overview
+Please design and implement a complete database system for university management, covering academic, administrative, and operational aspects. The project is divided into three sequential stages: 
+  1. Conceptual Design (ERD), 
+  2. Logical Design (RM), and 
+  3. Physical Implementation (SQL).
+], 
+  [
+    #subtask(points: 20)[
+=== Stage: Entity-Relationship Diagram (ERD) Design
+==== Task Description
+Design a comprehensive Entity-Relationship Diagram for a university management system. Your ERD must capture all significant entities, relationships, attributes, cardinalities, and constraints necessary for managing academic programs, student records, faculty, courses, registration, facilities, and departmental administration.
 
-In dem folgenden Programmcode wird ein einfaches Bibliothekssystem erzeugt. Beschreiben Sie, welche Funktionen mit dem Code abgedeckt werden. Welche Klassen und Methoden sind definiert? 
-  Fällt Ihnen ein, wie Sie das Programm erweitern könnten?\
-  #box(width: 100%, height: 87%, stroke: color.black)[]
-  1. Die Klasse ```java Book```
-  ```java
-public class Book {
-    private String title;
-    private String author;
-    private boolean isBorrowed;
-
-    public Book(String title, String author) {
-        this.title = title;
-        this.author = author;
-        this.isBorrowed = false;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public boolean isBorrowed() {
-        return isBorrowed;
-    }
-
-    public void borrow() {
-        if (!isBorrowed) {
-            isBorrowed = true;
-            System.out.println("Das Buch '" + title + "' wurde ausgeliehen.");
-        } else {
-            System.out.println("Das Buch '" + title + "' ist bereits ausgeliehen.");
-        }
-    }
-
-    public void returnBook() {
-        if (isBorrowed) {
-            isBorrowed = false;
-            System.out.println("Das Buch '" + title + "' wurde zurückgegeben.");
-        } else {
-            System.out.println("Das Buch '" + title + "' war nicht ausgeliehen.");
-        }
-    }
-
-    public String toString() {
-        return "Buch: " + title + " von " + author + (isBorrowed ? " (ausgeliehen)" : " (verfügbar)");
-    }
-}
-  ```
-
-  #v(90%)
-  2. Die Klasse ```java Library```
-
-  ```java
-import java.util.ArrayList;
-
-public class Library {
-    private ArrayList<Book> books;
-
-    public Library() {
-        books = new ArrayList<>();
-    }
-
-    public void addBook(Book book) {
-        books.add(book);
-        System.out.println("Das Buch '" + book.getTitle() + "' wurde der Bibliothek hinzugefügt.");
-    }
-
-    public void listBooks() {
-        if (books.isEmpty()) {
-            System.out.println("Die Bibliothek enthält keine Bücher.");
-        } else {
-            System.out.println("Liste der Bücher in der Bibliothek:");
-            for (Book book : books) {
-                System.out.println(book);
-            }
-        }
-    }
-
-    public void borrowBook(String title) {
-        for (Book book : books) {
-            if (book.getTitle().equalsIgnoreCase(title)) {
-                book.borrow();
-                return;
-            }
-        }
-        System.out.println("Das Buch '" + title + "' wurde nicht gefunden.");
-    }
-
-    public void returnBook(String title) {
-        for (Book book : books) {
-            if (book.getTitle().equalsIgnoreCase(title)) {
-                book.returnBook();
-                return;
-            }
-        }
-        System.out.println("Das Buch '" + title + "' wurde nicht gefunden.");
-    }
-}
-  ```
-  #v(90%)
-  3. Die Klasse ```java Main```
-  ```java
-import java.util.Scanner;
-
-public class Main {
-    public static void main(String[] args) {
-        Library library = new Library();
-        Scanner scanner = new Scanner(System.in);
-        boolean running = true;
-
-        // Beispielbücher hinzufügen
-        library.addBook(new Book("Der Herr der Ringe", "J.R.R. Tolkien"));
-      library.addBook(new Book("Harry Potter und der Stein der Weisen", "J.K. Rowling"));
-        library.addBook(new Book("1984", "George Orwell"));
-
-        while (running) {
-            System.out.println("\nBibliothekssystem:");
-            System.out.println("1. Bücher anzeigen");
-            System.out.println("2. Buch ausleihen");
-            System.out.println("3. Buch zurückgeben");
-            System.out.println("4. Beenden");
-            System.out.print("Wählen Sie eine Option: ");
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // Eingabezeile leeren
-
-            switch (choice) {
-                case 1:
-                    library.listBooks();
-                    break;
-                case 2:
-                    System.out.print("Titel des auszuleihenden Buches: ");
-                    String borrowTitle = scanner.nextLine();
-                    library.borrowBook(borrowTitle);
-                    break;
-                case 3:
-                    System.out.print("Titel des zurückzugebenden Buches: ");
-                    String returnTitle = scanner.nextLine();
-                    library.returnBook(returnTitle);
-                    break;
-                case 4:
-                    running = false;
-                    System.out.println("Programm beendet.");
-                    break;
-                default:
-                    System.out.println("Ungültige Option. Bitte erneut versuchen.");
-                    break;
-            }
-        }
-        scanner.close();
-    }
-}
-  ```
-], [], 
-(
-(2, [Override von `toString`]),
-(2, [Datenkapselung mittels `private` und Getter und Setter]),
-(2, [`ArrayList` statt normalem Array.]),
-(2, [`Scanner` wird als Eingabe über die Kommandozeile verwendet.]),
-(2, [Erweiterungen: Abstrakte-Klassen, Exceptions, Benutzerverwaltung]),
-))
-#pagebreak()
-
-= Praktischer Teil: 45min
-
-#task([Römisch zu Arabisch], [
-    Die römischen Ziffern bestehen aus sieben verschiedenen Symbolen: I, V, X, L, C, D und M.
-  #align(center + horizon)[
-#table(
-  columns: (auto, auto),
-  inset: 10pt,
-  align: horizon,
-  table.header(
-    [*Symbol*], [*Wert*],
-  ),
-    [I], [1],
-    [V], [5],
-    [X], [10],
-    [L], [50],
-    [C], [100],
-    [D], [500],
-    [M], [1000]
-)
-
+==== Requirements
+- Identify all relevant entities with appropriate attributes
+- Define meaningful relationships with proper cardinalities
+- Specify primary keys and foreign keys
+- Include derived attributes where appropriate
+- Identify weak entities if necessary
+- Document any assumptions made during the design process
+- Use proper ERD notation (Chen, Crow's Foot, or UML)\
+    #v(80%)
+  #box(height: 100%, width: 100%, stroke: color.black)[]
   ]
-Zum Beispiel wird die Zahl 2 als II geschrieben, da es zwei Einsen sind. Die Zahl 12 wird als XII dargestellt, was X (10) plus II (2) entspricht. Die Zahl 27 wird als XXVII geschrieben, was XX (20) plus V (5) plus II (2) ist.
+  #subtask(points: 20)[
+=== Stage: Relational Model (RM) Design
+==== Task Description
+Transform your ERD into a complete Relational Model. For each entity in your ERD, define a corresponding relation with attributes, primary keys, foreign keys, and any additional constraints. Ensure your design is properly normalized (at least to 3NF) and document any denormalization decisions if applicable.
 
-Römische Ziffern werden normalerweise von links nach rechts in der Reihenfolge von der größten zur kleinsten Zahl geschrieben. Allerdings wird die Zahl 4 nicht als IIII geschrieben, sondern als IV. Da die Eins vor der Fünf steht, subtrahieren wir sie, und so erhalten wir vier. Das gleiche Prinzip gilt für die Zahl 9, die als IX geschrieben wird. Es gibt sechs Fälle, in denen Subtraktion angewendet wird:
+==== Requirements
+- Transform all entities and relationships into appropriate tables
+- Properly handle many-to-many relationships with junction tables
+- Define all primary keys, foreign keys, and constraints
+- Specify attribute domains and data types
+- Document functional dependencies
+- Ensure the design is normalized to at least 3NF
+- Explain any denormalization decisions with justification\
 
-- I kann vor V (5) und X (10) stehen, um 4 und 9 zu bilden. 
-- X kann vor L (50) und C (100) stehen, um 40 und 90 zu bilden. 
-- C kann vor D (500) und M (1000) stehen, um 400 und 900 zu bilden.
-
-Schreiben Sie ein Programm, welches Ihnen eine römische Zahl in eine arabische (numerische) Zahl umrechnet!
-
-  #tip[
-    Sie werden durch den String iterieren müssen. Nutzen Sie dafür die Methode ```java String.getChar(int i)```, wobei hier i der Index ist, an dem Sie den Wert auslesen möchten. Beispiel:
-    ```java 
-    String s = "Hallo";
-    System.out.println("Buchstabe an der ersten Stelle von " + s + " ist " + s.charAt(0) + "."); //Buchstabe an der ersten Stelle von Hallo ist H.
-    ```
-    \
+  #box(height: 65%, width: 100%, stroke: color.black)[]
   ]
-], [
-    #subtask(points: 5)[
-    Legen Sie ein neues Projekt an. Geben Sie dabei dem Projekt einen Namen, der Ihre Matrikelnummer und Ihren Namen enthält. 
-    Erstellen Sie eine Klasse mit einer Methode, die einen entsprechenden Namen und Parameter sowie Rückgabewert enthält.
-    ]
-    #subtask(points: 30)[
-      Implementieren Sie die Funktion, die oben angegeben ist. Schreiben Sie zudem eine `main`-Methode, welche die Methode gegen Testinput laufen lässt.
-    ]
-    #subtask(points: 5)[
-      Legen Sie Ihr Projekt auf der externen Festplatte ab, die Sie von der Klausuraufsicht zur Verfügung gestellt bekommen. Fragen Sie einfach, falls Sie Ihr Projekt ablegen möchten. Nachdem das Projekt abgelegt worden ist, gibt es keine weiteren Möglichkeiten, Änderungen zu machen. 
-    ]
+  #subtask(points: 20)[
+  === Stage: SQL Implementation
+==== Task Description
+Implement your relational model as a PostgreSQL database. Write the SQL statements to create all tables with appropriate constraints, and populate them with sample data. Then, write SQL queries to demonstrate the functionality of your database for common university management operations.
 
-], (
-    (4, [Der Code hat den richtigen Coding Style und sieht ordentlich aus.]),
-    (8, [Der Code funktioniert wie beschrieben und gibt bei richtigem Input eine richtige Antwort zurück.]),
-    (4, [Das Programm ist gegen Fehler durch falsche Eingaben gesichert. Ein nicht definiertes Zeichen führt zu einem Abbruch der Operation.]),
-    (4, [Das Programm ist gegen Fehler durch falsche Eingaben gesichert. Es wurde ein entsprechendes Exception Handling implementiert.]),
-    (5, [Es ist ein Projekt mit entsprechendem Namen, sowie eine Klasse und eine Methode angelegt.]),
-    (5, [Die Methode ist entsprechend benannt, hat Parameter und Rückgabewert, die mit der Aufgabenstellung zusammenpassen.]),
-    (5, [Es gibt eine main-Methode in einer der Klassen, die ausführbar ist und den Code gegen Testinput testet.]),
-    (5, [Das Projekt ist auf der Festplatte, ist richtig benannt und kann geöffnet werden.]),
-))
+==== Requirements:
+- Create DDL statements for all tables with proper constraints
+- Include foreign key constraints with appropriate actions (`CASCADE`, `SET NULL`, etc.)
+- Develop SQL queries for common operations like:
+  - Course registration
+  - Grade reporting
+  - Faculty teaching assignments
+  - Room scheduling
+  - Student transcript generation
+  - Department budget analysis\
+  #box(height: 60%, width: 100%, stroke: color.black)[]
+  ]
+  ])
 
