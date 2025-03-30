@@ -20,80 +20,78 @@
 
 #show: exercise.project.with(
   title: "Databases Lab 01", university: [HAW Hamburg], institute: [TI IE4], seminar: [DBL], abstract: [
-  This is the second lab of Databases. This lab is designed to help you deepen your understanding of database design and SQL.
-  It is recommended that you familiarize yourself with the assignments to allow a more effective  participation in Laboratory 2.    If you have questions or need any support, help each other, or use the forum in our moodle room.  
+  This is the first lab of Databases. Here you will learn the basics of database design and SQL. 
+  It is recommended that you familiarize yourself with the assignments to allow a more effective  participation in Laboratory 1.    If you have questions or need any support, help each other, or use the forum in our moodle room.  
   ], show-outline: true, author: "Emily Antosch", show-solutions: false,
 )
 
-= Assignment 1: Relational Model for a Hotel    
-A hotel chain wants to use a database to keep track of their hotels and employees, described in  the following ERD:  
+= Assignment 1: Student Information System
 
-#figure(image("../../assets/img/2024_11_14_lab02_erd_employee_hotel_rev01.png"))
+== Introduction
+A university wants to store information about its students and their courses in a database. The  following requirements have been identified: 
+- The university offers one or more study programs. Every study program has a unique  program id, a unique name, and the required credit points to finish it. 
+- A study program is made up of one or more courses. A course belongs to exactly one study  program and has a course id, a name, a description, and credit points. A course can have  none, one or more other courses as a prerequisite.
+- A student has a student id, first name, last name, date of birth and a year of enrollment. A  student is enrolled in exactly one study program.
+- A student attempts courses, that are part of his/her study program. If a student attempts a  course the year and term (summer or winter semester) and grade (between 0 and 15  points) are recorded.  
 
-In addition to the constraints in the ERD, take account of the following constraint: “Every stand-in  is uniquely identifiable by the combination of the employee who replaces, the employee who is  replaced and the date of the stand-in.”
-Convert the ERD into a relation schema. Make sure that every relation is in 3NF.
+== Assignments:    
+1.  Create an entity-relationship-diagram in Chen notation according to these requirements.  Add attributes where necessary. Take special care that you identify the entity types,  relationship types, and key attributes.    
+2.  Can you think of adding some additional composite, multivalued, or derived attributes in  this example?    
+3.  How does the ERM looks like in MC notation?  
+4.  Describe two semantic integrity requirements, which make sense for the described model,  but cannot be reflected in the entity-relationship-diagram.
+5.  Convert the ERD into a relational schema.     
+6.  Write SQL-statements that create the corresponding tables. Come up with reasonable  constraints and datatypes for the fields of the tables. Think also about the behavior of data  when a referenced tuple is updated or deleted.
+7.  Insert example data in the database you created (you could for example give rows for your  own study program / courses / attempts or any fictional data).
 
+#pagebreak()
 
-= Assignment 2: Functional dependencies and normalization of a Furniture Database Version 1    
-A furniture company maintains a database that records information about orders, customers, and  products. Note: In version 1, each order contains only one product. The sample database relation  ORDER is as follows:    
+= Assignment 2: ERD for an Online Shopping Platform
 
-#table(columns: (auto, auto, auto, auto, auto, auto, auto), inset: 0.5em, 
-  [*CustomerID*], [*Name*], [*Address*], [*OrderID*], [*Product*], [*Quantity*], [*Price*],
-  [24], [Maria Müller], [Wegstraße 12b, Berlin], [101], [Table], [2], [150.0],
-  [24], [Maria Müller], [Wegstraße 12b, Berlin], [102], [Chair], [5], [80.0],
-  [18], [Klaus Schmidt], [Hauptstraße 4, Hamburg], [103], [Table], [1], [130.0],
-  [16], [Petra Wagner], [Lindenallee 7, Munich], [104], [Sofa], [2], [200.0],
+The following entity-relationship-diagram is given. Assume that the database is filled with data  according to the ERM. Decide whether the following statements are either true (T), false (F), or  undecidable/maybe (U). "U" is used for statements that can be either T or F depending on the  stored data. Evaluate the statements based exclusively on the ERM and the restrictions it contains.
+
+#figure(image("../../assets/img/2024_11_14_lab01_erd_shopping_rev01.png"))
+
+#table(columns: (auto, auto, auto), inset: 0.5em, 
+  [*Number*], [*Statement*], [*Answer*],
+  [01], [A customer can have multiple shopping carts.], [],
+  [02], [A product can be included in multiple orders.], [],
+  [03], [Each shopping cart is associated with a specific order.], [],
+  [04], [An order can contain only one product.], [],
+  [05], [A customer can place multiple orders.], [],
+  [06], [Each order has a unique oder number.], [],
+  [07], [Each order must be associated with a customer.], [],
+  [08], [A customer can place an order without a shopping cart.], [],
+  [09], [A product can be sold at different prices in different orders.], [],
+  [10], [Every product can be contained several times in the same order.], [],
+  [11], [A product can be uniquely identified by the combination of the Product name and Product ID.], [],
 )
 
-1. Determine the (full) functional dependencies. Keep in mind that functional dependencies  are determined by the model, not just by the actual data in the database relations.  
-2. Determine potential candidate keys and a primary key for the given relation ORDER.  Elaborate on your answer.  
-3. Transform the relational schema to 3NF. Your relation(s) should indicate PKs & FKs and  contain all the data.  
-4. Create an entity relationship diagram of the 3NF schema.
+= Assignment 3 ERD for a Technology Support Company
+A technology company is developing a support ticket management system to handle customer  complaints efficiently and track the support staff's work. The system must store information about  support requests, customers, support staff and their interactions.
+1.  Create an entity-relationship-diagram in Chen notation according to these requirements.  Add attributes where necessary. Take special care that you identify the entity types,  relationship types, and key attributes.
+2.  Can you think of adding some additional composite, multivalued, or derived attributes in  this example?
+3.  How does the ERM looks like in MC notation?
+4.  Convert the ERD into a relational schema.
 
 
-= Assignment 3: Functional dependencies and normalization of a Furniture Database Version 2    
-A furniture company maintains a database that records information about orders, customers, and  products. Note: In version 2, each order may contain several products. The sample database  relation ORDER is as follows:
 
-#table(columns: (auto, auto, auto, auto, auto, auto, auto), inset: 0.5em, 
-  [*CustomerID*], [*Name*], [*Address*], [*OrderID*], [*Product*], [*Quantity*], [*Price*],
-  [24], [Maria Müller], [Wegstraße 12b, Berlin], [101], [Table], [2], [150.0],
-  [24], [Maria Müller], [Wegstraße 12b, Berlin], [102], [Chair], [5], [80.0],
-  [18], [Klaus Schmidt], [Hauptstraße 4, Hamburg], [103], [Table], [1], [130.0],
-  [16], [Petra Wagner], [Lindenallee 7, Munich], [104], [Sofa], [2], [200.0],
-)
+= Assignment 4 – RM for Favorite Books
+Transform given the ERD to an equivalent relational model.
 
-1. Determine the (full) functional dependencies. Keep in mind that functional dependencies  are determined by the model, not just by the actual data in the database relations.  
-2. Determine potential candidate keys and a primary key for the given relation ORDER.  Elaborate on your answer.  
-3. Transform the relational schema to 3NF. Your relation(s) should indicate PKs & FKs and  contain all the data.  
-4. Implement the schema in your database and insert sample date.  
+#figure(image("../../assets/img/2024_11_14_lab01_erd_favorite_books_rev01.png"))
 
 
-= Assignment 4: Functional dependencies and normalization of a Sale Database
-
-A university stores information about the quantities of copies of lecture notes sold by each  professor. Lectures are taught by different professors, using different lecture notes.  The following sample database relation SALE is used:
-
-#figure(image("../../assets/img/2024_11_14_lab02_sales_table_rev01.png"))
-
-1. Determine the (full) functional dependencies. Keep in mind that FDs are determined by the  model, not just by the actual data in the database relations.
-2. Identify a primary key for the given relation SALE. Explain your answer. 
-3. Transform the relational schema to 2NF. Your relation(s) should indicate PKs & FKs and  contain all the data.
-4. Transform the relational schema to 3NF. Your relation(s) should indicate PKs & FKs and  contain all the sample data.
+= Assignment 5: ERD for a Zoo
+Draw an Entity-Relationship-Diagram in MC notation according to the following requirements. Add  attributes where necessary. Take special care that you identify the entity types, relationship types,  and key attributes. Translate the resulting ERM into a relational model.
+The director of the local zoo wants to track problems with his animals. 
+- The zoo has many animal types. Every animal type has a unique name and defines an age  at which this type is determined reproductive.
+- Every animal has a unique animal ID. Animals also have an age and a gender as well as an  indicator if they are capable of reproduction.
+- Animals may have diseases. The beginning time and the duration of a disease needs to be  recorded. A disease has a unique name.
+- A keeper takes care of only one animal type, but for every animal type there may be many  keepers.
 
 
-= Assignment 5: Functional dependencies and normalization for a general example
-Consider the following relation *ANY*:
-
-ANY (aid, bid, cid, aName, bName, cName, since, description, location)
-
-and functional dependencies *F* that hold over the relation *ANY*:      
-
-- aid: aName
-- aName: aid
-- bid: bName, location, cid, cName, description
-- cid: cName, description
-- cName: cId
-- aName, bid: aid, bid, cid, aName, bName, cName, since, description
-
-1. Determine all candidate keys (possible primary keys) of ANY.  
-2. In which normal form is the relation ANY and why?  
-3. If relation ANY is not in 1NF, 2NF or 3NF then decompose it, accordingly, taking care to  denote possible keys (both PKs and FKs).    
+= Assignment 6: ERD for a Cooking Club
+Draw an Entity-Relationship-Diagram in MC notation according to the following requirements. Add  attributes where necessary. Take special care that you identify the entity types, relationship types,  and key attributes. Translate the resulting ERM into a relational model.
+A cooking club organizes several dinners for its members. The purpose of the club is to allow  several members to get together and prepare a dinner for the other members. The club president  maintains a database that plans each meal and tracks which members attend each dinner and  keeps track of which members create each dinner.
+- Each dinner serves many members, and any member is allowed to attend. Each dinner has  an invitation. This invitation is mailed to each member. The invitation includes the date of  the dinner and location.
+- Each dinner is based on a single entrée, a main course, and a single dessert. The recipes for  the entrées and desserts can be used again for other dinners.

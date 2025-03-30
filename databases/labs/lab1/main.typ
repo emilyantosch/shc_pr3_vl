@@ -1,97 +1,294 @@
 #import "@preview/grape-suite:1.0.0": exercise, german-dates
+#import "@preview/gentle-clues:1.2.0"
 
 #set text(lang: "en")
 
 #import "@preview/codly:1.0.0": *
 #show: codly-init.with()
 
+#let is_solution = true
+
 #codly(
   languages: (
     sql: (
-      name: text(font: "JetBrainsMono NFM", " SQL", weight: "bold"), icon: text(font: "JetBrainsMono NFM", "\u{e76e}", weight: "bold"), color: rgb("#2563eb"),
+      name: text(font: "JetBrainsMono NFM", " SQL", weight: "bold"),
+      icon: text(font: "JetBrainsMono NFM", "\u{e76e}", weight: "bold"),
+      color: rgb("#2563eb"),
     ),
     java: (
-      name: text(font: "JetBrainsMono NFM", " Java", weight: "bold"), icon: text(font: "JetBrainsMono NFM", "\u{e738}", weight: "bold"), color: rgb("#CE412B"),
-    ), c: (
-      name: text(font: "JetBrainsMono NFM", " C", weight: "bold"), icon: text(font: "JetBrainsMono NFM", "\u{e61e}", weight: "bold"), color: rgb("#7c3aed"),
+      name: text(font: "JetBrainsMono NFM", " Java", weight: "bold"),
+      icon: text(font: "JetBrainsMono NFM", "\u{e738}", weight: "bold"),
+      color: rgb("#CE412B"),
+    ),
+    c: (
+      name: text(font: "JetBrainsMono NFM", " C", weight: "bold"),
+      icon: text(font: "JetBrainsMono NFM", "\u{e61e}", weight: "bold"),
+      color: rgb("#7c3aed"),
     ),
   ),
 )
 
 #show: exercise.project.with(
-  title: "Databases Lab 01", university: [HAW Hamburg], institute: [TI IE4], seminar: [DBL], abstract: [
-  This is the first lab of Databases. Here you will learn the basics of database design and SQL. 
-  It is recommended that you familiarize yourself with the assignments to allow a more effective  participation in Laboratory 1.    If you have questions or need any support, help each other, or use the forum in our moodle room.  
-  ], show-outline: true, author: "Emily Antosch", show-solutions: false,
+  title: "Databases Lab 03",
+  university: [HAW Hamburg],
+  institute: [TI IE4],
+  seminar: [DBL],
+  abstract: [
+    This is the first lab of Databases. This lab focuses on improving your skills in
+    dealing with SQL queries. There are tasks for both DDL and DML statements. If you have questions or need any
+    support, help each other, ask your tutor or use the forum in our moodle room.
+  ],
+  show-outline: true,
+  author: "Emily Antosch & Furkan Yildirim & Julian Moldenhauer",
+  show-solutions: false,
 )
 
-= Assignment 1: Student Information System
+= Assignment 1: SQL-statements for the Student Information System
+A schema essentially is a collection of tables and their relations to each other. Schemas are commonly implemented by SQL.
+Consider the following schema for the Student Information System:
 
-== Introduction
-A university wants to store information about its students and their courses in a database. The  following requirements have been identified: 
-- The university offers one or more study programs. Every study program has a unique  program id, a unique name, and the required credit points to finish it. 
-- A study program is made up of one or more courses. A course belongs to exactly one study  program and has a course id, a name, a description, and credit points. A course can have  none, one or more other courses as a prerequisite.
-- A student has a student id, first name, last name, date of birth and a year of enrollment. A  student is enrolled in exactly one study program.
-- A student attempts courses, that are part of his/her study program. If a student attempts a  course the year and term (summer or winter semester) and grade (between 0 and 15  points) are recorded.  
+- *STUDENT*(studentID, fistName, lastName, dob, programID(FK))
+- *PROGRAM*(programID, name, requiredCPs)
+- *COURSE*(courseID, name, description, creditPoints, programID(FK))
+- *ATTEMPTS*(studentID(FK),courseID(FK), year, term, grade)
+- *PREREQUISITE*(advancedCourseID(FK), prerequisiteCourseID (FK))
 
-== Assignments:    
-1.  Create an entity-relationship-diagram in Chen notation according to these requirements.  Add attributes where necessary. Take special care that you identify the entity types,  relationship types, and key attributes.    
-2.  Can you think of adding some additional composite, multivalued, or derived attributes in  this example?    
-3.  How does the ERM looks like in MC notation?  
-4.  Describe two semantic integrity requirements, which make sense for the described model,  but cannot be reflected in the entity-relationship-diagram.
-5.  Convert the ERD into a relational schema.     
-6.  Write SQL-statements that create the corresponding tables. Come up with reasonable  constraints and datatypes for the fields of the tables. Think also about the behavior of data  when a referenced tuple is updated or deleted.
-7.  Insert example data in the database you created (you could for example give rows for your  own study program / courses / attempts or any fictional data).
-
-#pagebreak()
-
-= Assignment 2: ERD for an Online Shopping Platform
-
-The following entity-relationship-diagram is given. Assume that the database is filled with data  according to the ERM. Decide whether the following statements are either true (T), false (F), or  undecidable/maybe (U). "U" is used for statements that can be either T or F depending on the  stored data. Evaluate the statements based exclusively on the ERM and the restrictions it contains.
-
-#figure(image("../../assets/img/2024_11_14_lab01_erd_shopping_rev01.png"))
-
-#table(columns: (auto, auto, auto), inset: 0.5em, 
-  [*Number*], [*Statement*], [*Answer*],
-  [01], [A customer can have multiple shopping carts.], [],
-  [02], [A product can be included in multiple orders.], [],
-  [03], [Each shopping cart is associated with a specific order.], [],
-  [04], [An order can contain only one product.], [],
-  [05], [A customer can place multiple orders.], [],
-  [06], [Each order has a unique oder number.], [],
-  [07], [Each order must be associated with a customer.], [],
-  [08], [A customer can place an order without a shopping cart.], [],
-  [09], [A product can be sold at different prices in different orders.], [],
-  [10], [Every product can be contained several times in the same order.], [],
-  [11], [A product can be uniquely identified by the combination of the Product name and Product ID.], [],
+1. Write SQL-statements that create the corresponding tables. Come up with
+  reasonable constraints and datatypes for the fields of the tables.
+#if is_solution [
+  #heading(numbering: none)[Solution 1.1]
+  ```sql
+  CREATE TABLE Program
+    (programID INT NOT NULL,
+     name VARCHAR(32) NOT NULL,
+     requiredCPs INT NOT NULL,
+     PRIMARY KEY (programID) );
+  ```
+  ```sql
+  CREATE TABLE Student
+    (studentID INT NOT NULL,
+     firstName VARCHAR(32) NOT NULL,
+     lastName  VARCHAR(32) NOT NULL,
+     dob            DATE NOT NULL,
+     programID INT NOT NULL,
+     PRIMARY KEY (studentID),
+     FOREIGN KEY (programID) REFERENCES Program(programID) );
+  ```
+  ```sql
+  CREATE TABLE Course
+    (CourseID INT NOT NULL,
+     name VARCHAR(32) NOT NULL,
+     description VARCHAR(100) NOT NULL,
+     creditPoints INT NOT NULL,
+     programID INT NOT NULL,
+     PRIMARY KEY (courseID),
+     FOREIGN KEY (programID) REFERENCES Program(programID) );
+  ```
+  ```sql
+    CREATE TABLE Attempts
+      (studentID INT NOT NULL,
+       courseID INT NOT NULL,
+       year INT NOT NULL,
+       term INT NOT NULL,
+       grade INT NOT NULL,
+      PRIMARY KEY (studentID, courseID, year, term),
+      FOREIGN KEY (studentID) REFERENCES Student(studentID),
+      FOREIGN KEY (courseID) REFERENCES Course(courseID) );
+  ```
+  ```sql
+  CREATE TABLE Prerequisite
+    (advancedCourse INT NOT NULL,
+     prerequisiteCourse INT NOT NULL,
+    PRIMARY KEY (advancedCourse, prerequisiteCourse),
+    FOREIGN KEY (advancedCourse) REFERENCES Course(courseID),
+    FOREIGN KEY (prerequisiteCourse) REFERENCES Course(courseID) );
+  ```
+]
+2. Write SQL-queries that insert example data into your created tables. Make sure
+  that each table contains at least 2 rows of data. Here are some sample data.
+#figure(
+  table(
+    columns: (auto, auto, auto, auto, auto),
+    inset: 0.5em,
+    [*studentID*], [*firstName*], [*lastName*], [*dob*], [*programID*],
+    [123456], [John], [Wayne], [11.05.1998], [1],
+    [234567], [Anna], [Meyer], [13.02.1999], [1],
+  ),
+  caption: [Table *STUDENT*],
 )
 
-= Assignment 3 ERD for a Technology Support Company
-A technology company is developing a support ticket management system to handle customer  complaints efficiently and track the support staff's work. The system must store information about  support requests, customers, support staff and their interactions.
-1.  Create an entity-relationship-diagram in Chen notation according to these requirements.  Add attributes where necessary. Take special care that you identify the entity types,  relationship types, and key attributes.
-2.  Can you think of adding some additional composite, multivalued, or derived attributes in  this example?
-3.  How does the ERM looks like in MC notation?
-4.  Convert the ERD into a relational schema.
+#figure(
+  table(
+    columns: (auto, auto, auto, auto, auto),
+    inset: 0.5em,
+    [*studentID*], [*firstName*], [*lastName*], [*dob*], [*programID*],
+    [123456], [John], [Wayne], [11.05.1998], [1],
+    [234567], [Anna], [Meyer], [13.02.1999], [1],
+  ),
+  caption: [Table *STUDENT*],
+)
 
+#figure(
+  table(
+    columns: (auto, auto, auto),
+    inset: 0.5em,
+    [*programID*], [*Name*], [*requiredCPs*],
+    [1], [Information Engineering], [120],
+    [2], [Renewable Energies], [110],
+  ),
+  caption: [Table *PROGRAM*],
+)
 
+#figure(
+  table(
+    columns: (auto, auto, auto, auto, auto),
+    inset: 0.5em,
+    [*courseID*], [*Name*], [*Description*], [*creditPoints*], [*programID*],
+    [4], [MA1], [Mathematics 1], [8], [1],
+    [9], [MA2], [Mathematics 2], [8], [1],
+    [13], [SS1], [Signals and Systems 1], [6], [1],
+    [15], [DB], [Databases], [6], [1],
+  ),
+  caption: [Table *COURSE*],
+)
 
-= Assignment 4 – RM for Favorite Books
-Transform given the ERD to an equivalent relational model.
+#figure(
+  table(
+    columns: (auto, auto),
+    inset: 0.5em,
+    [*advancedCourseID*], [*prerequisiteCourseID*],
+    [9], [4],
+    [13], [9],
+    [13], [4],
+  ),
+  caption: [Table *PREREQUISITE*],
+)
 
-#figure(image("../../assets/img/2024_11_14_lab01_erd_favorite_books_rev01.png"))
+#figure(
+  table(
+    columns: (auto, auto, auto, auto, auto),
+    inset: 0.5em,
+    [*studentID*], [*courseID*], [*Year*], [*Term*], [*grade*],
+    [123456], [4], [2021], [1], [7],
+    [234567], [9], [2021], [2], [9],
+    [234567], [13], [2022], [1], [3],
+    [234567], [13], [2022], [2], [6],
+  ),
+  caption: [Table *ATTEMPTS*],
+)
+#conclus
 
+3. Write a SQL-query for the created database that returns all students (first name
+  and last name) that study the program “Information Engineering”.
+4. Write a SQL-query that returns the name of all courses that have prerequisite
+  courses.
+5. Write a SQL-query that returns the sum of all credit points successfully
+  achieved by student “John Wayne”. Keep in mind that the credit points only count
+  when the student has an attempt with a grade of 5 or more points.
+6. A student needs to be removed from the database. Write SQL-statements to remove
+  the student with the name “John Wayne” from the database.
 
-= Assignment 5: ERD for a Zoo
-Draw an Entity-Relationship-Diagram in MC notation according to the following requirements. Add  attributes where necessary. Take special care that you identify the entity types, relationship types,  and key attributes. Translate the resulting ERM into a relational model.
-The director of the local zoo wants to track problems with his animals. 
-- The zoo has many animal types. Every animal type has a unique name and defines an age  at which this type is determined reproductive.
-- Every animal has a unique animal ID. Animals also have an age and a gender as well as an  indicator if they are capable of reproduction.
-- Animals may have diseases. The beginning time and the duration of a disease needs to be  recorded. A disease has a unique name.
-- A keeper takes care of only one animal type, but for every animal type there may be many  keepers.
+= Assignment 2: SQL-statements for a Shipping company
+A shipping company wants to use a SQL-database to keep track of its ships and
+employed sailors based on the following relation schema:
+- *HARBOR* (harborID, location, establishedIn)
+- *SAILOR* (sailorID, lastName, dob, trainedAt(FK -> harborID))
+- *SHIP* (shipID, name, grossWeight, launchDate, baseHarbor(FK -> harborID))
+- *HIRE* (sailor(FK -> sailorID), ship(FK -> shipID), startOfService,
+  annualSalary)
 
+You can use the provided SQL-script for creating the tables and inserting some
+data in the tables.
+1. Create a SQL-query that returns the dob (date of birth) of sailors in descending
+  order that were hired on August 3rd, 2012.
+2. Create a SQL-query that returns all information of sailors that were hired
+  between July 3rd, 2011, and September 3rd, 2012, and whose last name starts with
+  a ‘J’.
+3. Create a SQL-query that returns for each ship the sum of the annual salary of
+  every sailor who is hired for that ship.
+4. Create a SQL-query that returns the location of all harbors that are not base
+  harbor to any ship in the database.
+5. Create a SQL-query that returns the shipId, ship name and the number of sailors
+  who are hired on the ship and earn maximum 42.000\$.
+6. Describe in your own words the result of the following query:
 
-= Assignment 6: ERD for a Cooking Club
-Draw an Entity-Relationship-Diagram in MC notation according to the following requirements. Add  attributes where necessary. Take special care that you identify the entity types, relationship types,  and key attributes. Translate the resulting ERM into a relational model.
-A cooking club organizes several dinners for its members. The purpose of the club is to allow  several members to get together and prepare a dinner for the other members. The club president  maintains a database that plans each meal and tracks which members attend each dinner and  keeps track of which members create each dinner.
-- Each dinner serves many members, and any member is allowed to attend. Each dinner has  an invitation. This invitation is mailed to each member. The invitation includes the date of  the dinner and location.
-- Each dinner is based on a single entrée, a main course, and a single dessert. The recipes for  the entrées and desserts can be used again for other dinners.
+```sql
+SELECT DISTINCT h1.location
+FROM SHIP s1, SHIP s2, HARBOR h1, HARBOR h2
+WHERE s1.baseHarbor = h1.harborID
+AND s2.baseHarbor = h2.harborID
+AND s1.launchDate = s2.launchDate
+AND h1.location = h2.location
+AND h1.harborID != h2.harborID;
+```
+
+= Assignment 3: SQL-statements for the COMPANY example from Elmasri also used in the lecture
+Let’s have a look on the COPMPANY example from the book „Fundamentals of
+Database Systems“ from Elmasri which is also used in the lecture. Given is the
+database schema in Figure 1 and the database state in Figure 2.
+
+#figure(image("../../assets/img/labs/2024_11_18_lab3_employee_table_columns_rev01.png"))
+
+#figure(image("../../assets/img/labs/2024_11_18_lab3_employee_tables_rev01.png"))
+
+Write SQL statement for the following tasks:
+1. Retrieve the names of all employees in department 5 who work more than 10 hours
+  per week on a project.
+2. List the names of all employees who have a dependent with the same first name as
+  themselves.
+3. Find the names of all employees who are directly supervised by ‘Franklin Wong’.
+4. Suppose that the EMPLOYEE table’s constraint EMPSUPERFK as specified in Figure 3
+  on the next page is changed to read as follows:
+```sql
+CONSTRAINT EMPSUPERFK  FOREIGN KEY (Super_ssn) REFERENCES EMPLOYEE(Ssn)  ON DELETE CASCADE ON UPDATE CASCADE;
+```
+Answer the following questions:
+- What happens when the following command is run on the database state shown in
+  Figure 2?
+```sql
+DELETE FROM EMPLOYEE WHERE Lname = ‘Borg’ ;
+```
+- Is it better to ```sql CASCADE``` or ```sql SET NULL``` in case of ```sql EMPSUPERFK``` constraint ```sql ON DELETE```?
+
+#figure(image("../../assets/img/labs/2024_11_18_lab03_database_schema_rev01.png"))
+
+5. For each project, list the project name and the total hours per week (by all
+  employees) spent on that project.
+6. Retrieve the average salary of all female employees.
+7. Write SQL statements to create a table EMPLOYEE_BACKUP to back up the EMPLOYEE
+  table shown.
+8. For each department, whose average employee salary is more than \$30,000,
+  retrieve the department name and the number of employees working for that
+  department.
+
+= Assignment 4: Relational Algebra vs. SQL query for a Cinema Database
+The following excerpt from a database schema models a database about a cinema.
+The following assignments are to be answered in the form of relational algebra
+AND additionally in the form of an SQL query.
+- *Movies* (FilmID (PK), Title, Director, Release Year, Genre)
+- *Actors* (ActorID (PK), First Name, Last Name, Birthdate)
+- *Screenings* (ScreeningID (PK), FilmID (FK), Cinema Hall, Date, Time)
+- *Reservations* (ReservationID (PK), ScreeningID (FK), Seat, Customer Name,
+  Booking Date)
+1. Do a projection to see a list of all movie titles and their directors.
+2. Display a list of actors (first name, last name) and their roles in a specific
+  movie (e.g., "FilmXYZ").
+3. Find all movies that will be shown in the screenings (ScreeningID) for the movie
+  theater "HallA" on 2024-01-30 at 19:00.
+4. Create a table with information about all reservations made by customers with
+  the last name "Schmidt", including the movie title and seat number.
+
+= Assignment 5: Relational Algebra vs. SQL query for a Weather Database
+
+The following excerpt from a database schema models a database about a weather
+station. The following assignments are to be answered in the form of relational
+algebra AND additionally in the form of an SQL query.
+- *CITY* (CityID, Name, Country)
+- *WEATHER_DATA* (DataID, CityID (FK), Date, Temperature, Humidity,
+- *Precipitation*, WindSpeed)
+1. Which cities have an average daily temperature above 25°C in August 2023?
+2. Which cities experienced no precipitation on any day in July 2023?
+3. On which particular day did the cities have the highest wind speed?
+4. Which cities recorded the highest temperature?
+5. Which cities had the lowest humidity in May 2023?
+
