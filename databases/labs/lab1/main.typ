@@ -1,5 +1,5 @@
-#import "@preview/grape-suite:1.0.0": exercise, german-dates
-#import "@preview/gentle-clues:1.2.0"
+#import "@preview/grape-suite:2.0.0": exercise, german-dates
+#import "@preview/gentle-clues:1.2.0": *
 
 #set text(lang: "en")
 
@@ -56,15 +56,16 @@ Consider the following schema for the Student Information System:
 1. Write SQL-statements that create the corresponding tables. Come up with
   reasonable constraints and datatypes for the fields of the tables.
 #if is_solution [
-  #heading(numbering: none)[Solution 1.1]
-  ```sql
+#let program = [```sql
   CREATE TABLE Program
     (programID INT NOT NULL,
      name VARCHAR(32) NOT NULL,
      requiredCPs INT NOT NULL,
      PRIMARY KEY (programID) );
   ```
-  ```sql
+  #v(1em)
+]
+#let student = [```sql
   CREATE TABLE Student
     (studentID INT NOT NULL,
      firstName VARCHAR(32) NOT NULL,
@@ -74,7 +75,9 @@ Consider the following schema for the Student Information System:
      PRIMARY KEY (studentID),
      FOREIGN KEY (programID) REFERENCES Program(programID) );
   ```
-  ```sql
+  #v(1em)
+]
+#let course = [```sql
   CREATE TABLE Course
     (CourseID INT NOT NULL,
      name VARCHAR(32) NOT NULL,
@@ -84,7 +87,10 @@ Consider the following schema for the Student Information System:
      PRIMARY KEY (courseID),
      FOREIGN KEY (programID) REFERENCES Program(programID) );
   ```
-  ```sql
+
+  #v(1em)
+]
+#let attempts = [```sql
     CREATE TABLE Attempts
       (studentID INT NOT NULL,
        courseID INT NOT NULL,
@@ -95,7 +101,9 @@ Consider the following schema for the Student Information System:
       FOREIGN KEY (studentID) REFERENCES Student(studentID),
       FOREIGN KEY (courseID) REFERENCES Course(courseID) );
   ```
-  ```sql
+  #v(1em)
+]
+#let prerequisite = [```sql
   CREATE TABLE Prerequisite
     (advancedCourse INT NOT NULL,
      prerequisiteCourse INT NOT NULL,
@@ -104,8 +112,13 @@ Consider the following schema for the Student Information System:
     FOREIGN KEY (prerequisiteCourse) REFERENCES Course(courseID) );
   ```
 ]
+#conclusion(title: [Solution])[
+#grid(columns: (auto), gutter: 0.25em, program, student, course, attempts, prerequisite)
+]
+]
 2. Write SQL-queries that insert example data into your created tables. Make sure
   that each table contains at least 2 rows of data. Here are some sample data.
+#let table_student = [
 #figure(
   table(
     columns: (auto, auto, auto, auto, auto),
@@ -116,18 +129,9 @@ Consider the following schema for the Student Information System:
   ),
   caption: [Table *STUDENT*],
 )
+]
 
-#figure(
-  table(
-    columns: (auto, auto, auto, auto, auto),
-    inset: 0.5em,
-    [*studentID*], [*firstName*], [*lastName*], [*dob*], [*programID*],
-    [123456], [John], [Wayne], [11.05.1998], [1],
-    [234567], [Anna], [Meyer], [13.02.1999], [1],
-  ),
-  caption: [Table *STUDENT*],
-)
-
+#let table_program = [
 #figure(
   table(
     columns: (auto, auto, auto),
@@ -138,7 +142,10 @@ Consider the following schema for the Student Information System:
   ),
   caption: [Table *PROGRAM*],
 )
+]
 
+
+#let table_course = [
 #figure(
   table(
     columns: (auto, auto, auto, auto, auto),
@@ -151,7 +158,9 @@ Consider the following schema for the Student Information System:
   ),
   caption: [Table *COURSE*],
 )
+]
 
+#let table_prerequisite = [
 #figure(
   table(
     columns: (auto, auto),
@@ -163,7 +172,9 @@ Consider the following schema for the Student Information System:
   ),
   caption: [Table *PREREQUISITE*],
 )
+]
 
+#let table_attempts = [
 #figure(
   table(
     columns: (auto, auto, auto, auto, auto),
@@ -176,17 +187,134 @@ Consider the following schema for the Student Information System:
   ),
   caption: [Table *ATTEMPTS*],
 )
-#conclus
+]
+//#grid(columns: (auto, auto), gutter: 0.25em, table_student, table_program, table_course, table_attempts, table_prerequisite)
+#table_program
+#table_student
+#table_course
+#table_attempts
+#table_prerequisite
+
+#if is_solution [
+#conclusion(title: [Solution])[
+```sql
+INSERT INTO Program
+VALUES ( 1, 'Information Engineering',120); 
+
+INSERT INTO Program
+VALUES ( 2, 'Renewable Energies',110); 
+```
+```sql
+INSERT INTO Student
+VALUES ( 123456, 'John', 'Wayne', '1998-05-11',1); 
+
+INSERT INTO Student
+VALUES ( 234567, 'Anna', 'Meyer', '1999-02-13',1); 
+```
+
+```sql
+INSERT INTO Course
+VALUES ( 4, 'MA1', 'Mathematics 1', 8,1); 
+
+INSERT INTO Course
+VALUES ( 9, 'MA2', 'Mathematics 2', 8,1); 
+
+INSERT INTO Course
+VALUES ( 13, 'SS1', 'Signals and Systems 1', 6,1); 
+
+INSERT INTO Course
+VALUES ( 15, 'DB', 'Databases', 6,1); 
+```
+
+
+```sql
+INSERT INTO Prerequisite
+VALUES ( 9,4); 
+
+INSERT INTO Prerequisite
+VALUES ( 13,4); 
+
+INSERT INTO Prerequisite
+VALUES ( 13,9); 
+```
+]
+#conclusion(title: [Solution])[
+```sql
+INSERT INTO Attempts
+VALUES (123456, 4, 2021, 1, 7);
+
+INSERT INTO Attempts
+VALUES (123456, 9, 2021, 2, 9);
+
+INSERT INTO Attempts
+VALUES (123456, 13, 2022, 1, 3);
+
+INSERT INTO Attempts
+VALUES (123456, 13, 2022, 2, 6);
+```
+]
+]
 
 3. Write a SQL-query for the created database that returns all students (first name
   and last name) that study the program “Information Engineering”.
-4. Write a SQL-query that returns the name of all courses that have prerequisite
-  courses.
+
+#if is_solution [
+#conclusion(title: [Solution])[
+```sql
+SELECT s.firstname, s.lastname
+FROM student s, program p
+WHERE p.name = 'Information Engineering' and p.programID = s.programID;
+```
+]
+]
+
+
+4. Write a SQL-query that returns the name of all courses that have prerequisite courses.
+
+#if is_solution [
+#conclusion(title: [Solution])[
+```sql
+SELECT DISTINCT c.name
+FROM course c, prerequisite pre
+WHERE c.courseID = pre.advancedCourse;
+```
+]
+]
+
 5. Write a SQL-query that returns the sum of all credit points successfully
   achieved by student “John Wayne”. Keep in mind that the credit points only count
   when the student has an attempt with a grade of 5 or more points.
+
+#if is_solution [
+#conclusion(title: [Solution])[
+```sql
+SELECT SUM(c.creditPoints) AS SUM
+FROM student s, course c, attempts a
+WHERE s.firstname = 'John' AND s.lastname = 'Wayne' AND a.studentID = s.studentID
+AND a.courseID = c.courseID AND a.grade > 4;
+```
+]
+]
+
 6. A student needs to be removed from the database. Write SQL-statements to remove
   the student with the name “John Wayne” from the database.
+
+#if is_solution [
+#conclusion(title: [Solution])[
+```sql
+DELETE FROM attempts a
+   WHERE a.studentID IN (
+      SELECT s.studentID FROM Student s
+      WHERE s.firstName = 'John'
+      AND s.lastName = 'Wayne');
+      
+DELETE FROM Student 
+   WHERE firstName = 'John'
+   AND lastName = 'Wayne';
+```
+]
+]
+
 
 = Assignment 2: SQL-statements for a Shipping company
 A shipping company wants to use a SQL-database to keep track of its ships and
@@ -199,17 +327,69 @@ employed sailors based on the following relation schema:
 
 You can use the provided SQL-script for creating the tables and inserting some
 data in the tables.
-1. Create a SQL-query that returns the dob (date of birth) of sailors in descending
-  order that were hired on August 3rd, 2012.
-2. Create a SQL-query that returns all information of sailors that were hired
-  between July 3rd, 2011, and September 3rd, 2012, and whose last name starts with
-  a ‘J’.
-3. Create a SQL-query that returns for each ship the sum of the annual salary of
-  every sailor who is hired for that ship.
-4. Create a SQL-query that returns the location of all harbors that are not base
-  harbor to any ship in the database.
-5. Create a SQL-query that returns the shipId, ship name and the number of sailors
-  who are hired on the ship and earn maximum 42.000\$.
+1. Create a SQL-query that returns the dob (date of birth) of sailors in descending order that were hired on August 3rd, 2012.
+
+#if is_solution [
+#conclusion(title: [Solution])[
+ ```sql
+  SELECT lastname, dob
+  from sailor s, hire h
+  where s.sailorID = h.sailorID AND
+  h.startOfService = '2012-08-03'
+  ORDER BY dob DESC;
+  ``` 
+]
+]
+
+2. Create a SQL-query that returns all information of sailors that were hired between July 3rd, 2011, and September 3rd, 2012, and whose last name starts with a ‘J’.
+#if is_solution [
+#conclusion(title: [Solution])[
+```sql
+SELECT *
+from sailor s, hire h
+where s.sailorID = h.sailorID AND
+h.startOfService BETWEEN '2011-07-03' AND '2012-09-03'
+AND lastname like 'J%';
+```
+]
+]
+3. Create a SQL-query that returns for each ship the sum of the annual salary of every sailor who is hired for that ship.
+#if is_solution [
+#conclusion(title: [Solution])[
+```sql
+SELECT * from hire;
+
+SELECT s.name, SUM(h.annualSalary)
+FROM ship s, hire h
+WHERE s.shipID = h.shipID
+GROUP BY s.shipID;
+```
+]
+]
+4. Create a SQL-query that returns the location of all harbors that are not base harbor to any ship in the database.
+#if is_solution [
+#conclusion(title: [Solution])[
+```sql
+Select h.location
+FROM Harbour h
+where h.harbourID NOT IN (SELECT s.baseharbour from Ship s);
+```
+]
+]
+5. Create a SQL-query that returns the shipId, ship name and the number of sailors who are hired on the ship and earn maximum 42.000\$.
+#if is_solution [
+#conclusion(title: [Solution])[
+```sql
+SELECT * from hire;
+
+select h.shipid, s.name, COUNT(h.sailorid)
+FROM ship s, hire h
+WHERE h.shipid = s.shipid
+GROUP BY h.shipid
+HAVING MAX(h.annualSalary) < 42000;
+```
+]
+]
 6. Describe in your own words the result of the following query:
 
 ```sql
@@ -221,42 +401,114 @@ AND s1.launchDate = s2.launchDate
 AND h1.location = h2.location
 AND h1.harborID != h2.harborID;
 ```
+#if is_solution [
+#conclusion(title: [Solution])[
+  A correct answer would include:
+  - This query outputs the distinct (or deduplicated) locations from the harbours
+  - Four tables, with all ships and harbours are selected twice each.
+  - Only harbours are selected that are home to a ship.
+  - Only ships that have the same launch date are selected.
+  - Only harbours that are in the same location, but are different harbours are selected.
 
+  - The result is a list of locations that have two distinct harbours, that are the home harbour of two different ship, with those two different ships that having the same launch date.
+]
+]
+#v(80%)
 = Assignment 3: SQL-statements for the COMPANY example from Elmasri also used in the lecture
-Let’s have a look on the COPMPANY example from the book „Fundamentals of
-Database Systems“ from Elmasri which is also used in the lecture. Given is the
-database schema in Figure 1 and the database state in Figure 2.
+Let’s have a look on the COPMPANY example from the book „Fundamentals of Database Systems“ from Elmasri which is also used in the lecture. Given is the database schema in Figure 1 and the database state in Figure 2.
 
 #figure(image("../../assets/img/labs/2024_11_18_lab3_employee_table_columns_rev01.png"))
 
 #figure(image("../../assets/img/labs/2024_11_18_lab3_employee_tables_rev01.png"))
 
 Write SQL statement for the following tasks:
-1. Retrieve the names of all employees in department 5 who work more than 10 hours
-  per week on a project.
-2. List the names of all employees who have a dependent with the same first name as
-  themselves.
+1. Retrieve the names of all employees in department 5 who work more than 10 hours per week on a project.
+#if is_solution [
+#conclusion(title: [Solution])[
+```sql
+  SELECT first_name, last_name
+  FROM employee e
+  LEFT JOIN works_on wo ON e.ssn = wo.essn
+  WHERE e.dno = 5
+  AND wo.hours >= 10;
+```
+]]
+2. List the names of all employees who have a dependent with the same first name as themselves.
+#if is_solution [
+#conclusion(title: [Solution])[
+```sql
+  SELECT first_name, last_name
+  FROM employee e
+  LEFT JOIN DEPENDENT d ON e.ssn = d.essn
+  WHERE d.dependent_name = e.first_name;
+```
+]
+  ]
 3. Find the names of all employees who are directly supervised by ‘Franklin Wong’.
-4. Suppose that the EMPLOYEE table’s constraint EMPSUPERFK as specified in Figure 3
-  on the next page is changed to read as follows:
+#if is_solution [
+#conclusion(title: [Solution])[
+```sql
+  SELECT first_name, last_name
+  FROM employee e
+  WHERE super_ssn = 333445555;
+```
+]
+]
+4. Suppose that the EMPLOYEE table’s constraint EMPSUPERFK as specified below is changed to read as follows:
 ```sql
 CONSTRAINT EMPSUPERFK  FOREIGN KEY (Super_ssn) REFERENCES EMPLOYEE(Ssn)  ON DELETE CASCADE ON UPDATE CASCADE;
 ```
 Answer the following questions:
-- What happens when the following command is run on the database state shown in
-  Figure 2?
+- What happens when the following command is run on the database state?
 ```sql
 DELETE FROM EMPLOYEE WHERE Lname = ‘Borg’ ;
 ```
+#if is_solution [
+#conclusion(title: [Solution])[
+The entire database entries of employee would get deleted, since Borg does not have a supervisor and everyone else does (provided there is no other constraint to the table).
+However, since there is a foreign key constraint on the department table that references employee, the operation will return an error.
+]
+]
 - Is it better to ```sql CASCADE``` or ```sql SET NULL``` in case of ```sql EMPSUPERFK``` constraint ```sql ON DELETE```?
-
+#if is_solution [
+#conclusion(title: [ Solution ])[
+In this case, it would be better to ```sql SET NULL```, since when only the head of the company changes, the res of the employees will probably still remain.
+]
+]
 #figure(image("../../assets/img/labs/2024_11_18_lab03_database_schema_rev01.png"))
 
 5. For each project, list the project name and the total hours per week (by all
   employees) spent on that project.
+#if is_solution [
+#conclusion(title: [Solution])[
+  ```sql
+    SELECT 
+      pname,
+      SUM(hours)
+    FROM project p
+    LEFT JOIN works_on wo ON wo.pno = p.pnumber
+    GROUP BY pname;
+  ```
+]
+]
 6. Retrieve the average salary of all female employees.
+#if is_solution [
+#conclusion(title: [Solution])[
+  ```sql
+    SELECT
+      AVG()
+  ```
+]
+]
 7. Write SQL statements to create a table EMPLOYEE_BACKUP to back up the EMPLOYEE
   table shown.
+#if is_solution [
+#conclusion(title: [Solution])[
+  ```sql
+    CREATE TABLE employee_backup SELECT * FROM employee;
+  ```
+]
+]
 8. For each department, whose average employee salary is more than \$30,000,
   retrieve the department name and the number of employees working for that
   department.
