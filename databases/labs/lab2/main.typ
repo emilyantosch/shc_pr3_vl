@@ -28,6 +28,7 @@
 
 #let is_solution = true
 
+
 #show: exercise.project.with(
   title: "Databases Lab 02",
   university: [HAW Hamburg],
@@ -134,9 +135,9 @@ A technology company is developing a support ticket management system to handle 
   ]
   #conclusion(title: [Solution])[
     *CUSTOMER*(#underline[CustomerID] (PK), name, joinDate)\
-    *REQUESTS*(#underline[RequestID] (PK), #underline[CustomerID] (FK), topic)\
+    *REQUESTS*(#underline[RequestID] (PK), CustomerID (FK), topic)\
     *SUPPORT STAFF*(#underline[SupportStaffID] (PK), supportLevel, name)\
-    *CALLS*(#underline[CallID] (PK), time, #underline[RequestID] (FK), #underline[CustomerID] (FK))\
+    *CALLS*(#underline[CallID] (PK), time, RequestID (FK), CustomerID (FK))\
     #figure(image("../../assets/img/labs/20250401_chen_tech_requests_rev01.png", height: 69%))
   ]
 ]
@@ -149,12 +150,11 @@ Transform given the ERD to an equivalent relational model.
 
 #if is_solution [
   #conclusion(title: [Solution])[
-    *BOOK*(#underline[BookID], title, author, #underline[ISBNID] (FK), #underline[GenreID] (FK))\
+    *BOOK*(#underline[BookID], title, author, ISBNID (FK), GenreID (FK))\
     *GENRE*(#underline[GenreID] (PK), name)\
     *ISBN*(#underline[ISBNID] (PK), no, registerDate)\
-    *READER*(#underline[ReaderID] (PK), #underline[GenreID] (FK), name)\
+    *READER*(#underline[ReaderID] (PK), GenreID (FK), name)\
     *READERFOLLOWSREADER*(#underline[ReaderOneID] (FK), #underline[ReaderTwoID] (FK))\
     #figure(image("../../assets/img/labs/20250401_reader_rm_rev01.png"))
   ]
 ]
-

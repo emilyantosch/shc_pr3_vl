@@ -534,7 +534,7 @@
   ```
   #memo[
     While on first glance views might not seem all that powerful, they are one of the most used database objects, offering a wid variety of uses in application development.
-  ]
+]
 ]
 
 #slide[
@@ -779,7 +779,7 @@
 
 #slide[
   #heading(numbering: none)[Relational Model vs. SQL]
-  #memo[
+#memo[
     SQL allows, in contrast to the Relational Model, a table to have two or more tuples to be identical in all of their attributes.
     This makes SQL tables multi sets by design.
   ]
@@ -917,7 +917,7 @@
 
 #slide[
   #heading(numbering: none)[WHERE: `NULL`]
-  #question[
+#question[
     - What is `42 < NULL`?
   ]
   - Comparisons with `NULL` are never true
@@ -960,7 +960,7 @@
     UNION
     (SELECT DISTINCT USER_NAME FROM USERS WHERE LAST_NAME = 'Miller');
   ```
-  #question[
+#question[
     What does the above statement do?
   ]
 ]
@@ -973,7 +973,7 @@
     UNION ALL
     EXCEPT ALL
     INTERSECT ALL
-  ```
+```
 ]
 
 #slide[
@@ -1004,7 +1004,7 @@
   - This is done using the SQL statement `JOIN`, which combines two tables either
   by building the cartesian product or by connecting them based on certain criteria.
   - There are multiple types of joins available, which we will explore in the following slides.
-  #memo[
+#memo[
     It can be difficult to wrap your head around, how different tables will end up looking after a join:
     1. Don't fret, this is a difficult subject!
     2. It is often very useful to try different types of joins and to look at the entire result of the unfiltered query.

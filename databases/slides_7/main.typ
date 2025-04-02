@@ -41,8 +41,13 @@
   )
 }
 #show: university-theme.with(
-  aspect-ratio: "16-9", config-info(
-    title: [Databases], subtitle: [Lecture 7 - Subqueries and Views], author: [Emily Lucia Antosch], date: datetime.today().display("[day].[month].[year]"), institution: [HAW Hamburg],
+  aspect-ratio: "16-9",
+  config-info(
+    title: [Databases],
+    subtitle: [Lecture 7 - Subqueries and Views],
+    author: [Emily Lucia Antosch],
+    date: datetime.today().display("[day].[month].[year]"),
+    institution: [HAW Hamburg],
   ),
 )
 
@@ -873,7 +878,6 @@
 
 #slide[
   #heading(numbering: none)[Use Cases]
-
   - Hide some information
     - Example: Salary not viewable for colleagues
     - Can see only employees of same department?
