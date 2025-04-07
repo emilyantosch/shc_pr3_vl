@@ -26,7 +26,7 @@
   ),
 )
 
-#let is_solution = true
+#let is_solution = false
 
 #show: exercise.project.with(
   title: "Databases Lab 03",

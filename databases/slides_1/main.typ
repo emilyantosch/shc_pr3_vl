@@ -113,7 +113,7 @@
 == About me
 #slide[
   - Emily Lucia Antosch
-  - I did my bachelor's degree in Electrical Engineering
+  - I did my bachelor's degree in Electrical Engineering, also at the HAW.
   - Software Engineer in the marine industry
   - Looking to start my master degree in the near future
   - Mail: #link("emilylucia.antosch@haw-hamburg.de")
@@ -121,10 +121,8 @@
 
 == How is this lecture going to work?
 #slide[
-  //TODO: Add additional parts about how the lectures are going to work
-  - I would like to kindly ask you to participate in the lectures ahead, it'll make
-    the whole thing more fun.
-  - All parts of this course will split into lectures and labs.
+  - I would like to kindly ask you to participate in the lectures ahead, it'll make the whole thing more fun.
+  - All parts of this course will split into lectures and labs. (More on labs later).
   #memo[I would ask you to please let me know if you find that you were not able to
     follow the lecture. I'm more than happy to repeat certain parts.]
 ]
@@ -149,9 +147,10 @@
       - Solve problems collaboratively with the AI
   ]
   #let right = [
-    #figure(image("../assets/img/slides_01/20250325_chatgpt_logo_rev01.png"))
+    #figure(image("../assets/img/slides_01/20250325_chatgpt_logo_rev01.png", width: 50%))
     #figure(image("../assets/img/slides_01/20250325_claude_logo_rev01.png"))
   ]
+  #grid(columns: (auto, 30%), gutter: 0.25em, left, right)
 ]
 #slide[
   #heading(numbering: none)[Challenges]
@@ -184,13 +183,13 @@
 #slide[
   - Assignments should be worked on in teams
     - Work in fixed teams of two. You need to enter your group into the Moodle room before the first lab.
-    - Working together means discussing things, explaining each other, helping each other out!
+    - Working together means discussing things, explaining problems each other, helping each other out!
     - Every team member must be ability to explain the solution of each assignment
   - For PVL (precondition for examination):
     - Presence in all laboratories is obligatory!
-    - In case of illness: Send a sick note and make up the Lab on another date
-    - All assignments for the labs must be successfully solved
-    - Each student must present at least two assignments on blackboard
+    - In case of illness: Send a sick note and make up the Lab on another date.
+    - All assignments for the labs must be successfully solved.
+    - Each student must present *at least two* assignments on blackboard.
 ]
 
 #slide[
@@ -221,25 +220,17 @@
 
 == First Lab
 #slide[
-  //TODO: Check data after dates and plan has been shared
   - Joint lab with all three lab groups
   - Attendance is mandatory!
-  - Division of the teams of two to work on the lab assignments
   - Bring your own device *with a working PostgreSQL database*!
-  - You do not have to submit solutions in moodle or implement the assignments in
-    advance
-  - Start time: 8:30 am
-  - I strongly recommend that you look at and solve the assignments in advance! This
-    will make the laboratory much more effective for you.
+  - There's an installation guide on it in the Moodle room. If you find yourself being lost despite that, shoot me an email! There's also lots of good instructions online.
 ]
 
 == Important people in this lecture
 #slide[
-  //TODO: Add information after talking to all the other lecturers
   - Emily Antosch: Lecture #link("mailto:emilylucia.antosch@haw-hamburg.de")
-  - Julian Moldenhauer: Lab group 01 or group 2 #link("mailto:julian.moldenhauer@haw-hamburg.de")
-  - Furkan Yildirim: Lab group 01 or group 2 #link("mailto:furkan.yildirim@haw-hamburg.de")
-  - Ulrike Herster: Lecture and Lab group 03 #link("mailto:Ulrike.Herster@haw-hamburg.de")
+  - Julian Moldenhauer: Lab #link("mailto:julian.moldenhauer@haw-hamburg.de")
+  - Furkan Yildirim: Lab #link("mailto:furkan.yildirim@haw-hamburg.de")
 ]
 
 == Focus of these lectures
@@ -256,12 +247,9 @@
     You will need an installation of *PostgreSQL 16*.
   ]
   - It's open source software and the main database system that will look at.
-  - Depending on your system and how you want to install PostgreSQL, there are
-    multiple ways to go about it. There are detailed descriptions in the Moodle-Room
-    for you to follow.
-  - It's totally up to you, but I would suggest you also download pgAdmin4, because
-    it allows you to use an UI to interact with your database. pgAdmin4 is also
-    free.
+  - Depending on your system and how you want to install PostgreSQL, there are multiple ways to go about it. There are detailed descriptions in the MoodleRoom for you to follow.
+  - It's totally up to you, but I would suggest you also download pgAdmin4, because it allows you to use an UI to interact with your database. pgAdmin4 is also free.
+    - pgAdmin4 also usually comes with the installation of PostgresQL in most cases.
 ]
 
 == Who are you?
@@ -274,13 +262,10 @@
 ]
 
 = Introduction to Databases
-
 == Where are we right now?
 #slide[
-  - You just learnt how this lecture is going to work and what you can expect going
-    forward.
-  - Next, we'll be discussing the basics of databases and the differences to
-    database management systems.
+  - You just learnt how this lecture is going to work and what you can expect going forward.
+  - Next, we'll be discussing the basics of databases and the differences to database management systems.
   - We'll learn about the history of databases.
   - And we'll find out, why we should be using databases in the first place.
 ]
@@ -310,11 +295,9 @@
 
 == What is a Database?
 #slide[
-  #memo[
+  #idea(title: [Definition])[
     - A *database* refers to a set of data and how it it organized.
-    - Access is granted via a *database management system* (DBMS) consisting of
-      integrated software that allows for interaction with one or databases and
-      provides access to the data.
+    - Access is granted via a *database management system* (DBMS) consisting of integrated software that allows for interaction with one or databases and provides access to the data.
     - Supports storage, manipulation, and querying of information.
   ]
 ]
@@ -322,25 +305,21 @@
 == What is a Database Management System (DBMS)?
 #slide[
   - Software system that manages databases.
-  - A DBMS provides a systematic approach of creating, updating, storing and
-    retrieving data stored in a database.
-  - It enables the end user and programmers to share data, and it allows for data to
-    be shared among multiple applications.
+  - A DBMS provides a systematic approach of creating, updating, storing and retrieving data stored in a database.
+  - It enables the end user and programmers to share data, and it allows for data to be shared among multiple applications.
   - It eliminates the need for data to be stored in new files and being propagated.
 ]
 
 #slide[
-  The essential functions of a DBMS:
-
-  - Storing, changing, and deleting data
-  - Managing metadata (data about the data)
-  - Keeping your data safe and secure
-  - Making sure your data is correct and consistent
-  - Allowing multiple users to work with the data at the same time (transactions)
-  - Optimizing queries (finding the fastest way to get the data you need)
-  - Enabling triggers (automatic actions when certain events happen) and stored
-    procedures (pre-written SQL code)
-  - Providing key metrics about the DBMS technology and how it's running
+  - *Essential functions of a DBMS*:
+    - Storing, changing, and deleting data
+    - Managing metadata (data about the data)
+    - Keeping your data safe and secure
+    - Making sure your data is correct and consistent
+    - Allowing multiple users to work with the data at the same time (transactions)
+    - Optimizing queries (finding the fastest way to get the data you need)
+    - Enabling triggers (automatic actions when certain events happen) and stored procedures (pre-written SQL code)
+    - Providing key metrics about the DBMS technology and how it's running
 ]
 
 == In essence: DB vs DBMS
@@ -389,8 +368,7 @@
 
 == History of the Database
 #slide[
-  - In the 1960s, people used files to store data. This wasn't ideal because files
-    are designed for specific applications, and it was a lot of work to manage them.
+  - In the 1960s, people used files to store data. This wasn't ideal because files are designed for specific applications, and it was a lot of work to manage them.
   - In the 1970s, Edgar F. Codd, came up with the idea of relational databases.
   - He developed the first relational database system called "System R."
   - Oracle took Codd's ideas and made SQL (Structured Query Language) a big success.
@@ -507,22 +485,23 @@
 
 == Different DB-Models
 #slide[
-  There are a number of different database models available. These include:
-  - Relational model
-  - Hierarchical model
-  - Network model
-  - Object relational model
-  - Object oriented model
-  - XML-based model
+  - There are a number of different database models available. These include:
+    - Relational model
+    - Hierarchical model
+    - Network model
+    - Object relational model
+    - Object oriented model
+    - XML-based model
 ]
 
 == RDBMS vs. ODBMS
 #slide[
-  There are (in general) two types of DBMS used in production:
-  - RDBMS (Relational Database Management System) stores data in tables with rows
-    and columns, kind of like a spreadsheet.
-  - ODBMS (Object-Oriented Database Management System) stores data as objects, which
-    can be more complex and have their own properties and methods.
+  - There are (in general) two types of DBMS used in production:
+    - RDBMS (Relational Database Management System) stores data in tables with rows and columns, kind of like a spreadsheet.
+    - ODBMS (Object-Oriented Database Management System) stores data as objects, which can be more complex and have their own properties and methods.
+  #info[
+    Databases that implement more than one type (paradigm) of databases are called _multi-paradigm_. An example would be SurrealDB.
+  ]
 ]
 
 == Most Popular Databases 2024
@@ -555,23 +534,17 @@
   - Why PostgreSQL instead of MySQL, SQLite or Oracle?
     - SQLite is easy but limited in its feature set.
     - Oracle is used in many enterprises, but it's not free.
-    - MySQL is also a very valid option, but I like PostgresQL more.
+    - MySQL is also a very valid option, but I like PostgresQL more. It seems to me that PostgresQL has become the preferred choice for most developers.
 ]
 
 == Database Design
 #slide[
-  To design a database, you typically follow these steps:
-  1. *Requirements:* Figure out what you need the database to do.
-  2. *Conceptual Database Design:* Come up with a high-level plan for your database
-    using an ER Model (Entity-Relationship Model). This is like a rough sketch of
-    your database.
-  3. *Logical Database Design:* Refine your plan and choose a specific type of
-    database (like a relational database). You'll also use a more formal model here,
-    like the Relational Model.
-  4. *Physical Database Design:* Get into the technical details of how the data will
-    be stored and organized.
-  5. *Database Implementation:* Build the actual database using SQL (Structured Query
-    Language).
+  - To design a database, you typically follow these steps:
+    1. *Requirements:* Figure out what you need the database to do.
+    2. *Conceptual Database Design:* Come up with a high-level plan for your database using an ER Model (Entity-Relationship Model). This is like a rough sketch of your database.
+    3. *Logical Database Design:* Refine your plan and choose a specific type of database (like a relational database). You'll also use a more formal model here, like the Relational Model.
+    4. *Physical Database Design:* Get into the technical details of how the data will be stored and organized.
+    5. *Database Implementation:* Build the actual database using SQL (Structured Query Language).
 ]
 
 #slide[
@@ -603,28 +576,21 @@
 ]
 
 #slide[
-  *Option 1: Conceptual design with a Class Diagram*
-  - You can use a class diagram to model your database conceptually.
-  - This involves defining classes (like blueprints) for the things in your database
-    (e.g., a Person class, a House class).
-  - Each class has properties (attributes) to describe those things (e.g., a Person
-    has a name, a House has an address).
-  - You also define relationships between the classes (e.g., a Person "lives in" a
-    House).
+  - *Option 1: Conceptual design with a Class Diagram*
+    - You can use a class diagram to model your database conceptually.
+    - This involves defining classes (like blueprints) for the things in your database (e.g., a Person class, a House class).
+    - Each class has properties (attributes) to describe those things (e.g., a Person has a name, a House has an address).
+    - You also define relationships between the classes (e.g., a Person "lives in" a House).
 
   #figure(image("../assets/img/slides_01/2025_01_18_class_diagram_example_rev01.png"))
 ]
 
 #slide[
-  *Option 2: Conceptual design with ER Model*
-  - You can also use an ER Model (Entity-Relationship Model) for the conceptual
-    design.
-  - This is a more visual way to model your database, where you use boxes to
-    represent entities (things) and diamonds to represent relationships between
-    them.
-  - Each entity has attributes (properties) that describe it.
-  - You also indicate how many entities can be related to each other
-    (cardinalities).
+  - *Option 2: Conceptual design with ER Model*
+    - You can also use an ER Model (Entity-Relationship Model) for the conceptual design.
+    - This is a more visual way to model your database, where you use boxes to represent entities (things) and diamonds to represent relationships between them.
+    - Each entity has attributes (properties) that describe it.
+    - You also indicate how many entities can be related to each other (cardinalities).
 ]
 
 #slide[
@@ -658,7 +624,14 @@
 #slide[
   - Creating the tables with the correct columns:
   ```sql
-  CREATE TABLE Person( SSN  CHAR(9) NOT NULL , FirstName VARCHAR(15) NOT NULL , LastName VARCHAR(15) NOT NULL, Mobile VARCHAR(30), PhoneWork VARCHAR(30), Birthdate DATE, PRIMARY KEY ( SSN ));
+  CREATE TABLE Person(
+    SSN  CHAR(9) NOT NULL, 
+    FirstName VARCHAR(15) NOT NULL, 
+    LastName VARCHAR(15) NOT NULL, 
+    Mobile VARCHAR(30), 
+    PhoneWork VARCHAR(30), 
+    Birthdate DATE, 
+    PRIMARY KEY ( SSN ));
   ```
 ]
 
@@ -732,8 +705,7 @@
 
 #slide[
   #let left = [
-    - The *external schemas* describe the different external views of the data
-      and there may be many external schemas for a given database
+    - The *external schemas* describe the different external views of the data and there may be many external schemas for a given database
     - The *conceptual schema* describes all the data items and relationships between them, together with integrity constraints
       - There is only one conceptual schema per database
     - The *internal schema* at the lowest level contains definitions of the stored records, the methods of representation, the data fields, and indexes

@@ -409,7 +409,7 @@
   - Let's correct our mistake.
   ```sql
   ALTER TABLE EMP
-  MODIFY COLUMN JOIN_DATE DATE;
+  ALTER COLUMN JOIN_DATE DATE;
   ```
 ]
 
@@ -438,9 +438,9 @@
   #heading(numbering: none)[`DROP`-Statement]
   - Delete named schema elements, e.g., tables, constraints, schema, indexes, triggers
   - `DROP` needs to observe referential integrity, in order to drop tables in correct order
-  - Two drop behavior options:
-    #sym.arrow CASCADE
-    #sym.arrow RESTRICT
+  - Two drop behavior options: \
+      - `CASCADE`\
+      - `RESTRICT`\
   - `DROP` deletes all data AND the data definition
     - if you want to delete only the data then use `DELETE`
 ]
@@ -461,7 +461,7 @@
     ```sql
     DROP TABLE Dependent CASCADE;
     ```
-    #sym.arrow The table is dropped even if there are references 436 S
+    #sym.arrow The table is dropped even if there are references
   ]
 ]
 
@@ -488,7 +488,6 @@
    ALTER TABLE COMPANY.Employee DROP CONSTRAINT EMPSUPERFK CASCADE; -- Drop all constraints that depend on EMPSUPERFK
   ```
 ]
-]
 
 == Index
 #slide[
@@ -500,13 +499,14 @@
   - Earlier versions of SQL had commands for creating indexes, but these were removed because they were not at the conceptual schema level
   - Many systems still have the CREATE INDEX commands.
   ```sql
-  CREATE [ UNIQUE ] INDEX <name> ON < table > ( < column > [ , . . . ] )
+  CREATE [ UNIQUE ] INDEX 
+  <name> ON 
+  < table > ( < column > [ , . . . ] )
   ```
 ]
 
 #slide[
   #heading(numbering: none)[When to use `INDEX`]
-
   - Column is used often for searches or sorting
   - Many different values, `NULL` seldom
   - Many rows in table
@@ -520,7 +520,6 @@
 == More Objects
 #slide[
   #heading(numbering: none)[More Database Objects]
-
   - DB Objects can be `CREATE`d, `ALTER`ed, `DROP`ped
   - `USER`, `ROLE`
     - DB users and groups
@@ -533,7 +532,7 @@
     CREATE OR REPLACE VIEW view [SELECT ... FROM ...];
   ```
   #memo[
-    While on first glance views might not seem all that powerful, they are one of the most used database objects, offering a wid variety of uses in application development.
+    While on first glance views might not seem all that powerful, they are one of the most used database objects, offering a wide variety of uses in application development.
 ]
 ]
 
@@ -542,10 +541,10 @@
   - Example: User
     - Either owner of a relation or the DBA can grant (or revoke) selected users the privileges to use a SQL statement (e.g., `SELECT`, `INSERT`, `DELETE`)
     ```sql
-    CREATE USER ‘student' IDENTIFIED BY ‘123’;
-    GRANT ALL PRIVILEGES ON COMPANY.Employee TO ‘student’;
+    CREATE USER 'student' IDENTIFIED BY '123';
+    GRANT ALL PRIVILEGES ON COMPANY.Employee TO 'student';
 
-    REVOKE DROP ON COMPANY.Employee FROM ‘student’;
+    REVOKE DROP ON COMPANY.Employee FROM 'student';
     SHOW GRANTS FOR student;
     ```
 ]
@@ -566,7 +565,7 @@
 == Simple Data Manipulation
 #slide[
   #heading(numbering: none)[`INSERT`, `UPDATE`, `DELETE`]
-  - INSERT, UPDATE, DELETE
+  - `INSERT`, `UPDATE`, `DELETE`
     - All operations work on a set of tuples
       - Special case(!): work on one tuple
     - Example for modifications of sets of tuples:
@@ -580,13 +579,15 @@
   #heading(numbering: none)[What is a transaction?]
   - Start a transaction
     #sym.arrow While some DBMS (e.g. PostgreSQL) need to explicitly start a transaction, some others (e.g. Oracle) do not
-  - After starting a transaction, you can make changes to the db that stay local to your session.
+  - After starting a transaction, you can make changes to the DB that stay local to your session.
   - Whenever you feel ready, you can use `COMMIT;` to commit those changes to the database.
   - If you make a mistake, you can use `ROLLBACK;` while in a transaction to undo your changes.
+  - We'll learn more about transactions later in this course!
   #memo[
     If you forget to explicitly commit your changes, you will lose those changes when quitting the transaction.
   ]
 ]
+
 == Inserting into tables
 #slide[
   #heading(numbering: none)[`INSERT`-statement]
@@ -694,7 +695,6 @@
     UPDATE Person SET email = NULL WHERE email IS NOT NULL;
   ```
 ]
-]
 
 == Deleting table data
 #slide[
@@ -710,7 +710,7 @@
 ]
 
 #slide[
-  #heading(numbering: none)[`DELETE`-statement]
+  #heading(numbering: none)[Assignment: `DELETE`-statement]
   #let left = [
     - Insert a new student `<‘Johnson’, 25, 1,‘Math’>` into the database.
     - Change the class of `STUDENT` ‘Smith’ to 2.
@@ -718,7 +718,7 @@
     - Delete the record for the student whose name is ‘Smith’ and whose student number is 17.
   ]
   #let right = [
-    #figure(image("../assets/img/slides_02/20250211_cs_assignment_rev01.png"))
+    #figure(image("../assets/img/slides_02/20250211_cs_assignment_rev01.png", height: 90%))
   ]
   #grid(
     columns: (auto, auto),
@@ -813,6 +813,7 @@
 
 #slide[
   #heading(numbering: none)[Examples]
+  #text(size: 18pt)[
   #example[
     ```sql
     SELECT Bdate, Address
@@ -826,6 +827,7 @@
   ]
   #question[
     What do these queries mean?
+  ]
   ]
 ]
 
@@ -935,7 +937,7 @@
 
 #slide[
   #heading(numbering: none)[WHERE: `NULL`]
-  #figure(image("../assets/img/slides_02/20250214_boolean_table_rev01.png"))
+  #figure(image("../assets/img/slides_02/20250214_boolean_table_rev01.png", height: 90%))
 ]
 
 == Set Operations
@@ -985,7 +987,7 @@
     - Retrieve the name and transcript of each student with Class 2 majoring in CS. A transcript includes course name, course number, credit hours, semester, year, and grade for each course completed by the student.
   ]
   #let right = [
-    #figure(image("../assets/img/slides_02/20250211_cs_assignment_rev01.png"))
+    #figure(image("../assets/img/slides_02/20250211_cs_assignment_rev01.png", height: 90%))
   ]
 
   #grid(
@@ -1075,6 +1077,7 @@
 #slide[
   #let left = [
     #heading(numbering: none)[`FULL (OUTER) JOIN`]
+    #text(size: 18pt)[
     - This join type combines the `LEFT JOIN` and `RIGHT JOIN` and selects all records from both tables, even if there are rows that do not match.
     ```sql
     SELECT * FROM CUSTOMERS c
@@ -1090,6 +1093,7 @@
       RIGHT JOIN BOOKS b ON c._ID = b.BORROWER_ID;
       ```
     ]
+    ] 
   ]
   #let right = figure(image("../assets/img/slides_02/2025_01_21_book_cust_rev01.png"))
   #grid(
@@ -1154,6 +1158,7 @@
 
 #slide[
   #heading(numbering: none)[Using `BETWEEN`]
+  #text(size: 15pt)[
   #example[
     Let's say you want to query for all your employees between the ages of 18 and 21.
   ]
@@ -1161,8 +1166,9 @@
   WHERE age >= 18 AND age <= 21;
   WHERE age BETWEEN 18 AND 21;
   ```
-
+  ]
   #heading(numbering: none)[Using `IN`]
+  #text(size: 15pt)[
   #example[
     Let's say you want to check if the person entering data into the form is one of three special employees.
   ]
@@ -1172,10 +1178,12 @@
   ```
   - The `IN`-clause checks whether a value is part of a set.
   - Improves the readability of the code!
+  ]
 ]
 
 #slide[
   #heading(numbering: none)[String Patterns using `LIKE`]
+  #text(size: 18pt)[
   #example[
     Imagine you only save the full name of each employee. Now you want to query of all employees, whose last name is Smith.
   ]
@@ -1186,17 +1194,18 @@
   - `_`: Replaces a single character
   - `\`: Escapes one of the wildcard characters (`AB\_CD` #sym.arrow.r `AB_CD`)
 
-  ```sql `
+  ```sql
   'abc' LIKE 'abc' -> TRUE
   'abc' LIKE 'a%' -> TRUE
   'abc' LIKE '_b_' -> TRUE
   'abc' LIKE 'b' -> FALSE
   ```
-
+  ]
 ]
 
 #slide[
   #heading(numbering: none)[Comparison with `DATE`]
+  #text(size: 18pt)[
   #example[
     Let's say you want to congratulate all employees who have started in the founding year of your company. Let's take 2018 as an example.
   ]
@@ -1211,21 +1220,20 @@
     WHERE JOIN_DATE >= TO_DATE('2018-01-01', 'yyyy.mm.dd') AND JOIN_DATE <= TO_DATE('2018-12-31', 'yyyy.mm.dd')
     ```
   ]
+  ]
 ]
 
 == Sorting query results
 #slide[
   #heading(numbering: none)[Using `ORDER BY`]
+  #text(size: 18pt)[
   - The results of queries are sets, meaning they have no order applied to them
   - Using `ORDER BY`, you can impose an order on the result of a query
   - You can order by more than one column.
   ```sql
-  SELECT
-    NAME
-  FROM
-    EMP
-  ORDER BY
-    _ID;
+  SELECT NAME
+  FROM EMP
+  ORDER BY _ID;
   ```
   #memo[
     You can change the direction of the sort by using `ASC` (ascending) and `DESC` (descending).
@@ -1234,22 +1242,20 @@
     ORDER BY _ID DESC;
     ```
   ]
+  ]
 ]
 
 == Aggregate Functions
 #slide[
   #heading(numbering: none)[Using Aggregate Functions]
+  #text(size: 18pt)[
   - Using aggregate functions, you can analyze your data and create summaries of the shape of your data.
   - For instance, you can count the number of rows that match your condition or simply return the maximum value of a set of values.
   ```sql
-  SELECT
-    COUNT(NAME)
-  FROM
-    EMP
-  WHERE
-    NAME LIKE '%SMITH'
-  ORDER BY
-    _ID;
+  SELECT COUNT(NAME)
+  FROM EMP
+  WHERE NAME LIKE '%SMITH'
+  ORDER BY _ID;
   ```
   #memo[
     You can change the direction of the sort by using `ASC` (ascending) and `DESC` (descending).
@@ -1257,6 +1263,7 @@
     ORDER BY _ID ASC;
     ORDER BY _ID DESC;
     ```
+  ]
   ]
 ]
 
@@ -1271,10 +1278,10 @@
   SELECT AVG(Price) FROM Book; -> 16.22
   ```
 ]
-//TODO: Add additional examples as per template slide 06
 == GROUP BY & HAVING
 #slide[
   #heading(numbering: none)[Using `GROUP BY`]
+  #text(size: 18pt)[
   - Grouping is used to create subgroups of tuples before summarization
     - partition the relation into nonoverlapping subsets (or groups) of tuples
     - Using a grouping attribute
@@ -1289,6 +1296,7 @@
     FROM EMP
     GROUP BY DEPARTMENT;
     ```
+  ]
 ]
 
 #slide[
@@ -1315,7 +1323,9 @@
 
 #slide[
   #heading(numbering: none)[Using `HAVING`]
-  - Let's say you wanna retrieve all projects in your company that have more than 2 employees working on it. The PROJECTS table contains all projects and the EMP_PROJECT_RESPONSIBILITY matches employees to projects.
+  #text(size: 16pt)[
+  - Let's say you wanna retrieve all projects in your company that have more than 2 employees working on it. 
+  - The `PROJECTS` table contains all projects and the `EMP_PROJECT_RESPONSIBILITY` matches employees to projects.
   ```sql
   SELECT p.PROJECT_NUM, p.PROJECT_NAME, count(*) as emp_amount
   FROM PROJECTS p
@@ -1323,15 +1333,12 @@
   GROUP BY p.PROJECT_NUM, p.PROJECT_NAME
   HAVING count(*) > 2;
   ```
-]
-
-#slide[
-  #heading(numbering: none)[Using `HAVING`]
   #info[
     - When using groups, only two types of things are allowed in a `SELECT`-clause:
       - Aggregate Functions
       - Columns contained in a `GROUP BY`-statement
     - And while `HAVING` allows aggregate functions, `WHERE` does not.
+  ]
   ]
 ]
 

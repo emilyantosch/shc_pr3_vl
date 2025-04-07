@@ -107,33 +107,31 @@
     - decide how to implement that relationship in SQL.
 ]
 
-
-:%s/- /- /g
-:%s/- /- /g
-:%s/ - / - /g
-
-
 = Relationships
 == Relationship Types
 #slide[
   #heading(numbering: none)[Basics]
-  - Describe relationships between entity types characterized by a verb
-  - Often 2 naming possibilities:
-    - teaches vs. is taught by
-    - Relationship has always two (or more) directions
-  - May have attributes
-  - Number of participating entity types (degree):
-    1. Unary relationship type (e.g., Employee supervises another employee)
-    2. Binary relationship type (e.g., Employee works for one department)
-    3. Ternary relationship type (e.g., Lecturer recommends books for one specific course)
-    4. Higher degrees...
+  #text(size: 22pt)[
+    - Describe relationships between entity types characterized by a verb
+    - Often 2 naming possibilities:
+      - teaches vs. is taught by
+      - Relationship has always two (or more) directions
+    - May have attributes
+    - Number of participating entity types (degree):
+      1. Unary relationship type (e.g., Employee supervises another employee)
+      2. Binary relationship type (e.g., Employee works for one department)
+      3. Ternary relationship type (e.g., Lecturer recommends books for one specific course)
+      4. Higher degrees...
+  ]
 ]
 
 #slide[
   #heading(numbering: none)[Basics]
-  - Each relationship instance in R is an association of entities, where the association includes exactly one entity from each participating entity type
-  - In an ERM, relationship types are displayed as diamond-shaped boxes, which are connected by straight lines to the entity types
-    #figure(image("../assets/img/slides_04/20250305_emp_depart_worksfor_rev01.jpeg"))
+  #text(size: 22pt)[
+    - Each relationship instance in R is an association of entities, where the association includes exactly one entity from each participating entity type
+    - In an ERM, relationship types are displayed as diamond-shaped boxes, which are connected by straight lines to the entity types
+      #figure(image("../assets/img/slides_04/20250305_emp_depart_worksfor_rev01.jpeg", height: 50%))
+  ]
 ]
 
 #slide[
@@ -153,7 +151,7 @@
 
 #slide[
   #heading(numbering: none)[Company Example]
-  #figure(image("../assets/img/slides_04/20250305_circle_emp_dept_worksfor_rev01.png"))
+  #figure(image("../assets/img/slides_04/20250305_circle_emp_dept_worksfor_rev01.png", height: 90%))
 ]
 
 #slide[
@@ -175,17 +173,16 @@
 
 #slide[
   #heading(numbering: none)[Recursive Relationship Types]
-  #figure(image("../assets/img/slides_04/20250305_circle_emp_supervision_rev01.png"))
+  #figure(image("../assets/img/slides_04/20250305_circle_emp_supervision_rev01.png", height: 90%))
 ]
 
 #slide[
-  #heading(numbering: none)[Company Example]
+  #example(title: [Example: Employee in 2 roles])[
+    - Supervisor (boss) role name 1
+    - Supervisee (subordinate) role name 2
+      #figure(image("../assets/img/slides_04/20250305_emp_supervis_rev01.jpeg", height: 75%))
+  ]
 
-  Example: Employee in 2 roles
-
-  - Supervisor (boss) role name 1
-  - Supervisee (subordinate) role name 2
-    #figure(image("../assets/img/slides_04/20250305_emp_supervis_rev01.jpeg"))
 ]
 
 
@@ -203,60 +200,60 @@
 
 #slide[
   #heading(numbering: none)[Company Example]
-  #figure(image("../assets/img/slides_04/20250305_double_circle_manages_works_on_rev01.png"))
+  #figure(image("../assets/img/slides_04/20250305_double_circle_manages_works_on_rev01.png", height: 90%))
 
 ]
 
 #slide[
   #heading(numbering: none)[Constraints]
-  - Cardinality
-  - (min,max) Notation
-  - Example
-    - A car has at least 3 and at most 5 wheels Every wheel is associated to exactly one car
-      #figure(image("../assets/img/slides_04/20250305_car_has_wheel_rev01.jpeg"))
+  #text(size: 22pt)[
+    - Cardinality
+    - (min,max) Notation
+    - Example
+      - A car has at least 3 and at most 5 wheels Every wheel is associated to exactly one car
+        #figure(image("../assets/img/slides_04/20250305_car_has_wheel_rev01.jpeg"))
 
-  - Attention: In UML, (min,max) is placed on the opposite sites!
-  - Problem: General case cannot be easily implemented in RDBMS
+    - Attention: In UML, (min,max) is placed on the opposite sites!
+    - Problem: General case cannot be easily implemented in RDBMS
+  ]
 ]
 
 #slide[
   #heading(numbering: none)[Constraints]
-
   - Other notations (e.g., in tools like draw.io)
-    #figure(image("../assets/img/slides_04/20250305_relationship_rev01.jpeg"))
+    #figure(image("../assets/img/slides_04/20250305_relationship_rev01.jpeg", height: 70%))
 ]
 
 
 
 #slide[
   #heading(numbering: none)[Constraints]
-  - Participation
-  - Specifies whether the existence of an entity depends on its being related to another entity via the relationship type
-  - Also called *minimum cardinality constraint*
-  - Two types
-  - Total: every entity in the total set of all entities of an entity type A must be related to an entity of entity type B via a relationship
-    - Total participation is also called *existence dependency*
-      - Is displayed as a double line connecting the participating entity type to the relationship
-  - Partial: some or part of the entities of an entity type A are related to some entities of an entity type B via a relationship
-    - Is displayed by a single line connecting the participating entity type to the relationship230
-
-
+  #text(size: 20pt)[
+    - Participation
+    - Specifies whether the existence of an entity depends on its being related to another entity via the relationship type
+    - Also called *minimum cardinality constraint*
+    - Two types
+    - Total: every entity in the total set of all entities of an entity type A must be related to an entity of entity type B via a relationship
+      - Total participation is also called *existence dependency*
+        - Is displayed as a double line connecting the participating entity type to the relationship
+    - Partial: some or part of the entities of an entity type A are related to some entities of an entity type B via a relationship
+      - Is displayed by a single line connecting the participating entity type to the relationship
+  ]
 ]
 
 #slide[
   #heading(numbering: none)[Constraints]
+  - Cardinality: specifies the maximum number of relationship instances that an entity can participate in
 
+  - Participation: specifies if the existence of an entity depends on its being related to another entity via the relationship type
+    - *minimum cardinality constraint*
 ]
-- Cardinality: specifies the maximum number of relationship instances that an entity can participate in
-
-- Participation: specifies if the existence of an entity depends on its being related to another entity via the relationship type
-  - *minimum cardinality constraint*
 
 
 
 #slide[
   #heading(numbering: none)[Company Example]
-  #figure(image("../assets/img/slides_04/20250305_circle_emp_dept_worksfor_rev01.png"))
+  #figure(image("../assets/img/slides_04/20250305_circle_emp_dept_worksfor_rev01.png", height: 90%))
 
 ]
 
@@ -269,13 +266,12 @@
 
 #slide[
   #heading(numbering: none)[Company Example]
-  #figure(image("../assets/img/slides_04/20250305_double_circle_manages_works_on_rev01.png"))
+  #figure(image("../assets/img/slides_04/20250305_double_circle_manages_works_on_rev01.png", height: 90%))
 
 ]
 
 #slide[
   #heading(numbering: none)[How to define them?]
-
   - Relationship between entity types
   - Good naming
   - More than one relationship?
@@ -290,20 +286,24 @@
 == Relational Model
 #slide[
   #heading(numbering: none)[Constraints]
-  - Three categories
-    1. Constraints that are inherent in the data model *inherent model-based constraints* or *implicit constraints* Example: no duplicate tuples in a relation
-    2. Constraints that can be directly expressed in schemas of the data model *schema-based constraints* or *explicit constraints* Example: Domain constraints, primary key (entity integrity constraints), constraints on NULL, and **referential integrity constraints**
-    3. Constraints that cannot be directly expressed in the schemas of the data model, and hence must be expressed and enforced by the application programs *application-based* or *semantic constraints* or *business rules*
+  #text(size: 20pt)[
+    - Three categories
+      1. Constraints that are inherent in the data model *inherent model-based constraints* or *implicit constraints* Example: no duplicate tuples in a relation
+      2. Constraints that can be directly expressed in schemas of the data model *schema-based constraints* or *explicit constraints* Example: Domain constraints, primary key (entity integrity constraints), constraints on NULL, and *referential integrity constraints*
+      3. Constraints that cannot be directly expressed in the schemas of the data model, and hence must be expressed and enforced by the application programs *application-based* or *semantic constraints* or *business rules*
+  ]
 ]
 
 
 #slide[
   #heading(numbering: none)[Referential Integrity Constraint]
-  - It is defined between two relations
-  - It is used to maintain the consistency among tules in the two relations: a tuple in one relation that refers to another relation must refer to an existing tuple in that relation
-  - *Foreign key*: a set of attributes FK in relation schema $R_1$ is a foreign key of $R_1$ that references relation $R_2$ if it satisfies the following rules:
-    - 1. The attributes in FK have the same domain(s) as the primary key attributes PK of $R_2$; the attributes FK are said to *reference* or *refer to* the relation $R_2$
-    - 2. A value of FK in a tuple $t_1$ of the current state$r_1(R_1)$ either occurs as a value of PK for some tuple $t_2$ in the current state $r_2(R_2)$ or is `NULL`. In the former case, we have $t_1["FK"] = t_2["FK"]$ , and we say that the tuple $t_1$ references or refers to the tuple $t_2$
+  #text(size: 20pt)[
+    - It is defined between two relations
+    - It is used to maintain the consistency among tules in the two relations: a tuple in one relation that refers to another relation must refer to an existing tuple in that relation
+    - *Foreign key*: a set of attributes FK in relation schema $R_1$ is a foreign key of $R_1$ that references relation $R_2$ if it satisfies the following rules:
+      - 1. The attributes in FK have the same domain(s) as the primary key attributes PK of $R_2$; the attributes FK are said to *reference* or *refer to* the relation $R_2$
+      - 2. A value of FK in a tuple $t_1$ of the current state$r_1(R_1)$ either occurs as a value of PK for some tuple $t_2$ in the current state $r_2(R_2)$ or is `NULL`. In the former case, we have $t_1["FK"] = t_2["FK"]$ , and we say that the tuple $t_1$ references or refers to the tuple $t_2$
+  ]
 ]
 
 #slide[
@@ -315,27 +315,28 @@
 
 #slide[
   #heading(numbering: none)[Company Example]
-  #figure(image("../assets/img/slides_04/20250305_circle_emp_dept_worksfor_rev01.png"))
+  #figure(image("../assets/img/slides_04/20250305_circle_emp_dept_worksfor_rev01.png", height: 90%))
 ]
 
 #slide[
   #heading(numbering: none)[Company Example]
-  #figure(image("../assets/img/slides_04/20250305_emp_dept_proj_rev01.png"))
+  #figure(image("../assets/img/slides_04/20250305_emp_dept_proj_rev01.png", height: 90%))
 ]
 
 #slide[
   #heading(numbering: none)[Notation of Foreign Keys]
-
-  - There are several ways for the notation of relational schemas, especially for representing foreign keys
-    - Option 1:
-      - Foreign Keys can be represented with arrows
-      - This notation is used in the lecture slides and in the book "Fundamentals of Database Systems" from Elmasri and Navathe
-      - Advantage: Each FK-arrow connects the referencing attribute and referenced attribute, so the involved relations are obvious
-      - Option 2:
-        - Foreign Keys can be represented with addition (FK) within the referencing attribute
-        - This notation is used in the laboratory of Mr. Ocker
-        - Advantage: This notation is more readable for large, complex schemas
-  - Both notations are correct and may be used within the examination
+  #text(size: 20pt)[
+    - There are several ways for the notation of relational schemas, especially for representing foreign keys
+      - Option 1:
+        - Foreign Keys can be represented with arrows
+        - This notation is used in the lecture slides and in the book "Fundamentals of Database Systems" from Elmasri and Navathe
+        - Advantage: Each FK-arrow connects the referencing attribute and referenced attribute, so the involved relations are obvious
+        - Option 2:
+          - Foreign Keys can be represented with addition (FK) within the referencing attribute
+          - This notation is used in the laboratory of Mr. Ocker
+          - Advantage: This notation is more readable for large, complex schemas
+    - Both notations are correct and may be used within the examination
+  ]
 ]
 
 #slide[
@@ -379,19 +380,21 @@
 #slide[
   #heading(numbering: none)[Mapping of Binary 1:1]
   #figure(image("../assets/img/slides_04/20250305_emp_dept_table_rev01.jpeg"))
-  - Mapping of relationship type MANAGES
-    - DEPARTMENT serves as S
-    - EMPLOYEE serves as T
-  - Attribute `SSN` is renamed in `MGR_SSN` in `DEPARTMENT`
-  - Attribute `START_DATE` is renamed in `Mgr_start_date` in `DEPARTMENT`
-  - It is also possible to include primary key of S as foreign key in T
-  - For the mapping, a *UNIQUE-Constraint* must be used!
-    - Otherwise, an employee could manage several departments!
+  #text(size: 22pt)[
+    - Mapping of relationship type MANAGES
+      - DEPARTMENT serves as S
+      - EMPLOYEE serves as T
+    - Attribute `SSN` is renamed in `MGR_SSN` in `DEPARTMENT`
+    - Attribute `START_DATE` is renamed in `Mgr_start_date` in `DEPARTMENT`
+    - It is also possible to include primary key of S as foreign key in T
+    - For the mapping, a *UNIQUE-Constraint* must be used!
+      - Otherwise, an employee could manage several departments!
+  ]
 ]
 
 #slide[
   #heading(numbering: none)[Mapping of Binary 1:1]
-  - For the mapping, a **UNIQUE-Constraint** must be used!
+  - For the mapping, a `UNIQUE`-Constraint must be used!
     #figure(image("../assets/img/slides_04/20250305_person_has_drive_lice_rev01.png"))
 ]
 
@@ -405,12 +408,14 @@
 
 #slide[
   #heading(numbering: none)[Mapping of Binary 1:1]
-  3. The cross-reference or relationship relation approach
-    - Set up a third relation R for the purpose of cross-referencing the primary keys of the two relations S and T representing the entity types
-    - This approach is required for binary M:N relationships
-    - The relation R will include the primary key attributes of S and T as foreign keys to S and T
-    - The primary key of R will be one of the two foreign keys, and the other foreign key will be a unique key of R
-    #figure(image("../assets/img/slides_04/20250305_manages_rev01.jpeg"))
+  #text(size: 22pt)[
+    3. The cross-reference or relationship relation approach
+      - Set up a third relation R for the purpose of cross-referencing the primary keys of the two relations S and T representing the entity types
+      - This approach is required for binary M:N relationships
+      - The relation R will include the primary key attributes of S and T as foreign keys to S and T
+      - The primary key of R will be one of the two foreign keys, and the other foreign key will be a unique key of R
+      #figure(image("../assets/img/slides_04/20250305_manages_rev01.jpeg"))
+  ]
 ]
 
 #slide[
@@ -423,10 +428,12 @@
 
 #slide[
   #heading(numbering: none)[Mapping of Binary 1:N]
-  #figure(image("../assets/img/slides_04/20250305_three_circle_rev01.png"))
-  - Relationship type WORKS\_FOR: Attribute Dno as foreign key in EMPLOYEE
-  - Relationship type SUPERVISION: Attribute Super\_ssn as foreign key in EMPLOYEE
-  - Relationship type CONTROLS: Attribute Dnum as foreign key in PROJECT
+  #figure(image("../assets/img/slides_04/20250305_three_circle_rev01.png", height: 50%))
+  #text(size: 22pt)[
+    - Relationship type `WORKS_FOR`: Attribute `Dno` as foreign key in `EMPLOYEE`
+    - Relationship type `SUPERVISION`: Attribute `Super_ssn` as foreign key in `EMPLOYEE`
+    - Relationship type `CONTROLS`: Attribute `Dnum` as foreign key in `PROJECT`
+  ]
 ]
 
 #slide[
@@ -450,13 +457,19 @@
 
 #slide[
   #heading(numbering: none)[Mapping of Binary M:N]
-  #figure(image("../assets/img/slides_04/20250305_circle_workson_rev01.png"))
-  - Attribute `Ssn` is renamed in `Essn` in WORKS\_ON
-  - Attribute `Pname` is renamed in `Pno` in DEPARTMENT
-  - Primary key is the combination `{Essn, Pno}`
-    #info[
-      The existence dependency between EMPLOYEE and PROJECT should be specified on the foreign keys in the relation corresponding to the relationship R (ON UPDATE and ON DELETE)
-    ]
+  #figure(image("../assets/img/slides_04/20250305_circle_workson_rev01.png", height: 90%))
+]
+
+#slide[
+  #heading(numbering: none)[Mapping of Binary M:N]
+  #text(size: 20pt)[
+    - Attribute `Ssn` is renamed in `Essn` in WORKS\_ON
+    - Attribute `Pname` is renamed in `Pno` in DEPARTMENT
+    - Primary key is the combination `{Essn, Pno}`
+      #info[
+        The existence dependency between `EMPLOYEE` and `PROJECT` should be specified on the foreign keys in the relation corresponding to the relationship `R` (`ON UPDATE` and `ON DELETE`)
+      ]
+  ]
 ]
 
 #slide[

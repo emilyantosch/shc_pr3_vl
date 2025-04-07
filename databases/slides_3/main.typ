@@ -272,12 +272,11 @@
 
 #slide[
   #heading(numbering: none)[Attributes]
-  #figure(image("../assets/img/slides_03/20250220_attribute_ex_rev01.png"))
+  #figure(image("../assets/img/slides_03/20250220_attribute_ex_rev01.png", height: 90%))
 ]
 
 #slide[
   #heading(numbering: none)[Attributes]
-  #figure(image("../assets/img/slides_03/20250220_attribute_ex_rev01.png"))
   - Composite vs. Simple (atomic) attributes
     - Attributes which are not divisible are called simple or atomic attributes
     - Composite attributes can form a hierarchy
@@ -295,8 +294,7 @@
 #slide[
   #heading(numbering: none)[Key Attributes in entity sets]
   - How can we identify an actual entity within an entity set?
-  - Attributes must be used
-    → Key Attributes (also called identifying attributes)
+  - Attributes must be used #sym.arrow Key Attributes (also called identifying attributes)
   - Sometimes several attributes together form a key attribute (identifying attribute), meaning that the combination of the attribute values must be distinct for each entity
     - If a set of attributes possesses this property, the proper way to represent this in the ER model that is to define a composite attribute and designate it as a key attribute of the entity type
     - Notice that such a composite key attributes must be minimal; that is, all component attributes must be included in the composite attribute to have the uniqueness property
@@ -317,7 +315,7 @@
 
 #slide[
   #heading(numbering: none)[Key attributes in entity sets]
-  #figure(image("../assets/img/slides_03/20250220_attribute_emp_dept_rev01.png"))
+  #figure(image("../assets/img/slides_03/20250220_attribute_emp_dept_rev01.png", height: 90%))
 ]
 
 #slide[
@@ -336,8 +334,6 @@
   #figure(image("../assets/img/slides_03/20250220_attribute_person_house_rev01.png", height: 53%))
 ]
 
-//TODO: Add more sections to the above chapter
-
 = The relational model
 == What is the relational model
 #slide[
@@ -351,7 +347,7 @@
 
   ]
   #let right = [
-    #figure(image("../assets/img/slides_03/2024_12_31_s1_db_inventor_rev01.png"))
+    #figure(image("../assets/img/slides_03/2024_12_31_s1_db_inventor_rev01.png", height: 45%))
     #figure(image("../assets/img/slides_03/20250220_relational_table_rev01.png"))
 
   ]
@@ -418,12 +414,12 @@
   - Example:
     - `ROOM(room_num, function, seats)`
     - where $"function" = {"auditorium, lab, office, administration"}$
-  //TODO: Add img
+  #figure(image("../assets/img/slides_03/20250223_attribute_relation_rev01.png", height: auto))
 ]
 
 #slide[
   #heading(numbering: none)[RM: The math behind it]
-  #idea[
+  #idea(title: [Definition])[
     - A Relation Schema $R$ is a set of attributes $(A_1, A_2, ..., A_n)$.
     - Each attribute $A_i$ is the name of a role played by a certain domain $D$ in the relational schema $R$.
     - A domain $D$ of attribute $A_i$ is denoted as $"dom"(A_i)$.
@@ -433,7 +429,7 @@
 
 #slide[
   #heading(numbering: none)[RM: The math behind it]
-  //TODO: Add image
+  #figure(image("../assets/img/slides_03/20250223_relation_example_rev01.png", height: auto))
 ]
 
 #slide[
@@ -491,12 +487,6 @@
 
 #slide[
   #heading(numbering: none)[RM: The math behind it]
-  //TODO: Image wechseln
-  #figure(image("../assets/img/slides_03/2024_12_31_s1_db_inventor_rev01.png"))
-]
-
-#slide[
-  #heading(numbering: none)[RM: The math behind it]
   - A relation (or relational state) $r(R)$ is a mathematical relation of degree $n$ on the domains $"dom"(A_1), "dom"(A_2), ..., "dom"(A_n)$, which is a subset of the Cartesian product (denoted by $times$) of the domains that define $R$:
   #align(center)[
     $r(R) subset.eq ("dom"(A_1) times "dom"(A_2) times ... times "dom"(A_n))$
@@ -533,28 +523,40 @@
 
 #slide[
   #heading(numbering: none)[Notation]
-  - A relational schema $R$ of degree $n$ is denoted by $R$ $(A_1, A_2, ..., A_n)$
-  - The uppercase letters $Q$, $R$, $S$ denote relational names
-  - The lowercase letters $q$, $r$, $s$ denote relation states
-  - The letters $t$, $u$, $v$ denote tuples
-  - In general, the name of a relation schema such as `BOOK` also indicates the current set of tuples in that relation (the current relation state) whereas `STUDENT`(`Name`, `Ssn`, ...) refers only to the relation schema
-  - An attribute $A$ can be qualified with the relation's name $R$ to which it belongs by using the dot notation $R.A$ - for example, `BOOK.title`
-  - An $n$-tuple $t$ in a relation $r(R)$ is denoted by $t = <v_1, v_2, ..., v_n>$
-  - $t[A_i]$ and $t.A_i$ refer to the value $v_i$ in $t$.
-  - $t[A_u, A_w, ..., A_z]$ and $t.(A_u, A_w, ..., A_z)$ refer to a subtuple in $t$
+  #text(size: 20pt)[
+    - A relational schema $R$ of degree $n$ is denoted by $R$ $(A_1, A_2, ..., A_n)$
+    - The uppercase letters $Q$, $R$, $S$ denote relational names
+    - The lowercase letters $q$, $r$, $s$ denote relation states
+    - The letters $t$, $u$, $v$ denote tuples
+    - In general, the name of a relation schema such as `BOOK` also indicates the current set of tuples in that relation (the current relation state) whereas `STUDENT`(`Name`, `Ssn`, ...) refers only to the relation schema
+    - An attribute $A$ can be qualified with the relation's name $R$ to which it belongs by using the dot notation $R.A$ - for example, `BOOK.title`
+    - An $n$-tuple $t$ in a relation $r(R)$ is denoted by $t = <v_1, v_2, ..., v_n>$
+    - $t[A_i]$ and $t.A_i$ refer to the value $v_i$ in $t$.
+    - $t[A_u, A_w, ..., A_z]$ and $t.(A_u, A_w, ..., A_z)$ refer to a subtuple in $t$
+  ]
 ]
 
 #slide[
   #heading(numbering: none)[Constraints]
-  Three categories
   1. Constraints that are inherent in the data model
-  #sym.arrow _inherent model-based constraints or implicit constraints_
-  Example: no duplicate tuples in a relation
+    - _inherent model-based constraints or implicit constraints_
+  #example[
+    Example: no duplicate tuples in a relation
+  ]
+]
+
+#slide[
+  #heading(numbering: none)[Constraints]
   2. Constraints that can be directly expressed in schemas of the data model
-  #sym.arrow _schema-based constraints or explicit constraints_
-  Example: Domain constraints, *key constraints*, constraints on NULL, entity integrity constraints and referential integrity constraints
+    - _schema-based constraints or explicit constraints_
+  #example[
+    Domain constraints, *key constraints*, constraints on NULL, entity integrity constraints and referential integrity constraints
+  ]
+]
+#slide[
+  #heading(numbering: none)[Constraints]
   3. Constraints that cannot be directly expressed in the schemas of the data model, and hence must be expressed and enforced by the application programs
-  #sym.arrow _application-based or semantic constraints or business rules_
+    - _application-based or semantic constraints or business rules_
 ]
 
 #slide[
@@ -597,7 +599,7 @@
 
 #slide[
   #heading(numbering: none)[Constraints - Artificial Keys]
-  #text(size: 24pt)[
+  #text(size: 22pt)[
     - PNo is an example for an artificial key
     - Also called: surrogate key, technical key
     - Key is an attribute not natural for the entity
@@ -615,7 +617,9 @@
 
 #slide[
   #heading(numbering: none)[Database Design]
-  #figure(image("../assets/img/slides_03/20250224_impl_rev01.png"))
+  #align(center + horizon)[
+    #figure(image("../assets/img/slides_03/20250224_impl_rev01.png"))
+  ]
 ]
 
 #slide[
@@ -635,7 +639,7 @@
       - Therefore, many manufacturers describe their database as relational if it meets only some of the most important criteria
   ]
   #let right = [
-    #figure(image("../assets/img/slides_03/2024_12_31_s1_db_inventor_rev01.png"))
+    #figure(image("../assets/img/slides_03/2024_12_31_s1_db_inventor_rev01.png", height: 90%))
   ]
   #grid(
     columns: (auto, auto),
@@ -646,23 +650,24 @@
 
 #slide[
   #heading(numbering: none)[Codd's Twelve Rules]
-  #figure(image("../assets/img/slides_03/20250224_rules_db_design_rev01.png"))
+  #figure(image("../assets/img/slides_03/20250224_rules_db_design_rev01.png", height: 90%))
 ]
-
 
 #slide[
   #heading(numbering: none)[SQL History]
-  - SQL may commercial be considered one of the major reasons
-  for the commercial success relational databases
-  - SEQUEL: In 1981, SEQUEL was designed and implemented at IBM Research as the interface
-  for an experimental relational database system called SYSTEM R
-  - SQL-86 or SQL1: developed by ANSI and ISO
-    - Standardized data types, query syntax
-    - `BOOLEAN`, structured types (classes), recursive queries, ...
-  - SQL-92 or SQL2
-    - `BLOBS`, `VARCHAR`, `DATE`, `TIME`, `TIMESTAMP`
-    - consistence checks
-    - modifications of data structures
+  #text(size: 20pt)[
+    - SQL may commercial be considered one of the major reasons
+    for the commercial success relational databases
+    - `SEQUEL`: In 1981, `SEQUEL` was designed and implemented at IBM Research as the interface
+    for an experimental relational database system called `SYSTEM R`
+    - SQL-86 or SQL1: developed by ANSI and ISO
+      - Standardized data types, query syntax
+      - `BOOLEAN`, structured types (classes), recursive queries, ...
+    - SQL-92 or SQL2
+      - `BLOBS`, `VARCHAR`, `DATE`, `TIME`, `TIMESTAMP`
+      - consistence checks
+      - modifications of data structures
+  ]
 ]
 
 #slide[
@@ -687,8 +692,7 @@
     - Specifying security and authorization
     - Defining integrity constraints
     - Specifying transaction controls
-  - It also has rules for embedding SQL statements into a general-purpose programming
-  language such as Java, COBOL, or C/C++
+  - It also has rules for embedding SQL statements into a general-purpose programming language such as Java, COBOL, or C/C++
 ]
 
 
@@ -748,13 +752,13 @@
 
 #slide[
   #heading(numbering: none)[SQL Basics]
-  #figure(image("../assets/img/slides_03/20250224_relational_sql_rev01.png"))
+  #figure(image("../assets/img/slides_03/20250224_relational_sql_rev01.png", height: 90%))
 ]
 
 #slide[
   #heading(numbering: none)[SQL Basics]
   - Syntax Definition: BNF (Backus-Naur Form)
-  #figure(image("../assets/img/slides_03/20250224_symbol_semantics_rev01.png"))
+  #figure(image("../assets/img/slides_03/20250224_symbol_semantics_rev01.png", height: 70%))
 ]
 
 #slide[
@@ -775,7 +779,7 @@
 
 #slide[
   #heading(numbering: none)[Create Schema]
-  - Syntax:
+  #text(size: 18pt)[
     ```sql
     CREATE [ OR REPLACE ]
     { DATABASE | SCHEMA }
@@ -783,11 +787,15 @@
     db_name
     [ create_specification ] ...
     ```
-  - Example:
-  ```sql
-  CREATE SCHEMA COMPANY;
-  ```
-  - Attention: User must be authorized to create schema and schema elements
+    #example[
+      ```sql
+      CREATE SCHEMA COMPANY;
+      ```
+    ]
+    #memo[
+      User must be authorized to create schema and schema elements!
+    ]
+  ]
 ]
 
 #slide[
@@ -840,7 +848,7 @@
 
 #slide[
   #heading(numbering: none)[Mapping: Step 1]
-  #figure(image("../assets/img/slides_03/20250226_mapping_1_rev01.png"))
+  #figure(image("../assets/img/slides_03/20250226_mapping_1_rev01.png", height: 90%))
 ]
 
 #slide[
@@ -857,7 +865,7 @@
 
 #slide[
   #heading(numbering: none)[Create Table `EMP`]
-  #figure(image("../assets/img/slides_03/20250226_emp_table_creation_rev01.png"))
+  #figure(image("../assets/img/slides_03/20250226_emp_table_creation_rev01.png", height: 90%))
 ]
 
 
@@ -873,16 +881,19 @@
 
 #slide[
   #heading(numbering: none)[Data Types: Numeric]
-  - Numeric
-    - Integer: ```sql INTEGER``` or ```sql INT```, ```sql SMALLINT```, ```sql BIGINT```
-    - Floating-point: ```sql FLOAT``` or ```sql REAL```, ```sql DOUBLE PRECISION```
-  - Formatted numbers: `DECIMAL(i,j)` or `NUMERIC(i,j)` where
-  - `i` #sym.arrow precision (total number of decimal digits)
-  - `j` #sym.arrow (digits after the decimal point)
-  - Example:
-    - `DECIMAL` (10,2) : values up to 99,999,999.99
-    - `NUMERIC` (9,2) : 1746352.32
-    - `NUMERIC` (6) : not possible
+  #text(size: 22pt)[
+    - Numeric
+      - Integer: ```sql INTEGER``` or ```sql INT```, ```sql SMALLINT```, ```sql BIGINT```
+      - Floating-point: ```sql FLOAT``` or ```sql REAL```, ```sql DOUBLE PRECISION```
+    - Formatted numbers: `DECIMAL(i,j)` or `NUMERIC(i,j)` where
+    - `i` #sym.arrow precision (total number of decimal digits)
+    - `j` #sym.arrow (digits after the decimal point)
+    #example[
+      - `INT`: `-2147483648` to `+2147483647`
+      - `REAL`: 6 decimal digits precision
+      - `NUMERIC(6,3)`: Up to `999999.999`
+    ]
+  ]
 ]
 
 
@@ -921,11 +932,12 @@
   - `BLOB`: Binary Large Object
     - Long Binary Data (e.g, pictures, video)
   - `BOOLEAN`
+  - `JSON` or `JSONB`
 ]
 
 #slide[
   #heading(numbering: none)[Data Types: Additional]
-  #figure(image("../assets/img/slides_03/20250226_sqlserver_oracle_types_rev01.png"))
+  #figure(image("../assets/img/slides_03/20250226_sqlserver_oracle_types_rev01.png", height: 90%))
 ]
 
 #slide[
