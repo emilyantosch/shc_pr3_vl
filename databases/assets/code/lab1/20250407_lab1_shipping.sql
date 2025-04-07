@@ -1,3 +1,6 @@
+CREATE SCHEMA lab1_2;
+SET SEARCH_PATH TO lab1_2;
+
 CREATE TABLE Harbour
   (harbourID INT NOT NULL,
    location VARCHAR(32) NOT NULL,

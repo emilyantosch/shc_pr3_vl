@@ -6,7 +6,7 @@
 #import "@preview/codly:1.0.0": *
 #show: codly-init.with()
 
-#let is_solution = false
+#let is_solution = true
 
 #codly(
   languages: (
@@ -37,6 +37,12 @@
     This is the first lab of Databases. This lab focuses on improving your skills in
     dealing with SQL queries. There are tasks for both DDL and DML statements. If you have questions or need any
     support, help each other, ask your tutor or use the forum in our moodle room.
+    #heading[Submission Deadline]
+    Deadline to upload the solutions for all tasks is Saturday, 11:59 pm before the lab date.
+    #heading[General Information]
+    The following tasks are to be worked on in fixed teams of two. Each team member must be able to explain all solutions. Please submit only one solution for each team of two.
+    The submission must be a PDF file in our Moodle room with the name and matriculation number. Solutions must be in digital format with intermediate steps and detailed explanations (no handwritten scans).
+    You can use any tool or drawing program of your choice to create the diagrams. If you have questions or need support, use the forum in our Moodle room and help each other.
   ],
   show-outline: true,
   author: "Emily Antosch & Furkan Yildirim & Julian Moldenhauer",
