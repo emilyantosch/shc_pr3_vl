@@ -439,8 +439,8 @@
   - Delete named schema elements, e.g., tables, constraints, schema, indexes, triggers
   - `DROP` needs to observe referential integrity, in order to drop tables in correct order
   - Two drop behavior options: \
-      - `CASCADE`\
-      - `RESTRICT`\
+    - `CASCADE`\
+    - `RESTRICT`\
   - `DROP` deletes all data AND the data definition
     - if you want to delete only the data then use `DELETE`
 ]
@@ -499,8 +499,8 @@
   - Earlier versions of SQL had commands for creating indexes, but these were removed because they were not at the conceptual schema level
   - Many systems still have the CREATE INDEX commands.
   ```sql
-  CREATE [ UNIQUE ] INDEX 
-  <name> ON 
+  CREATE [ UNIQUE ] INDEX
+  <name> ON
   < table > ( < column > [ , . . . ] )
   ```
 ]
@@ -533,7 +533,7 @@
   ```
   #memo[
     While on first glance views might not seem all that powerful, they are one of the most used database objects, offering a wide variety of uses in application development.
-]
+  ]
 ]
 
 #slide[
@@ -779,7 +779,7 @@
 
 #slide[
   #heading(numbering: none)[Relational Model vs. SQL]
-#memo[
+  #memo[
     SQL allows, in contrast to the Relational Model, a table to have two or more tuples to be identical in all of their attributes.
     This makes SQL tables multi sets by design.
   ]
@@ -814,20 +814,20 @@
 #slide[
   #heading(numbering: none)[Examples]
   #text(size: 18pt)[
-  #example[
-    ```sql
-    SELECT Bdate, Address
-    FROM Employee
-    WHERE Fname = ‘John’ AND Minit = ‘B’ AND Lname = ‘Smith’;
+    #example[
+      ```sql
+      SELECT Bdate, Address
+      FROM Employee
+      WHERE Fname = ‘John’ AND Minit = ‘B’ AND Lname = ‘Smith’;
 
-    SELECT Fname, Lname, Address
-    FROM Employee, Department
-    WHERE Dname = ‘Research’ AND Dnumber = Dno;
-    ```
-  ]
-  #question[
-    What do these queries mean?
-  ]
+      SELECT Fname, Lname, Address
+      FROM Employee, Department
+      WHERE Dname = ‘Research’ AND Dnumber = Dno;
+      ```
+    ]
+    #question[
+      What do these queries mean?
+    ]
   ]
 ]
 
@@ -919,7 +919,7 @@
 
 #slide[
   #heading(numbering: none)[WHERE: `NULL`]
-#question[
+  #question[
     - What is `42 < NULL`?
   ]
   - Comparisons with `NULL` are never true
@@ -962,7 +962,7 @@
     UNION
     (SELECT DISTINCT USER_NAME FROM USERS WHERE LAST_NAME = 'Miller');
   ```
-#question[
+  #question[
     What does the above statement do?
   ]
 ]
@@ -972,10 +972,10 @@
   #heading(numbering: none)[Multiset Operations]
   - SQL allows for certain multiset operations using the keyword `ALL`.
   ```sql
-    UNION ALL
-    EXCEPT ALL
-    INTERSECT ALL
-```
+      UNION ALL
+      EXCEPT ALL
+      INTERSECT ALL
+  ```
 ]
 
 #slide[
@@ -1006,7 +1006,7 @@
   - This is done using the SQL statement `JOIN`, which combines two tables either
   by building the cartesian product or by connecting them based on certain criteria.
   - There are multiple types of joins available, which we will explore in the following slides.
-#memo[
+  #memo[
     It can be difficult to wrap your head around, how different tables will end up looking after a join:
     1. Don't fret, this is a difficult subject!
     2. It is often very useful to try different types of joins and to look at the entire result of the unfiltered query.
@@ -1078,22 +1078,22 @@
   #let left = [
     #heading(numbering: none)[`FULL (OUTER) JOIN`]
     #text(size: 18pt)[
-    - This join type combines the `LEFT JOIN` and `RIGHT JOIN` and selects all records from both tables, even if there are rows that do not match.
-    ```sql
-    SELECT * FROM CUSTOMERS c
-    FULL JOIN BOOKS b ON c._ID = b.BORROWER_ID;
-    ```
-    #info[
-      You can also achieve the same behaviour by using `UNION` on two queries, one with a `LEFT JOIN` and the other with a `RIGHT JOIN`.
+      - This join type combines the `LEFT JOIN` and `RIGHT JOIN` and selects all records from both tables, even if there are rows that do not match.
       ```sql
       SELECT * FROM CUSTOMERS c
-      LEFT JOIN BOOKS b ON c._ID = b.BORROWER_ID;
-      UNION
-      SELECT * FROM CUSTOMERS c
-      RIGHT JOIN BOOKS b ON c._ID = b.BORROWER_ID;
+      FULL JOIN BOOKS b ON c._ID = b.BORROWER_ID;
       ```
+      #info[
+        You can also achieve the same behaviour by using `UNION` on two queries, one with a `LEFT JOIN` and the other with a `RIGHT JOIN`.
+        ```sql
+        SELECT * FROM CUSTOMERS c
+        LEFT JOIN BOOKS b ON c._ID = b.BORROWER_ID;
+        UNION
+        SELECT * FROM CUSTOMERS c
+        RIGHT JOIN BOOKS b ON c._ID = b.BORROWER_ID;
+        ```
+      ]
     ]
-    ] 
   ]
   #let right = figure(image("../assets/img/slides_02/2025_01_21_book_cust_rev01.png"))
   #grid(
@@ -1159,67 +1159,67 @@
 #slide[
   #heading(numbering: none)[Using `BETWEEN`]
   #text(size: 15pt)[
-  #example[
-    Let's say you want to query for all your employees between the ages of 18 and 21.
-  ]
-  ```sql
-  WHERE age >= 18 AND age <= 21;
-  WHERE age BETWEEN 18 AND 21;
-  ```
+    #example[
+      Let's say you want to query for all your employees between the ages of 18 and 21.
+    ]
+    ```sql
+    WHERE age >= 18 AND age <= 21;
+    WHERE age BETWEEN 18 AND 21;
+    ```
   ]
   #heading(numbering: none)[Using `IN`]
   #text(size: 15pt)[
-  #example[
-    Let's say you want to check if the person entering data into the form is one of three special employees.
-  ]
-  ```sql
-  WHERE _ID = 102 OR _ID = 304 OR _ID = 201;
-  WHERE _ID IN (102, 304, 201);
-  ```
-  - The `IN`-clause checks whether a value is part of a set.
-  - Improves the readability of the code!
+    #example[
+      Let's say you want to check if the person entering data into the form is one of three special employees.
+    ]
+    ```sql
+    WHERE _ID = 102 OR _ID = 304 OR _ID = 201;
+    WHERE _ID IN (102, 304, 201);
+    ```
+    - The `IN`-clause checks whether a value is part of a set.
+    - Improves the readability of the code!
   ]
 ]
 
 #slide[
   #heading(numbering: none)[String Patterns using `LIKE`]
   #text(size: 18pt)[
-  #example[
-    Imagine you only save the full name of each employee. Now you want to query of all employees, whose last name is Smith.
-  ]
-  ```sql
-  WHERE NAME LIKE '%SMITH';
-  ```
-  - `%`: Replaces an arbitrary number of letters and numbers
-  - `_`: Replaces a single character
-  - `\`: Escapes one of the wildcard characters (`AB\_CD` #sym.arrow.r `AB_CD`)
+    #example[
+      Imagine you only save the full name of each employee. Now you want to query of all employees, whose last name is Smith.
+    ]
+    ```sql
+    WHERE NAME LIKE '%SMITH';
+    ```
+    - `%`: Replaces an arbitrary number of letters and numbers
+    - `_`: Replaces a single character
+    - `\`: Escapes one of the wildcard characters (`AB\_CD` #sym.arrow.r `AB_CD`)
 
-  ```sql
-  'abc' LIKE 'abc' -> TRUE
-  'abc' LIKE 'a%' -> TRUE
-  'abc' LIKE '_b_' -> TRUE
-  'abc' LIKE 'b' -> FALSE
-  ```
+    ```sql
+    'abc' LIKE 'abc' -> TRUE
+    'abc' LIKE 'a%' -> TRUE
+    'abc' LIKE '_b_' -> TRUE
+    'abc' LIKE 'b' -> FALSE
+    ```
   ]
 ]
 
 #slide[
   #heading(numbering: none)[Comparison with `DATE`]
   #text(size: 18pt)[
-  #example[
-    Let's say you want to congratulate all employees who have started in the founding year of your company. Let's take 2018 as an example.
-  ]
-  ```sql
-  WHERE JOIN_DATE >= '2018-01-01' AND JOIN_DATE <= '2018-12-31';
-  WHERE JOIN_DATE BETWEEN '2018-01-01' AND '2018-12-31';
-  WHERE JOIN_DATE::TEXT LIKE '2018%';
-  ```
-  #memo[
-    The example of date comparisons are DBMS dependant. Example for Oracle:
+    #example[
+      Let's say you want to congratulate all employees who have started in the founding year of your company. Let's take 2018 as an example.
+    ]
     ```sql
-    WHERE JOIN_DATE >= TO_DATE('2018-01-01', 'yyyy.mm.dd') AND JOIN_DATE <= TO_DATE('2018-12-31', 'yyyy.mm.dd')
+    WHERE JOIN_DATE >= '2018-01-01' AND JOIN_DATE <= '2018-12-31';
+    WHERE JOIN_DATE BETWEEN '2018-01-01' AND '2018-12-31';
+    WHERE JOIN_DATE::TEXT LIKE '2018%';
     ```
-  ]
+    #memo[
+      The example of date comparisons are DBMS dependant. Example for Oracle:
+      ```sql
+      WHERE JOIN_DATE >= TO_DATE('2018-01-01', 'yyyy.mm.dd') AND JOIN_DATE <= TO_DATE('2018-12-31', 'yyyy.mm.dd')
+      ```
+    ]
   ]
 ]
 
@@ -1227,21 +1227,21 @@
 #slide[
   #heading(numbering: none)[Using `ORDER BY`]
   #text(size: 18pt)[
-  - The results of queries are sets, meaning they have no order applied to them
-  - Using `ORDER BY`, you can impose an order on the result of a query
-  - You can order by more than one column.
-  ```sql
-  SELECT NAME
-  FROM EMP
-  ORDER BY _ID;
-  ```
-  #memo[
-    You can change the direction of the sort by using `ASC` (ascending) and `DESC` (descending).
+    - The results of queries are sets, meaning they have no order applied to them
+    - Using `ORDER BY`, you can impose an order on the result of a query
+    - You can order by more than one column.
     ```sql
-    ORDER BY _ID ASC;
-    ORDER BY _ID DESC;
+    SELECT NAME
+    FROM EMP
+    ORDER BY _ID;
     ```
-  ]
+    #memo[
+      You can change the direction of the sort by using `ASC` (ascending) and `DESC` (descending).
+      ```sql
+      ORDER BY _ID ASC;
+      ORDER BY _ID DESC;
+      ```
+    ]
   ]
 ]
 
@@ -1249,21 +1249,21 @@
 #slide[
   #heading(numbering: none)[Using Aggregate Functions]
   #text(size: 18pt)[
-  - Using aggregate functions, you can analyze your data and create summaries of the shape of your data.
-  - For instance, you can count the number of rows that match your condition or simply return the maximum value of a set of values.
-  ```sql
-  SELECT COUNT(NAME)
-  FROM EMP
-  WHERE NAME LIKE '%SMITH'
-  ORDER BY _ID;
-  ```
-  #memo[
-    You can change the direction of the sort by using `ASC` (ascending) and `DESC` (descending).
+    - Using aggregate functions, you can analyze your data and create summaries of the shape of your data.
+    - For instance, you can count the number of rows that match your condition or simply return the maximum value of a set of values.
     ```sql
-    ORDER BY _ID ASC;
-    ORDER BY _ID DESC;
+    SELECT COUNT(NAME)
+    FROM EMP
+    WHERE NAME LIKE '%SMITH'
+    ORDER BY _ID;
     ```
-  ]
+    #memo[
+      You can change the direction of the sort by using `ASC` (ascending) and `DESC` (descending).
+      ```sql
+      ORDER BY _ID ASC;
+      ORDER BY _ID DESC;
+      ```
+    ]
   ]
 ]
 
@@ -1282,20 +1282,20 @@
 #slide[
   #heading(numbering: none)[Using `GROUP BY`]
   #text(size: 18pt)[
-  - Grouping is used to create subgroups of tuples before summarization
-    - partition the relation into nonoverlapping subsets (or groups) of tuples
-    - Using a grouping attribute
-    - Grouping attribute should appear in the SELECT clause
-    - If NULLs exist in the grouping attribute, then a separate group is created for all tuples with a NULL value
-    #example[
-      For each department, we want to retrieve the department number, the number of employees in the department, and their average salary.
-    ]
-    ```sql
-    SELECT
-      DEPARTMENT, COUNT(*), AVG(SALARY)
-    FROM EMP
-    GROUP BY DEPARTMENT;
-    ```
+    - Grouping is used to create subgroups of tuples before summarization
+      - partition the relation into nonoverlapping subsets (or groups) of tuples
+      - Using a grouping attribute
+      - Grouping attribute should appear in the SELECT clause
+      - If NULLs exist in the grouping attribute, then a separate group is created for all tuples with a NULL value
+      #example[
+        For each department, we want to retrieve the department number, the number of employees in the department, and their average salary.
+      ]
+      ```sql
+      SELECT
+        DEPARTMENT, COUNT(*), AVG(SALARY)
+      FROM EMP
+      GROUP BY DEPARTMENT;
+      ```
   ]
 ]
 
@@ -1324,21 +1324,21 @@
 #slide[
   #heading(numbering: none)[Using `HAVING`]
   #text(size: 16pt)[
-  - Let's say you wanna retrieve all projects in your company that have more than 2 employees working on it. 
-  - The `PROJECTS` table contains all projects and the `EMP_PROJECT_RESPONSIBILITY` matches employees to projects.
-  ```sql
-  SELECT p.PROJECT_NUM, p.PROJECT_NAME, count(*) as emp_amount
-  FROM PROJECTS p
-  LEFT JOIN EMP_PROJECT_RESPONSIBILITY e ON e.project_id = p._id
-  GROUP BY p.PROJECT_NUM, p.PROJECT_NAME
-  HAVING count(*) > 2;
-  ```
-  #info[
-    - When using groups, only two types of things are allowed in a `SELECT`-clause:
-      - Aggregate Functions
-      - Columns contained in a `GROUP BY`-statement
-    - And while `HAVING` allows aggregate functions, `WHERE` does not.
-  ]
+    - Let's say you wanna retrieve all projects in your company that have more than 2 employees working on it.
+    - The `PROJECTS` table contains all projects and the `EMP_PROJECT_RESPONSIBILITY` matches employees to projects.
+    ```sql
+    SELECT p.PROJECT_NUM, p.PROJECT_NAME, count(*) as emp_amount
+    FROM PROJECTS p
+    LEFT JOIN EMP_PROJECT_RESPONSIBILITY e ON e.project_id = p._id
+    GROUP BY p.PROJECT_NUM, p.PROJECT_NAME
+    HAVING count(*) > 2;
+    ```
+    #info[
+      - When using groups, only two types of things are allowed in a `SELECT`-clause:
+        - Aggregate Functions
+        - Columns contained in a `GROUP BY`-statement
+      - And while `HAVING` allows aggregate functions, `WHERE` does not.
+    ]
   ]
 ]
 
@@ -1386,13 +1386,18 @@
 ]
 
 = License Notice
-
 == Attribution
+#slide[
+  The basis of this course stems from: Professor Dr. Ulrike Herster
+  The following license applies to all unmodified and modified material used throughout this course.
+  #memo(title: [License])[
+    The publication or sharing of slides, image and sound recordings of this course are not permitted.
 
-- This work is shared under the CC BY-NC-SA 4.0 License and the respective Public
-  License.
-- #link("https://creativecommons.org/licenses/by-nc-sa/4.0/")
-- This work is based off of the work by Prof. Dr. Ulrike Herster.
-- Some of the images and texts, as well as the layout were changed.
-- The base material was supplied in private, therefore the link to the source
-  cannot be shared with the audience.
+    © Professor Dr. Ulrike Herster
+
+    This video and the presented script are protected by copyright.
+    The use is only permitted in relation with the course of study.
+    It is not permitted to forward or republish it in other places (especially in the internet).
+  ]
+]
+

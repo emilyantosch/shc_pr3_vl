@@ -150,7 +150,11 @@
     #figure(image("../assets/img/slides_01/20250325_chatgpt_logo_rev01.png", width: 50%))
     #figure(image("../assets/img/slides_01/20250325_claude_logo_rev01.png"))
   ]
-  #grid(columns: (auto, 30%), gutter: 0.25em, left, right)
+  #grid(
+    columns: (auto, 30%),
+    gutter: 0.25em,
+    left, right,
+  )
 ]
 #slide[
   #heading(numbering: none)[Challenges]
@@ -625,12 +629,12 @@
   - Creating the tables with the correct columns:
   ```sql
   CREATE TABLE Person(
-    SSN  CHAR(9) NOT NULL, 
-    FirstName VARCHAR(15) NOT NULL, 
-    LastName VARCHAR(15) NOT NULL, 
-    Mobile VARCHAR(30), 
-    PhoneWork VARCHAR(30), 
-    Birthdate DATE, 
+    SSN  CHAR(9) NOT NULL,
+    FirstName VARCHAR(15) NOT NULL,
+    LastName VARCHAR(15) NOT NULL,
+    Mobile VARCHAR(30),
+    PhoneWork VARCHAR(30),
+    Birthdate DATE,
     PRIMARY KEY ( SSN ));
   ```
 ]
@@ -709,7 +713,8 @@
     - The *conceptual schema* describes all the data items and relationships between them, together with integrity constraints
       - There is only one conceptual schema per database
     - The *internal schema* at the lowest level contains definitions of the stored records, the methods of representation, the data fields, and indexes
-      - There is only one internal schema per database]
+      - There is only one internal schema per database
+  ]
   #let right = [
     #align(horizon)[
       #figure(image("../assets/img/slides_01/2025_02_03_ansi_sparc_concept_rev01.png", height: auto))
@@ -779,13 +784,18 @@
 ]
 
 = License Notice
-
 == Attribution
+#slide[
+  The basis of this course stems from: Professor Dr. Ulrike Herster
+  The following license applies to all unmodified and modified material used throughout this course.
+  #memo(title: [License])[
+    The publication or sharing of slides, image and sound recordings of this course are not permitted.
 
-- This work is shared under the CC BY-NC-SA 4.0 License and the respective Public
-  License.
-- #link("https://creativecommons.org/licenses/by-nc-sa/4.0/")
-- This work is based off of the work by Prof. Dr. Ulrike Herster.
-- Some of the images and texts, as well as the layout were changed.
-- The base material was supplied in private, therefore the link to the source
-  cannot be shared with the audience.
+    © Professor Dr. Ulrike Herster
+
+    This video and the presented script are protected by copyright.
+    The use is only permitted in relation with the course of study.
+    It is not permitted to forward or republish it in other places (especially in the internet).
+  ]
+]
+

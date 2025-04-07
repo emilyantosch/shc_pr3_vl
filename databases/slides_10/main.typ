@@ -126,7 +126,8 @@
     - To ensure interoperability between the participating resource managers the *2-phase commit protocol* is realized
     - It defines the final synchronization of different parts of a transaction of a global transaction
     - In the first phase the transaction manager asks participating resource managers to announce the results of their local transaction part
-    - This leads to a global result (commit or rollback) that is then in the second phase announced to the participants]
+    - This leads to a global result (commit or rollback) that is then in the second phase announced to the participants
+  ]
   #let right = [
     #figure(image("../assets/img/slides_08/20250309_trans_coord_res_man_rev01.jpeg"))
   ]
@@ -296,7 +297,8 @@
         - Data type differences, like pointers in OO,…
         - Structural and integrity differences, like constraints in RM, objects can be composed of other objects in OO, …
         - Transactional differences, like transactions in RM
-        - Manipulative differences, like declarative querys in RM]
+        - Manipulative differences, like declarative querys in RM
+  ]
   #let right = [
     #figure(image("../assets/img/slides_10/20250309_object_rel_model_rev01.png"))
   ]
@@ -390,7 +392,8 @@
       - MySQL: https://dev.mysql.com/downloads/connector/j/
     - Prepare a Java Project, e.g. in Eclipse
     - Prepare a MySQL database
-    - Import the JDBC library]
+    - Import the JDBC library
+  ]
   #let right = [
     #figure(image("../assets/img/slides_10/20250309_connector_platform_rev01.png"))
   ]
@@ -415,7 +418,8 @@
       - MySQL: https://dev.mysql.com/downloads/connector/j/
     - Prepare a Java Project, e.g. in Eclipse
     - Prepare a MySQL database
-    - Import the JDBC library]
+    - Import the JDBC library
+  ]
   #let right = [
     #figure(image("../assets/img/slides_10/20250309_referenced_lib_rev01.png"))
   ]
@@ -865,9 +869,16 @@
 
 = License Notice
 == Attribution
-- This work is shared under the CC BY-NC-SA 4.0 License and the respective Public License.
-- #link("https://creativecommons.org/licenses/by-nc-sa/4.0/")
-- This work is based off of the work by Prof. Dr. Ulrike Herster.
-- Some of the images and texts, as well as the layout were changed.
-- The base material was supplied in private, therefore the link to the source
-  cannot be shared with the audience.
+#slide[
+  The basis of this course stems from: Professor Dr. Ulrike Herster
+  The following license applies to all unmodified and modified material used throughout this course.
+  #memo(title: [License])[
+    The publication or sharing of slides, image and sound recordings of this course are not permitted.
+
+    © Professor Dr. Ulrike Herster
+
+    This video and the presented script are protected by copyright.
+    The use is only permitted in relation with the course of study.
+    It is not permitted to forward or republish it in other places (especially in the internet).
+  ]
+]

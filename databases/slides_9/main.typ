@@ -347,7 +347,8 @@
     - Standardized by X/Open
       - Transaction Manager: A software component that guarantees transaction properties
       - Resource Manager: Every resource (e.g., DBS, GUI) that is able to work in a transactional mode without providing a transaction control structure itself
-    - The Transaction manager coordinates the Resource Manager that take part in the transaction. E.g., different DBS (distributed transactions) that appear as one DBS from outside (transparency!)]
+    - The Transaction manager coordinates the Resource Manager that take part in the transaction. E.g., different DBS (distributed transactions) that appear as one DBS from outside (transparency!)
+  ]
   #let right = [
     #figure(image("../assets/img/slides_08/20250309_ap_rms_tm_rev01.jpeg"))
   ]
@@ -364,7 +365,8 @@
     - To ensure interoperability between the participating resource managers the *2-phase commit protocol* is realized
     - It defines the final synchronization of different parts of a transaction of a global transaction
     - In the first phase the transaction manager asks participating resource managers to announce the results of their local transaction part
-    - This leads to a global result (commit or rollback) that is then in the second phase announced to the participants]
+    - This leads to a global result (commit or rollback) that is then in the second phase announced to the participants
+  ]
   #let right = [
     #figure(image("../assets/img/slides_08/20250309_trans_coord_res_man_rev01.jpeg"))
   ]
@@ -624,7 +626,8 @@
       - The record ID `PHID`
       - The reference to table Product with the foreign key `PID`
       - The current price `Price`
-      - The date `Change_Date`, where we store the date of the change]
+      - The date `Change_Date`, where we store the date of the change
+  ]
   #let right = [
     #figure(image("../assets/img/slides_09/20250309_table_product_rev01.png"))
   ]
@@ -641,7 +644,8 @@
   #let left = [
     1. `INSERT` trigger: We want to get an `INSERT` with the current (start) price in table `Price_History` when we do an `INSERT` in the table `Product`. This is triggered when an `INSERT` on our table product is done (`AFTER`).
     2. `DELETE` trigger: Furthermore, in case of a `DELETE`, all records of the deleted product in the table `Price_History` should be deleted as well.
-    3. `UPDATE` trigger: If a price of a product is changed, this change should also result in an entry in the table `Price_History`.]
+    3. `UPDATE` trigger: If a price of a product is changed, this change should also result in an entry in the table `Price_History`.
+  ]
   #let right = [
     #figure(image("../assets/img/slides_09/20250309_table_product_rev01.png"))
   ]
@@ -701,9 +705,16 @@
 
 = License Notice
 == Attribution
-- This work is shared under the CC BY-NC-SA 4.0 License and the respective Public License.
-- #link("https://creativecommons.org/licenses/by-nc-sa/4.0/")
-- This work is based off of the work by Prof. Dr. Ulrike Herster.
-- Some of the images and texts, as well as the layout were changed.
-- The base material was supplied in private, therefore the link to the source
-  cannot be shared with the audience.
+#slide[
+  The basis of this course stems from: Professor Dr. Ulrike Herster
+  The following license applies to all unmodified and modified material used throughout this course.
+  #memo(title: [License])[
+    The publication or sharing of slides, image and sound recordings of this course are not permitted.
+
+    © Professor Dr. Ulrike Herster
+
+    This video and the presented script are protected by copyright.
+    The use is only permitted in relation with the course of study.
+    It is not permitted to forward or republish it in other places (especially in the internet).
+  ]
+]
