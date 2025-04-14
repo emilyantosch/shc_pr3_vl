@@ -126,7 +126,8 @@
     - A manufacturer must supply at least one item.
     - An article from in-house production does not have to be supplied for a project but can be supplied for many projects.
     - A project uses at least one item.
-    - An item is supplied by only one manufacturer for a project.]
+    - An item is supplied by only one manufacturer for a project.
+  ]
   #figure(image("../assets/img/slides_05/20250310_article_supplied_manu_proj_nc_rev01.png"))
 ]
 
@@ -369,7 +370,8 @@
       - Attributes that are NULL frequently could be placed in separate relations (with the primary key): 1:c
       #example[
         Attribute Office if only 15 percent of employees have individual offices
-      ]]
+      ]
+  ]
   #let right = [
 
     #figure(image("../assets/img/slides_06/20250309_circle_office_emp_rev01.png"))
@@ -398,7 +400,8 @@
         - Employee
         - Project
       - When joining these relations, we want only tuples for real existing combinations of employees and projects
-      - Other combinations: *Spurious tuples*]
+      - Other combinations: *Spurious tuples*
+    ]
   - Spurious tuples are created when two tables are joined on attributes that are neither primary keys nor foreign keys
 ]
 
@@ -628,7 +631,8 @@
       - X is a super key for schema R
     - Focusses on FDs within key attributes
     - Every relation in BCNF is in 3NF, too ... but not the other way round
-    - Informally: To test whether a relation is in BCNF, identify all the determinants and make sure that they are candidate keys]
+    - Informally: To test whether a relation is in BCNF, identify all the determinants and make sure that they are candidate keys
+  ]
   #let right = [
     #figure(image("../assets/img/slides_06/20250309_1nf_2nf_bcnf_rev01.jpeg"))
   ]
@@ -688,8 +692,17 @@
 
 = License Notice
 == Attribution
-- This work is shared under the CC BY-NC-SA 4.0 License and the respective Public License.
-- #link("https://creativecommons.org/licenses/by-nc-sa/4.0/")
-- This work is based off of the work by Prof. Dr. Ulrike Herster.
-- Some of the images and texts, as well as the layout were changed.
-- The base material was supplied in private, therefore the link to the source cannot be shared with the audience.
+#slide[
+  The basis of this course stems from: Professor Dr. Ulrike Herster
+  The following license applies to all unmodified and modified material used throughout this course.
+  #memo(title: [License])[
+    The publication or sharing of slides, image and sound recordings of this course are not permitted.
+
+    © Professor Dr. Ulrike Herster
+
+    This video and the presented script are protected by copyright.
+    The use is only permitted in relation with the course of study.
+    It is not permitted to forward or republish it in other places (especially in the internet).
+  ]
+]
+

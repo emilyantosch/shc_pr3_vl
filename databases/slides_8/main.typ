@@ -164,7 +164,8 @@
     - Suppose that we want the department name number of employees in each department whose departments have an average income of more than 30,000 \$. How can we specify this query in SQL?
     - Retrieve the names of all employees with the smallest salary.
     - Retrieve the names of all employees whose supervisor's supervisor has ssn '888665555'.
-    - Retrieve the names of employees who make at least \$10,000 more than the employee who is paid the least in the company.]
+    - Retrieve the names of employees who make at least \$10,000 more than the employee who is paid the least in the company.
+  ]
   #let right = [
     #figure(image("../assets/img/slides_08/20250309_emp_dept_ep_workson_rev01.png"))
   ]
@@ -397,7 +398,8 @@
   #let left = [
     - Create a view that has the department name, manager name, and manager salary for every department.
     - Create a view that has the project name, controlling department name, number of employees, and total hours worked per week on the project for each project.
-    - Create a view that has the project name, controlling department name, number of employees, and total hours worked per week on the project for each project with more than one employee working on it.]
+    - Create a view that has the project name, controlling department name, number of employees, and total hours worked per week on the project for each project with more than one employee working on it.
+  ]
   #let right = [
     #figure(image("../assets/img/slides_08/20250309_emp_dept_ep_workson_rev01.png"))
   ]
@@ -624,7 +626,8 @@
 
     - When doing the same `SELECT` twice, new tuples may appear that are inserted by another transaction
     - Basically, same problem as Unrepeatable Read
-      #figure(image("../assets/img/slides_08/20250309_time_trans1_2_type2_rev01.png"))]
+      #figure(image("../assets/img/slides_08/20250309_time_trans1_2_type2_rev01.png"))
+  ]
   #let right = [
     #figure(image("../assets/img/slides_08/20250309_pen_eraser_ruler_rev01.jpeg"))
   ]
@@ -792,7 +795,8 @@
     - Standardized by X/Open
       - Transaction Manager: A software component that guarantees transaction properties
       - Resource Manager: Every resource (e.g., DBS, GUI) that is able to work in a transactional mode without providing a transaction control structure itself
-    - The Transaction manager coordinates the Resource Manager that take part in the transaction. E.g., different DBS (distributed transactions) that appear as one DBS from outside (transparency!)]
+    - The Transaction manager coordinates the Resource Manager that take part in the transaction. E.g., different DBS (distributed transactions) that appear as one DBS from outside (transparency!)
+  ]
   #let right = [
     #figure(image("../assets/img/slides_08/20250309_ap_rms_tm_rev01.jpeg"))
   ]
@@ -810,7 +814,8 @@
     - To ensure interoperability between the participating resource managers the *2-phase commit protocol* is realized
     - It defines the final synchronization of different parts of a transaction of a global transaction
     - In the first phase the transaction manager asks participating resource managers to announce the results of their local transaction part
-    - This leads to a global result (commit or rollback) that is then in the second phase announced to the participants]
+    - This leads to a global result (commit or rollback) that is then in the second phase announced to the participants
+  ]
   #let right = [
     #figure(image("../assets/img/slides_08/20250309_trans_coord_res_man_rev01.jpeg"))
   ]
@@ -828,11 +833,20 @@
   #heading(numbering: none)[Savepoints]
   #figure(image("../assets/img/slides_08/20250309_code_tables_rev01.png"))
 ]
+
 = License Notice
 == Attribution
-- This work is shared under the CC BY-NC-SA 4.0 License and the respective Public License.
-- #link("https://creativecommons.org/licenses/by-nc-sa/4.0/")
-- This work is based off of the work by Prof. Dr. Ulrike Herster.
-- Some of the images and texts, as well as the layout were changed.
-- The base material was supplied in private, therefore the link to the source
-  cannot be shared with the audience.
+#slide[
+  The basis of this course stems from: Professor Dr. Ulrike Herster
+  The following license applies to all unmodified and modified material used throughout this course.
+  #memo(title: [License])[
+    The publication or sharing of slides, image and sound recordings of this course are not permitted.
+
+    © Professor Dr. Ulrike Herster
+
+    This video and the presented script are protected by copyright.
+    The use is only permitted in relation with the course of study.
+    It is not permitted to forward or republish it in other places (especially in the internet).
+  ]
+]
+

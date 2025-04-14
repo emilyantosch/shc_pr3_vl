@@ -26,7 +26,7 @@
   ),
 )
 
-#let is_solution = false
+#let is_solution = true
 
 
 #show: exercise.project.with(
@@ -36,6 +36,12 @@
   seminar: [DBL],
   abstract: [
     This is the second lab of Databases. Here you will learn the basics of database design using the ERD (Entity-Relationship-Diagram) and the RM (Relational Model).
+    #heading[Submission Deadline]
+    Deadline to upload the solutions for all tasks is Saturday, 11:59 pm before the lab date.
+    #heading[General Information]
+    The following tasks are to be worked on in fixed teams of two. Each team member must be able to explain all solutions. Please submit only one solution for each team of two.
+    The submission must be a PDF file in our Moodle room with the name and matriculation number. Solutions must be in digital format with intermediate steps and detailed explanations (no handwritten scans).
+    You can use any tool or drawing program of your choice to create the diagrams. If you have questions or need support, use the forum in our Moodle room and help each other.
   ],
   show-outline: true,
   author: "Emily Antosch",
