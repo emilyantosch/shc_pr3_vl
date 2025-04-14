@@ -10,7 +10,6 @@
 
 #import "@preview/numbly:0.1.0": numbly
 
-#set text(lang: "en", font: "Roboto")
 #set heading(numbering: numbly("{1}.", default: "1.1"))
 
 #set align(left + top)
@@ -70,6 +69,8 @@
     ),
   ),
 )
+
+#set text(lang: "en", size: 22pt, font: "Roboto")
 
 #title-slide(authors: [Emily Lucia Antosch])
 
@@ -474,19 +475,20 @@
 
 #slide[
   #heading(numbering: none)[Example Company]
-  #figure(image("../assets/img/slides_04/20250305_no_circle_rev01.png"))
+  #figure(image("../assets/img/slides_04/20250305_no_circle_rev01.png", height: 90%))
 ]
 
 #slide[
   #heading(numbering: none)[Example Company]
-  #figure(image("../assets/img/slides_04/20250305_emp_dept_proj_rev01.png"))
+  #figure(image("../assets/img/slides_04/20250305_emp_dept_proj_rev01.png", height: 90%))
 ]
 
 #slide[
   #heading(numbering: none)[Assignment Office - Convert ERD to RM]
-
-  - Departments, identified by ID, operate a variety of printers, each located in a particular room in a particular building. Printers are supplied by a number of suppliers, identified by name, with each supplier charging a different price for a given printer, but also providing different delivery delays, measured in days. A given room can have any number of printers, including none.
-  #figure(image("../assets/img/slides_04/20250305_dept_operates_printer_rev01.png"))
+  #text(size: 20pt)[
+    Departments, identified by ID, operate a variety of printers, each located in a particular room in a particular building. Printers are supplied by a number of suppliers, identified by name, with each supplier charging a different price for a given printer, but also providing different delivery delays, measured in days. A given room can have any number of printers, including none.
+  ]
+  #figure(image("../assets/img/slides_04/20250305_dept_operates_printer_rev01.png", height: 50%))
 ]
 
 #slide[
@@ -513,19 +515,21 @@
 
 #slide[
   #heading(numbering: none)[Create Table - Constraints Syntax]
-  - As Column Constraint
-    - Only if the foreign key is one single attribute (and not combined)
-  ```sql
-  [CONSTRAINT < constraintname > ]
-     REFERENCES < tablename >[( column )] [< action >]
-  ```
-  - As Table Constraint:
-  ```sql
-  [CONSTRAINT < constraintname >]
-     FOREIGN KEY (< column list >)
-     REFERENCES < tablename >[(< column list >)]
-             [< action >]
-  ```
+  #text(size: 22pt)[
+    - As Column Constraint:
+      - Only if the foreign key is one single attribute (and not combined)
+    ```sql
+    [CONSTRAINT < constraintname > ]
+       REFERENCES < tablename >[( column )] [< action >]
+    ```
+    - As Table Constraint:
+    ```sql
+    [CONSTRAINT < constraintname >]
+      FOREIGN KEY (< column list >)
+      REFERENCES < tablename >[(< column list >)]
+    [< action >]
+    ```
+  ]
 ]
 #slide[
   #heading(numbering: none)[Create Table - Constraints Syntax]
