@@ -11,7 +11,6 @@
 
 #import "@preview/numbly:0.1.0": numbly
 
-#set text(lang: "en", font: "Roboto", size: 18pt)
 #set heading(numbering: numbly("{1}.", default: "1.1"))
 
 #set align(left + top)
@@ -50,6 +49,7 @@
     institution: [HAW Hamburg],
   ),
 )
+#set text(lang: "en", font: "Roboto", size: 22pt)
 
 #codly(
   languages: (
@@ -80,7 +80,7 @@
 == Where are we right now?
 #slide[
   //TODO: Add what we did last time
-  - Last time, we looked at the
+  - Last time, we looked at the way we can normalize our database to improve our database design.
   - Today, we'll be discussing
     - how you can work with subqueries and views,
     - how subqueries and views are powerful tools that you can use to design complex databases and
@@ -150,7 +150,7 @@
 
 #slide[
   #heading(numbering: none)[Queries]
-  #figure(image("../assets/img/slides_07/20250221_proj_sel_rev01.png"))
+  #figure(image("../assets/img/slides_07/20250221_proj_sel_rev01.png", height: 40%))
   - `<attribute list>` is a list of attribute names (columns) whose values are to be retrieved by the query
   - `<table list>` is a list of the relation names (e.g., tables) required to process the query
   - `<condition>`: optional conditional (Boolean) expression that identifies the tuples to be retrieved by the query
@@ -158,18 +158,20 @@
 
 #slide[
   #heading(numbering: none)[Selection]
-  - *Selection*($sigma$): mask out rows
-    - Specify, which rows should remain (subset of the tuple)
-      - Usage of selection: Specify, which tuples are interesting
-      - Selection condition is a Boolean expression (condition)
-      - The condition may contain complex expressions (combinations)
-    - Specify, which relation is meant
-      - Notice that $R$ is generally a relational algebra expression whose result is a relation, e.g., a relation
-    - Syntax: $sigma_"selection condition"(R)$
-    #example[
-      $sigma_"Salary>30,000"("Employee")$
-      $sigma_"(DNr=4 AND Salary>30,000)OR(DNr=5 AND Salary > 25,000)"("Employee")$
-    ]
+  #text(size: 18pt)[
+    - *Selection*($sigma$): mask out rows
+      - Specify, which rows should remain (subset of the tuple)
+        - Usage of selection: Specify, which tuples are interesting
+        - Selection condition is a Boolean expression (condition)
+        - The condition may contain complex expressions (combinations)
+      - Specify, which relation is meant
+        - Notice that $R$ is generally a relational algebra expression whose result is a relation, e.g., a relation
+      - Syntax: $sigma_"selection condition"(R)$
+      #example[
+        $sigma_"Salary>30,000"("Employee")$
+        $sigma_"(DNr=4 AND Salary>30,000)OR(DNr=5 AND Salary > 25,000)"("Employee")$
+      ]
+  ]
 ]
 
 #slide[

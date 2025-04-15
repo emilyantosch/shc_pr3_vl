@@ -11,7 +11,6 @@
 
 #import "@preview/numbly:0.1.0": numbly
 
-#set text(lang: "en", font: "Roboto")
 #set heading(numbering: numbly("{1}.", default: "1.1"))
 
 #set align(left + top)
@@ -50,6 +49,9 @@
     institution: [HAW Hamburg],
   ),
 )
+
+#set text(lang: "en", size: 22pt, font: "Roboto")
+#set strong(delta: 600)
 
 #codly(
   languages: (
@@ -120,15 +122,17 @@
 
 #slide[
   #heading(numbering: none)[Weak Entity Types]
-
-  - An entity type without a key attribute is called a *weak entity type*
-  - Weak entities are identified by being related to specific entities from another entity type in combination with one of their attribute values;
-  - This other entity type is called *the identifying or owner entity type*, and the relationship type that relates a weak entity type to its owner *the identifying relationship*
-  - A weak entity type always has a total participation constraint (existence dependency) with respect to its identifying relationship
-  - Represented by double rectangles and by having their identifying relationship placed in double diamonds
-    - The partial key attribute is underlined with a dashed or dotted line
-  - Example: Room vs. Building
-    - Need for identify room: Room number and Building number!
+  #text(size: 18pt)[
+    - An entity type without a key attribute is called a *weak entity type*
+    - Weak entities are identified by being related to specific entities from another entity type in combination with one of their attribute values;
+    - This other entity type is called *the identifying or owner entity type*, and the relationship type that relates a weak entity type to its owner *the identifying relationship*
+    - A weak entity type always has a total participation constraint (existence dependency) with respect to its identifying relationship
+    - Represented by double rectangles and by having their identifying relationship placed in double diamonds
+      - The partial key attribute is underlined with a dashed or dotted line
+    #example(title: [Example: Room vs. Building])[
+      Need for identify room: Room number and Building number!
+    ]
+  ]
 ]
 
 
@@ -139,14 +143,16 @@
 
 #slide[
   #heading(numbering: none)[Weak Entity Types]
-  - The company is organized into departments
-  - Each department has a unique name, a unique number, a manager (employee) with start date, and several locations
-  - A department controls a number of projects, each with unique name, unique number, single location
-  - We store each employee's name, ssn, address, salary, sex, birthdate
-  - An employee is assigned to one department, but may work on several projects, also from other departments
-  - We keep track of the hours per week per project
-  - We also keep track of the supervisor
-  - We want to keep track of each employee's dependents for insurance purposes, namely first name, sex, birth date, and relationship to employee. Source: Elmasri, Fundamentals
+  #text(size: 20pt)[
+    - The company is organized into departments
+    - Each department has a unique name, a unique number, a manager (employee) with start date, and several locations
+    - A department controls a number of projects, each with unique name, unique number, single location
+    - We store each employee's name, ssn, address, salary, sex, birthdate
+    - An employee is assigned to one department, but may work on several projects, also from other departments
+    - We keep track of the hours per week per project
+    - We also keep track of the supervisor
+    - We want to keep track of each employee's dependents for insurance purposes, namely first name, sex, birth date, and relationship to employee. Source: Elmasri, Fundamentals
+  ]
 ]
 
 #slide[
@@ -154,12 +160,12 @@
   #question[
     What could be a weak entity type?
   ]
-  #figure(image("../assets/img/slides_05/20250306_emp_dep_dept_proj_rev01.png"))
+  #figure(image("../assets/img/slides_05/20250306_emp_dep_dept_proj_rev01.png", height: 59%))
 ]
 
 #slide[
   #heading(numbering: none)[Weak Entity Types]
-  #figure(image("../assets/img/slides_05/20250306_circle_dependents_rev01.png"))
+  #figure(image("../assets/img/slides_05/20250306_circle_dependents_rev01.png", height: 90%))
 ]
 
 #slide[
@@ -172,22 +178,24 @@
 
 #slide[
   #heading(numbering: none)[Multivalued Attributes]
-  #question[
-    What could be a multivalued attribute?
+  #text(size: 16pt)[
+    #question[
+      What could be a multivalued attribute?
+    ]
+    - The company is organized into departments.
+    - Each department has a unique name, a unique number, a manager (employee) with start date, and several locations.
+    - A department controls a number of projects, each with unique name, unique number, single location.
+    - We store each employee's name, ssn, address, salary, sex, birthdate.
+    - An employee is assigned to one department, but may work on several projects, also from other departments.
+    - We keep track of the hours per week per project.
+    - We also keep track of the supervisor.
+    - We want to keep track of each employee's dependents for insurance purposes, namely first name, sex, birth date, and relationship to employee.
   ]
-  - The company is organized into departments
-  - Each department has a unique name, a unique number, a manager (employee) with start date, and several locations
-  - A department controls a number of projects, each with unique name, unique number, single location
-  - We store each employee's name, ssn, address, salary, sex, birthdate
-  - An employee is assigned to one department, but may work on several projects, also from other departments
-  - We keep track of the hours per week per project
-  - We also keep track of the supervisor
-  - We want to keep track of each employee's dependents for insurance purposes, namely first name, sex, birth date, and relationship to employee. Source: Elmasri, Fundamentals
 ]
 
 #slide[
   #heading(numbering: none)[Multivalued Attributes]
-  #figure(image("../assets/img/slides_05/20250306_circle_locations_rev01.png"))
+  #figure(image("../assets/img/slides_05/20250306_circle_locations_rev01.png", height: 90%))
 ]
 
 #slide[
@@ -209,22 +217,24 @@
 
 #slide[
   #heading(numbering: none)[Derived Attributes]
-  #question[
-    Can you think of a derived attribute?
+  #text(size: 16pt)[
+    #question[
+      Can you think of a derived attribute?
+    ]
+    - The company is organized into departments.
+    - Each department has a unique name, a unique number, a manager (employee) with start date, and several locations.
+    - A department controls a number of projects, each with unique name, unique number, single location.
+    - We store each employee's name, ssn, address, salary, sex, birthdate.
+    - An employee is assigned to one department, but may work on several projects, also from other departments.
+    - We keep track of the hours per week per project.
+    - We also keep track of the supervisor.
+    - We want to keep track of each employee's dependents for insurance purposes, namely first name, sex, birth date, and relationship to employee.
   ]
-  - The company is organized into departments
-  - Each department has a unique name, a unique number, a manager (employee) with start date, and several locations
-  - A department controls a number of projects, each with unique name, unique number, single location
-  - We store each employee's name, ssn, address, salary, sex, birthdate
-  - An employee is assigned to one department, but may work on several projects, also from other departments
-  - We keep track of the hours per week per project
-  - We also keep track of the supervisor
-  - We want to keep track of each employee's dependents for insurance purposes, namely first name, sex, birth date, and relationship to employee. Source: Elmasri, Fundamentals
 ]
 
 #slide[
   #heading(numbering: none)[Derived Attributes]
-  #figure(image("../assets/img/slides_05/20250306_circle_num_of_emp_rev01.png"))
+  #figure(image("../assets/img/slides_05/20250306_circle_num_of_emp_rev01.png", height: 90%))
 ]
 
 #slide[
@@ -248,27 +258,33 @@
 
 #slide[
   #heading(numbering: none)[Mapping of ERM: Weak Entity Types]
-  #figure(image("../assets/img/slides_05/20250306_circle_emp_dep_rev01.png"))
-  #info[
-    - The attribute `SSN` is renamed to `ESSN`, although this is not necessary.
-    - The primary key is the combination `{ESSN, DEPENDENT_NAME}`
+  #figure(image("../assets/img/slides_05/20250306_circle_emp_dep_rev01.png", height: 60%))
+  #text(size: 16pt)[
+    #info[
+      - The attribute `SSN` is renamed to `ESSN`, although this is not necessary.
+      - The primary key is the combination `{ESSN, DEPENDENT_NAME}`
+    ]
   ]
 ]
+
+
 #slide[
   #heading(numbering: none)[Mapping of ERM: Multivalued Attributes]
-  - For each multivalued attribute A, create a new relation R
-  - This relation R will include an attribute corresponding to A, plus the primary key attribute K - as a foreign key in R - of the relation that represents the entity type or relationship type that has A as a multivalued attribute
-  - The primary key of R is the combination of A and K
+  - For each multivalued attribute $A$, create a new relation $R$
+  - This relation $R$ will include an attribute corresponding to $A$, plus the primary key attribute $K$ - as a foreign key in $R$ - of the relation that represents the entity type or relationship type that has $A$ as a multivalued attribute
+  - The primary key of $R$ is the combination of $A$ and $K$
   - If the multivalued attribute is composite, we include its simple components
 ]
 
 #slide[
-  #heading(numbering: none)[Mapping of ERM: Multivalued Attributes]
-  #figure(image("../assets/img/slides_05/20250306_dept_locations_rev01.png"))
-  - Attribute `Dlocation` represents the multivalued attribute `LOCATIONS` of `DEPARTMENT`
-  - Attribute `Dnumber` represents the primary key of `DEPARTMENT`
-  - The primary key of `DEPT_LOCATIONS` is the combination of `{Dnumber, Dlocation}`
-  - A separate tuple will exist in `DEPT_LOCATIONS` for each location that a department has
+  #text(size: 18pt)[
+    #heading(numbering: none)[Mapping of ERM: Multivalued Attributes]
+    #figure(image("../assets/img/slides_05/20250306_dept_locations_rev01.png", height: 60%))
+    - Attribute `Dlocation` represents the multivalued attribute `LOCATIONS` of `DEPARTMENT`
+    - Attribute `Dnumber` represents the primary key of `DEPARTMENT`
+    - The primary key of `DEPT_LOCATIONS` is the combination of `{Dnumber, Dlocation}`
+    - A separate tuple will exist in `DEPT_LOCATIONS` for each location that a department has
+  ]
 ]
 
 #slide[
@@ -285,13 +301,16 @@
 
 #slide[
   #heading(numbering: none)[Ternary Relationship Types]
-  - Example:
-    - Manufacturers supply items for projects.
-    - A manufacturer must supply at least one item.
-    - An article from in-house production does not have to be supplied for a project but can be supplied for many projects.
-    - A project uses at least one item.
-    - An item is supplied by only one manufacturer for a project.
-  #figure(image("../assets/img/slides_05/20251003_article_supplied_manu_rev01.png"))
+  #text(size: 18pt)[
+    #example[
+      - Manufacturers supply items for projects.
+      - A manufacturer must supply at least one item.
+      - An article from in-house production does not have to be supplied for a project but can be supplied for many projects.
+      - A project uses at least one item.
+      - An item is supplied by only one manufacturer for a project.
+    ]
+  ]
+  #figure(image("../assets/img/slides_05/20251003_article_supplied_manu_rev01.png", height: 30%))
 ]
 
 #slide[
@@ -305,11 +324,12 @@
 ]
 #slide[
   #heading(numbering: none)[Ternary Relationship Types]
-  - Example:
+  #example[
     - To prevent students from concentrating on one professor, they may only work with one professor on one seminar topic.
     - In addition, a student can only work on a seminar topic with one professor.
     - However, a professor may assign a seminar topic more than once.
     - Students must attend seminars, but seminar topics do not have to be chosen.
+  ]
 ]
 
 
@@ -321,14 +341,14 @@
 #slide[
   #heading(numbering: none)[Ternary Relationship Types]
   - Higher degree relationship type: Literature recommendations for specific courses
-    #figure(image("../assets/img/slides_05/20250306_lecturer_teaches_course_rev01.jpeg"))
+    #figure(image("../assets/img/slides_05/20250306_lecturer_teaches_course_rev01.jpeg", height: 70%))
 ]
 
 #slide[
   #heading(numbering: none)[Ternary Relationship Types]
   - In many CASE tools, only binary relationship types can be represented
   - Ternary relationship type is replaced by (weak) entity type + relationship types
-  #figure(image("../assets/img/slides_05/20250306_lecturer_teaches_course_recomm_rev01.jpeg"))
+  #figure(image("../assets/img/slides_05/20250306_lecturer_teaches_course_recomm_rev01.jpeg", height: 60%))
 ]
 
 
@@ -419,14 +439,16 @@
 == ERM
 #slide[
   #heading(numbering: none)[Key Attributes]
-  - How can we identify an actual entity within an entity set?
-  - Attributes must be used
-    - Key Attributes (also called identifying attributes)
-  - Sometimes several attributes together form a key attribute (identifying attribute), meaning that the combination of the attribute values must be distinct for each entity
-    - If a set of attributes possesses this property, the proper way to represent this in the ER model that is to define a *composite attribute* and designate it as a key attribute of the entity type
-    - Notice that such a composite key attributes must be minimal; that is, all component attributes must be included in the composite attribute to have the uniqueness property
-  - Key attributes are underlined
-  - If two attributes are underlined separately, then each is an identifying attribute on its own
+  #text(size: 18pt)[
+    - How can we identify an actual entity within an entity set?
+    - Attributes must be used
+      - Key Attributes (also called identifying attributes)
+    - Sometimes several attributes together form a key attribute (identifying attribute), meaning that the combination of the attribute values must be distinct for each entity
+      - If a set of attributes possesses this property, the proper way to represent this in the ER model that is to define a *composite attribute* and designate it as a key attribute of the entity type
+      - Notice that such a composite key attributes must be minimal; that is, all component attributes must be included in the composite attribute to have the uniqueness property
+    - Key attributes are underlined
+    - If two attributes are underlined separately, then each is an identifying attribute on its own
+  ]
 ]
 
 == RM
@@ -442,8 +464,21 @@
       align: (center, center, center, center, center, center),
       fill: (_, y) => if calc.odd(y) { rgb("#438C94").lighten(90%) },
       table.header[*ISBN*][*Title*][*Author*][*Publisher*][*Year*][*Price*],
-      [978-1-292-09761-9], [Fundamentals of Database Systems], [Ramez Elmasri], [Prentice Hall], [2016], [59.99],
-      [978-0321197849], [An Introduction to Database Systems], [C. J. Date], [Pearson], [2003], [69.92],
+      [978-1-292-
+        09761-9],
+      [Fundamentals of Database Systems],
+      [Ramez Elmasri],
+      [Prentice Hall],
+      [2016],
+      [59.99],
+
+      [978-0-321-
+        19784-9],
+      [An Introduction to Database Systems],
+      [C. J. Date],
+      [Pearson],
+      [2003],
+      [69.92],
     )
 ]
 
@@ -479,7 +514,7 @@
   #heading(numbering: none)[Basics]
   - For example: Employee must be between 16 and 70 years old
   - Value sets are not displayed in ER diagrams, and are typically specified using the basic data types available in most programming languages
-    #figure(image("../assets/img/slides_05/20250306_circle_bdate_rev01.jpeg"))
+    #figure(image("../assets/img/slides_05/20250306_circle_bdate_rev01.jpeg", height: 60%))
 ]
 
 #slide[
@@ -492,31 +527,35 @@
 
 #slide[
   #heading(numbering: none)[Basics]
-  - `CREATE DOMAIN` is part of the ANSI Standard But almost all RDBMS ignore this command
-  - A domain is simply a self-defined data type More precise it is a limitation of the values range of a data type
-    #example[
-      - You want to save the age of a person, you could use `INTEGER`
-      - Now you could save a value from -2,147,483,648 to 2,147,483,647
-      - No person will reach an age of 2,147,483,647 years, neither can someone be younger than 0
-    ]
-  - By creating a domain, you could design a useful value range (e.g., 0 => column =< 100).
-  - For using a domain, you just type the domain-name instead of a data type
+  #text(size: 18pt)[
+    - `CREATE DOMAIN` is part of the ANSI Standard But almost all RDBMS ignore this command
+    - A domain is simply a self-defined data type More precise it is a limitation of the values range of a data type
+      #example[
+        - You want to save the age of a person, you could use `INTEGER`
+        - Now you could save a value from -2,147,483,648 to 2,147,483,647
+        - No person will reach an age of 2,147,483,647 years, neither can someone be younger than 0
+      ]
+    - By creating a domain, you could design a useful value range (e.g., 0 => column =< 100).
+    - For using a domain, you just type the domain-name instead of a data type
+  ]
 ]
 
 #slide[
   #heading(numbering: none)[Basics]
-  - Based on base data type ... with additional constraints
-    ```sql
-    CREATE DOMAIN <name> [ AS ] datatype [ DEFAULT expession] [ constraint [ . . . ] ] ; [ CONSTRAINT constraint\_name] { NOT NULL | NULL | CHECK ( expression )
-    ```
-    #example[
+  #text(size: 20pt)[
+    - Based on base data type ... with additional constraints
       ```sql
-      CREATE DOMAIN nnint AS INT NOT NULL ;
-      CREATE DOMAIN posint AS INT CHECK ( VALUE >= 0 ) ;
-      CREATE DOMAIN dayofweek AS VARCHAR CHECK ( VALUE IN ( 'Monday' , 'Tuesday' , ...)) ;
-      CREATE DOMAIN SSN TYPE AS CHAR(9);
+      CREATE DOMAIN <name> [ AS ] datatype [ DEFAULT expession] [ constraint [ . . . ] ] ; [ CONSTRAINT constraint\_name] { NOT NULL | NULL | CHECK ( expression )
       ```
-    ]
+      #example[
+        ```sql
+        CREATE DOMAIN nnint AS INT NOT NULL ;
+        CREATE DOMAIN posint AS INT CHECK ( VALUE >= 0 ) ;
+        CREATE DOMAIN dayofweek AS VARCHAR CHECK ( VALUE IN ( 'Monday' , 'Tuesday' , ...)) ;
+        CREATE DOMAIN SSN TYPE AS CHAR(9);
+        ```
+      ]
+  ]
 ]
 
 
@@ -535,22 +574,24 @@
 
 #slide[
   #heading(numbering: none)[SQL - Check]
-  - Tuple-based constraints
-    - Semantical Integrity
-    - Apply to each tuple individually and are checked whenever a tuple is inserted or modified
-  - Makes sure that condition is met ... or `NULL`!
-  - Typical use case: Range checking
-    #example[
-      ```sql
-      CONSTRAINT chk\_age CHECK (age ≥ 18)
-      ```
-    ]
-  - Also, complex conditions possible (verify relationships with other rows and/or tables)
-    #example[
-      ```sql
-        CHECK (Dept_create_date <= Mgr_start_date);
-      ```
-    ]
+  #text(size: 16pt)[
+    - Tuple-based constraints
+      - Semantical Integrity
+      - Apply to each tuple individually and are checked whenever a tuple is inserted or modified
+    - Makes sure that condition is met ... or `NULL`!
+    - Typical use case: Range checking
+      #example[
+        ```sql
+        CONSTRAINT chk\_age CHECK (age ≥ 18)
+        ```
+      ]
+    - Also, complex conditions possible (verify relationships with other rows and/or tables)
+      #example[
+        ```sql
+          CHECK (Dept_create_date <= Mgr_start_date);
+        ```
+      ]
+  ]
 ]
 
 #slide[
@@ -574,7 +615,6 @@
       - A person has a home phone but does not want it to be listed, so it is withheld and represented as `NULL` in the database.
     - Not applicable (the attribute is undefined for this tupel)
       - Student's name has no middle initials, student has no academic degree, ...
-  - Example: primary key
 ]
 
 #slide[
@@ -668,15 +708,17 @@ UNIQUE ( Dname ),
 ]
 #slide[
   #heading(numbering: none)[Relationship Types]
-  - Participation
-    - Specifies whether the existence of an entity depends on its being related to another entity via the relationship type
-    - Also called *minimum cardinality constraint*
-    - Two types
-      - Total: every entity in the total set of all entities of an entity type A must be related to an entity of entity type B via a relationship
-        - Total participation is also called *existence dependency*
-        - Is displayed as a double line connecting the participating entity type to the relationship
-      - Partial: some or part of the entities of an entity type A are related to some entities of an entity type B via a relationship
-        - Is displayed by a single line connecting the participating entity type to the relationship336
+  #text(size: 18pt)[
+    - Participation
+      - Specifies whether the existence of an entity depends on its being related to another entity via the relationship type
+      - Also called *minimum cardinality constraint*
+      - Two types
+        - Total: every entity in the total set of all entities of an entity type A must be related to an entity of entity type B via a relationship
+          - Total participation is also called *existence dependency*
+          - Is displayed as a double line connecting the participating entity type to the relationship
+        - Partial: some or part of the entities of an entity type A are related to some entities of an entity type B via a relationship
+          - Is displayed by a single line connecting the participating entity type to the relationship
+  ]
 ]
 
 #slide[
@@ -690,11 +732,13 @@ UNIQUE ( Dname ),
 
 #slide[
   #heading(numbering: none)[Referential Integrity Constraint]
-  - It is defined between two relations
-  - It is used to maintain the consistency among tules in the two relations: a tuple in one relation that refers to another relation must refer to an existing tuple in that relation
-  - *Foreign key*: a set of attributes FK in relation schema $R_1$ is a foreign key of $R_1$ that references relation $R_2$ if it satisfies the following rules:
-    1. The attributes in FK have the same domain(s) as the primary key attributes PK of $R_2$; the attributes FK are said to *reference* or *refer to* the relation $R_2$.
-    2. A value of FK in a tuple $t_1$ of the current state $r_1(R_1)$ either occurs as a value of PK for some tuple $t_2$ in the current state $r_2(R_2)$ or is `NULL`. In the former case, we have $t_1["FK"] = t_2["FK"]$ , and we say that the tuple $t_1$ references or refers to the tuple $t_2$.
+  #text(size: 20pt)[
+    - Is defined between two relations
+    - Is used to maintain the consistency among tuples in the two relations: a tuple in one relation that refers to another relation must refer to an existing tuple in that relation
+    - *Foreign key*: a set of attributes FK in relation schema $R_1$ is a foreign key of $R_1$ that references relation $R_2$ if it satisfies the following rules:
+      1. The attributes in FK have the same domain(s) as the primary key attributes PK of $R_2$; the attributes FK are said to *reference* or *refer to* the relation $R_2$.
+      2. A value of FK in a tuple $t_1$ of the current state $r_1(R_1)$ either occurs as a value of PK for some tuple $t_2$ in the current state $r_2(R_2)$ or is `NULL`. In the former case, we have $t_1["FK"] = t_2["FK"]$ , and we say that the tuple $t_1$ references or refers to the tuple $t_2$.
+  ]
 ]
 
 #slide[
@@ -769,20 +813,6 @@ UNIQUE ( Dname ),
     - For relations that represent weak entity types
 ]
 
-#slide[
-  #heading(numbering: none)[Foreign Key]
-  ```sql
-    CREATE TABLE Employee
-  (...,
-    Dno INT NOT NULL DEFAULT 1,
-    CONSTRAINT EMPPK PRIMARY KEY (Ssn),
-    CONSTRAINT EMPSUPERFK FOREIGN KEY (Super_ssn) REFERENCES Employee(Ssn)
-      ON DELETE SET NULL ON UPDATE CASCADE,
-    CONSTRAINT EMPDEPTFK FOREIGN KEY(Dno) REFERENCES Department(Dnumber)
-      ON DELETE SET DEFAULT
-      ON UPDATE CASCADE);
-  ```
-]
 
 #slide[
   #heading(numbering: none)[Foreign Key]
@@ -805,8 +835,7 @@ UNIQUE ( Dname ),
       ON UPDATE CASCADE,
     CONSTRAINT EMPDEPTFK FOREIGN KEY(Dno) REFERENCES Department(Dnumber)
       ON DELETE SET DEFAULT
-      ON UPDATE CASCADE
-   );
+      ON UPDATE CASCADE);
   ```
 
 ]
@@ -844,12 +873,12 @@ UNIQUE ( Dname ),
 == ERM
 #slide[
   #heading(numbering: none)[Basics]
-  #figure(image("../assets/img/slides_05/20250306_symbol_meaning_rev01.jpeg"))
+  #figure(image("../assets/img/slides_05/20250306_symbol_meaning_rev01.jpeg", height: 90%))
 ]
 
 #slide[
   #heading(numbering: none)[Basics]
-  #figure(image("../assets/img/slides_05/20250306_symbol_meaning_entity_rm_rev01.png"))
+  #figure(image("../assets/img/slides_05/20250306_symbol_meaning_entity_rm_rev01.png", height: 90%))
 ]
 
 #slide[
@@ -873,12 +902,12 @@ UNIQUE ( Dname ),
 ]
 #slide[
   #heading(numbering: none)[Basics]
-  #figure(image("../assets/img/slides_05/20250306_no_circle_emp_dept_rev01.png"))
+  #figure(image("../assets/img/slides_05/20250306_no_circle_emp_dept_rev01.png", height: 90%))
 ]
 
 #slide[
   #heading(numbering: none)[UML Notation]
-  #figure(image("../assets/img/slides_05/20250306_mc_schema_rev01.png"))
+  #figure(image("../assets/img/slides_05/20250306_mc_schema_rev01.png", height: 90%))
 ]
 
 #slide[
@@ -897,14 +926,16 @@ UNIQUE ( Dname ),
 
 #slide[
   #heading(numbering: none)[MC Notation - Tenary Relationship]
-  #example[
-    - Manufacturers supply items for projects.
-    - A manufacturer must supply at least one item.
-    - An article from in-house production does not have to be supplied for a project but can be supplied for many projects.
-    - A project uses at least one item.
-    - An item is supplied by only one manufacturer for a project.
+  #text(size: 18pt)[
+    #example[
+      - Manufacturers supply items for projects.
+      - A manufacturer must supply at least one item.
+      - An article from in-house production does not have to be supplied for a project but can be supplied for many projects.
+      - A project uses at least one item.
+      - An item is supplied by only one manufacturer for a project.
+    ]
   ]
-  #figure(image("../assets/img/slides_05/20250310_article_supplied_manu_proj_nc_rev01.png"))
+  #figure(image("../assets/img/slides_05/20250310_article_supplied_manu_proj_nc_rev01.png", height: 30%))
 ]
 
 #slide[
@@ -919,11 +950,13 @@ UNIQUE ( Dname ),
 
 #slide[
   #heading(numbering: none)[MC Notation]
-  - To prevent students from concentrating on one professor, they may only work with one professor on one seminar topic.
-  - In addition, a student can only work on a seminar topic with one professor.
-  - However, a professor may assign a seminar topic more than once.
-  - Students must attend seminars, but seminar topics do not have to be chosen.
-    #figure(image("../assets/img/slides_05/20250310_professor_supp_student_rev01.png"))
+  #text(size: 20pt)[
+    - To prevent students from concentrating on one professor, they may only work with one professor on one seminar topic.
+    - In addition, a student can only work on a seminar topic with one professor.
+    - However, a professor may assign a seminar topic more than once.
+    - Students must attend seminars, but seminar topics do not have to be chosen.
+  ]
+  #figure(image("../assets/img/slides_05/20250310_professor_supp_student_rev01.png", height: 50%))
 ]
 
 #slide[
@@ -934,12 +967,14 @@ UNIQUE ( Dname ),
 
 #slide[
   #heading(numbering: none)[Comparison ERM and RM]
-  - ERM:
-    - Conceptual Database Design
-    - Describes a collection of *entities*, also called as real-world *objects* and *relations* between those entities
-    - Basic elements: *entity type*, *relationship type* and *attributes*
-    - *Constraints* like *Cardinality*, *Participation ratio* and *Keys*
-    #figure(image("../assets/img/slides_05/20250306_erm_person_livesin_house_rev01.png"))
+  #text(size: 18pt)[
+    - ERM:
+      - Conceptual Database Design
+      - Describes a collection of *entities*, also called as real-world *objects* and *relations* between those entities
+      - Basic elements: *entity type*, *relationship type* and *attributes*
+      - *Constraints* like *Cardinality*, *Participation ratio* and *Keys*
+  ]
+  #figure(image("../assets/img/slides_05/20250306_erm_person_livesin_house_rev01.png", height: 50%))
 ]
 
 #slide[
@@ -954,8 +989,8 @@ UNIQUE ( Dname ),
 
 #slide[
   #heading(numbering: none)[Comparison ERM and RM]
-  #figure(image("../assets/img/slides_05/20250306_erm_person_livesin_house_rev01.png"))
-  #figure(image("../assets/img/slides_05/20250306_rm_person_house_arrow_rev01.png"))
+  #figure(image("../assets/img/slides_05/20250306_erm_person_livesin_house_rev01.png", height: 45%))
+  #figure(image("../assets/img/slides_05/20250306_rm_person_house_arrow_rev01.png", height: 30%))
 ]
 
 
@@ -1009,7 +1044,7 @@ UNIQUE ( Dname ),
 = License Notice
 == Attribution
 #slide[
-  The basis of this course stems from: Professor Dr. Ulrike Herster
+  The basis of this course stems from: Professor Dr. Ulrike Herster \
   The following license applies to all unmodified and modified material used throughout this course.
   #memo(title: [License])[
     The publication or sharing of slides, image and sound recordings of this course are not permitted.

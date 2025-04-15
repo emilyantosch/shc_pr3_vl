@@ -11,7 +11,6 @@
 
 #import "@preview/numbly:0.1.0": numbly
 
-#set text(lang: "en", font: "Roboto")
 #set heading(numbering: numbly("{1}.", default: "1.1"))
 
 #set align(left + top)
@@ -50,6 +49,8 @@
     institution: [HAW Hamburg],
   ),
 )
+
+#set text(lang: "en", font: "Roboto", size: 22pt)
 
 #codly(
   languages: (
@@ -110,7 +111,7 @@
 == Assignment Journal
 #slide[
   #heading(numbering: none)[Convert the ERD to a RM]
-  #figure(image("../assets/img/slides_06/20250310_person_sub_journal_steps_rev01.png"))
+  #figure(image("../assets/img/slides_06/20250310_person_sub_journal_steps_rev01.png", height: 90%))
 ]
 
 #slide[
@@ -121,14 +122,16 @@
 == ERM
 #slide[
   #heading(numbering: none)[MC Notation - Tenary Relationship]
-  #example[
-    - Manufacturers supply items for projects.
-    - A manufacturer must supply at least one item.
-    - An article from in-house production does not have to be supplied for a project but can be supplied for many projects.
-    - A project uses at least one item.
-    - An item is supplied by only one manufacturer for a project.
+  #text(size: 18pt)[
+    #example[
+      - Manufacturers supply items for projects.
+      - A manufacturer must supply at least one item.
+      - An article from in-house production does not have to be supplied for a project but can be supplied for many projects.
+      - A project uses at least one item.
+      - An item is supplied by only one manufacturer for a project.
+    ]
   ]
-  #figure(image("../assets/img/slides_05/20250310_article_supplied_manu_proj_nc_rev01.png"))
+  #figure(image("../assets/img/slides_05/20250310_article_supplied_manu_proj_nc_rev01.png", height: 30%))
 ]
 
 #slide[
@@ -158,7 +161,7 @@
 
 #slide[
   #heading(numbering: none)[UML Notation]
-  #figure(image("../assets/img/slides_05/20250306_mc_schema_rev01.png"))
+  #figure(image("../assets/img/slides_05/20250306_mc_schema_rev01.png", height: 90%))
 ]
 
 #slide[
@@ -257,11 +260,13 @@
 
 #slide[
   #heading(numbering: none)[MC Notation]
-  - To prevent students from concentrating on one professor, they may only work with one professor on one seminar topic.
-  - In addition, a student can only work on a seminar topic with one professor.
-  - However, a professor may assign a seminar topic more than once.
-  - Students must attend seminars, but seminar topics do not have to be chosen.
-    #figure(image("../assets/img/slides_05/20250310_professor_supp_student_rev01.png"))
+  #text(size: 18pt)[
+    - To prevent students from concentrating on one professor, they may only work with one professor on one seminar topic.
+    - In addition, a student can only work on a seminar topic with one professor.
+    - However, a professor may assign a seminar topic more than once.
+    - Students must attend seminars, but seminar topics do not have to be chosen.
+      #figure(image("../assets/img/slides_05/20250310_professor_supp_student_rev01.png", height: 50%))
+  ]
 ]
 
 #slide[
@@ -271,12 +276,14 @@
 
 #slide[
   #heading(numbering: none)[Comparison ERM and RM]
-  - ERM:
-    - Conceptual Database Design
-    - Describes a collection of *entities*, also called as real-world *objects* and *relations* between those entities
-    - Basic elements: *entity type*, *relationship type* and *attributes*
-    - *Constraints* like *Cardinality*, *Participation ratio* and *Keys*
-    #figure(image("../assets/img/slides_05/20250306_erm_person_livesin_house_rev01.png"))
+  #text(size: 18pt)[
+    - ERM:
+      - Conceptual Database Design
+      - Describes a collection of *entities*, also called as real-world *objects* and *relations* between those entities
+      - Basic elements: *entity type*, *relationship type* and *attributes*
+      - *Constraints* like *Cardinality*, *Participation ratio* and *Keys*
+  ]
+  #figure(image("../assets/img/slides_05/20250306_erm_person_livesin_house_rev01.png", height: 50%))
 ]
 
 #slide[
@@ -291,8 +298,8 @@
 
 #slide[
   #heading(numbering: none)[Comparison ERM and RM]
-  #figure(image("../assets/img/slides_05/20250306_erm_person_livesin_house_rev01.png"))
-  #figure(image("../assets/img/slides_05/20250306_rm_person_house_arrow_rev01.png"))
+  #figure(image("../assets/img/slides_05/20250306_erm_person_livesin_house_rev01.png", height: 45%))
+  #figure(image("../assets/img/slides_05/20250306_rm_person_house_arrow_rev01.png", height: 30%))
 ]
 
 
@@ -363,7 +370,6 @@
 #slide[
   #heading(numbering: none)[Design Guideline]
   #let left = [
-
     - Guideline 3
       - Avoid attributes whose values are frequently NULL
       - NULL values should be the exception
@@ -377,7 +383,7 @@
     #figure(image("../assets/img/slides_06/20250309_circle_office_emp_rev01.png"))
   ]
   #grid(
-    columns: (auto, auto),
+    columns: (60%, 40%),
     gutter: 0.25em,
     left, right,
   )
@@ -413,19 +419,23 @@
 
 #slide[
   #heading(numbering: none)[Design Guidelines]
-  - One problem is: Some data is the always the same (E.g., ISBN)
-    - This problem occurs in nearly all applications
-    - There are almost one or several attributes, which define the values of the remaining attributes
-    - This fact is called *functional dependency*
-    - Functional dependency is relevant in practical applications
-    #figure(image("../assets/img/slides_06/20250309_all_table_prof.png"))
+  #text(size: 18pt)[
+    - One problem is: Some data is the always the same (E.g., ISBN)
+      - This problem occurs in nearly all applications
+      - There are almost one or several attributes, which define the values of the remaining attributes
+      - This fact is called *functional dependency*
+      - Functional dependency is relevant in practical applications
+  ]
+  #figure(image("../assets/img/slides_06/20250309_all_table_prof.png", height: 50%))
 ]
 
 #slide[
   #heading(numbering: none)[Design Guidelines - Functional Dependencies]
-  - Definition: There is a relational schema called R, and X and Y are any attribute sets of the attributes of R. Then Y is functional dependent on X, noted as X → Y, if and only if every value of X in R defines exactly one value of Y in R
-  - In other words: Whenever two tuples of relation R match in their X values, then the Y values of these tuples match as well
-    #figure(image("../assets/img/slides_06/20250309_brackets_y_x_rev01.png"))
+  #text(size: 18pt)[
+    - Definition: There is a relational schema called R, and X and Y are any attribute sets of the attributes of R. Then Y is functional dependent on X, noted as X → Y, if and only if every value of X in R defines exactly one value of Y in R
+    - In other words: Whenever two tuples of relation R match in their X values, then the Y values of these tuples match as well
+  ]
+  #figure(image("../assets/img/slides_06/20250309_brackets_y_x_rev01.png", height: 50%))
 ]
 
 
@@ -437,7 +447,6 @@
   - FD: If for 2 tuples X is the same, then Y must also be the same
   - Notation: X → Y Read: "X determines Y"
   - Generalization of keys
-  - A key determines all attributes: ൌ
 ]
 
 #slide[
@@ -456,34 +465,32 @@
   - Normal Forms provide quality statements on relations
   - The process of decomposing unsatisfactory "bad" relations by breaking up their attributes into smaller relations
   - There are different Normal Forms: 1NF, 2NF, 3NF, BCNF, ...
-]
-
-#slide[
-  #heading(numbering: none)[Normalization]
-  #figure(image("../assets/img/slides_06/20250309_no_circle_mysql_opti_rev01.png"))
+  #figure(image("../assets/img/slides_06/20250309_no_circle_mysql_opti_rev01.png", height: 25%))
 ]
 
 #slide[
   #heading(numbering: none)[Normalization - 1NF]
-  - The *First Normal Form* (1NF) defines that the values in each column of a table must be atomic
-  - Solution: Separate the duplicities into multiple columns using repeating groups 'subject'
-    #figure(image("../assets/img/slides_06/20250309_two_circle_subject_1_2_3_rev01.png"))
-    #question[
-      What are the disadvantages?
-    ]
+  #text(size: 18pt)[
+    - The *First Normal Form* (1NF) defines that the values in each column of a table must be atomic
+    - Solution: Separate the duplicities into multiple columns using repeating groups 'subject'
+      #figure(image("../assets/img/slides_06/20250309_two_circle_subject_1_2_3_rev01.png", height: 43%))
+      #question[
+        What are the disadvantages?
+      ]
+  ]
 ]
 
 #slide[
   #heading(numbering: none)[Normalization - 1NF]
   - Alternative Solution:
-    #figure(image("../assets/img/slides_06/20250309_three_circle_subject_title_rev01.png"))
+    #figure(image("../assets/img/slides_06/20250309_three_circle_subject_title_rev01.png", height: 80%))
 ]
 
 
 #slide[
   #heading(numbering: none)[Normalization - 1NF]
   - Alternative Solution:
-    #figure(image("../assets/img/slides_06/20250309_three_circle_subject_title_rev01.png"))
+    #figure(image("../assets/img/slides_06/20250309_three_circle_subject_title_rev01.png", height: 80%))
 ]
 
 #slide[
@@ -512,14 +519,23 @@
   #figure(image("../assets/img/slides_06/20250309_circle_price_table_rev01.png"))
   - Primary key: Title + Format
   - Functional dependencies:
+  #let left = [
     - Title #sym.arrow Author
     - Title #sym.arrow Author Nationality
     - Title, Format #sym.arrow Price
     - Title #sym.arrow Pages
+  ]
+  #let right = [
     - Title #sym.arrow Thickness
     - Title #sym.arrow GenreID
     - Title #sym.arrow GenreName
     - Title #sym.arrow PublisherID
+  ]
+  #grid(
+    columns: (auto, auto),
+    gutter: 0.25em,
+    left, right,
+  )
 ]
 
 #slide[
@@ -545,7 +561,7 @@
   #heading(numbering: none)[Normalization - 2NF]
   - Decomposition to Second Normal Form
     - Then the decomposition respecting this FD results in following schema: (keyPart1, keyPart2, noKey1) (keyPart2, noKey2)
-    #figure(image("../assets/img/slides_06/20250309_two_circle_price_format_rev01.png"))
+    #figure(image("../assets/img/slides_06/20250309_two_circle_price_format_rev01.png", height: 60%))
 ]
 
 #slide[
@@ -580,14 +596,23 @@
   #heading(numbering: none)[Normalization - 3NF]
   #figure(image("../assets/img/slides_06/20250309_circle_genre_id_genre_name_rev01.png"))
   - Functional dependencies:
+  #let left = [
     - Title #sym.arrow Author
     - Title #sym.arrow Author Nationality #sym.arrow Author
     - Title, Format #sym.arrow Price
     - Title #sym.arrow Pages
+  ]
+  #let right = [
     - Title #sym.arrow Thickness
     - Title #sym.arrow GenreID
     - Title #sym.arrow GenreName #sym.arrow GenreID
     - Title #sym.arrow PublisherID
+  ]
+  #grid(
+    columns: (auto, auto),
+    gutter: 0.25em,
+    left, right,
+  )
 ]
 
 #slide[
@@ -618,8 +643,10 @@
 
 #slide[
   #heading(numbering: none)[Normalization]
-  #memo[
-    *For normalization, use functional dependencies. And not the semantics of the attributes!*
+  #align(center + horizon)[
+    #memo[
+      *For normalization, use functional dependencies. And not the semantics of the attributes!*
+    ]
   ]
 ]
 
@@ -645,7 +672,7 @@
 
 #slide[
   #heading(numbering: none)[Normalization - BCNF]
-  #figure(image("../assets/img/slides_06/20250309_1nf_2nf_rev01.png"))
+  #figure(image("../assets/img/slides_06/20250309_1nf_2nf_rev01.png", height: 90%))
 ]
 
 #slide[
