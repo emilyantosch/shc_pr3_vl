@@ -11,7 +11,6 @@
 
 #import "@preview/numbly:0.1.0": numbly
 
-#set text(lang: "en", font: "Roboto", size: 18pt)
 #set heading(numbering: numbly("{1}.", default: "1.1"))
 
 #set align(left + top)
@@ -44,13 +43,14 @@
   aspect-ratio: "16-9",
   config-info(
     title: [Databases],
-    subtitle: [Lecture 9 - Views and Transactions],
+    subtitle: [Lecture 9 - Trigger, Integrity and Security],
     author: [Emily Lucia Antosch],
     date: datetime.today().display("[day].[month].[year]"),
     institution: [HAW Hamburg],
   ),
 )
 
+#set text(lang: "en", font: "Roboto", size: 22pt)
 #codly(
   languages: (
     sql: (
@@ -76,14 +76,13 @@
 #outline(depth: 1)
 
 = Introduction
-
 == Where are we right now?
 #slide[
   - Last time, we looked at the basics of subqueries and views
   - Today, we'll be discussing
-    - how we can expand our knowledge of views,
-    - how we can use transactions to increase the safety of our data manipulation statements
-    - how transactions are executed.
+    - how we can use transactions to increase the safety of our data manipulation statements,
+    - how transactions are executed and
+    - what triggers are and how we can use them.
 ]
 
 #slide[
@@ -96,13 +95,13 @@
   8. *Subqueries & Views*
   9. *Transactions*
   10. Database Applications
-  11. Integrity, Trigger & Security
+  11. *Integrity, Trigger & Security*
 ]
 
 == What is the goal of this chapter?
 #slide[
   - At the end of this lesson, you should be able to
-    - create views in PostgresQL and use them effectively and
+    - create and define functions being run certain events using triggers
     - use transactions to make safe changes, that can be undone if necessary.
 ]
 
@@ -249,7 +248,7 @@
 
 #slide[
   #heading(numbering: none)[ACID - Isolation: Concurrency Control]
-  #figure(image("../assets/img/slides_08/20250309_trans_iso_level_rev01.png"))
+  #figure(image("../assets/img/slides_08/20250309_trans_iso_level_rev01.png", height: 90%))
 
 ]
 
@@ -257,7 +256,7 @@
   #heading(numbering: none)[ACID - Isolation: Concurrency Control]
   - Deadlocks may occur!
     - Usually are resolved automatically by aborting one transaction
-  #figure(image("../assets/img/slides_08/20250309_start_trans_mod_table_rev01.jpeg"))
+  #figure(image("../assets/img/slides_08/20250309_start_trans_mod_table_rev01.jpeg", height: 70%))
 ]
 
 #slide[
@@ -334,7 +333,7 @@
   - Oracle
     - Data Guard
       - Replication on second server, can be used to answer Read-Only queries
-    #figure(image("../assets/img/slides_08/20250309_trans_apply_redo_rev01.jpeg"))
+    #figure(image("../assets/img/slides_08/20250309_trans_apply_redo_rev01.jpeg", height: 40%))
   - Real Application Cluster (RAC)
     - Several servers share the same DB
 ]
@@ -343,17 +342,19 @@
 #slide[
   #heading(numbering: none)[Distributed Transactions]
   #let left = [
-    - Transactions not only in a single DBS
-    - Standardized by X/Open
-      - Transaction Manager: A software component that guarantees transaction properties
-      - Resource Manager: Every resource (e.g., DBS, GUI) that is able to work in a transactional mode without providing a transaction control structure itself
-    - The Transaction manager coordinates the Resource Manager that take part in the transaction. E.g., different DBS (distributed transactions) that appear as one DBS from outside (transparency!)
+    #text(size: 20pt)[
+      - Transactions not only in a single DBS
+      - Standardized by X/Open
+        - Transaction Manager: A software component that guarantees transaction properties
+        - Resource Manager: Every resource (e.g., DBS, GUI) that is able to work in a transactional mode without providing a transaction control structure itself
+      - The Transaction manager coordinates the Resource Manager that take part in the transaction. E.g., different DBS (distributed transactions) that appear as one DBS from outside (transparency!)
+    ]
   ]
   #let right = [
     #figure(image("../assets/img/slides_08/20250309_ap_rms_tm_rev01.jpeg"))
   ]
   #grid(
-    columns: (auto, auto),
+    columns: (60%, 40%),
     gutter: 0.25em,
     left, right,
   )
@@ -362,14 +363,21 @@
 #slide[
   #heading(numbering: none)[Distributed Transactions]
   #let left = [
-    - To ensure interoperability between the participating resource managers the *2-phase commit protocol* is realized
-    - It defines the final synchronization of different parts of a transaction of a global transaction
-    - In the first phase the transaction manager asks participating resource managers to announce the results of their local transaction part
-    - This leads to a global result (commit or rollback) that is then in the second phase announced to the participants
+    #text(size: 18pt)[
+      - To ensure interoperability between the participating resource managers the *2-phase commit protocol* is realized
+      - It defines the final synchronization of different parts of a transaction of a global transaction
+      - In the first phase the transaction manager asks participating resource managers to announce the results of their local transaction part
+      - This leads to a global result (commit or rollback) that is then in the second phase announced to the participants
+    ]
   ]
   #let right = [
     #figure(image("../assets/img/slides_08/20250309_trans_coord_res_man_rev01.jpeg"))
   ]
+  #grid(
+    columns: (60%, 40%),
+    gutter: 0.25em,
+    left, right,
+  )
 ]
 
 #slide[
@@ -382,7 +390,7 @@
 
 #slide[
   #heading(numbering: none)[Savepoints]
-  #figure(image("../assets/img/slides_08/20250309_code_tables_rev01.png"))
+  #figure(image("../assets/img/slides_08/20250309_code_tables_rev01.png", height: 90%))
 ]
 
 = Integrity, Trigger and Security
@@ -489,23 +497,25 @@
 
 #slide[
   #heading(numbering: none)[Excursion Delimiter: Example]
-  ```sql
-  delimiter |
-  CREATE TRIGGER SALARY_VIOLATION
-  BEFORE INSERT ON EMPLOYEE
-  FOR EACH ROW
-     BEGIN
-         IF NEW.SALARY > (SELECT SALARY
-                          FROM EMPLOYEE
-                          WHERE SSN = NEW.SUPER_SSN )
-         THEN SET NEW.Salary = (SELECT SALARY
-                                   FROM EMPLOYEE
-                                  WHERE SSN = NEW.SUPER_SSN )‐1;
-         END IF;
-  END;
-  |
-  delimiter;
-  ```
+  #text(size: 16pt)[
+    ```sql
+    delimiter |
+    CREATE TRIGGER SALARY_VIOLATION
+    BEFORE INSERT ON EMPLOYEE
+    FOR EACH ROW
+       BEGIN
+           IF NEW.SALARY > (SELECT SALARY
+                            FROM EMPLOYEE
+                            WHERE SSN = NEW.SUPER_SSN )
+           THEN SET NEW.Salary = (SELECT SALARY
+                                     FROM EMPLOYEE
+                                    WHERE SSN = NEW.SUPER_SSN )‐1;
+           END IF;
+    END;
+    |
+    delimiter;
+    ```
+  ]
 ]
 
 #slide[
@@ -550,10 +560,10 @@
   #heading(numbering: none)[Transition Variables]
   - Row triggers can access old and new tuples
     - PostgresQL
-      - `:old` or `old` #sym.arrow `NULL` for `INSERT`
-      - `:new` or `new` #sym.arrow `NULL` for `DELETE`
+      - `old` #sym.arrow `NULL` for `INSERT`
+      - `new` #sym.arrow `NULL` for `DELETE`
   - Oracle
-    - `NEW` and `OLD`
+    - `:new` and `:old`
     - Before row triggers:
       - Can even modify new!
 ]
@@ -564,7 +574,7 @@
   - Audit
     - When was a record last modified?
   - Integrity checks with error correction
-    - Change `:new`
+    - Change `new`
   - Maintain redundant data
   - Updateable views
     - `INSTEAD OF`
@@ -574,10 +584,15 @@
   #heading(numbering: none)[Trigger: Example]
   - Audit insertion of new persons
     ```sql
+    CREATE OR REPLACE FUNCTION f_trg_emp_log() RETURNS TRIGGER $$
+    BEGIN
+    -- Statement here
+    END;
+    $$ LANGUAGE plpgsql;
+
     DROP TRIGGER IF EXISTS emp_insert;
     CREATE TRIGGER emp_insert AFTER INSERT ON employee
-    FOR EACH ROW
-    INSERT INTO EMPLOYEE_LOG (ESSN, INSERT_DATE) VALUES ( NEW.ssn , NOW() ) ;
+    FOR EACH ROW EXECUTE FUNCTION f_trg_emp_log();
     ```
 ]
 
@@ -629,7 +644,7 @@
       - The date `Change_Date`, where we store the date of the change
   ]
   #let right = [
-    #figure(image("../assets/img/slides_09/20250309_table_product_rev01.png"))
+    #figure(image("../assets/img/slides_09/20250309_table_product_rev01.png", height: 90%))
   ]
   #grid(
     columns: (auto, auto),
@@ -647,7 +662,7 @@
     3. `UPDATE` trigger: If a price of a product is changed, this change should also result in an entry in the table `Price_History`.
   ]
   #let right = [
-    #figure(image("../assets/img/slides_09/20250309_table_product_rev01.png"))
+    #figure(image("../assets/img/slides_09/20250309_table_product_rev01.png", height: 90%))
   ]
   #grid(
     columns: (auto, auto),

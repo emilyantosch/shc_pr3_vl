@@ -176,14 +176,6 @@
 
 #slide[
   #heading(numbering: none)[Selection]
-  //TODO: Add img here
-  #example[
-
-  ]
-]
-
-#slide[
-  #heading(numbering: none)[Selection]
   #info[
     - Selection is unary (apply to a single relation)
     - The degree of the relation resulting from a Selection is the same as the degree of $R$
@@ -216,9 +208,9 @@
   #heading(numbering: none)[Projection]
   #info[
     - The degree of the result is equal to the number of attributes in attribute list
-    - If the attribute list includes only non-key attributes of 𝑅, duplicate tuples are likely to occur
+    - If the attribute list includes only non-key attributes of $R$, duplicate tuples are likely to occur
       - The Projection removes any duplicate tuples, so, the result of the Projection is a set of distinct tuples, and hence a valid relation
-    - The number of tuples in a relation resulting from a Projection is always less than or equal to the number of tuples in 𝑅
+    - The number of tuples in a relation resulting from a Projection is always less than or equal to the number of tuples in $R$
   ]
 ]
 
@@ -276,29 +268,39 @@
     - Example: Retrieve the Social Security numbers of all employees who
       - either work in department 5
       - or directly supervise an employee who works in department 5
-  #example[
-    $"DEP5_EMPS <-"sigma_"DNr=5"("Employees")$
-    $"RESULT1 <-"pi_"SSN"("DEP5_EMPS")$
-    $"RESULT2 <-"pi_"Superssn"("DEP5_EMPS")$
-    $"RESULT <- RESULT1" union "RESULT2"$
-  ]
-  #figure(image("../assets/img/slides_07/20250227_employee_example_table_rev01.png"))
 ]
 
 #slide[
   #heading(numbering: none)[Union]
-  - Union $union$
-    - Example: Retrieve the Social Security numbers of all employees who
-      - either work in department 5
-      - or directly supervise an employee who works in department 5
-  #example[
-    ```sql
-      (SELECT ssn FROM EMPLOYEE
-      WHERE DEPARTMENT_NUM = 5)
-      UNION
-      (SELECT Superssn FROM EMPLOYEE
-      WHERE DEPARTMENT_NUM = 5)
-    ```
+  #text(size: 18pt)[
+    #example[
+      $"DEP5_EMPS" arrow.l sigma_"DNr=5"("Employees")$\
+      $"RESULT1" arrow.l pi_"SSN"("DEP5_EMPS")$\
+      $"RESULT2" arrow.l pi_"Superssn"("DEP5_EMPS")$\
+      $"RESULT" arrow.l "RESULT1" union "RESULT2"$\
+    ]
+  ]
+  #figure(image("../assets/img/slides_07/20250227_employee_example_table_rev01.png", height: 40%))
+
+]
+
+
+#slide[
+  #heading(numbering: none)[Union]
+  #text(size: 18pt)[
+    - Union $union$
+      - Example: Retrieve the Social Security numbers of all employees who
+        - either work in department 5
+        - or directly supervise an employee who works in department 5
+    #example[
+      ```sql
+        (SELECT ssn FROM EMPLOYEE
+        WHERE DEPARTMENT_NUM = 5)
+        UNION
+        (SELECT Superssn FROM EMPLOYEE
+        WHERE DEPARTMENT_NUM = 5)
+      ```
+    ]
   ]
 ]
 
@@ -326,7 +328,7 @@
 
 #slide[
   #heading(numbering: none)[Union, Intersection and Difference]
-  #figure(image("../assets/img/slides_07/20250227_student_instructor_intersection_rev01.png"))
+  #figure(image("../assets/img/slides_07/20250227_student_instructor_intersection_rev01.png", height: 90%))
 ]
 
 #slide[
@@ -345,12 +347,12 @@
 
 #slide[
   #heading(numbering: none)[Union, Intersection and Difference]
-  #figure(image("../assets/img/slides_07/20250227_student_instr_minus_rev01.png"))
+  #figure(image("../assets/img/slides_07/20250227_student_instr_minus_rev01.png", height: 90%))
 ]
 
 #slide[
   #heading(numbering: none)[Union, Intersection and Difference]
-  #figure(image("../assets/img/slides_07/20250227_student_instr_overview_rev01.png"))
+  #figure(image("../assets/img/slides_07/20250227_student_instr_overview_rev01.png", height: 90%))
 ]
 
 #slide[
@@ -377,32 +379,36 @@
 
 #slide[
   #heading(numbering: none)[Cartesian Product]
-  #example[
-    Retrieve a list of names of each female employee and her dependents
-    $"FEMALE_EMPS" <- sigma_"sex=F"("EMPLOYEE")$
-    $"EMPNAMES" <- pi_"FName, LName, SSN"("FEMALE_EMPS")$
-    $"EMP_DEPENDENTS" <- "EMPNAMES" times "DEPENDENT"$
-    $"ACTUAL_DEPENDENTS" <- sigma_"SSN=ESSN"("EMP_DEPENDENTS")$
-    $"RESULT" <- pi_"Fname, Lname, Dependent_name"("ACTUAL_DEPENDENTS")$
+  #text(size: 18pt)[
+    #example[
+      Retrieve a list of names of each female employee and her dependents
+      $"FEMALE_EMPS" <- sigma_"sex=F"("EMPLOYEE")$\
+      $"EMPNAMES" <- pi_"FName, LName, SSN"("FEMALE_EMPS")$\
+      $"EMP_DEPENDENTS" <- "EMPNAMES" times "DEPENDENT"$\
+      $"ACTUAL_DEPENDENTS" <- sigma_"SSN=ESSN"("EMP_DEPENDENTS")$\
+      $"RESULT" <- pi_"Fname, Lname, Dependent_name"("ACTUAL_DEPENDENTS")$\
+    ]
   ]
-  #figure(image("../assets/img/slides_07/20250227_female_emps_empnames_rev01.png"))
+  #figure(image("../assets/img/slides_07/20250227_female_emps_empnames_rev01.png", height: 32%))
 ]
 
 #slide[
   #heading(numbering: none)[Cartesian Product]
-  #figure(image("../assets/img/slides_07/20250227_emp_dependents_rev01.png"))
+  #figure(image("../assets/img/slides_07/20250227_emp_dependents_rev01.png", height: 90%))
 ]
 
 #slide[
   #heading(numbering: none)[Cartesian Product]
-  #example[
-    $"FEMALE_EMPS" <- sigma_"sex=F"("EMPLOYEE")$
-    $"EMPNAMES" <- pi_"FName, LName, SSN"("FEMALE_EMPS")$
-    $"EMP_DEPENDENTS" <- "EMPNAMES" times "DEPENDENT"$
-    $"ACTUAL_DEPENDENTS" <- sigma_"SSN=ESSN"("EMP_DEPENDENTS")$
-    $"RESULT" <- pi_"Fname, Lname, Dependent_name"("ACTUAL_DEPENDENTS")$
+  #text(size: 18pt)[
+    #example[
+      $"FEMALE_EMPS" <- sigma_"sex=F"("EMPLOYEE")$\
+      $"EMPNAMES" <- pi_"FName, LName, SSN"("FEMALE_EMPS")$\
+      $"EMP_DEPENDENTS" <- "EMPNAMES" times "DEPENDENT"$\
+      $"ACTUAL_DEPENDENTS" <- sigma_"SSN=ESSN"("EMP_DEPENDENTS")$\
+      $"RESULT" <- pi_"Fname, Lname, Dependent_name"("ACTUAL_DEPENDENTS")$\
+    ]
   ]
-  #figure(image("../assets/img/slides_07/20250227_actual_dependents_rev01.png"))
+  #figure(image("../assets/img/slides_07/20250227_actual_dependents_rev01.png", height: 35%))
 ]
 
 #slide[
@@ -428,7 +434,6 @@
 
 #slide[
   #heading(numbering: none)[Join]
-
   #example[
     With Cartesian Product:
     $"EMP_DEPENDENTS" <- "EMPNAMES" times "DEPENDENT"$
@@ -452,7 +457,7 @@
 
 #slide[
   #heading(numbering: none)[Join]
-  #figure(image("../assets/img/slides_07/20250227_sql_joins_rev01.png"))
+  #figure(image("../assets/img/slides_07/20250227_sql_joins_rev01.png", height: 90%))
 ]
 
 #slide[
@@ -608,14 +613,24 @@
 #slide[
   #heading(numbering: none)[`WHERE` x in]
   ```sql
-    SELECT DISTINCT Essn FROM WORKS_ON WHERE (Pno) IN (SELECT Pno FROM WORKS_ON WHERE Essn='123456789');
+    SELECT DISTINCT
+      Essn
+    FROM
+      WORKS_ON
+    WHERE
+      (Pno) IN (SELECT Pno FROM WORKS_ON WHERE Essn='123456789');
   ```
 ]
 
 #slide[
   #heading(numbering: none)[`WHERE` x in]
   ```sql
-    SELECT title  FROM books  WHERE isbn IN  (SELECT isbn FROM recommended_books)
+    SELECT
+      title
+    FROM
+      books
+    WHERE
+      isbn IN (SELECT isbn FROM recommended_books)
   ```
   - The subqueries are independent of each other, because they do not access the same tables
 
@@ -624,7 +639,12 @@
 #slide[
   #heading(numbering: none)[`WHERE` x in]
   ```sql
-    SELECT lastname FROM person WHERE 1.0 IN (SELECT grade  FROM exam WHERE person.no = exam.no)
+    SELECT
+      lastname
+    FROM
+      person
+    WHERE
+      1.0 IN (SELECT grade  FROM exam WHERE person.no = exam.no)
   ```
   - In this example both queries depend on each other, because the second query references a part of the first relation ("person").
 ]
@@ -632,7 +652,13 @@
 #slide[
   #heading(numbering: none)[WHERE x in]
   ```sql
-    SELECT E.Fname, E.Lname FROM EMPLOYEE AS E WHERE E.Ssn IN ( SELECT Essn FROM DEPENDENT AS D WHERE E.Sex = D.Sex );
+    SELECT
+      E.Fname,
+      E.Lname
+    FROM
+      EMPLOYEE AS E
+    WHERE
+      E.Ssn IN ( SELECT Essn FROM DEPENDENT AS D WHERE E.Sex = D.Sex );
   ```
 ]
 
@@ -697,7 +723,15 @@
   #heading(numbering: none)[WHERE x in]
   - Example from last slide (Alternative statement without a subquery)
     ```sql
-    SELECT E.Fname, E.Lname FROM EMPLOYEE AS E, DEPENDENT AS D WHERE E.Ssn=D.Essn AND E.Sex=D.Sex;
+    SELECT
+      E.Fname,
+      E.Lname
+    FROM
+      EMPLOYEE AS E,
+      DEPENDENT AS D
+    WHERE
+      E.Ssn=D.Essn AND
+      E.Sex=D.Sex;
     ```
 ]
 
@@ -710,13 +744,20 @@
   - Example: Persons who have borrowed a book: ```sql SELECT name FROM Person WHERE PNr = ANY (SELECT PNr FROM book );```
 ]
 
+
 #slide[
   #heading(numbering: none)[Other Comparison Operators]
   - `ALL`
-    - Comparison operations can be combined with ALL, e.g., >, >=, <, <=, and <>
+    - Comparison operations can be combined with `ALL` like `>,` `>=,` `<,` `<=,` and `<>`
     - Example: Employees earning more money as the employees of department 5
     ```sql
-    SELECT Lname, Fname FROM EMPLOYEE WHERE Salary > ALL (SELECT Salary FROM EMPLOYEE WHERE Dno=5) ;
+    SELECT
+      Lname,
+      Fname
+    FROM
+      EMPLOYEE
+    WHERE
+      Salary > ALL (SELECT Salary FROM EMPLOYEE WHERE Dno=5);
     ```
 ]
 #slide[
@@ -725,7 +766,6 @@
   - Often several queries give the same result
     - but might have difference in the performance!
   ```sql
-
   SELECT * FROM book WHERE price <= ALL (SELECT price FROM book);
   SELECT * FROM book WHERE price = (SELECT MIN(price) FROM book);
   SELECT * FROM book WHERE price >= ALL (SELECT price FROM book);
@@ -740,23 +780,22 @@
   #heading(numbering: none)[Other Comparison Operators]
   - Often several queries give the same result
     - but might have difference in the performance!
-
     - Strategy depends on DBMS, probably equivalent if no index on price, otherwise, the second version will be (much) faster
 
 ]
 
 #slide[
   #heading(numbering: none)[Correlated Nested Queries]
-
-  - Uncorrelated
-    - Outer and nested query are independent
-    - Nested query must be computed only once
-  - Correlated
-    - Nested query depends on columns of outer query
-    - Result of a correlated nested query is different for each tuple of the relation(s) outer query
-    - A nested query is evaluated once for each tuple (or combination of tuples) in the outer query
-  #question[But what about performance?]
-
+  #text(size: 20pt)[
+    - Uncorrelated
+      - Outer and nested query are independent
+      - Nested query must be computed only once
+    - Correlated
+      - Nested query depends on columns of outer query
+      - Result of a correlated nested query is different for each tuple of the relation(s) outer query
+      - A nested query is evaluated once for each tuple (or combination of tuples) in the outer query
+    #question[But what about performance?]
+  ]
 ]
 
 #slide[
@@ -765,7 +804,13 @@
     Who has borrowed books for 9.99\$ ?
   ]
   ```sql
-  SELECT name  FROM pers  WHERE 9.99 IN (SELECT price FROM book  WHERE pers.PNr = book.PNr ) ; SELECT name  FROM pers, book WHERE pers.PNr = book.PNr AND  book.price = 9.99;
+  SELECT name
+  FROM pers
+  WHERE 9.99 IN (SELECT price FROM book  WHERE pers.PNr = book.PNr );
+
+  SELECT name
+  FROM pers, book
+  WHERE pers.PNr = book.PNr AND book.price = 9.99;
   ```
 ]
 
@@ -775,35 +820,45 @@
     From Before: Who is lead by a female superior?
   ]
   ```sql
-  SELECT E.Fname, E.Lname FROM EMPLOYEE AS E WHERE E.Ssn IN ( SELECT Essn FROM DEPENDENT AS D WHERE D.Sex='F');
+  SELECT
+    E.Fname,
+    E.Lname
+  FROM
+    EMPLOYEE AS E
+  WHERE
+    E.Ssn IN ( SELECT Essn FROM DEPENDENT AS D WHERE D.Sex='F');
   ```
 ]
 
 #slide[
   #heading(numbering: none)[Correlated Nested Queries]
-
   - In general, we can have several levels of nested queries
     - possible ambiguity among attribute names if attributes of the same name exist:
     - one in a relation in the FROM clause of the outer query, and
     - another in a relation in the FROM clause of the nested query
   - The rule is that a reference to an unqualified attribute refers to the relation declared in the *innermost nested query*.
-
 ]
 
 #slide[
   #heading(numbering: none)[Ambiguity of Attributes]
-
-  - Example: Retrieve the name of each employee who has a female dependent:
+  #example[
+    Retrieve the name of each employee who has a female dependent:
+  ]
   ```sql
-  SELECT E.Fname, E.Lname FROM EMPLOYEE AS E WHERE E.Ssn IN ( SELECT Essn FROM DEPENDENT AS D WHERE D.Sex='F');
+  SELECT
+    E.Fname,
+    E.Lname
+  FROM EMPLOYEE AS E
+  WHERE E.Ssn IN ( SELECT Essn FROM DEPENDENT AS D WHERE D.Sex='F');
   ```
-
 ]
 
 #slide[
   #heading(numbering: none)[Ambiguity of Attributes]
-  #memo[
-    It is generally advisable to create tuple variables (aliases) for all the tables referenced in an SQL query to avoid potential errors and ambiguities!!!
+  #align(center + horizon)[
+    #memo[
+      It is generally advisable to create tuple variables (aliases) for all the tables referenced in an SQL query to avoid potential errors and ambiguities!!!
+    ]
   ]
 ]
 
@@ -811,7 +866,10 @@
   #heading(numbering: none)[`EXISTS`]
   - The operator `EXISTS (NOT EXISTS)` provides the possibility to check if the result of another query is empty (`FALSE`) or not (`TRUE`)
   ```sql
-   SELECT isbn FROM book WHERE EXISTS (SELECT * FROM borrowed WHERE book.libraryno = borrowed.libraryno)
+   SELECT isbn
+   FROM book
+   WHERE EXISTS (SELECT * FROM borrowed
+     WHERE book.libraryno = borrowed.libraryno)
   ```
   - This example provides as result a set of all borrowed books
   - Typically, the usage is so that the DBMS may decide, which column should be examined:
@@ -824,7 +882,14 @@
   #heading(numbering: none)[`EXISTS`]
   Alternative SQL-statement from before:
   ```sql
-  SELECT E.Fname, E.Lname FROM EMPLOYEE AS E WHERE EXISTS (SELECT * FROM DEPENDENT AS D WHERE E.Ssn = D.Essn AND E.Sex = D.Sex);
+  SELECT
+    E.Fname,
+    E.Lname
+  FROM
+    EMPLOYEE AS E
+  WHERE EXISTS
+    (SELECT * FROM DEPENDENT AS D
+    WHERE E.Ssn = D.Essn AND E.Sex = D.Sex);
   ```
 
 ]
@@ -836,7 +901,11 @@
     Retrieve the names of employees who have no dependents
   ]
   ```sql
-   SELECT Fname, Lname FROM EMPLOYEE WHERE NOT EXISTS ( SELECT * FROM DEPENDENT WHERE Ssn=Essn );
+   SELECT
+     Fname,
+     Lname
+   FROM EMPLOYEE
+   WHERE NOT EXISTS ( SELECT * FROM DEPENDENT WHERE Ssn=Essn );
   ```
 ]
 
@@ -846,7 +915,13 @@
     List the names of managers who have at least one dependent
   ]
   ```sql
-  SELECT Fname, Lname FROM EMPLOYEE WHERE EXISTS ( SELECT * FROM DEPENDENT WHERE Ssn=Essn ) AND EXISTS ( SELECT * FROM DEPARTMENT WHERE Ssn=Mgr_ssn );
+  SELECT
+    Fname,
+    Lname
+  FROM EMPLOYEE
+  WHERE
+    EXISTS (SELECT * FROM DEPENDENT WHERE Ssn=Essn)
+    AND EXISTS (SELECT * FROM DEPARTMENT WHERE Ssn=Mgr_ssn);
   ```
 ]
 
@@ -856,7 +931,11 @@
   - Necessary: give a name to the relation
   #example[Set an alias for a `SELECT` statement in the `FROM` statement]
   ```sql
-  SELECT tab_a.x , newtab_b.y FROM tab_a , (SELECT v1, v2 FROM tab_b) AS newtab_b;
+  SELECT
+    tab_a.x,
+    newtab_b.y
+  FROM
+    tab_a, (SELECT v1, v2 FROM tab_b) AS newtab_b;
   ```
 ]
 
@@ -894,7 +973,7 @@
 #slide[
   #heading(numbering: none)[Syntax]
   ```sql
-  CREATE [OR REPLACE] VIEW <vname> AS <query> ;
+  CREATE [OR REPLACE] VIEW <vname> AS <query>;
   ```
   - `<query>` is an arbitrary `SELECT` statement
 ]
@@ -903,12 +982,12 @@
   #heading(numbering: none)[Syntax]
   - Example for a sample view:
     ```sql
-    CREATE VIEW vPerson AS
-    SELECT Name , Id , BirthDate FROM person ;
+    CREATE VIEW V_Person AS
+    SELECT Name , Id , BirthDate FROM person;
     ```
   - Can rename columns in view:
   ```sql
-  CREATE VIEW vPerson ( lname , pnr , bd ) AS
+  CREATE VIEW V_Person ( lname , pnr , bd ) AS
   SELECT Name , Id , BirthDate FROM person
   ```
 ]
@@ -917,22 +996,30 @@
   #heading(numbering: none)[Syntax]
   ```sql
   CREATE VIEW v_WORKS_ON1 AS
-  SELECT Fname, Lname, Pname, Hours
-  FROM EMPLOYEE, PROJECT, WORKS_ON
-  WHERE Ssn=Essn AND Pno=Pnumber;
+  SELECT
+    Fname,
+    Lname,
+    Pname,
+    Hours
+  FROM
+    EMPLOYEE, PROJECT, WORKS_ON
+  WHERE
+    Ssn=Essn AND Pno=Pnumber;
   ```
 ]
 
 #slide[
   #heading(numbering: none)[Syntax]
   ```sql
-  CREATE VIEW v_DEPT_INFO
-  (Dept_name, No_of_emps, Total_sal) AS
-  SELECT Dname, COUNT(*), SUM(Salary)
+  CREATE VIEW v_DEPT_INFO (Dept_name, No_of_emps, Total_sal)
+  AS SELECT
+    Dname,
+    COUNT(*),
+    SUM(Salary)
   FROM
-  DEPARTMENT, EMPLOYEE
+    DEPARTMENT, EMPLOYEE
   WHERE
-  Dnumber=Dno
+    Dnumber=Dno
   GROUP BY Dname;
   ```
 ]
@@ -956,7 +1043,7 @@
   #heading(numbering: none)[`DROP`]
   - Views can be dropped
   ```sql
-  DROP VIEW v_WORKS_ON1;
+  DROP VIEW V_WORKS_ON1;
   ```
 ]
 
@@ -986,32 +1073,34 @@
 
 #slide[
   #heading(numbering: none)[Materialized Views]
-  #let left = [
-    ```sql
-    CREATE MATERIALIZED VIEW <name> AS SELECT …
-    ```
-    - Traditional views
-    - `SELECT` is performed when needed
-    - Performance penalty
-  ]
+  #text(size: 20pt)[
+    #let left = [
+      ```sql
+      CREATE MATERIALIZED VIEW <name> AS SELECT …
+      ```
+      - Traditional views
+      - `SELECT` is performed when needed
+      - Performance penalty
+    ]
 
-  #let right = [
-    - Materialized view
-      - Store select statement and selected data
-      - Problems
-        - Store data twice
-        - When to update selected data?
-      - Rules for updating: event vs. time triggered
-      - Selected data can be updated
-        - manually
-        - on a regular basis (every night)
-        - event triggered (update to base table)
+    #let right = [
+      - Materialized view
+        - Store select statement and selected data
+        - Problems
+          - Store data twice
+          - When to update selected data?
+        - Rules for updating: event vs. time triggered
+        - Selected data can be updated
+          - manually
+          - on a regular basis (every night)
+          - event triggered (update to base table)
+    ]
+    #grid(
+      columns: (auto, auto),
+      gutter: 0.25em,
+      left, right,
+    )
   ]
-  #grid(
-    columns: (auto, auto),
-    gutter: 0.25em,
-    left, right,
-  )
 ]
 
 = License Notice

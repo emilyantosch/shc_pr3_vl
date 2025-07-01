@@ -11,7 +11,6 @@
 
 #import "@preview/numbly:0.1.0": numbly
 
-#set text(lang: "en", font: "Roboto", size: 18pt)
 #set heading(numbering: numbly("{1}.", default: "1.1"))
 
 #set align(left + top)
@@ -50,6 +49,8 @@
     institution: [HAW Hamburg],
   ),
 )
+
+#set text(lang: "en", font: "Roboto", size: 22pt)
 
 #codly(
   languages: (
@@ -155,16 +156,25 @@
   - Necessary: give a name to the relation
   - Example: Alias name `newtab_b`
 
-  ```sql SELECT tab_a.x , newtab_b.y FROM tab_a , (SELECT v1, v2 FROM tab_b) AS newtab_b;```
+  ```sql
+  SELECT
+    tab_a.x,
+    newtab_b.y
+  FROM
+    tab_a,
+    (SELECT v1, v2 FROM tab_b) AS newtab_b;
+  ```
 ]
 
 #slide[
   #heading(numbering: none)[Assignment]
   #let left = [
-    - Suppose that we want the department name number of employees in each department whose departments have an average income of more than 30,000 \$. How can we specify this query in SQL?
-    - Retrieve the names of all employees with the smallest salary.
-    - Retrieve the names of all employees whose supervisor's supervisor has ssn '888665555'.
-    - Retrieve the names of employees who make at least \$10,000 more than the employee who is paid the least in the company.
+    #text(size: 20pt)[
+      - Suppose that we want the department name number of employees in each department whose departments have an average income of more than 30,000 \$. How can we specify this query in SQL?
+      - Retrieve the names of all employees with the smallest salary.
+      - Retrieve the names of all employees whose supervisor's supervisor has ssn '888665555'.
+      - Retrieve the names of employees who make at least \$10,000 more than the employee who is paid the least in the company.
+    ]
   ]
   #let right = [
     #figure(image("../assets/img/slides_08/20250309_emp_dept_ep_workson_rev01.png"))
@@ -179,7 +189,7 @@
 == Views
 #slide[
   #heading(numbering: none)[ANSI-SPARC]
-  #figure(image("../assets/img/slides_08/20250309_ansi_sparc_arch_rev01.jpeg"))
+  #figure(image("../assets/img/slides_08/20250309_ansi_sparc_arch_rev01.jpeg", height: 90%))
 ]
 
 #slide[
@@ -225,7 +235,7 @@
 
 #slide[
   #heading(numbering: none)[Basics]
-  #figure(image("../assets/img/slides_08/20250309_emp_proj_workson_rev01.png"))
+  #figure(image("../assets/img/slides_08/20250309_emp_proj_workson_rev01.png", height: 40%))
   ```sql
   UPDATE v_WORKS_ON1
   SET Pname = "Project2"
@@ -291,60 +301,65 @@
 
 #slide[
   #heading(numbering: none)[Basics]
-  - *Selection View*
-    #example[
-      ```sql
-      CREATE VIEW v_top AS SELECT * FROM employee WHERE salary > 20000;
-      ```
-    ]
-  - Problem:
-    - Update can move tuples out of selection condition
-    - So, the update looks like a delete!
-    #example[
-      ```sql
-      UPDATE v_top SET salary = 100;
-      ```
-    ]
-  - This phenomenon is called "*tuple migration*"
+  #text(size: 18pt)[
+    - *Selection View*
+      #example[
+        ```sql
+        CREATE VIEW v_top
+        AS SELECT * FROM employee WHERE salary > 20000;
+        ```
+      ]
+    - Problem:
+      - Update can move tuples out of selection condition, so the update looks like a delete!
+      #example[
+        ```sql
+        UPDATE v_top SET salary = 100;
+        ```
+      ]
+    - This phenomenon is called "*tuple migration*"
+  ]
 ]
 
 
 #slide[
   #heading(numbering: none)[Basics]
-  - *Join View*
-  #example[
+  #text(size: 18pt)[
+    - *Join View*
+    #example[
+      ```sql
+        CREATE VIEW v_depman
+        AS SELECT * FROM employee, department
+           WHERE employee.ssn = department.mgr_ssn ;
+      ```
+    ]
+    - Data manipulation cannot be transformed to base tables in general case!
     ```sql
-      CREATE VIEW v_depman AS
-         SELECT *
-         FROM employee , department
-         WHERE employee.ssn = department.mgr_ssn ;
+    DELETE FROM v_depman WHERE id =11;
+    ```
+    - Transformation to base tables employee and department?
+    ```sql
+    DELETE FROM employee?
+    DELETE FROM department?
     ```
   ]
-  - Data manipulation cannot be transformed to base tables in general case!
-  ```sql
-  DELETE FROM v_depman WHERE id =11;
-  ```
-  - Transformation to base tables employee and department?
-  ```sql
-  DELETE FROM employee?
-  DELETE FROM department?
-  ```
 ]
 
 #slide[
   #heading(numbering: none)[Basics]
-  - *Aggregation View*
-  #example[
-    ```sql
-    CREATE VIEW v_astats AS
-      SELECT MAX(i) , MIN(i) , COUNT(*)
-      FROM a ;
-    ```
-  ]
-  - Update of the aggregated columns not possible!
-    #info[
-      Aggregation may depend on other columns (`GROUP BY`)
+  #text(size: 18pt)[
+    - *Aggregation View*
+    #example[
+      ```sql
+      CREATE VIEW v_astats AS
+        SELECT MAX(i) , MIN(i) , COUNT(*)
+        FROM a ;
+      ```
     ]
+    - Update of the aggregated columns not possible!
+      #info[
+        Aggregation may depend on other columns (`GROUP BY`)
+      ]
+  ]
 ]
 
 #slide[
@@ -401,7 +416,7 @@
     - Create a view that has the project name, controlling department name, number of employees, and total hours worked per week on the project for each project with more than one employee working on it.
   ]
   #let right = [
-    #figure(image("../assets/img/slides_08/20250309_emp_dept_ep_workson_rev01.png"))
+    #figure(image("../assets/img/slides_08/20250309_emp_dept_ep_workson_rev01.png", height: 80%))
   ]
   #grid(
     columns: (auto, auto),
@@ -421,7 +436,7 @@
     ```
   ]
   #let right = [
-    #figure(image("../assets/img/slides_08/20250309_emp_dept_ep_workson_rev01.png"))
+    #figure(image("../assets/img/slides_08/20250309_emp_dept_ep_workson_rev01.png", height: 80%))
   ]
   #grid(
     columns: (auto, auto),
@@ -432,36 +447,40 @@
 
 #slide[
   #heading(numbering: none)[Views: Assignment]
-  Describe the semantics oft he following SQL -statements. State which of the following queries and updates would be allowed on the view. If a query or update would be allowed, show what the corresponding query or update on the base relations would look like, and give its result when applied to the database.
-  ```sql
-  SELECT * FROM v_DEPT_SUMMARY;
-  SELECT DNO, COUNT_EMPS FROM V_DEPT_SUMMARY WHERE SUM_SALARY > 100000;
-  SELECT DNO, AVG_SALARY FROM V_DEPT_SUMMARY WHERE COUNT_EMPS > (SELECT COUNT_EMPS FROM V_DEPT_SUMMARY WHERE DNO=4);
-  UPDATE v_DEPT_SUMMARY SET DNO=3 WHERE DNO=4;
-  DELETE FROM v\_DEPT\_SUMMARY WHERE COUNT\_EMPS > 4;
-  ```
+  #text(size: 18pt)[
+    Describe the semantics oft he following SQL -statements. State which of the following queries and updates would be allowed on the view. If a query or update would be allowed, show what the corresponding query or update on the base relations would look like, and give its result when applied to the database.
+    ```sql
+    SELECT * FROM v_DEPT_SUMMARY;
+    SELECT DNO, COUNT_EMPS FROM V_DEPT_SUMMARY WHERE SUM_SALARY > 100000;
+    SELECT DNO, AVG_SALARY FROM V_DEPT_SUMMARY WHERE COUNT_EMPS >
+      (SELECT COUNT_EMPS FROM V_DEPT_SUMMARY WHERE DNO=4);
+    UPDATE v_DEPT_SUMMARY SET DNO=3 WHERE DNO=4;
+    DELETE FROM v\_DEPT\_SUMMARY WHERE COUNT\_EMPS > 4;
+    ```
+  ]
 ]
 
 
 #slide[
   #heading(numbering: none)[Views: Assignment]
   #let left = [
-    ```sql
-    CREATE VIEW v_DEPT_SUMMARY (DNO, COUNT_EMPS, SUM_SALARY, AVG_SALARY)
-    AS SELECT Dno, COUNT(*), SUM(Salary), AVG(Salary)
-    FROM EMPLOYEE GROUP BY Dno;
+    #text(size: 18pt)[
+      ```sql
+      CREATE VIEW V_DEPT_SUMMARY (DNO, COUNT_EMPS, SUM_SALARY, AVG_SALARY)
+      AS SELECT Dno, COUNT(*), SUM(Salary), AVG(Salary)
+      FROM EMPLOYEE GROUP BY Dno;
 
-    SELECT * FROM v_DEPT_SUMMARY;
-    SELECT DNO, COUNT_EMPS FROM v_DEPT_SUMMARY WHERE SUM_SALARY > 100000;
-    SELECT DNO, AVG_SALARY FROM v_DEPT_SUMMARY WHERE COUNT_EMPS >
-    (SELECT COUNT_EMPS FROM v_DEPT_SUMMARY WHERE DNO=4);
-
-    UPDATE v_DEPT_SUMMARY SET DNO=3 WHERE DNO=4;
-    DELETE FROM v_DEPT_SUMMARY WHERE COUNT_EMPS > 4;
-    ```
+      SELECT * FROM v_DEPT_SUMMARY;
+      SELECT DNO, COUNT_EMPS FROM v_DEPT_SUMMARY WHERE SUM_SALARY > 100000;
+      SELECT DNO, AVG_SALARY FROM v_DEPT_SUMMARY WHERE COUNT_EMPS >
+      (SELECT COUNT_EMPS FROM v_DEPT_SUMMARY WHERE DNO=4);
+      UPDATE v_DEPT_SUMMARY SET DNO=3 WHERE DNO=4;
+      DELETE FROM v_DEPT_SUMMARY WHERE COUNT_EMPS > 4;
+      ```
+    ]
   ]
   #let right = [
-    #figure(image("../assets/img/slides_08/20250309_emp_dept_ep_workson_rev01.png"))
+    #figure(image("../assets/img/slides_08/20250309_emp_dept_ep_workson_rev01.png", height: 90%))
   ]
   #grid(
     columns: (auto, auto),
@@ -576,13 +595,17 @@
 
 #slide[
   #heading(numbering: none)[ACID - Consistency]
-  #example[
-    Employee #sym.arrow.l.r.double Department
-    If the relationship "*employee works in department*" is mandatory, so that an employee should only exist, if he/she is working in a department, then how can that be assured?
-    - We must introduce a deferred constraint!
+  #text(size: 18pt)[
+    #example[
+      - If the relationship "*employee works in department*" is mandatory, so that an employee should only exist, if he/she is working in a department, then how can that be assured?
+      - We must introduce a deferred constraint!
+    ]
+    ```sql
+    SET CONSTRAINTS { ALL | name [, ...] }
+    { DEFERRED | IMMEDIATE }
+    ```
   ]
-  - PostgresQL: ```sql SET CONSTRAINTS { ALL | name [, ...] } { DEFERRED | IMMEDIATE }```
-  #figure(image("../assets/img/slides_08/20250314_emp_worksin_dept_id_rev01.png"))
+  #figure(image("../assets/img/slides_08/20250314_emp_worksin_dept_id_rev01.png", height: 20%))
 ]
 
 #slide[
@@ -623,13 +646,12 @@
 #slide[
   #heading(numbering: none)[ACID - Isolation: Concurrency Control]
   #let left = [
-
     - When doing the same `SELECT` twice, new tuples may appear that are inserted by another transaction
     - Basically, same problem as Unrepeatable Read
       #figure(image("../assets/img/slides_08/20250309_time_trans1_2_type2_rev01.png"))
   ]
   #let right = [
-    #figure(image("../assets/img/slides_08/20250309_pen_eraser_ruler_rev01.jpeg"))
+    #figure(image("../assets/img/slides_08/20250309_pen_eraser_ruler_rev01.jpeg", height: 90%))
   ]
   #grid(
     columns: (auto, auto),
@@ -661,14 +683,13 @@
 
 #slide[
   #heading(numbering: none)[ACID - Isolation: Concurrency Control]
-  #figure(image("../assets/img/slides_08/20250309_trans_iso_level_rev01.png"))
+  #figure(image("../assets/img/slides_08/20250309_trans_iso_level_rev01.png", height: 90%))
 
 ]
 
 #slide[
   #heading(numbering: none)[ACID - Isolation: Concurrency Control]
   - Isolation levels can be set
-  - Syntax:
   ```sql
   SET TRANSACTION < transaction_mode > [, …]
   <transaction_mode> ::= ISOLATION LEVEL {
@@ -695,7 +716,7 @@
   #heading(numbering: none)[ACID - Isolation: Concurrency Control]
   - Deadlocks may occur!
     - Usually are resolved automatically by aborting one transaction
-  #figure(image("../assets/img/slides_08/20250309_start_trans_mod_table_rev01.jpeg"))
+  #figure(image("../assets/img/slides_08/20250309_start_trans_mod_table_rev01.jpeg", height: 70%))
 ]
 
 #slide[
@@ -783,7 +804,7 @@
   - Oracle
     - Data Guard
       - Replication on second server, can be used to answer Read-Only queries
-    #figure(image("../assets/img/slides_08/20250309_trans_apply_redo_rev01.jpeg"))
+    #figure(image("../assets/img/slides_08/20250309_trans_apply_redo_rev01.jpeg", height: 40%))
   - Real Application Cluster (RAC)
     - Several servers share the same DB
 ]
@@ -791,17 +812,19 @@
 #slide[
   #heading(numbering: none)[Distributed Transactions]
   #let left = [
-    - Transactions not only in a single DBS
-    - Standardized by X/Open
-      - Transaction Manager: A software component that guarantees transaction properties
-      - Resource Manager: Every resource (e.g., DBS, GUI) that is able to work in a transactional mode without providing a transaction control structure itself
-    - The Transaction manager coordinates the Resource Manager that take part in the transaction. E.g., different DBS (distributed transactions) that appear as one DBS from outside (transparency!)
+    #text(size: 20pt)[
+      - Transactions not only in a single DBS
+      - Standardized by X/Open
+        - Transaction Manager: A software component that guarantees transaction properties
+        - Resource Manager: Every resource (e.g., DBS, GUI) that is able to work in a transactional mode without providing a transaction control structure itself
+      - The Transaction manager coordinates the Resource Manager that take part in the transaction. E.g., different DBS (distributed transactions) that appear as one DBS from outside (transparency!)
+    ]
   ]
   #let right = [
     #figure(image("../assets/img/slides_08/20250309_ap_rms_tm_rev01.jpeg"))
   ]
   #grid(
-    columns: (auto, auto),
+    columns: (60%, 40%),
     gutter: 0.25em,
     left, right,
   )
@@ -811,14 +834,21 @@
 #slide[
   #heading(numbering: none)[Distributed Transactions]
   #let left = [
-    - To ensure interoperability between the participating resource managers the *2-phase commit protocol* is realized
-    - It defines the final synchronization of different parts of a transaction of a global transaction
-    - In the first phase the transaction manager asks participating resource managers to announce the results of their local transaction part
-    - This leads to a global result (commit or rollback) that is then in the second phase announced to the participants
+    #text(size: 18pt)[
+      - To ensure interoperability between the participating resource managers the *2-phase commit protocol* is realized
+      - It defines the final synchronization of different parts of a transaction of a global transaction
+      - In the first phase the transaction manager asks participating resource managers to announce the results of their local transaction part
+      - This leads to a global result (commit or rollback) that is then in the second phase announced to the participants
+    ]
   ]
   #let right = [
     #figure(image("../assets/img/slides_08/20250309_trans_coord_res_man_rev01.jpeg"))
   ]
+  #grid(
+    columns: (60%, 40%),
+    gutter: 0.25em,
+    left, right,
+  )
 ]
 
 #slide[
@@ -831,7 +861,7 @@
 
 #slide[
   #heading(numbering: none)[Savepoints]
-  #figure(image("../assets/img/slides_08/20250309_code_tables_rev01.png"))
+  #figure(image("../assets/img/slides_08/20250309_code_tables_rev01.png", height: 90%))
 ]
 
 = License Notice

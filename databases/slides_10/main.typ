@@ -11,7 +11,6 @@
 
 #import "@preview/numbly:0.1.0": numbly
 
-#set text(lang: "en", font: "Roboto", size: 18pt)
 #set heading(numbering: numbly("{1}.", default: "1.1"))
 
 #set align(left + top)
@@ -44,13 +43,14 @@
   aspect-ratio: "16-9",
   config-info(
     title: [Databases],
-    subtitle: [Lecture 10 - ],
+    subtitle: [Lecture 10 - Database Applications],
     author: [Emily Lucia Antosch],
     date: datetime.today().display("[day].[month].[year]"),
     institution: [HAW Hamburg],
   ),
 )
 
+#set text(lang: "en", font: "Roboto", size: 22pt)
 #codly(
   languages: (
     sql: (
@@ -81,9 +81,9 @@
 #slide[
   - Last time, we looked at the basics of subqueries and views
   - Today, we'll be discussing
-    - how we can expand our knowledge of views,
-    - how we can use transactions to increase the safety of our data manipulation statements
-    - how transactions are executed.
+    - what solutions there are for calling SQL from code,
+    - how we can integrate our database with Java and
+    - in what way databases can be used in applications.
 ]
 
 #slide[
@@ -93,17 +93,16 @@
   4. Entity-Relationship-Model
   5. Relationships
   6. Constraints
-  8. *Subqueries & Views*
-  9. *Transactions*
-  10. Database Applications
+  8. Subqueries & Views
+  9. Transactions
+  10. *Database Applications*
   11. Integrity, Trigger & Security
 ]
 
 == What is the goal of this chapter?
 #slide[
   - At the end of this lesson, you should be able to
-    - create views in PostgresQL and use them effectively and
-    - use transactions to make safe changes, that can be undone if necessary.
+    - create a simple app using Java and PostgreSQL.
 ]
 
 = Repetition
@@ -123,14 +122,21 @@
 #slide[
   #heading(numbering: none)[Distributed Transactions]
   #let left = [
-    - To ensure interoperability between the participating resource managers the *2-phase commit protocol* is realized
-    - It defines the final synchronization of different parts of a transaction of a global transaction
-    - In the first phase the transaction manager asks participating resource managers to announce the results of their local transaction part
-    - This leads to a global result (commit or rollback) that is then in the second phase announced to the participants
+    #text(size: 18pt)[
+      - To ensure interoperability between the participating resource managers the *2-phase commit protocol* is realized
+      - It defines the final synchronization of different parts of a transaction of a global transaction
+      - In the first phase the transaction manager asks participating resource managers to announce the results of their local transaction part
+      - This leads to a global result (commit or rollback) that is then in the second phase announced to the participants
+    ]
   ]
   #let right = [
     #figure(image("../assets/img/slides_08/20250309_trans_coord_res_man_rev01.jpeg"))
   ]
+  #grid(
+    columns: (60%, 40%),
+    gutter: 0.25em,
+    left, right,
+  )
 ]
 
 == Integrity, Trigger and Security Integrity Constraints
@@ -154,6 +160,7 @@
           status of order #sym.arrow new #sym.arrow payed #sym.arrow processing #sym.arrow shipped
         ]
   ]
+
   #grid(
     columns: (auto, auto),
     gutter: 0.25em,
@@ -182,23 +189,25 @@
 
 #slide[
   #heading(numbering: none)[Excursion Delimiter: Example]
-  ```sql
-  delimiter |
-  CREATE TRIGGER SALARY_VIOLATION
-  BEFORE INSERT ON EMPLOYEE
-  FOR EACH ROW
-     BEGIN
-         IF NEW.SALARY > (SELECT SALARY
-                          FROM EMPLOYEE
-                          WHERE SSN = NEW.SUPER_SSN )
-         THEN SET NEW.Salary = (SELECT SALARY
-                                   FROM EMPLOYEE
-                                  WHERE SSN = NEW.SUPER_SSN )‐1;
-         END IF;
-  END;
-  |
-  delimiter;
-  ```
+  #text(size: 16pt)[
+    ```sql
+    delimiter |
+    CREATE TRIGGER SALARY_VIOLATION
+    BEFORE INSERT ON EMPLOYEE
+    FOR EACH ROW
+       BEGIN
+           IF NEW.SALARY > (SELECT SALARY
+                            FROM EMPLOYEE
+                            WHERE SSN = NEW.SUPER_SSN )
+           THEN SET NEW.Salary = (SELECT SALARY
+                                     FROM EMPLOYEE
+                                    WHERE SSN = NEW.SUPER_SSN )‐1;
+           END IF;
+    END;
+    |
+    delimiter;
+    ```
+  ]
 ]
 
 #slide[
@@ -213,7 +222,6 @@
     - Even if no row is affected!
     - Default trigger type
   - Row trigger
-  - For every affected row
   - Syntax: `FOR EACH ROW`
 ]
 
@@ -292,12 +300,14 @@
 #slide[
   #heading(numbering: none)[Impedance Mismatch]
   #let left = [
-    - E.g., Object–relational impedance mismatch
-      - Object-oriented concepts, like inheritance in OO, polymorphism in OO,…
-        - Data type differences, like pointers in OO,…
-        - Structural and integrity differences, like constraints in RM, objects can be composed of other objects in OO, …
-        - Transactional differences, like transactions in RM
-        - Manipulative differences, like declarative querys in RM
+    #text(size: 18pt)[
+      - E.g., Object–relational impedance mismatch
+        - Object-oriented concepts, like inheritance in OO, polymorphism in OO,…
+          - Data type differences, like pointers in OO,…
+          - Structural and integrity differences, like constraints in RM, objects can be composed of other objects in OO, …
+          - Transactional differences, like transactions in RM
+          - Manipulative differences, like declarative querys in RM
+    ]
   ]
   #let right = [
     #figure(image("../assets/img/slides_10/20250309_object_rel_model_rev01.png"))
@@ -311,27 +321,29 @@
 
 #slide[
   #heading(numbering: none)[Embedded SQL]
-  #figure(image("../assets/img/slides_10/20250309_embed_sql_rev01.jpeg"))
+  #figure(image("../assets/img/slides_10/20250309_embed_sql_rev01.jpeg", height: 90%))
 ]
 
 
 #slide[
   #heading(numbering: none)[SQL in C]
-  ```c
-  int main() {
-      exec sql begin declare section;
-      int sv_new_price;
-      int sv_isbn;
-      exec sql end declare section;
-      printf("Please enter ISBN: \n ");
-      scanf("%d", &sv_isbn);
-      printf("Please enter new_price: \n");
-      scanf("%d", &sv_new_price);
-      exec sql update book
-             set price = :sv_new_price
-             where isbn = :sv_isbn;
-  } Shared variables
-  ```
+  #text(size: 20pt)[
+    ```c
+    int main() {
+        exec sql begin declare section;
+        int sv_new_price;
+        int sv_isbn;
+        exec sql end declare section;
+        printf("Please enter ISBN: \n ");
+        scanf("%d", &sv_isbn);
+        printf("Please enter new_price: \n");
+        scanf("%d", &sv_new_price);
+        exec sql update book
+               set price = :sv_new_price
+               where isbn = :sv_isbn;
+    } Shared variables
+    ```
+  ]
 ]
 
 #slide[
@@ -464,10 +476,12 @@
 
 #slide[
   #heading(numbering: none)[API Calls - JDBC]
-  - Exkursion: `localhost`
-    - In computer networking, `localhost` is a hostname that refers to the current computer used to access it. It is used to access the network services that are running on the host via the loopback network interface. Using the loopback interface bypasses any local network interface hardware.
-    - The local loopback mechanism may be used to run a network service on a host without requiring a physical network interface, or without making the service accessible from the networks the computer may be connected to. For example, a locally installed website may be accessed from a Web browser by the URL #link("http://localhost") to display its home page.
-    - The name `localhost` normally resolves to the IPv4 loopback address `127.0.0.1`, and to the IPv6 loopback address ::1. (Ipv stands for Internet Protocol version)
+  #text(size: 20pt)[
+    - Exkursion: `localhost`
+      - In computer networking, `localhost` is a hostname that refers to the current computer used to access it. It is used to access the network services that are running on the host via the loopback network interface. Using the loopback interface bypasses any local network interface hardware.
+      - The local loopback mechanism may be used to run a network service on a host without requiring a physical network interface, or without making the service accessible from the networks the computer may be connected to. For example, a locally installed website may be accessed from a Web browser by the URL #link("http://localhost") to display its home page.
+      - The name `localhost` normally resolves to the IPv4 loopback address `127.0.0.1`, and to the IPv6 loopback address ::1. (Ipv stands for Internet Protocol version)
+  ]
 ]
 
 #slide[
@@ -622,20 +636,22 @@
 
 #slide[
   #heading(numbering: none)[API Calls - Antipatterns]
-  - Do not build SQL string using user input!
+  #text(size: 20pt)[
+    - Do not build SQL string using user input!
 
-  ```java
-    Statement st = conn.createStatement();
-    String query = "SELECT id FROM books WHERE title = '" + name + "'";
-  ```
+    ```java
+      Statement st = conn.createStatement();
+      String query = "SELECT id FROM books WHERE title = '" + name + "'";
+    ```
 
-  - Problems
-    - Correct quoting
-    - Need to handle special characters like '&'
-    - Opens the door for SQL injection attacks
-    #memo[
-      Always use `PreparedStatement` / parameter binding!
-    ]
+    - Problems
+      - Correct quoting
+      - Need to handle special characters like '&'
+      - Opens the door for SQL injection attacks
+      #memo[
+        Always use `PreparedStatement` / parameter binding!
+      ]
+  ]
 ]
 
 #slide[
@@ -699,7 +715,6 @@
    <PL/SQL‐Block>
   ```
 ]
-)
 
 #slide[
   #heading(numbering: none)[Extend SQL - PL/SQL]
@@ -748,22 +763,24 @@
 
 #slide[
   #heading(numbering: none)[Extend SQL - PL/SQL]
-  - Loops (for, while, loop)
-  ```sql
-  while < condition >
-  loop
-  < PL/SQL‐operation >
-  end loop ;
-  ```
-
-  - Executing a relation with infinite loop
+  #text(size: 20pt)[
+    - Loops (for, while, loop)
     ```sql
+    while < condition >
     loop
-    fetch Book into BookRecord;
-    exit when Book%not found ;
-    ...
+    < PL/SQL‐operation >
     end loop ;
     ```
+
+    - Executing a relation with infinite loop
+      ```sql
+      loop
+      fetch Book into BookRecord;
+      exit when Book%not found ;
+      ...
+      end loop ;
+      ```
+  ]
 ]
 
 #slide[
@@ -785,25 +802,24 @@
 
 #slide[
   #heading(numbering: none)[Extend SQL - Example]
-  ```sql
-  Example: MySQL
-      delimiter |
-     CREATE TRIGGER IF NOT EXISTS Print_salary_changes
-     BEFORE UPDATE ON EMPLOYEE
-     FOR EACH ROW
-           BEGIN
-              DECLARE sal_diff DECIMAL(10,2);
-              IF (NEW.salary != OLD.salary)
-              THEN
-                    BEGIN
-                       SET sal_diff = NEW.salary ‐ OLD.salary ;
-                       CALL output(NEW.ssn, OLD.salary, NEW.salary, sal_diff);
-                    END;
-              END IF;
-     END;
-     |
-     delimiter ;
-  ```
+  #text(size: 18pt)[
+    ```sql
+        delimiter |
+       CREATE TRIGGER IF NOT EXISTS Print_salary_changes
+       BEFORE UPDATE ON EMPLOYEE
+       FOR EACH ROW
+             BEGIN
+                DECLARE sal_diff DECIMAL(10,2);
+                IF (NEW.salary != OLD.salary)
+                THEN
+                      BEGIN
+                         SET sal_diff = NEW.salary ‐ OLD.salary ;
+                         CALL output(NEW.ssn, OLD.salary, NEW.salary, sal_diff);
+                      END;
+                END IF;
+       END; | delimiter ;
+    ```
+  ]
 ]
 
 

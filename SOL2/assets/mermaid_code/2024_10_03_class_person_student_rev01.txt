@@ -1,0 +1,14 @@
+classDiagram
+Person <|-- Student
+class Person{
+-String firstName
+-String surname
++getFirstName() String
++getSurname() String
++setFirstName(String)
++getSurname(String)
+}
+class Student{
+-int matrNumber
++getMatrNumber() int
+}
