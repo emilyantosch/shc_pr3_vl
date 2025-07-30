@@ -1,32 +1,30 @@
 
-#import "@preview/grape-suite:2.0.0": exercise, colors
+#import "@preview/grape-suite:2.0.0": colors, exercise
 #import "@preview/gentle-clues:1.0.0": *
-#import exercise: project, task, subtask
+#import exercise: project, subtask, task
 #import colors: *
 
 #import "@preview/codly:1.0.0": *
 #show: codly-init.with()
 
 
-#codly(
-  languages: (
-    java: (
-      name: text(font: "JetBrainsMono NFM", " Java", weight: "bold"),
-      icon: text(font: "JetBrainsMono NFM", "\u{e738}", weight: "bold"),
-      color: rgb("#CE412B"),
-    ),
-    c: (
-      name: text(font: "JetBrainsMono NFM", " C", weight: "bold"),
-      icon: text(font: "JetBrainsMono NFM", "\u{e61e}", weight: "bold"),
-      color: rgb("#5612EC"),
-    ),
-    sql: (
-      name: text(font: "JetBrainsMono NFM", " SQL", weight: "bold"),
-      icon: text(font: "JetBrainsMono NFM", "\u{e76e}", weight: "bold"),
-      color: rgb("#2563eb"),
-    ),
+#codly(languages: (
+  java: (
+    name: text(font: "JetBrainsMono NFM", " Java", weight: "bold"),
+    icon: text(font: "JetBrainsMono NFM", "\u{e738}", weight: "bold"),
+    color: rgb("#CE412B"),
   ),
-)
+  c: (
+    name: text(font: "JetBrainsMono NFM", " C", weight: "bold"),
+    icon: text(font: "JetBrainsMono NFM", "\u{e61e}", weight: "bold"),
+    color: rgb("#5612EC"),
+  ),
+  sql: (
+    name: text(font: "JetBrainsMono NFM", " SQL", weight: "bold"),
+    icon: text(font: "JetBrainsMono NFM", "\u{e76e}", weight: "bold"),
+    color: rgb("#2563eb"),
+  ),
+))
 
 #show: project.with(
   type: [Exam],
@@ -71,7 +69,7 @@
 #task(
   points: 40,
   [
-    Film Festival Management System
+    University Library Network System
   ],
   [
     *Topic*: Design a system to manage a university library network with branches, collections, borrowers, and circulation services.
@@ -84,7 +82,6 @@
     - Track library patrons and their borrowing history
     - Manage which material is at which branch of the library in general. Extra Points, if you can also keep track of the stock at the current moment at time.
     - Document any assumptions you made during the development process
-    - Generate reports on circulation statistics, popular materials, and overdue items
 
     *Deliverables*: Complete ERD with all entities, relationships, cardinalities, and a normalized relational model.
     #box(height: 60%, width: 100%, stroke: color.black)[]
@@ -221,11 +218,7 @@
       columns: (auto, auto, auto),
       inset: 10pt,
       align: horizon,
-      table.header(
-        [*Statement*],
-        [*True*],
-        [*False*],
-      ),
+      table.header([*Statement*], [*True*], [*False*]),
 
       [A table can have multiple primary keys.], [], [],
       [Denormalization always improves query performance.], [], [],
@@ -250,7 +243,7 @@
 #v(80%)
 
 #task(
-  [University Management System Database Project],
+  [Hospital Management System],
   [
     == Project Overview
     Please design and implement a complete database system for hospital management, covering medical, administrative, and operational aspects. The project is divided into three sequential stages:
@@ -262,16 +255,15 @@
     #subtask(points: 20)[
       === Stage: Entity-Relationship Diagram (ERD) Design
       ==== Task Description
-      Design a comprehensive Entity-Relationship Diagram for a hospital management system. Your ERD must capture all significant entities, relationships, attributes, cardinalities, and constraints necessary for managing medical departments, patient records, medical staff, treatments, appointments, medical equipment, and hospital administration.
+      Design a comprehensive Entity-Relationship Diagram for a hospital management system. Your ERD must capture all significant entities, relationships, attributes, cardinalities, and constraints necessary for managing medical departments, patient records, medical staff and treatments on patients.
 
       ==== Requirements
       - Identify all relevant entities with appropriate attributes
       - Define meaningful relationships with proper cardinalities
       - Specify primary keys and foreign keys
-      - Include derived attributes where appropriate
       - Identify weak entities if necessary
-      - Document any assumptions made during the design process
-      - Use proper ERD notation (Chen, Crow's Foot, or UML)
+      - Document any assumptions made during the design process. Any sound assumptions are correct and will be evaluated with no deduction of points.
+      - Use proper ERD notation (Chen or MC)
         #v(80%)
         #box(height: 100%, width: 100%, stroke: color.black)[]
     ]
@@ -283,9 +275,7 @@
       ==== Requirements
       - Transform all entities and relationships into appropriate tables
       - Properly handle many-to-many relationships with junction tables
-      - Define all primary keys, foreign keys, and constraints
-      - Specify attribute domains and data types
-      - Document functional dependencies
+      - Define all primary keys, and foreign keys
       - Ensure the design is normalized to at least 3NF
       - Explain any denormalization decisions with justification
 
@@ -302,10 +292,6 @@
       - Develop SQL queries for common operations like:
         - Patient admission and discharge
         - Medical treatment tracking
-        - Doctor-patient assignment
-        - Operating room scheduling
-        - Patient medical history generation
-        - Department resource allocation
         #box(height: 60%, width: 100%, stroke: color.black)[]
     ]
   ],
