@@ -137,7 +137,7 @@
   #text(size: 13pt)[
     - Ausgewählte Methoden der Klasse PrintStream:
 
-      #figure(image("../assets/img/2024_11_08_sout_prints_rev01.png", height: 40%))
+      #figure(image("../assets/img/slides_9/2024_11_08_sout_prints_rev01.png", height: 40%))
 
     #question[
 
@@ -156,7 +156,7 @@
   #text(size: 18pt)[
     In `System` referenzierte Ströme:
 
-    #figure(image("../assets/img/2024_11_08_system_outerrin_rev01.png", height: 40%))
+    #figure(image("../assets/img/slides_9/2024_11_08_system_outerrin_rev01.png", height: 40%))
   ]
 ]
 
@@ -391,7 +391,7 @@
       - Transportierten Zeichen aus jeweils 2 Byte
       - Abstrakte Klassen Reader und Writer sowie hiervon abgeleitete Klassen
 
-        #figure(image("../assets/img/2024_11_08_object_streams_rev01.png", height: 40%))
+        #figure(image("../assets/img/slides_9/2024_11_08_object_streams_rev01.png", height: 40%))
   ]
 ]
 
@@ -409,7 +409,7 @@
       - Ja, verwenden Sie für Tastatureingaben ruhig Scanner.
     #figure(
       image(
-        "../assets/img/2024_11_08_tastatur_stream_programm_rev01.png",
+        "../assets/img/slides_9/2024_11_08_tastatur_stream_programm_rev01.png",
         height: 40%,
       ),
     )
@@ -447,7 +447,7 @@
 
       #figure(
         image(
-          "../assets/img/2024_11_08_tastatur_stream_buffered_rev01.png",
+          "../assets/img/slides_9/2024_11_08_tastatur_stream_buffered_rev01.png",
           height: 30%,
         ),
       )
@@ -542,7 +542,7 @@
 
         #figure(
           image(
-            "../assets/img/2024_11_08_programm_datei_reader_writer_rev01.png",
+            "../assets/img/slides_9/2024_11_08_programm_datei_reader_writer_rev01.png",
             height: 50%,
           ),
         )

@@ -155,7 +155,7 @@
     - Ausnahmen und Fehler durch Objekte spezieller Klassen dargestellt
     - Basisklasse aller Ausnahmeklassen ist Throwable
 
-    #figure(image("../assets/img/2024_11_04_throwable_rev01.png"))
+    #figure(image("../assets/img/slides_8/2024_11_04_throwable_rev01.png"))
 
     - Man unterscheide:
       - Exception (Ausnahme): Behandelbar, Programm kann fortgeführt werden
@@ -202,7 +202,7 @@
     2. Ausnahme fangen:
       - Programmierer kann Ausnahme abfangen und behandeln
 
-    #figure(image("../assets/img/2024_11_04_programmfluss_throwable_rev01.png", height: 50%))
+    #figure(image("../assets/img/slides_8/2024_11_04_programmfluss_throwable_rev01.png", height: 50%))
 
   ]
 ]
@@ -211,7 +211,7 @@
   #text(size: 18pt)[
     - Falls keine Ausnahmebehandlung programmiert: Programm wird beendet
 
-      #figure(image("../assets/img/2024_11_04_programmfluss_noexceptionhandling_rev01.png"))
+      #figure(image("../assets/img/slides_8/2024_11_04_programmfluss_noexceptionhandling_rev01.png"))
 
   ]
 ]
@@ -693,7 +693,7 @@
     - Eigenen Ausnahmetyp durch Ableiten einer bestehenden Klasse
     - Erster Ansatz: Ableiten der Klasse Exception
 
-    #figure(image("../assets/img/2024_11_05_vererbung_throwable_rev01.png", height: 60%))
+    #figure(image("../assets/img/slides_8/2024_11_05_vererbung_throwable_rev01.png", height: 60%))
 
   ]
 ]
@@ -753,7 +753,7 @@
     - Dies gilt für alle Ausnahmetypen (d.h. Throwable und davon abgeleitet) außer für:
       - Klasse RuntimeException
       - Von RuntimeException (direkt oder indirekt) abgeleitete Klassen
-        #figure(image("../assets/img/2024_11_05_vererbung_runtimeexception_rev01.png"))
+        #figure(image("../assets/img/slides_8/2024_11_05_vererbung_runtimeexception_rev01.png"))
   ]
 ]
 

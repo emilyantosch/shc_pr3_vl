@@ -107,7 +107,7 @@
 
     - Sie machen Rührei und Pudding.
     - Möglicher Ablauf:
-    #figure(image("../assets/img/2024_11_07_serial_ruehrei_rev01.png", height: 40%))
+    #figure(image("../assets/img/slides_10/2024_11_07_serial_ruehrei_rev01.png", height: 40%))
 
     #question[
       - Wie könnte der Ablauf aussehen, wenn Sie zu viert kochen?
@@ -122,7 +122,7 @@
     - Mögliche Reihenfolge
     - Ressourcenkonflikt: Herdplatte
 
-    #figure(image("../assets/img/2024_11_07_parallel_ruehrei_rev01.png", height: 80%))
+    #figure(image("../assets/img/slides_10/2024_11_07_parallel_ruehrei_rev01.png", height: 80%))
 
   ]
 ]
@@ -130,7 +130,7 @@
 #slide[
   #text(size: 18pt)[
     - Mögliche Aufteilung auf vier Personen
-    #figure(image("../assets/img/2024_11_07_parallel_swimlane_rev01.png", height: 80%))
+    #figure(image("../assets/img/slides_10/2024_11_07_parallel_swimlane_rev01.png", height: 80%))
   ]
 ]
 
@@ -204,7 +204,7 @@
     - Methode `run()` enthält Code, der in Ausführungsstrang ausgeführt werden soll
     - Ausführungsstrang wird beendet, sobald `run()` beendet wird
 
-    #figure(image("../assets/img/2024_11_07_klasse_thread_uml_rev01.png", height: 40%))
+    #figure(image("../assets/img/slides_10/2024_11_07_klasse_thread_uml_rev01.png", height: 40%))
   ]
 ]
 
@@ -212,7 +212,7 @@
   #text(size: 18pt)[
 
     - Veranschaulichung
-    #figure(image("../assets/img/2024_11_07_programmfluss_thread_rev01.png", height: 60%))
+    #figure(image("../assets/img/slides_10/2024_11_07_programmfluss_thread_rev01.png", height: 60%))
   ]
 ]
 
@@ -248,7 +248,7 @@
 
     - Eigene Thread-Klasse von Thread ableiten und run() überlagern
 
-    #figure(image("../assets/img/2024_11_07_vererbung_thread_uml_rev01.png", height: 40%))
+    #figure(image("../assets/img/slides_10/2024_11_07_vererbung_thread_uml_rev01.png", height: 40%))
   ]
 ]
 
@@ -291,7 +291,7 @@
       - Runnable-Objekt beinhaltet, was ausgeführt werden soll
       - Thread-Objekt beinhaltet alles, was zur Nebenläufigkeit benötigt wird
 
-    #figure(image("../assets/img/2024_11_07_interface_Runnable_rev01.png", height: 40%))
+    #figure(image("../assets/img/slides_10/2024_11_07_interface_Runnable_rev01.png", height: 40%))
   ]
 ]
 
@@ -357,7 +357,7 @@
         - `main`-Thread zuerst beendet
         - Thread mit `run()` läuft weiter
     ]
-    #let fig = figure(image("../assets/img/2024_11_07_thread_counter_rev01.png"))
+    #let fig = figure(image("../assets/img/slides_10/2024_11_07_thread_counter_rev01.png"))
     #grid(
       columns: (60%, 40%),
       gutter: 0.25em,
@@ -392,7 +392,7 @@
     - Blockiert: Wird nicht ausgeführt und würde es auch bei freiem Prozessor nicht
     - Terminiert: Thread beendet. Java-Objekt existiert weiterhin!
 
-    #figure(image("../assets/img/2024_11_07_ablauf_thread_queue_rev01.png", height: 50%))
+    #figure(image("../assets/img/slides_10/2024_11_07_ablauf_thread_queue_rev01.png", height: 50%))
   ]
 ]
 
@@ -410,7 +410,7 @@
       - `setPriority()` setzt Priorität, aber keine Garantie wie Scheduler sie berücksichtigt
       - „Der Scheduler ist eine Diva!“
 
-    #figure(image("../assets/img/2024_11_07_lauffaehig_laeuft_rev01.png", height: 35%))
+    #figure(image("../assets/img/slides_10/2024_11_07_lauffaehig_laeuft_rev01.png", height: 35%))
   ]
 ]
 
@@ -434,7 +434,7 @@
       }
       ```
     ]
-    #let fig = figure(image("../assets/img/2024_11_07_laufend_sleep_block_rev01.png"))
+    #let fig = figure(image("../assets/img/slides_10/2024_11_07_laufend_sleep_block_rev01.png"))
     #grid(
       columns: (80%, 20%),
       gutter: 0.25em,
@@ -510,7 +510,7 @@
     }
     ```
 
-    #figure(image("../assets/img/2024_11_11_flashlight_rev01.png", height: 50%))
+    #figure(image("../assets/img/slides_10/2024_11_11_flashlight_rev01.png", height: 50%))
   ]
 ]
 
@@ -537,7 +537,7 @@
         - Wozu wird dies benötigt? (Man wartet ja schließlich nicht ohne Grund)
 
     ]
-    #let fig = figure(image("../assets/img/2024_11_11_blocked_join_rev01.png"))
+    #let fig = figure(image("../assets/img/slides_10/2024_11_11_blocked_join_rev01.png"))
     #grid(
       columns: (80%, 20%),
       gutter: 0.5em,
@@ -630,7 +630,7 @@
       - Threads führen gleichzeitig Methoden deposit() und withdraw() aus
       - Beide Methoden greifen auf Variable balance zu.
 
-    #figure(image("../assets/img/2024_11_11_deposit_withdraw_thread_rev01.png", height: 50%))
+    #figure(image("../assets/img/slides_10/2024_11_11_deposit_withdraw_thread_rev01.png", height: 50%))
 
   ]
 ]
@@ -648,7 +648,7 @@
     - Antwort:
       - Race Condition, wenn mindestens ein Thread schreibt
 
-    #figure(image("../assets/img/2024_11_11_race_conditions_rev01.png", height: 40%))
+    #figure(image("../assets/img/slides_10/2024_11_11_race_conditions_rev01.png", height: 40%))
   ]
 ]
 

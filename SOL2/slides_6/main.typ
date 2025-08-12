@@ -113,7 +113,7 @@
   ]
   #pause
   #figure(
-    image("../assets/img/2024_10_23_geometrische_form_ohneAbstrakt_rev01.png", height: 50%),
+    image("../assets/img/slides_6/2024_10_23_geometrische_form_ohneAbstrakt_rev01.png", height: 50%),
     caption: [Überlagern der Methode aus Shape],
   )
 
@@ -148,7 +148,7 @@
   ]
   #let fig = [
     #align(center + horizon)[
-      #figure(image("../assets/img/2024_10_23_abstrakte_klasse_rev01.png"))
+      #figure(image("../assets/img/slides_6/2024_10_23_abstrakte_klasse_rev01.png"))
     ]
   ]
   #grid(
@@ -175,7 +175,7 @@
         	}
         ```
       ]
-      #let right = figure(image("../assets/img/2024_10_23_abstrakte_methoden_rev01.png"))
+      #let right = figure(image("../assets/img/slides_6/2024_10_23_abstrakte_methoden_rev01.png"))
       #grid(
         columns: (60%, 40%),
         gutter: 0.05em,
@@ -217,7 +217,7 @@
       	}
       ```
     ]
-    #let fig = figure(image("../assets/img/2024_10_23_abstrakte_klasse_methode_rev01.png"))
+    #let fig = figure(image("../assets/img/slides_6/2024_10_23_abstrakte_klasse_methode_rev01.png"))
     #grid(
       columns: (80%, 20%),
       gutter: 0.25em,
@@ -228,7 +228,7 @@
 
 #slide[
   #figure(
-    image("../assets/img/2024_10_24_abstrakt_klasse_methode_baum_rev01.png", height: 90%),
+    image("../assets/img/slides_6/2024_10_24_abstrakt_klasse_methode_baum_rev01.png", height: 90%),
     caption: [Großer Overview über Abstrakte Klassen und Methoden],
   )
 ]
@@ -238,7 +238,7 @@
     - Verbessern Sie nun den Aufbau der Klassenstruktur.
     - Verwenden Sie hierfür abstrakte Elemente.
   ]
-  #figure(image("../assets/img/2024_10_24_geom_form_ohne_erkl_rev01.png", height: 50%))
+  #figure(image("../assets/img/slides_6/2024_10_24_geom_form_ohne_erkl_rev01.png", height: 50%))
 ]
 
 #slide[
@@ -247,7 +247,7 @@
     - Alle Klassen für geometrischen Formen besitzen getArea().
     - Implementierung je nach Typ der geometrischen Form
       #figure(
-        image("../assets/img/2024_10_24_geom_formen_abst_impl_rev01.png", height: 60%),
+        image("../assets/img/slides_6/2024_10_24_geom_formen_abst_impl_rev01.png", height: 60%),
         caption: [Abstrakte und implementierte Methoden],
       )
 
@@ -279,7 +279,7 @@
 
 #slide[
   #figure(
-    image("../assets/img/2024_10_24_abstufung_klas_abst_inter_rev01.png"),
+    image("../assets/img/slides_6/2024_10_24_abstufung_klas_abst_inter_rev01.png"),
     caption: [Abstufung zwischen Konkret, Abstrakt und Interface],
   )
 ]
@@ -304,7 +304,7 @@
       	}
       ```
     ]
-    #let fig = figure(image("../assets/img/2024_10_24_scalable_interface_rev01.png"))
+    #let fig = figure(image("../assets/img/slides_6/2024_10_24_scalable_interface_rev01.png"))
     #grid(
       columns: (75%, 25%),
       gutter: 0.25em,
@@ -336,7 +336,7 @@
       	}
       ```
     ]
-    #let fig = figure(image("../assets/img/2024_10_24_scalable_interface_vector_rev01.png"))
+    #let fig = figure(image("../assets/img/slides_6/2024_10_24_scalable_interface_vector_rev01.png"))
     #grid(
       columns: (70%, 30%),
       gutter: 0.25em,
@@ -354,7 +354,7 @@
   ]
 
   #figure(
-    image("../assets/img/2024_10_24_scalable_interface_abstrakt_vector_rev01.png", height: 60%),
+    image("../assets/img/slides_6/2024_10_24_scalable_interface_abstrakt_vector_rev01.png", height: 60%),
     caption: [Abstrakte Klassen und Interfaces],
   )
 ]
@@ -380,7 +380,7 @@
       	}
       ```
     ]
-    #let fig = figure(image("../assets/img/2024_10_24_double_interface_rev01.png"))
+    #let fig = figure(image("../assets/img/slides_6/2024_10_24_double_interface_rev01.png"))
     #grid(
       columns: (80%, 20%),
       gutter: 0.25em,
@@ -400,7 +400,7 @@
     }
     ```
 
-    #figure(image("../assets/img/2024_10_24_grayimage_interface_rev01.png", height: 50%), caption: [GrayImage-Beispiel])
+    #figure(image("../assets/img/slides_6/2024_10_24_grayimage_interface_rev01.png", height: 50%), caption: [GrayImage-Beispiel])
   ]
 ]
 
@@ -429,7 +429,7 @@
       	}
       ```
     ]
-    #let fig = figure(image("../assets/img/2024_10_24_interface_vererbung_rev01.png"))
+    #let fig = figure(image("../assets/img/slides_6/2024_10_24_interface_vererbung_rev01.png"))
     #grid(
       columns: (65%, 35%),
       gutter: 0.25em,
@@ -461,7 +461,7 @@
       ```
 
     ]
-    #let fig = figure(image("../assets/img/2024_10_24_scalable_vector_voll_rev01.png"))
+    #let fig = figure(image("../assets/img/slides_6/2024_10_24_scalable_vector_voll_rev01.png"))
     #grid(
       columns: (80%, 20%),
       gutter: 0.25em,
@@ -479,7 +479,7 @@
         - Skalieren
         - Implementieren Sie die Schnittstelle in allen Klassen geometrischer Formen
     ]
-    #figure(image("../assets/img/2024_10_24_geom_form_ohne_erkl_rev01.png", height: 45%))
+    #figure(image("../assets/img/slides_6/2024_10_24_geom_form_ohne_erkl_rev01.png", height: 45%))
   ]
 ]
 
@@ -501,10 +501,10 @@
         - Schnittstelle in eigener Klasse implementieren
         - Platzhalter Type durch eigenen Klassennamen ersetzen
         - Rückgabewert wird wie folgt gedeutet:
-        #figure(image("../assets/img/2024_10_24_comparable_returnvalue_rev01.png"))
+        #figure(image("../assets/img/slides_6/2024_10_24_comparable_returnvalue_rev01.png"))
     ]
 
-    #let fig = figure(image("../assets/img/2024_10_24_comparable_A_rev01.png"))
+    #let fig = figure(image("../assets/img/slides_6/2024_10_24_comparable_A_rev01.png"))
     #grid(
       columns: (80%, 20%),
       gutter: 0.25em,
@@ -537,7 +537,7 @@
       	}
       ```
     ]
-    #let fig = figure(image("../assets/img/2024_10_24_comparable_vector_rev01.png"))
+    #let fig = figure(image("../assets/img/slides_6/2024_10_24_comparable_vector_rev01.png"))
     #grid(
       columns: (80%, 20%),
       gutter: 0.25em,
@@ -569,7 +569,7 @@
 
 
     ]
-    #let fig = figure(image("../assets/img/2024_10_24_comparable_vector_rev01.png"))
+    #let fig = figure(image("../assets/img/slides_6/2024_10_24_comparable_vector_rev01.png"))
     #grid(
       columns: (80%, 20%),
       gutter: 0.25em,
@@ -584,7 +584,7 @@
       - Implementieren Sie `Comparable<Type>` für geometrische Objekte.
       - Kriterium für den Vergleich ist die Fläche der Objekte.
     ]
-    #figure(image("../assets/img/2024_10_24_geom_form_ohne_erkl_rev01.png", height: 50%))
+    #figure(image("../assets/img/slides_6/2024_10_24_geom_form_ohne_erkl_rev01.png", height: 50%))
 
   ]
 ]
@@ -595,7 +595,7 @@
       - Nur die Klasse `Shape` muss `Comparable` implementieren.
       - Die übrigen Klassen erben die Schnittstelle und Implementierung.
     ]
-    #figure(image("../assets/img/2024_10_24_comparable_shape_rev01.png", height: 50%))
+    #figure(image("../assets/img/slides_6/2024_10_24_comparable_shape_rev01.png", height: 50%))
 
   ]
 ]

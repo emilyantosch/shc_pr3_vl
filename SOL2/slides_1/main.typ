@@ -3,6 +3,8 @@
 
 #import "@preview/fletcher:0.5.8" as flechter: diagram, edge, node
 
+#import "@preview/cetz:0.4.1"
+
 #import "@preview/tiaoma:0.2.1"
 
 #import "@preview/gentle-clues:1.0.0": *
@@ -12,7 +14,7 @@
 
 #import "@preview/numbly:0.1.0": numbly
 
-#set text(lang: "en")
+#set text(lang: "en", font: "Roboto")
 #set heading(numbering: numbly("{1}.", default: "1.1"))
 
 #set align(left + top)
@@ -212,22 +214,28 @@
     - The values of these variables describe the *state* of the object.
     - Functions are called *methods*.
   ]
-  - So-called UML class diagrams can be used to describe classes with their *attributes* and *methods*.
 ]
 
-
 #slide[
-  #figure(image("../assets/img/slides_01/2024_10_03_class_person_explain_rev01.png"), caption: [UML Class Diagram])
+  - So-called UML class diagrams can be used to describe classes with their *attributes* and *methods*.
+  #align(center + horizon)[
+    #figure(
+      image("../assets/img/slides_01/20250730_attributes_methods_rev01.png", height: 70%),
+      caption: [UML Class Diagram],
+    )
+  ]
 ]
 
 == Data Encapsulation
 #slide[
   - Data can be encapsulated using attributes and methods of classes.
 
-  #figure(
-    image("./../assets/img/slides_01/2024_10_03_data_capsulation_rev01.png", width: 80%),
-    caption: [Data encapsulation through classes],
-  )<data-capsule>
+  #align(center + horizon)[
+    #figure(
+      image("./../assets/img/slides_01/20250730_data_encapsulation_rev01.png", height: 75%),
+      caption: [Data encapsulation through classes],
+    )<data-encapsulation>
+  ]
 ]
 
 #slide[
@@ -238,7 +246,6 @@
 
 #slide[
   #question[Where do the differences lie in comparison to the C programming language?]
-
   #pause
   - The data structure (i.e., the *struct*) must be made public for access to the elements.
   - The data is not protected.
@@ -248,29 +255,20 @@
 == Inheritance
 #slide[
   - Through inheritance, new classes can be created from other classes.
-
-  #figure(image("../assets/img/slides_01/2024_10_03_class_person_explain_rev01.png", width: 35%))
-
-]
-
-#slide[
-  - Through inheritance, new classes can be created from other classes.
     - The methods and attributes of the base class are inherited and extended with additional code.
     - No duplicated code.
+  #figure(image("../assets/img/slides_01/20250812_inheritance_rev01.png", height: 63%))
 ]
 
-#matrix-slide[
-  #align(left + top)[
-    - Classes can also be composed of other classes.
-    - This is called *composition*.
-    - For example, the *House* class would be composed of
-      *Windows*, *Walls*, and *Doors*.
-
-  ]
-][
+== Composition
+#slide[
+  - Classes can also be composed of other classes.
+  - This is called *composition*.
+  - For example, the *House* class would be composed of
+    *Windows*, *Walls*, and *Doors*.
   #figure(
-    image("../assets/img/slides_01/2024_10_04_class_composition_rev01.png", height: 80%),
-    caption: [Composition of the *House* class, which inherits from *Building*],
+    image("../assets/img/slides_01/20250812_composition_rev01.png", height: 50%),
+    caption: [Composition of a given class],
   )
 ]
 
@@ -286,7 +284,7 @@
   5. As soon as the *main* method is finished, the program ends.
 
   #figure(
-    image("../assets/img/2024_10_05_references_java_program_rev01.png"),
+    image("../assets/img/slides_01/20250730_program_execution_references_rev01.png", height: 80%),
     caption: [References in the lifetime of a program],
   )
 ]
@@ -309,7 +307,7 @@
   - Therefore, we want to continue building on your prior knowledge.
 
   #figure(
-    image("../assets/img/2024_10_04_java_origin_rev01.png", height: 40%),
+    image("../assets/img/slides_01/2024_10_04_java_origin_rev01.png", height: 40%),
     caption: [The influences on the Java programming language],
   )
 ]
@@ -326,7 +324,10 @@
 
 #slide[
   #align(left + horizon)[
-    #figure(image("../assets/img/2024_10_04_jvm_principle_rev01.png"), caption: [Program execution with the JVM])
+    #figure(
+      image("../assets/img/slides_01/20250812_jvm_bytecode_rev01(2).png"),
+      caption: [Program execution with the JVM],
+    )
   ]
 ]
 
@@ -341,7 +342,7 @@
   #align(left + horizon)[
 
     #figure(
-      image("../assets/img/2024_10_04_interpreted_lang_principle_rev01.png"),
+      image("../assets/img/slides_01/20250812_source_code_interpreter_rev01(1).png"),
       caption: [Execution of compiled languages],
     )
   ]
@@ -350,7 +351,7 @@
   #align(left + horizon)[
 
     #figure(
-      image("../assets/img/2024_10_04_compiled_lang_principle_rev01.png"),
+      image("../assets/img/slides_01/20250812_source_code_compiler_rev01.png"),
       caption: [Execution of interpreted languages],
     )
   ]
@@ -389,7 +390,7 @@
 #slide[
   #align(left + horizon)[
     #figure(
-      image("../assets/img/2024_10_03_jdk_jre_compiler_rev01.png"),
+      image("../assets/img/slides_01/20250812_jre_jdk_rev01.png"),
       caption: [The structure of the Java Toolchain#footnote(numbering: "*")[Application Programming Interface]],
     )
   ]

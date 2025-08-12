@@ -117,7 +117,7 @@
     - Vererbung: Ableitung, engl.: inheritance
 
     #figure(
-      image("../assets/img/2024_10_20_vererbung_AB_rev01.png"),
+      image("../assets/img/slides_5/2024_10_20_vererbung_AB_rev01.png"),
       caption: [Einfaches Beispiel für Vererbung],
     )
 ]
@@ -154,7 +154,7 @@
   ]
   #figure(
     image(
-      "../assets/img/2024_10_20_vererbung_person_pilot_rev01.png",
+      "../assets/img/slides_5/2024_10_20_vererbung_person_pilot_rev01.png",
       height: 40%,
     ),
     caption: [Pilot erbt von Person],
@@ -190,8 +190,8 @@
     grid(
       columns: 2,
       gutter: 1em,
-      image("../assets/img/2024_10_20_vererbung_uml_person_pilot_rev01.png"),
-      image("../assets/img/2024_10_20_vererbung_pilot_objekt_rev01.png"),
+      image("../assets/img/slides_5/2024_10_20_vererbung_uml_person_pilot_rev01.png"),
+      image("../assets/img/slides_5/2024_10_20_vererbung_pilot_objekt_rev01.png"),
     ),
     caption: [Vererbung von Attributen],
   )
@@ -214,8 +214,8 @@
       columns: 1,
       rows: 2,
       gutter: 1em,
-      image("../assets/img/2024_10_20_vererbung_AB_rev01.png"),
-      image("../assets/img/2024_10_20_vererbung_uml_person_pilot_rev01.png"),
+      image("../assets/img/slides_5/2024_10_20_vererbung_AB_rev01.png"),
+      image("../assets/img/slides_5/2024_10_20_vererbung_uml_person_pilot_rev01.png"),
     ),
   )
 
@@ -242,7 +242,7 @@
   - Gedankenbild: „Sichtbarkeit“ (d.h. ist Element sichtbar bzw. bekannt?)
 
     #figure(
-      image("../assets/img/2024_10_20_klassen_modifier_rev01.png"),
+      image("../assets/img/slides_5/2024_10_20_klassen_modifier_rev01.png"),
       caption: [Modifier für Klassen, Methoden und Attribute],
     )
     #question[Ist `private` als Modifier für Konstruktoren erlaubt?]
@@ -262,8 +262,8 @@
       columns: 1,
       rows: 2,
       gutter: 1em,
-      image("../assets/img/2024_10_20_vererbung_AB_rev01.png"),
-      image("../assets/img/2024_10_20_vererbung_uml_person_pilot_rev01.png"),
+      image("../assets/img/slides_5/2024_10_20_vererbung_AB_rev01.png"),
+      image("../assets/img/slides_5/2024_10_20_vererbung_uml_person_pilot_rev01.png"),
     ),
   )
   #grid(
@@ -312,7 +312,7 @@
     (Mehrfachvererbung)
 
     #figure(
-      image("../assets/img/2024_10_20_vererbung_strukturen_rev01.png", height: 50%),
+      image("../assets/img/slides_5/2024_10_20_vererbung_strukturen_rev01.png", height: 50%),
       caption: [Mögliche Strukturen zur Vererbung],
     )
 ]
@@ -335,7 +335,7 @@
 
 #slide[
   #figure(
-    image("../assets/img/2024_10_20_vererbung_uml_person_pilot_rev01.png"),
+    image("../assets/img/slides_5/2024_10_20_vererbung_uml_person_pilot_rev01.png"),
     caption: [Object als Superklasse von Person],
   )
 ]
@@ -344,7 +344,7 @@
   - Wichtige Konsequenz:
     - Object ist Basisklasse jeder Vererbungshierarchie
     #figure(
-      image("../assets/img/2024_10_20_vererbung_object_klasse_rev01.png"),
+      image("../assets/img/slides_5/2024_10_20_vererbung_object_klasse_rev01.png"),
       caption: [Object als Teil jeder Vererbung],
     )
 ]
@@ -391,7 +391,7 @@
   ]
   #figure(
     image(
-      "../assets/img/2024_10_20_vererbung_geometrische_Formen_rev01.png",
+      "../assets/img/slides_5/2024_10_20_vererbung_geometrische_Formen_rev01.png",
       height: 40%,
     ),
     caption: [Geometrische Formen als Objekte],
@@ -443,7 +443,7 @@
       ```
     ]
   ]
-  #let fig = figure(image("../assets/img/2024_10_20_vererbung_geom_formen_baum_rev01.png"))
+  #let fig = figure(image("../assets/img/slides_5/2024_10_20_vererbung_geom_formen_baum_rev01.png"))
   #grid(
     columns: (80%, 20%),
     gutter: 0.5em,
@@ -541,7 +541,7 @@
 == Erzeugung von Objekten
 
 #slide[
-  #let fig = figure(image("../assets/img/2024_10_20_vererbung_ABC_rev01.png"))
+  #let fig = figure(image("../assets/img/slides_5/2024_10_20_vererbung_ABC_rev01.png"))
 
   #let body = [
     #text(size: 18pt)[
@@ -580,7 +580,7 @@
     - Diese enthalten die von Klasse A geerbten Variablen
 
     #figure(
-      image("../assets/img/2024_10_20_vererbung_ABC_aufbau_rev01.png"),
+      image("../assets/img/slides_5/2024_10_20_vererbung_ABC_aufbau_rev01.png"),
       caption: [Zusammensetzung des Objekts der Klasse C],
     )
 ]
@@ -600,7 +600,7 @@
 
 #slide[
   #figure(
-    image("../assets/img/2024_10_20_vererbung_variablen_speicher_rev01.png"),
+    image("../assets/img/slides_5/2024_10_20_vererbung_variablen_speicher_rev01.png"),
     caption: [Variablen der Klasse C im Speicher],
   )
 ]
@@ -630,7 +630,7 @@
       ```
     ]
   ]
-  #let fig = figure(image("../assets/img/2024_10_20_vererbung_erzeugen_rev01.png"))
+  #let fig = figure(image("../assets/img/slides_5/2024_10_20_vererbung_erzeugen_rev01.png"))
   #grid(
     columns: (85%, 15%),
     gutter: 0.25em,
@@ -698,7 +698,7 @@
 
   #figure(
     image(
-      "../assets/img/2024_10_20_vererbung_uml_geom_formen_rev01.png",
+      "../assets/img/slides_5/2024_10_20_vererbung_uml_geom_formen_rev01.png",
       height: 40%,
     ),
     caption: [Aufbau der Vererbung],
@@ -756,7 +756,7 @@
       ```
     ]
   ]
-  #let fig = figure(image("../assets/img/2024_10_20_vererbung_uml_person_pilot_rev01.png"))
+  #let fig = figure(image("../assets/img/slides_5/2024_10_20_vererbung_uml_person_pilot_rev01.png"))
 
   #grid(
     columns: (85%, 15%),
@@ -790,7 +790,7 @@
 
     ]
   ]
-  #let fig = figure(image("../assets/img/2024_10_20_vererbung_uml_person_pilot_rev01.png"))
+  #let fig = figure(image("../assets/img/slides_5/2024_10_20_vererbung_uml_person_pilot_rev01.png"))
 
   #grid(
     columns: (85%, 15%),
@@ -806,7 +806,7 @@
   - Pilot beinhaltet Person („Pilot is a Person“) Als Person referenzierbar
   - Objekt wird hierdurch nicht verändert (d.h. Objekt bleibt vom Typ Pilot)!
     #figure(
-      image("../assets/img/2024_10_20_vererbung_referenzen_rev01.png", height: 40%),
+      image("../assets/img/slides_5/2024_10_20_vererbung_referenzen_rev01.png", height: 40%),
       caption: [Referenzen auf ein Objekt mit Basisklasse],
     )
 ]
@@ -866,7 +866,7 @@
       ```
     ]
   ]
-  #let fig = figure(image("../assets/img/2024_10_20_vererbung_person_toString_rot_rev01.png"))
+  #let fig = figure(image("../assets/img/slides_5/2024_10_20_vererbung_person_toString_rot_rev01.png"))
 
   #grid(
     columns: (80%, 20%),
@@ -898,7 +898,7 @@
       ```
     ]
   ]
-  #let fig = figure(image("../assets/img/2024_10_20_vererbung_person_pilot_tostring_rot_rev01.png"))
+  #let fig = figure(image("../assets/img/slides_5/2024_10_20_vererbung_person_pilot_tostring_rot_rev01.png"))
 
   #grid(
     columns: (80%, 20%),
@@ -941,7 +941,7 @@
     ]
   ]
 
-  #let fig = figure(image("../assets/img/2024_10_20_vererbung_toString_rev01.png"))
+  #let fig = figure(image("../assets/img/slides_5/2024_10_20_vererbung_toString_rev01.png"))
   #grid(
     columns: (80%, 20%),
     gutter: 0.25em,
@@ -973,7 +973,7 @@
     ]
   ]
 
-  #let fig = figure(image("../assets/img/2024_10_20_vererbung_toString_rev01.png"))
+  #let fig = figure(image("../assets/img/slides_5/2024_10_20_vererbung_toString_rev01.png"))
   #grid(
     columns: (80%, 20%),
     gutter: 0.25em,
@@ -1014,7 +1014,7 @@
     ]
   ]
 
-  #let fig = figure(image("../assets/img/2024_10_20_vererbung_toString_rev01.png"))
+  #let fig = figure(image("../assets/img/slides_5/2024_10_20_vererbung_toString_rev01.png"))
   #grid(
     columns: (80%, 20%),
     gutter: 0.25em,
@@ -1024,7 +1024,7 @@
 ]
 
 #slide[
-  #let fig = figure(image("../assets/img/2024_10_20_vererbung_toString_rev01.png"))
+  #let fig = figure(image("../assets/img/slides_5/2024_10_20_vererbung_toString_rev01.png"))
   #let body = [
     #text(size: 14pt)[
 
@@ -1043,7 +1043,7 @@
       - Methoden:
         - Methode mit Modifier final kann nicht in Subklasse überlagert werden
       #figure(
-        image("../assets/img/2024_10_20_vererbung_final_rev01.png"),
+        image("../assets/img/slides_5/2024_10_20_vererbung_final_rev01.png"),
         caption: [`final`-Schlüsselwort in der Vererbung],
       )
     ]
@@ -1076,7 +1076,7 @@
       - Welche Methoden hat Jason, die Katze?
       - Aus welchen Klassen stammt jeweils die Methoden-Definition?
     ]
-    #figure(image("../assets/img/2024_10_20_vererbung_katze_frage_rev01.png", height: 60%))
+    #figure(image("../assets/img/slides_5/2024_10_20_vererbung_katze_frage_rev01.png", height: 60%))
 
   ]
 ]
@@ -1086,7 +1086,7 @@
       - Welche Methoden hat Jason, die Katze?
       - Aus welchen Klassen stammt jeweils die Methoden-Definition?
     ]
-    #figure(image("../assets/img/2024_10_20_vererbung_katze_antwort_rev01.png", height: 60%))
+    #figure(image("../assets/img/slides_5/2024_10_20_vererbung_katze_antwort_rev01.png", height: 60%))
 
   ]
 ]
@@ -1101,7 +1101,7 @@
     ]
 
   ]
-  #figure(image("../assets/img/2024_10_20_vererbung_uml_geom_formen_rev01.png", height: 50%))
+  #figure(image("../assets/img/slides_5/2024_10_20_vererbung_uml_geom_formen_rev01.png", height: 50%))
 
 ]
 #slide[
@@ -1185,7 +1185,7 @@
       - Überladen (Overloading):
         - Methoden in Klasse haben gleichen Namen
         - Müssen unterschiedliche Signatur haben (d.h. unterschiedliche Parametertypen)
-        #figure(image("../assets/img/2024_10_20_vererbung_mathfunctions_rev01.png"), caption: [Klasse MathFunctions])
+        #figure(image("../assets/img/slides_5/2024_10_20_vererbung_mathfunctions_rev01.png"), caption: [Klasse MathFunctions])
 
     ]
 
@@ -1196,7 +1196,7 @@
         - Methode in Vererbungslinie haben gleichen Namen
         - Müssen gleiche Signatur haben (d.h. gleichen Namen und Parametertypen)
 
-        #figure(image("../assets/img/2024_10_20_vererbung_toString_rev01.png"), caption: [Vererbung von `toString()`])
+        #figure(image("../assets/img/slides_5/2024_10_20_vererbung_toString_rev01.png"), caption: [Vererbung von `toString()`])
 
     ]
   ]
@@ -1274,7 +1274,7 @@
     ]
 
   ]
-  #let fig = figure(image("../assets/img/2024_10_20_vererbung_referenzen_point_rev01.png"))
+  #let fig = figure(image("../assets/img/slides_5/2024_10_20_vererbung_referenzen_point_rev01.png"))
   #grid(
     columns: (80%, 20%),
     gutter: 0.25em,
@@ -1309,7 +1309,7 @@
       - Welches Ergebnis liefern die Vergleiche in der Tabelle?
     ]
   ]
-  #figure(image("../assets/img/2024_10_20_vererbung_referenzen_frage_rev01.png", height: 60%))
+  #figure(image("../assets/img/slides_5/2024_10_20_vererbung_referenzen_frage_rev01.png", height: 60%))
 ]
 
 #slide[
@@ -1319,7 +1319,7 @@
       - Welches Ergebnis liefern die Vergleiche in der Tabelle?
     ]
   ]
-  #figure(image("../assets/img/2024_10_20_vererbung_referenzen_antwort_rev01.png", height: 60%))
+  #figure(image("../assets/img/slides_5/2024_10_20_vererbung_referenzen_antwort_rev01.png", height: 60%))
 ]
 
 = License Notice

@@ -119,7 +119,7 @@
 
 #slide[
   #figure(
-    image("../assets/img/2024_10_16_strings_c_java_rev01.png"),
+    image("../assets/img/slides_4/2024_10_16_strings_c_java_rev01.png"),
     caption: [Zeichenketten: Unterschiede C und Java],
   )
 ]
@@ -180,7 +180,7 @@ name = "Birgit";
   ```
 
   #figure(
-    image("../assets/img/2024_10_16_string_immut_objects_rev01.png"),
+    image("../assets/img/slides_4/2024_10_16_string_immut_objects_rev01.png"),
     caption: [Referenz auf Zeichenkette],
   )
 ]
@@ -190,7 +190,7 @@ name = "Birgit";
   lena2 += " B.";
   ```
   #figure(
-    image("../assets/img/2024_10_16_string_immut_two_objects_rev01.png"),
+    image("../assets/img/slides_4/2024_10_16_string_immut_two_objects_rev01.png"),
     caption: [Änderung der Zeichenkette führt zu neuem Objekt],
   )
 ]
@@ -333,7 +333,7 @@ String name = "Lena " + "oder " + "dann ";
   ```java %[ArgumentNr.] [Flags] [MindestanzahlZeichen] [.Genauigkeit] Format```
 
   #figure(
-    image("../assets/img/2024_10_16_string_formats_rev01.png", height: 60%),
+    image("../assets/img/slides_4/2024_10_16_string_formats_rev01.png", height: 60%),
     caption: [Formate und Flags],
   )
 ]
@@ -407,7 +407,7 @@ String name = "Lena " + "oder " + "dann ";
 
 #slide[
   #figure(
-    image("../assets/img/2024_10_16_arrays_c_java_rev01.png"),
+    image("../assets/img/slides_4/2024_10_16_arrays_c_java_rev01.png"),
     caption: [Arrays in Java und C],
   )
 ]
@@ -443,7 +443,7 @@ int[] filter = new int[];
 ```
 
 #figure(
-  image("../assets/img/2024_10_16_filter_array_empty_rev01.png"),
+  image("../assets/img/slides_4/2024_10_16_filter_array_empty_rev01.png"),
   caption: [Erstellung eines Arrays],
 )
 
@@ -460,7 +460,7 @@ int[] filter = new int[3];
 ```
 
 #figure(
-  image("../assets/img/2024_10_16_filter_array_filled_single_rev01.png"),
+  image("../assets/img/slides_4/2024_10_16_filter_array_filled_single_rev01.png"),
   caption: [Zuweisen von Werten durch Indexzugriff],
 )
 
@@ -476,7 +476,7 @@ int[] filter = new int[] {1, 2, 1};
 ```
 
 #figure(
-  image("../assets/img/2024_10_16_filter_array_filled_single_rev01.png"),
+  image("../assets/img/slides_4/2024_10_16_filter_array_filled_single_rev01.png"),
   caption: [Füllen bei Deklaration],
 )
 
@@ -499,7 +499,7 @@ int[] filter = new int[] {1, 2, 1};
 ]
 
 #figure(
-  image("../assets/img/2024_10_16_filter_array_question_rev01.png"),
+  image("../assets/img/slides_4/2024_10_16_filter_array_question_rev01.png"),
   caption: [Befüllen durch `for`-Schleife],
 )
 
@@ -520,7 +520,7 @@ int[] filter = new int[] {1, 2, 1};
       ```
     ]
     #figure(
-      image("../assets/img/2024_10_16_filter_array_index_rev01.png"),
+      image("../assets/img/slides_4/2024_10_16_filter_array_index_rev01.png"),
       caption: [Indizes des Arrays `filter`],
     )
 ]
@@ -538,7 +538,7 @@ int[] filter = new int[] {1, 2, 1};
   ```
 
   #figure(
-    image("../assets/img/2024_10_16_friends_array_classes_rev01.png"),
+    image("../assets/img/slides_4/2024_10_16_friends_array_classes_rev01.png"),
     caption: [Arrays aus Objekten],
   )
 ]
@@ -638,7 +638,7 @@ Statische Deklaration:
 ```
 
 #figure(
-  image("../assets/img/2024_10_16_filter_array_dim_rev01.png"),
+  image("../assets/img/slides_4/2024_10_16_filter_array_dim_rev01.png"),
   caption: [Mehrdimensionales Array],
 )
 
@@ -658,7 +658,7 @@ Statische Deklaration:
 ]
 #slide[
   #figure(
-    image("../assets/img/2024_10_16_a_array_question_dim_rev01.png"),
+    image("../assets/img/slides_4/2024_10_16_a_array_question_dim_rev01.png"),
     caption: [Mehrdimensionale Arrays mit Werten],
   )
 ]
@@ -679,7 +679,7 @@ Statische Deklaration:
 
 #slide[
   #figure(
-    image("../assets/img/2024_10_16_a_b_c_array_question_rev01.png"),
+    image("../assets/img/slides_4/2024_10_16_a_b_c_array_question_rev01.png"),
     caption: [Komplizierte mehrdimensionale Arrays],
   )
 ]
@@ -703,7 +703,7 @@ Statische Deklaration:
 ]
 #slide[
   #figure(
-    image("../assets/img/2024_10_17_triangle_array_rev01.png"),
+    image("../assets/img/slides_4/2024_10_17_triangle_array_rev01.png"),
     caption: [Mehrdimensionales Array in der Form eines Dreiecks],
   )
 ]
@@ -794,7 +794,7 @@ Statische Deklaration:
   	    System.out.println("Element: " + element);
   	}
   ```
-  #figure(image("../assets/img/2024_10_16_foreach_rev01.png"), caption: [Ergebnis der foreach-Schleife])
+  #figure(image("../assets/img/slides_4/2024_10_16_foreach_rev01.png"), caption: [Ergebnis der foreach-Schleife])
 ]
 
 #slide[
@@ -837,7 +837,7 @@ Statische Deklaration:
   - „Packen“ (to wrap) primitive Datentypen in Klassen ein
   - Stellen Methoden (z.B. für Ganzzahlen) zur Verfügung
 
-#figure(image("../assets/img/2024_10_16_wrapper_rev01.png"), caption: [Wrapperklassen für primitive Datentypen])
+#figure(image("../assets/img/slides_4/2024_10_16_wrapper_rev01.png"), caption: [Wrapperklassen für primitive Datentypen])
 
 #slide[
   #text(size: 22pt)[
@@ -878,7 +878,7 @@ Statische Deklaration:
 ]
 
 #slide[
-  #figure(image("../assets/img/2024_10_16_wrapper_conversion_rev01.png"), caption: [Typumwandlung mit Wrapperklassen])
+  #figure(image("../assets/img/slides_4/2024_10_16_wrapper_conversion_rev01.png"), caption: [Typumwandlung mit Wrapperklassen])
 ]
 
 == `Math`-Klasse

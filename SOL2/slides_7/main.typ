@@ -110,7 +110,7 @@
       - Wie reagieren die Elemente? Hängen hierbei Elemente zusammen?
     ]
   ]
-  #figure(image("../assets/img/2024_10_25_windows_explorer_rev01.png", height: 50%), caption: [Windows 7 Explorer])
+  #figure(image("../assets/img/slides_7/2024_10_25_windows_explorer_rev01.png", height: 50%), caption: [Windows 7 Explorer])
 ]
 
 #slide[
@@ -140,7 +140,7 @@
     - Kann zusätzlich Menüleiste (Menu bar) enthalten
 
     #figure(
-      image("../assets/img/2024_10_25_window_frame_aufbau_rev01.png", height: 50%),
+      image("../assets/img/slides_7/2024_10_25_window_frame_aufbau_rev01.png", height: 50%),
       caption: [Aufbau eines Frames],
     )
   ]
@@ -151,7 +151,7 @@
     - Elemente werden hierarchisch hinzugefügt.
     - Für Elemente, die andere Elemente aufnehmen, lässt sich das Layout angeben.
     #figure(
-      image("../assets/img/2024_10_25_window_frame_hierarchie_rev01.png", height: 70%),
+      image("../assets/img/slides_7/2024_10_25_window_frame_hierarchie_rev01.png", height: 70%),
       caption: [Hierarchie eines Windows],
     )
   ]
@@ -195,7 +195,7 @@
         - Das Fenster ist zu klein!
         - Das Fenster „klebt“ in der linken oberen Ecke!
     ]
-    #let right = figure(image("../assets/img/2024_10_25_window_frame_mini_rev01.png", height: 20%))
+    #let right = figure(image("../assets/img/slides_7/2024_10_25_window_frame_mini_rev01.png", height: 20%))
     #grid(
       columns: (60%, 40%),
       gutter: 0.25em,
@@ -232,7 +232,7 @@
       	}
       ```
     ]
-    #let fig = figure(image("../assets/img/2024_10_25_window_frame_empty_rev01.png"))
+    #let fig = figure(image("../assets/img/slides_7/2024_10_25_window_frame_empty_rev01.png"))
     #grid(
       columns: (70%, 30%),
       gutter: 0.25em,
@@ -261,7 +261,7 @@
         - Die Menüleiste wird über setJMenuBar() hinzugefügt.
       ]
     ]
-    #let fig = figure(image("../assets/img/2024_10_25_window_frame_tree_rev01.png"))
+    #let fig = figure(image("../assets/img/slides_7/2024_10_25_window_frame_tree_rev01.png"))
     #grid(
       columns: (70%, 30%),
       gutter: 0.25em,
@@ -297,8 +297,8 @@
       ```
     ]
     #let fig = [
-      #figure(image("../assets/img/2024_10_25_window_frame_file_menu_rev01.png"))
-      #figure(image("../assets/img/2024_10_25_window_frame_help_menu_rev01.png"))
+      #figure(image("../assets/img/slides_7/2024_10_25_window_frame_file_menu_rev01.png"))
+      #figure(image("../assets/img/slides_7/2024_10_25_window_frame_help_menu_rev01.png"))
     ]
     #grid(
       columns: (70%, 30%),
@@ -324,7 +324,7 @@
         - Layout über frame.setLayout(new GridLayout(2, 1))
     ]
     #let fig = [
-      #figure(image("../assets/img/2024_10_25_window_frame_lena_rev01.png"))
+      #figure(image("../assets/img/slides_7/2024_10_25_window_frame_lena_rev01.png"))
     ]
     #grid(
       columns: (70%, 30%),
@@ -364,7 +364,7 @@
       ```
     ]
     #let fig = [
-      #figure(image("../assets/img/2024_10_25_window_frame_lena_rev01.png"))
+      #figure(image("../assets/img/slides_7/2024_10_25_window_frame_lena_rev01.png"))
     ]
     #grid(
       columns: (70%, 30%),
@@ -414,7 +414,7 @@
       ```
     ]
     #let fig = [
-      #figure(image("../assets/img/2024_10_25_window_frame_vertical_buttons_rev01.png"))
+      #figure(image("../assets/img/slides_7/2024_10_25_window_frame_vertical_buttons_rev01.png"))
     ]
     #grid(
       columns: (70%, 30%),
@@ -431,13 +431,13 @@
     ```java
     	contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
     ```
-    #figure(image("../assets/img/2024_10_25_window_frame_horizontal_buttons_rev01.png"))
+    #figure(image("../assets/img/slides_7/2024_10_25_window_frame_horizontal_buttons_rev01.png"))
 
     - GridLayout:
     ```java
     	contentPane.setLayout(new GridLayout(2, 2));
     ```
-    #figure(image("../assets/img/2024_10_25_window_frame_grid_buttons_rev01.png"))
+    #figure(image("../assets/img/slides_7/2024_10_25_window_frame_grid_buttons_rev01.png"))
   ]
 ]
 
@@ -451,7 +451,7 @@
         - Über welche Objekte und Layout-Manager sind diese angeordnet?
       ]
 
-      #figure(image("../assets/img/2024_10_25_window_frame_groups_rev01.png"))
+      #figure(image("../assets/img/slides_7/2024_10_25_window_frame_groups_rev01.png"))
   ]
 ]
 
@@ -482,7 +482,7 @@
       frame.setVisible(true);
       ```
     ]
-    #let fig = figure(image("../assets/img/2024_10_25_window_frame_group_jframe_rev01.png"))
+    #let fig = figure(image("../assets/img/slides_7/2024_10_25_window_frame_group_jframe_rev01.png"))
     #grid(
       columns: (70%, 30%),
       gutter: 0.25em,
@@ -508,7 +508,7 @@
         - Neuzeichnen kann auch über Methode repaint() veranlasst werden.
         - Diese ruft intern paintComponent() auf.
     ]
-    #let fig = figure(image("../assets/img/2024_10_25_window_frame_jpanel_uml_rev01.png"))
+    #let fig = figure(image("../assets/img/slides_7/2024_10_25_window_frame_jpanel_uml_rev01.png"))
     #grid(
       columns: (75%, 25%),
       gutter: 0.25em,
@@ -537,7 +537,7 @@
       	}
       ```
     ]
-    #let fig = figure(image("../assets/img/2024_10_25_window_frame_jpanel_uml_inherit_rev01.png"))
+    #let fig = figure(image("../assets/img/slides_7/2024_10_25_window_frame_jpanel_uml_inherit_rev01.png"))
     #grid(
       columns: (75%, 25%),
       gutter: 0.25em,
@@ -573,7 +573,7 @@
       }
       ```
     ]
-    #let fig = figure(image("../assets/img/2024_10_25_window_frame_jpanel_uml_example_rev01.png"))
+    #let fig = figure(image("../assets/img/slides_7/2024_10_25_window_frame_jpanel_uml_example_rev01.png"))
     #grid(
       columns: (75%, 25%),
       gutter: 0.25em,
@@ -605,7 +605,7 @@
       	}
       ```
     ]
-    #let fig = figure(image("../assets/img/2024_10_25_window_frame_jpanel_uml_example_rev01.png"))
+    #let fig = figure(image("../assets/img/slides_7/2024_10_25_window_frame_jpanel_uml_example_rev01.png"))
     #grid(
       columns: (75%, 25%),
       gutter: 0.25em,
@@ -620,7 +620,7 @@
       - Entdecken Sie Ihre künstlerische Ader!
       - Erstellen Sie ein Programm, das eine Ampel anzeigt.
     ]
-    #figure(image("../assets/img/2024_10_25_window_frame_ampel_rev01.png"))
+    #figure(image("../assets/img/slides_7/2024_10_25_window_frame_ampel_rev01.png"))
   ]
 ]
 
@@ -634,7 +634,7 @@
       - Fenster mit drei Buttons und einem Panel
       - Auswahl der Buttons färben das Panel rot, blau bzw. in zufälliger Farbe
 
-    #figure(image("../assets/img/2024_10_29_button_color_rev01.png"), caption: [Buttons, die eine Farbe ändern])
+    #figure(image("../assets/img/slides_7/2024_10_29_button_color_rev01.png"), caption: [Buttons, die eine Farbe ändern])
 
     - Wir benötigen hierzu:
       - Buttons als Elemente
@@ -648,7 +648,7 @@
       - Erzeugen Sie zunächst die GUI mit ihren Elementen.
     ]
 
-    #figure(image("../assets/img/2024_10_29_button_color_explain_rev01.png"))
+    #figure(image("../assets/img/slides_7/2024_10_29_button_color_explain_rev01.png"))
   ]
 ]
 
@@ -702,7 +702,7 @@
       - Button: Methode register(), um Beobachter zur Liste hinzuzufügen
       - Observer: Methode notify(), die Button-Objekt zur Benachrichtigung aufruft
 
-    #figure(image("../assets/img/2024_10_29_button_event_diagram_rev01.png", height: 70%))
+    #figure(image("../assets/img/slides_7/2024_10_29_button_event_diagram_rev01.png", height: 70%))
   ]
 ]
 
@@ -718,7 +718,7 @@
       - Button braucht die Klasse des Beobachters nicht kennen, nur das Interface
 
     #figure(
-      image("../assets/img/2024_10_29_observer_interface_rev01.png", height: 50%),
+      image("../assets/img/slides_7/2024_10_29_observer_interface_rev01.png", height: 50%),
       caption: [Interface `Oberserver`],
     )
   ]
@@ -730,7 +730,7 @@
     - Es können sich mehr als ein Beobachter registrieren.
     - In Swing Namen des Interfaces und der Methoden anders gewählt:
 
-    #figure(image("../assets/img/2024_10_29_actionlistener_rev01.png"))
+    #figure(image("../assets/img/slides_7/2024_10_29_actionlistener_rev01.png"))
   ]
 ]
 
@@ -741,7 +741,7 @@
       - Objekt der ausführbaren Klasse registriert sich bei den Buttons
     ]
 
-    #figure(image("../assets/img/2024_10_29_button_color_noexplain_rev01.png"))
+    #figure(image("../assets/img/slides_7/2024_10_29_button_color_noexplain_rev01.png"))
   ]
 ]
 
@@ -894,7 +894,7 @@
       }
       ```
     ]
-    #let fig = figure(image("../assets/img/2024_10_29_simple_dialog_rev01.png"))
+    #let fig = figure(image("../assets/img/slides_7/2024_10_29_simple_dialog_rev01.png"))
     #grid(
       columns: (70%, 30%),
       gutter: 0.25em,

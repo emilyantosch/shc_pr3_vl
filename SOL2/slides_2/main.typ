@@ -1,7 +1,7 @@
 #import "@preview/touying:0.5.2": *
 #import themes.university: *
 
-#import "@preview/fletcher:0.5.1" as flechter: diagram, node, edge
+#import "@preview/fletcher:0.5.1" as flechter: diagram, edge, node
 
 #import "@preview/gentle-clues:1.0.0": *
 #import "@preview/pinit:0.2.0": *
@@ -73,11 +73,13 @@
 
 == Where Are We Now?
 
-- In the introduction, I gave you an overview of the topics for the
-  upcoming lecture.
-- You have also written your first program in Java!
+#slide[
+  - In the introduction, I gave you an overview of the topics for the
+    upcoming lecture.
+  - You have also written your first program in Java!
 
-- Today we'll cover *Imperative Concepts*.
+  - Today we'll cover *Imperative Concepts*.
+]
 
 #slide[
   1. *Imperative Concepts*
@@ -92,29 +94,26 @@
 ]
 
 == The Goal of This Chapter
-
-- We will discuss imperative concepts in programming with Java.
-- You will understand the simple data types in Java.
-- You will control program flow with control structures and loops.
-- You will apply the correct coding style.
+#slide[
+  - We will discuss imperative concepts in programming with Java.
+  - You will understand the simple data types in Java.
+  - You will control program flow with control structures and loops.
+  - You will apply the correct coding style.
+]
 
 = Simple Data Types
-
 == Data Types and Memory
-
 #slide[
   #question[How can a program remember its state?]
-
   #pause
-
   - Variables that store the state in the computer's memory.
   - The content of the memory on the computer is interpreted based on the *data type*.
-
   #figure(
-    image("../assets/img/2024_10_06_data_storage_rev01.png", height: 25%),
+    image("../assets/img/slides_2/2024_10_06_data_storage_rev01.png", height: 25%),
     caption: [Memory in the computer with values from the program],
   )
 ]
+
 #slide[
   #question[Which data types do you already know from C?]
   #pause
@@ -125,59 +124,59 @@
 ]
 
 == Data Types in Java
-
 #slide[
   The following data structures are available in Java:
-
   #figure(
-    image("../assets/img/2024_10_06_data_types_java_rev01.png", height: 70%),
+    image("../assets/img/slides_2/2024_10_06_data_types_java_rev01.png", height: 70%),
     caption: [Data types in Java],
   )
 ]
 
 #slide[
   - Memory sizes and the corresponding value ranges:
-
   #figure(
-    image("../assets/img/2024_10_06_data_types_ranges_java_rev01.png"),
+    image("../assets/img/slides_2/2024_10_06_data_types_ranges_java_rev01.png"),
     caption: [Value ranges of data types in Java],
   )
 ]
-== Declaration of Variables
 
-#memo[Variables must be declared before they can be used.]
-- A data type is written before the variable name.
-- A declaration could look like this:
-```java
-int a;
-float b;
-char c;
-```
+== Declaration of Variables
+#slide[
+  #memo[Variables must be declared before they can be used.]
+  - A data type is written before the variable name.
+  - A declaration could look like this:
+  ```java
+  int a;
+  float b;
+  char c;
+  ```
+]
 
 == Initialization of Variables
-#memo[After declaration, a value can be assigned. This is called
-  initialization.]
-- A value is assigned to the variable using the assignment operator ```=```:
+#slide[
+  #memo[After declaration, a value can be assigned. This is called
+    initialization.]
+  - A value is assigned to the variable using the assignment operator ```=```:
 
-```java
-a = 5;
-b = 3.5;
-c = 'A';
-```
+  ```java
+  a = 5;
+  b = 3.5;
+  c = 'A';
+  ```
+]
 
 == Definition of Variables
-#memo[Declaration and initialization can also be done in one step. This
-  is then called definition.]
+#slide[
+  #memo[Declaration and initialization can also be done in one step. This
+    is then called definition.]
+  ```java
+  int a = 5;
+  float b = 3.5;
+  char c = 'A';
+  ```
+]
 
-- Beide Schritte werden direkt hintereinander geschreiben.
-- Deklaration und Initialisierung (Definition):
-```java
-int a = 5;
-float b = 3.5;
-char c = 'A';
-```
 == Scope of Variables
-
 #slide[
   - Variables have a scope that is defined by the curly braces.
   - Variables can be declared at any point in the code.
@@ -185,28 +184,26 @@ char c = 'A';
 ]
 
 == Type Correctness
-
 #slide[
-
   - Types must be correct to avoid errors.
     - Unlike in C, values must be assigned to the correct data type.
     - The following would not work:
-
   ```java
   int a = 5;
   float b = apin1;
   ```
-
   #pinit-rect-from(height: 2em, pos: bottom, fill: rgb(0, 180, 255), 1)[Incorrect type]
 ]
+
 #slide[
   #question[What differences do you see between C and Java when it comes to data types?]
   - No composite data types in Java.
   - No `unsigned` in Java.
   - Memory sizes are fixed and guaranteed.
-  - Zeichen werden mit 2 Byte kodiert.
+  - Characters are encoded with 2 bytes.
     - 65,536 characters can be represented instead of 256.
 ]
+
 == Literals
 #slide[
   #memo[A *literal* is a constant, immutable number or string that
@@ -242,12 +239,10 @@ char c = 'A';
 ]
 
 == Constants
-
 #slide[
   - We just had the example of the circle number $pi$.
   - In Java, there is the keyword ```final``` to define constants.
   - These can then no longer be changed.
-
   ```java
     final double PI = 3.1416;
   ```
@@ -260,87 +255,87 @@ char c = 'A';
 ]
 
 == Creating Console Output
+#slide[
+  #task[
+    We now want to create a console output:
+    - Open IntelliJ IDEA and open or create a new executable
+      class.
+    - Try the following code:
+    ```java
+    int age = 24;
+    System.out.println(24);
+    System.out.println(age);
+    ```
+  ]
+  #task[
+    - Using the "+" operator, you can combine text and variables:
 
-#task[
-  We now want to create a console output:
-  - Open IntelliJ IDEA and open or create a new executable
-    class.
-  - Try the following code:
-  ```java
-  int age = 24;
-  System.out.println(24);
-  System.out.println(age);
-  ```
-]
-#task[
-  - Using the "+" operator, you can combine text and variables:
-
-  ```java
-  int age = 24;
-  System.out.println("My age is " + 24);
-  System.out.println("My age is " + age);
-  ```
-]
-#tip[
-  - Type ```java sout``` in IntelliJ IDEA and press the
-    Tab key. This saves time when writing ```java System.out.println()```!
+    ```java
+    int age = 24;
+    System.out.println("My age is " + 24);
+    System.out.println("My age is " + age);
+    ```
+  ]
+  #tip[
+    - Type ```java sout``` in IntelliJ IDEA and press the
+      Tab key. This saves time when writing ```java System.out.println()```!
+  ]
 ]
 
 == Coding Style
+#slide[
+  #question[What is a *Coding Style*? What does the term tell you?]
 
-#question[What is a *Coding Style*? What does the term tell you?]
+  #pause
+  - The coding style is a collection of rules that determine how code
+    should be written.
+  - Uniform code is easier to read and maintain.
 
-#pause
-- The coding style is a collection of rules that determine how code
-  should be written.
-- Uniform code is easier to read and maintain.
-
-#memo[Compliance with the coding style will be evaluated in the exam!]
-
-== Coding Style: Naming Conventions
-
-- All names, and this applies to all identifiers, should be written in English!
-- The following naming conventions should be followed:
-  - Classes: *CamelCase*
-  - Methods and variables: *camelCase*
-  - Constants: *UPPER_CASE*
-  - Packages: *lowercase*
-
-#tip[From my experience: Make your variables as meaningful as possible!
-  Then the name can also be longer.]
-
-= Comments and Identifiers
-
-== Character Set
-
-- As already mentioned, Java uses the Unicode character set.
-- This means more characters are possible (65,536 to be exact).
-- So you can write your comments in German, English,
-  or Chinese without major restrictions.
-- However, I would ask you to write your comments in *German* or *English*.
-
-#memo[Since your keyboard doesn't have 65,536 characters, you can also copy
-  and paste the characters. Alternatively for #emoji.face.grin:
-  ```java
-  System.out.println("\u{1F600}");
-  ```
+  #memo[Compliance with the coding style will be evaluated in the exam!]
 ]
 
-== Comments
-
+== Coding Style: Naming Conventions
 #slide[
+  - All names, and this applies to all identifiers, should be written in English!
+  - The following naming conventions should be followed:
+    - Classes: *CamelCase*
+    - Methods and variables: *camelCase*
+    - Constants: *UPPER_CASE*
+    - Packages: *lowercase*
+  #tip[From my experience: Make your variables as meaningful as possible!
+    Then the name can also be longer.]
+]
 
+
+= Comments and Identifiers
+== Character Set
+#slide[
+  - As already mentioned, Java uses the Unicode character set.
+  - This means more characters are possible (65,536 to be exact).
+  - So you can write your comments in German, English,
+    or Chinese without major restrictions.
+  - However, I would ask you to write your comments in *German* or *English*.
+
+  #memo[Since your keyboard doesn't have 65,536 characters, you can also copy
+    and paste the characters. Alternatively for #emoji.face.grin:
+    ```java
+    System.out.println("\u{1F600}");
+    ```
+  ]
+]
+
+
+== Comments
+#slide[
   #question[What do you think about the following statement? Why are comments important?]
   #quotation[
     #quote(attribution: [Many Developers], block: true)[
       Make the code readable? Who else is supposed to read it?
     ]
   ]
-
 ]
 
 #slide[
-
   - Comments are important for documenting code and improving
     maintainability.
   - Both users of the code and the developers will need to understand
@@ -374,17 +369,18 @@ char c = 'A';
 ]
 
 == Identifiers
+#slide[
+  - All things that you name in Java are called *identifiers*. Many
+    things you write need a name!
 
-- All things that you name in Java are called *identifiers*. Many
-  things you write need a name!
-
-#memo[
-  - Follow these rules for identifiers:
-    - Letters, numbers, underscores, and dollar signs are allowed.
-    - The first character may not be a number.
-    - Case sensitivity is observed.
-    - No spaces or keywords.
-    - Not the literals `true`, `false`, or `null`.
+  #memo[
+    - Follow these rules for identifiers:
+      - Letters, numbers, underscores, and dollar signs are allowed.
+      - The first character may not be a number.
+      - Case sensitivity is observed.
+      - No spaces or keywords.
+      - Not the literals `true`, `false`, or `null`.
+  ]
 ]
 
 #slide[
@@ -411,9 +407,7 @@ char c = 'A';
 ]
 
 #slide[
-
   #question[Which of the identifiers are allowed in your opinion and why?]
-
   ```java
     int length;
     int länge;
@@ -432,36 +426,32 @@ char c = 'A';
     int c.o.s.t;
     String @cost;
   ```
-
 ]
 
 = Operators
-
 == Operators
+#slide[
+  - There are the usual arithmetic operators.
+  - In general, operators are also evaluated from left to right.
 
-- There are the usual arithmetic operators.
-- In general, operators are also evaluated from left to right.
-
-#figure(
-  image("../assets/img/2024_10_08_arithmetische_operatoren_java_rev01.png"),
-  caption: [Arithmetic operators in Java],
-)
+  #figure(
+    image("../assets/img/slides_2/2024_10_08_arithmetische_operatoren_java_rev01.png"),
+    caption: [Arithmetic operators in Java],
+  )
+]
 
 == Increment and Decrement
-
 #slide[
   - There are also the same operators for incrementing and decrementing as
     in C.
-
     #figure(
-      image("../assets/img/2024_10_08_increment_decrement_operatoren_rev01.png"),
+      image("../assets/img/slides_2/2024_10_08_increment_decrement_operatoren_rev01.png"),
       caption: [Operators for increment and decrement in Java],
     )
 ]
 
 #slide[
   #question[Think about it: What will appear on the console here?]
-
   ```java
   int a = 1;
   System.out.println("a   : " + a);
@@ -470,20 +460,20 @@ char c = 'A';
   System.out.println("--a : " + --a);
   System.out.println("a-- : " + a--);
   ```
-
 ]
 
 == Comparison Operators
+#slide[
+  - There are also the same comparison operators as in C!
 
-- Es gibt auch die gleichen Vergleichsoperatoren wie in C!
-
-#figure(
-  image("../assets/img/2024_10_08_boolean_operatoren_rev01.png"),
-  caption: [Vergleichsoperatoren in Java],
-)
+  #figure(
+    image("../assets/img/slides_2/2024_10_08_boolean_operatoren_rev01.png"),
+    caption: [Comparison operators in Java],
+  )
+]
 
 #slide[
-  #question[Zum Mitdenken: Was passiert hier?]
+  #question[Think about it: What happens here?]
 
   ```java
   int a = 7, b = 4;
@@ -495,75 +485,77 @@ char c = 'A';
 ]
 
 == Logical Operators
+#slide[
+  - The result of logical operators is always a truth value, which is represented as `boolean` in Java.
+  #figure(
+    image("../assets/img/slides_2/2024_10_09_logische_operatoren_rev01.png"),
+    caption: [Logical operators in Java],
+  )
 
-- Das Ergebnis der logischen Operatoren ist immer ein Wahrheitswert, der in Java
-  als
-  `boolean` dargestellt wird.
+  #memo[
+    - With logical operators, the right operand is not executed if the
+      result is already determined. In the following example, `a` is not evaluated.
+    - Example: ```java (true || a)```
+    - This is called *Short Circuit*.
+    - This becomes interesting when the right operand is, for example, a function/method.
+  ]
+]
+#slide[
+  #question[Think about it again: What happens in the following code?]
 
-#figure(
-  image("../assets/img/2024_10_09_logische_operatoren_rev01.png"),
-  caption: [Logische Operatoren in Java],
-)
-
-#memo[
-  - Bei den logischen Operatoren wird der rechte Operand nicht ausgeführt, wenn das
-    Ergebnis bereits feststeht. Im folgenden Beispiel wird `a` nicht ausgewertet.
-  - Beispiel: ```java (true || a)```
-  - Das nennt man dann *Short Circuit*.
-  - Wird dann interessant, wenn der rechte Operand bspw. eine Funktion/Methode ist.
+  ```java
+  int a = 3, b = 4;
+  System.out.println((++a == b) || (a++ > b));
+  System.out.println("a = " + a);
+  ```
 ]
 
-#question[Wieder zum Mitdenken: Was passiert im folgenden Code?]
-
-```java
-int a = 3, b = 4;
-System.out.println((++a == b) || (a++ > b));
-System.out.println("a = " + a);
-```
-
 == Assignment Operators
+#slide[
+  - As in C, there are also assignment operators in Java. These can also be
+    combined with other operators.
+  - The placeholder `<op>` stands for `*, /, +` and `-`, among others.
 
-- Wie in C gitb es auch in Java Zuweisungsoperatoren. Diese können auch mit
-  anderen Operatoren kombiniert werden.
-- Der Platzhalter `<op>` steht unter anderem für `*, /, +` und `-`.
-
-#figure(
-  image("../assets/img/2024_10_09_zuweisungs_operatoren_rev01.png"),
-  caption: [Zuweisungsoperatoren in Java],
-)
-
-#question[Ein letztes Mal: Was passiert in diesem Code?]
-
-```java
-int a = 1;
-a += 2;
-System.out.println(a);
-System.out.println(a *= --a);
-System.out.println(a *= -a++);
-System.out.println(a /= 10);
-```
-
-= Type Conversion
-
-== Type Conversion
-- Zur Erinnerung: Typkorrektheit verhindert, dass Variablen einen Wert bekommen,
-  der nicht ihrem Datentyp entspricht.
-- Das verhindert Fehler und macht den Code sicherer.
-
-#warning[Eine Variable, die vom Typ `int` ist passt allerdings in eine Variable vom Typ `byte`.
-  Wie können Sie den Wert in `byte` von trotzdem in eine `int` Variable speichern?]
-
-#idea[Sie können einfach schreiben, dass Sie das explizit wollen!]
-
-```java
-int a = 80;
-byte b = (byte) a;
-System.out.println(b);
-```
+  #figure(
+    image("../assets/img/slides_2/2024_10_09_zuweisungs_operatoren_rev01.png"),
+    caption: [Assignment operators in Java],
+  )
+]
 
 #slide[
-  #question[Was passiert in dem folgenden Code?]
+  #question[One last time: What happens in this code?]
 
+  ```java
+  int a = 1;
+  a += 2;
+  System.out.println(a);
+  System.out.println(a *= --a);
+  System.out.println(a *= -a++);
+  System.out.println(a /= 10);
+  ```
+]
+
+= Type Conversion
+== Type Conversion
+#slide[
+  - As a reminder: Type correctness prevents variables from getting a value
+    that does not correspond to their data type.
+  - This prevents errors and makes the code safer.
+
+  #warning[However, a variable of type `int` does not fit into a variable of type `byte`.
+    How can you still store the value from `int` in a `byte` variable?]
+
+  #idea[You can simply write that you want this explicitly!]
+
+  ```java
+  int a = 80;
+  byte b = (byte) a;
+  System.out.println(b);
+  ```
+]
+
+#slide[
+  #question[What happens in the following code?]
   ```java
   double a = 128.38;
   int b = (int) a;
@@ -573,43 +565,46 @@ System.out.println(b);
   System.out.println("byte  : " + c);
   ```
 ]
-
-#question[
-  Was passiert, wenn Sie den Wert von `128` in eine `byte` Variable speichern?
+#slide[
+  #question[
+    What happens when you store the value `128` in a `byte` variable?
+  ]
+  #pause
+  - Since the data type ```byte``` can only store values from `-128` to `127`,
+    the value will overflow.
+  - The result will be a negative number. In this case it will be `-128`.
 ]
-
-#pause
-
-- Da der Datentyp ```byte``` nur Werte von `-128` bis `127` speichern kann, wird
-  der Wert überlaufen.
-- Das Ergebnis wird eine negative Zahl sein. In diesem Fall wird es `-128` sein.
 
 == Implicit Type Conversion
+#slide[
+  #memo[
+    - Principle of implicit type conversion:
+      - No data loss when assigning from a smaller to a larger type.
+      - The cast operator is not necessary.
+      - Automatic conversion takes place.
+  ]
 
-#memo[
-  - Prinzip der impliziten Typkonvertierung:
-    - Kein Datenverlust bei Zuweisung von einem kleineren in einen größeren Typ.
-    - Der Cast-Operator ist nicht notwendig.
-    - Es erfolgt eine automatische Konvertierung.
+  #example[
+    - `short` (-32,768 to 32,767) fits into `int` (-2,147,483,648 to 2,147,483,647).
+    ```java
+    short a = 71;
+    int b = (int) a;
+    int c = a;
+    ```
+  ]
 ]
 
-#example[
-  - `short` (-32.768 bis 32.767) passt in `int` (-2.147.483.648 bis 2.147.483.647).
+#slide[
+  #question[
+    Think about it: Which of the following lines will compile?
+  ]
   ```java
-  short a = 71;
-  int b = (int) a;
-  int c = a;
+  short a = 1024;
+  long b = a;
+  float c = b;
   ```
 ]
 
-#question[
-  Zum Mitdenken: Welche der folgenden Zeilen werden kompilieren?
-]
-```java
-short a = 1024;
-long b = a;
-float c = b;
-```
 #slide[
   ```java
   char d = 'A';
@@ -619,40 +614,39 @@ float c = b;
 ]
 
 #slide[
-
   #align(left + horizon)[
-
     #figure(
-      image("../assets/img/2024_10_09_implizite_typkonvertierung_rev01.png"),
+      image("../assets/img/slides_2/2024_10_09_implizite_typkonvertierung_rev01.png"),
       caption: [Implizite Typkonvertierung in Java],
     )
   ]
 
   #memo[
-    - Ganzzahlen `char` und `short` besitzen jeweils 2 Byte, `char` ist aber ein
-      *unsigned* Datentyp.
-      - Wertebereich char: 0 bis 65.535
-      - Wertebereich short: -32.768 bis 32.767
-    - Nicht alle long-Werte in float darstellbar (Potenzieller Datenverlust!).
+    - Integer types `char` and `short` each have 2 bytes, but `char` is an
+      *unsigned* data type.
+      - Value range char: 0 to 65,535
+      - Value range short: -32,768 to 32,767
+    - Not all long values can be represented in float (potential data loss!).
   ]
 ]
 
 = Control Structures
-
 == if Statement
-
-#memo[If-Anweisungen sind die einfachste Form der Kontrollstrukturen. Sie erlauben es,
-  Anweisungen nur auszuführen, wenn eine Bedingung erfüllt ist.]
-
-```java
-if (Bedingung) {
-  Anweisungen
-}
-```
 #slide[
-  - Die Bedingung muss, anders als in C, immer ein `boolean` sein.
-  - Anwesungen werden nur ausgeführt, wenn die Bedingung wahr (`true`) ist.
-  - Bei nur einer Anweisung können die geschweiften Klammern weggelassen werden.
+  #memo[If statements are the simplest form of control structures. They allow
+    statements to be executed only when a condition is met.]
+
+  ```java
+  if (condition) {
+    statements
+  }
+  ```
+]
+
+#slide[
+  - The condition must always be a `boolean`, unlike in C.
+  - Statements are only executed when the condition is true (`true`).
+  - With only one statement, the curly braces can be omitted.
   ```java
   int a = 4, b = 8;
     int maximum = a;
@@ -664,20 +658,21 @@ if (Bedingung) {
 ]
 
 == if-else Statement
+#slide[
+  Using an `else` statement, you can specify a block that is executed
+  when the condition is not met.
 
-Mittels einer `else`-Anweisung kann ein Block angegeben werden, der ausgeführt
-wird, wenn die Bedingung nicht erfüllt ist.
-
-```java
-if (Bedingung) {
-      Anweisungen 1
-    } else {
-      Anweisungen 2
-    }
-```
+  ```java
+  if (condition) {
+        statements 1
+      } else {
+        statements 2
+      }
+  ```
+]
 
 #slide[
-  Die Anweisung 2 im obigen Beispiel wird eben ausgeführt, wenn die Bedingung `false` ist.
+  Statement 2 in the above example is executed when the condition is `false`.
 
   ```java
   int a = 4, b = 8;
@@ -689,79 +684,83 @@ if (Bedingung) {
       maximum = b;
     }
   ```
-
 ]
 
 == The ? Operator
-
-Für einfache Zuweisung mittels `if-else`-Anweisungen kann ein Ausdruck in dieser
-Form verwendet werden:
-```java
-(Bedingung) ? Ausdruck 1 : Ausdruck 2;
-```
-- Bedinung `true`: Ausdruck 1 wird eingesetzt
-- Bedingung `false`: Ausdruck 2 wird eingesetzt
-
-```java
-int a = 4, b = 8;
-int maximum = (a > b) ? a : b;
-```
-
-== if-else Statement
-
-#task[
-  - Gegeben ist eine Ganzzahl `weekDay` zwischen 1 und 7.
-  - Es entspricht: 1 = Montag, 2 = Dienstag, 3 = Mittwoch usw.
-  Erzeugen Sie in Abhängigkeit des Wertes folgende Konsolenausgaben:
-  - Montag bis Freitag: "Arbeiten"
-  - Samstag: "Einkaufen"
-  - Sonntag: "Ausruhen"
-]
-
-#example[
+#slide[
+  For simple assignment using `if-else` statements, an expression in this
+  form can be used:
   ```java
-  byte weekDay = 3;
+  (condition) ? expression 1 : expression 2;
+  ```
+  - Condition `true`: expression 1 is used
+  - Condition `false`: expression 2 is used
 
-    if (weekDay <= 5) {
-      System.out.println("Arbeiten");
-    } else if (weekDay == 6) {
-      System.out.println("Einkaufen");
-    } else if (weekDay == 7) {
-      System.out.println("Ausruhen");
-    }
+  ```java
+  int a = 4, b = 8;
+  int maximum = (a > b) ? a : b;
   ```
 ]
 
+== if-else Statement
+#slide[
+  #task[
+    - Given is an integer `weekDay` between 1 and 7.
+    - It corresponds to: 1 = Monday, 2 = Tuesday, 3 = Wednesday, etc.
+    Generate the following console outputs depending on the value:
+    - Monday to Friday: "Working"
+    - Saturday: "Shopping"
+    - Sunday: "Resting"
+  ]
+
+  #example[
+    ```java
+    byte weekDay = 3;
+
+      if (weekDay <= 5) {
+        System.out.println("Working");
+      } else if (weekDay == 6) {
+        System.out.println("Shopping");
+      } else if (weekDay == 7) {
+        System.out.println("Resting");
+      }
+    ```
+  ]
+]
+
 == switch Statement
-Mit der `switch`-Anweisung lassen sich `if-else`-Anweisungen vereinfachen.
-```java
-switch (Ausdruck) {
-    case Wert 1:
-    Anweisungen
-    break;
-    case Wert 2:
-    ...
-    default:
-    Anweisungen
-    }
-```
 #slide[
+  With the `switch` statement, `if-else` statements can be simplified.
+  ```java
+  switch (expression) {
+      case value 1:
+      statements
+      break;
+      case value 2:
+      ...
+      default:
+      statements
+      }
+  ```
+]
 
-  - Ausdruck ist z.B. eine ganzzahlige Variable (außer Typ `long`) oder ein `String` (ab
+#slide[
+  - Expression is e.g. an integer variable (except type `long`) or a `String` (from
     Java 7).
-  - Anweisungen, `break` und `default` sind optional.
-  - Mehrere `case`-Sprungmarken direkt hintereinander sind erlaubt.
-  - Sprung zu …
-    - `case`-Sprungmarke, falls diese den Wert von Ausdruck hat
-    - `default`, falls keine passende `case`-Sprungmarke
-    - Ende des `switch`-Blocks, falls keine passende `case`-Sprungmarke und kein `default`
-  - Von `case`-Sprungmarke oder `default` weiter bis `break` oder Ende des
-    `switch`-Blocks
+  - Statements, `break` and `default` are optional.
+  - Multiple `case` labels directly in succession are allowed.
+  - Jump to …
+    - `case` label, if it has the value of the expression
+    - `default`, if no matching `case` label
+    - End of `switch` block, if no matching `case` label and no `default`
+  - From `case` label or `default` continue until `break` or end of
+    `switch` block
 ]
 
 #slide[
-  #task[Implementieren Sie eine Lösung für die Aufgabe 3 als `switch`-Anweisung]
+  #task[Implement a solution for task 3 as a `switch` statement]
 ]
+
 #slide[
   ```java
   switch (weekDay) {
@@ -770,141 +769,147 @@ switch (Ausdruck) {
     case 3:
     case 4:
     case 5:
-        System.out.println("Arbeiten");
+        System.out.println("Working");
         break;
     case 6:
-        System.out.println("Einkaufen");
+        System.out.println("Shopping");
         break;
     case 7:
-        System.out.println("Ausruhen");
+        System.out.println("Resting");
         break;
     default:
-        System.out.println("Den Tag kenn' ich nicht ...");
+        System.out.println("I don't know that day...");
     }
   ```
 ]
 
 == while Loop
+#slide[
+  With the `while` loop, a statement is executed as long as the
+  condition is `true`.
 
-Mit der `while`-Schleife wird eine Anweisung so lange ausgeführt, wie die
-Bedingung `true` ist.
-
-```java
-while (Bedingung) {
-      Anweisungen
-    }
-```
-
-- Falls die Bedingung zu Beginn bereits false ist, wird die Anweisung nie
-  ausgeführt.
-- Auch *kopfgesteuerte* oder *abweisende* Schleife genannt.
+  ```java
+  while (condition) {
+        statements
+      }
+  ```
+  - If the condition is already false at the beginning, the statement is never
+    executed.
+  - Also called a *head-controlled* or *rejecting* loop.
+]
 
 #slide[
   #align(left + horizon)[]
   #figure(
-    image("../assets/img/2024_10_09_while_loop_rev01.png"),
+    image("../assets/img/slides_2/2024_10_09_while_loop_rev01.png"),
     caption: [while-Schleife in Java],
   )
 ]
 
 == do-while Loop
+#slide[
+  With the `do-while` loop, a statement is executed at least once.
+  If the condition is `true`, the statement is executed again.
 
-Mit der `do-while`-Schleife wird eine Anweisung mindestens einmal ausgeführt.
-Wenn die Bedingung `true` ist, wird die Anweisung wieder ausgeführt.
+  ```java
+  do {
+        statements
+      } while (condition);
+  ```
 
-```java
-do {
-      Anweisungen
-    } while (Bedingung);
-```
+  - Also called a *foot-controlled* or *non-rejecting* loop.
 
-- Auch *fußgesteuerte* oder *nicht abweisende* Schleife genannt.
-
-#align(left + horizon)[
-  #figure(
-    image("../assets/img/2024_10_09_dowhile_loop_rev01.png"),
-    caption: [do-while-Schleife in Java],
-  )
+  #align(left + horizon)[
+    #figure(
+      image("../assets/img/slides_2/2024_10_09_dowhile_loop_rev01.png"),
+      caption: [do-while-Schleife in Java],
+    )
+  ]
 ]
 
 == for Loop
+#slide[
+  With the `for` loop, you can repeat a statement a certain number of times.
 
-Mit der `for`-Schleife können Sie eine Anweisung eine bestimmte Anzahl von Malen
-wiederholen.
+  ```java
+  for (init; condition; update) {
+        statements
+      }
+  ```
 
-```java
-for (Init; Bedingung; Update) {
-      Anweisungen
-    }
-```
-
-- Falls Bedingung `false` ist, wird die Anweisung nie ausgeführt.
-- Init wird nur einmal ausgeführt, dafür aber immer.
-- Update wird nach jeder Iteration ausgeführt.
-#align(left + horizon)[
-  #figure(
-    image("../assets/img/2024_10_09_for_loop_rev01.png"),
-    caption: [for-Schleife in Java],
-  )
+  - If condition is `false`, the statement is never executed.
+  - Init is executed only once, but always.
+  - Update is executed after each iteration.
+  #align(left + horizon)[
+    #figure(
+      image("../assets/img/slides_2/2024_10_09_for_loop_rev01.png"),
+      caption: [for-Schleife in Java],
+    )
+  ]
 ]
 
 == Jump Statements
+#slide[
+  Using jump statements, you can control the program flow. `break` terminates
+  the loop and `continue` jumps to the next loop iteration.
 
-Mittels Sprunganweisungen können Sie den Programmfluss steuern. `break` beendet
-die Schleife und `continue` springt zum nächsten Schleifendurchlauf.
-
-#figure(
-  image("../assets/img/2024_10_09_break_continue_loop_rev01.png"),
-  caption: [Visualisierung von break und continue in Java],
-)
-
-#question[Was passiert in dem folgenden Code?]
-```java
-System.out.println("Break (bei i == 2):");
-for (int i = 0; i <= 4; i++) {
-  if (i == 2) {
-    break;
-  }
-  System.out.println("  i = " + i);
-}
-```
-
-#question[Was passiert in dem folgenden Code?]
-```java
-System.out.println("\nContinue (bei i == 2):");
-for (int i = 0; i <= 4; i++) {
-  if (i == 2) {
-    continue;
-  }
-  System.out.println("  i = " + i);
-}
-```
-
-== Coding Style
-
-- Wie bereits erwähnt, ist der Coding Style wichtig. Daher gibt es bei den
-  Kontrollstrukturen auch einen Coding Style.
-
-- Öffnende geschweifte Klammern werden in der gleichen Zeile wie die
-  Kontrollstruktur geschrieben (das gilt für alle öffnenden Klammern).
-- Nach einer schließenden geschweiften Klammer wird ein Zeilenumbruch gemacht. Bei `else` steht
-  die schließende Klammer in der gleichen Zeile.
-
-#example[
+  #figure(
+    image("../assets/img/slides_2/2024_10_09_break_continue_loop_rev01.png"),
+    caption: [Visualisierung von break und continue in Java],
+  )
+]
+#slide[
+  #question[What happens in the following code?]
   ```java
-  int a = 4, b = 8;
-    int maximum;
-
-    if (a > b) {
-      maximum = a;
-    } else {
-      maximum = b;
+  System.out.println("Break (when i == 2):");
+  for (int i = 0; i <= 4; i++) {
+    if (i == 2) {
+      break;
     }
+    System.out.println("  i = " + i);
+  }
   ```
 ]
 
-= License Notice
+#slide[
+  #question[What happens in the following code?]
+  ```java
+  System.out.println("\nContinue (when i == 2):");
+  for (int i = 0; i <= 4; i++) {
+    if (i == 2) {
+      continue;
+    }
+    System.out.println("  i = " + i);
+  }
+  ```
+]
 
+
+== Coding Style
+#slide[
+  - As already mentioned, coding style is important. Therefore, there is also a coding style for
+    control structures.
+
+  - Opening curly braces are written on the same line as the
+    control structure (this applies to all opening braces).
+  - After a closing curly brace, a line break is made. With `else`, the
+    closing brace is on the same line.
+
+  #example[
+    ```java
+    int a = 4, b = 8;
+      int maximum;
+
+      if (a > b) {
+        maximum = a;
+      } else {
+        maximum = b;
+      }
+    ```
+  ]
+]
+
+= License Notice
 == Attribution
 
 - This work is shared under the CC BY-NC-SA 4.0 License and the respective Public

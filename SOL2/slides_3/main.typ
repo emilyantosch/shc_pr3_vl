@@ -1,7 +1,7 @@
 #import "@preview/touying:0.5.2": *
 #import themes.university: *
 
-#import "@preview/fletcher:0.5.1" as flechter: diagram, node, edge
+#import "@preview/fletcher:0.5.1" as flechter: diagram, edge, node
 
 #import "@preview/gentle-clues:1.0.0": *
 #import "@preview/pinit:0.2.0": *
@@ -70,15 +70,15 @@
 #outline(depth: 1)
 
 = Introduction
-
 == Where Are We Now?
-
-- Last time we dealt with the imperative concepts of the Java programming language.
-- You can now
-  - use simple data types in Java,
-  - control program flow with control structures and loops, and
-  - convert data types.
-- Today we'll cover *Classes and Objects*.
+#slide[
+  - Last time we dealt with the imperative concepts of the Java programming language.
+  - You can now
+    - use simple data types in Java,
+    - control program flow with control structures and loops, and
+    - convert data types.
+  - Today we'll cover *Classes and Objects*.
+]
 
 #slide[
   1. Imperative Concepts
@@ -93,27 +93,27 @@
 ]
 
 == The Goal of This Chapter
+#slide[
 
-- You will implement classes and objects in Java to model real things.
-- You will create objects of a class and change their state through operations.
-- You will apply additional programming guidelines to improve the quality and
-  maintainability of your code.
+  - You will implement classes and objects in Java to model real things.
+  - You will create objects of a class and change their state through operations.
+  - You will apply additional programming guidelines to improve the quality and
+    maintainability of your code.
+]
 
 = Classes and Objects
-
 == Class
-
-- A *class* is a blueprint for objects. It contains
-  - *Attributes* (data fields) and
-  - *Methods* (operations).
-- Together, attributes and methods are called *members*.
-
-#align(left + horizon)[
-
-  #figure(
-    image("../assets/img/2024_10_03_class_person_explain_rev01.png", height: 50%),
-    caption: [UML notation of a Person class],
-  )
+#slide[
+  - A *class* is a blueprint for objects. It contains
+    - *Attributes* (data fields) and
+    - *Methods* (operations).
+  - Together, attributes and methods are called *members*.
+  #align(left + horizon)[
+    #figure(
+      image("../assets/img/slides_3/2024_10_03_class_person_explain_rev01.png", height: 50%),
+      caption: [UML notation of a Person class],
+    )
+  ]
 ]
 
 #slide[
@@ -124,77 +124,81 @@
 
   #figure(
     image(
-      "../assets/img/2024_10_10_klassen_methoden_attribute_rev01.png",
+      "../assets/img/slides_3/2024_10_10_klassen_methoden_attribute_rev01.png",
       height: 45%,
     ),
     caption: [Division of methods and attributes],
   )
 ]
 == Relationship Between Class and Object
+#slide[
+  - Klasse: Beschreibung („Bauplan“) eines Datentyps
+  - Objekt einer Klasse: Erzeugtes Element des Datentyps
+  - Es können beliebig viele Objekte einer Klasse erzeugt werden.
 
-- Klasse: Beschreibung („Bauplan“) eines Datentyps
-- Objekt einer Klasse: Erzeugtes Element des Datentyps
-- Es können beliebig viele Objekte einer Klasse erzeugt werden.
-
-#figure(
-  image("../assets/img/2024_10_10_klassen_mehr_objekte_rev01.png", height: 60%),
-  caption: [Mehrere Objekte aus einer Klasse],
-)
-
-== Classes in Java
-
-- Klassen können über den folgenden Code deklariert werden:
-```java
-class Klassenname {
-    Attribute
-    Methoden
-    }
-```
-
-#tip[Legen Sie jede Klasse in einer eigenen Datei an!]
-
-== Example: Simple Class
-
-#task[Lassen Sie uns diese einfache Klasse erstellen:
-  - Klasse Student, beschrieben durch Name, Matrikelnummer und Studienbeginn (in
-    Jahren)
+  #figure(
+    image("../assets/img/slides_3/2024_10_10_klassen_mehr_objekte_rev01.png", height: 60%),
+    caption: [Mehrere Objekte aus einer Klasse],
+  )
 ]
 
-#pause
+== Classes in Java
+#slide[
+  - Klassen können über den folgenden Code deklariert werden:
+  ```java
+  class Klassenname {
+      Attribute
+      Methoden
+      }
+  ```
 
-```java
-class Student {
-    String name;
-    int matrNumber;
-    int enrolledYear;
-  }
-```
+  #tip[Legen Sie jede Klasse in einer eigenen Datei an!]
 
-- Die Klasse hat weder Methoden noch eine Datenkapselung gegen Einfluss von außen.
+]
 
-#figure(
-  image("../assets/img/2024_10_10_klassen_uml_student_rev01.png"),
-  caption: [UML-Darstellung der Klasse, die wir eben erstellt haben],
-)
+== Example: Simple Class
+#slide[
+  #task[Lassen Sie uns diese einfache Klasse erstellen:
+    - Klasse Student, beschrieben durch Name, Matrikelnummer und Studienbeginn (in
+      Jahren)
+  ]
+
+  #pause
+
+  ```java
+  class Student {
+      String name;
+      int matrNumber;
+      int enrolledYear;
+    }
+  ```
+
+  - Die Klasse hat weder Methoden noch eine Datenkapselung gegen Einfluss von außen.
+
+  #figure(
+    image("../assets/img/slides_3/2024_10_10_klassen_uml_student_rev01.png"),
+    caption: [UML-Darstellung der Klasse, die wir eben erstellt haben],
+  )
+]
 
 == Example: One Class, Many Objects
+#slide[
+  - Klasse („Eine Klasse für alle Studierenden“):
+    - Die Klasse ist ein neuer Datentyp.
+    - Legt fest, durch welche Daten Studierende beschrieben werden
 
-- Klasse („Eine Klasse für alle Studierenden“):
-  - Die Klasse ist ein neuer Datentyp.
-  - Legt fest, durch welche Daten Studierende beschrieben werden
+  - Objekte („Für jede/n Studierende/n ein eigenes Objekt“):
+    - Objekte sind Instanzen im Speicher.
+    - Besitzen Struktur der Klasse, sind aber mit Daten gefüllt
+    - Es können beliebig viele Objekte erzeugt werden.
 
-- Objekte („Für jede/n Studierende/n ein eigenes Objekt“):
-  - Objekte sind Instanzen im Speicher.
-  - Besitzen Struktur der Klasse, sind aber mit Daten gefüllt
-  - Es können beliebig viele Objekte erzeugt werden.
-
-#figure(
-  image("../assets/img/2024_10_10_klassen_mehr_objekte_uml_rev01.png"),
-  caption: [Aus einer Klasse lassen sich mehrere Objekte erstellen],
-)
+  #figure(
+    image("../assets/img/slides_3/2024_10_10_klassen_mehr_objekte_uml_rev01.png"),
+    caption: [Aus einer Klasse lassen sich mehrere Objekte erstellen],
+  )
+]
 
 == Example: Local Variables
-
 #slide[
   #question[Welche Werte haben die Variablen `count`, `jan` und `lena`?]
 
@@ -212,7 +216,7 @@ class Student {
   #question[Welche Werte haben die Variablen `count`, `jan` und `lena`?]
   #figure(
     image(
-      "../assets/img/2024_10_10_klassen_primitiv_erklaerung_rev01.png",
+      "../assets/img/slides_3/2024_10_10_klassen_primitiv_erklaerung_rev01.png",
       height: 50%,
     ),
     caption: [Primitive Datentypen vs. Objekte],
@@ -242,7 +246,7 @@ class Student {
     - Objektvariablen mit Standardwerten initialisieren (mehr dazu gleich).
 
     #figure(
-      image("../assets/img/2024_10_10_klassen_primitv_vergleich.png"),
+      image("../assets/img/slides_3/2024_10_10_klassen_primitv_vergleich.png"),
       caption: [Erstellen von Referenz mit `new`],
     )
 
@@ -254,37 +258,38 @@ class Student {
     - Ist unabhängig vom `new`-Operator und der Erzeugung des Objekts
 
     #figure(
-      image("../assets/img/2024_10_10_klassen_primitiv_zuordnung_rev01.png"),
+      image("../assets/img/slides_3/2024_10_10_klassen_primitiv_zuordnung_rev01.png"),
       caption: [Zuweisung von Referenz an Variable],
     )
 ]
 
 = Variablen und Speicher
-
 == Objective
+#slide[
+  #conclusion[
+    - Das haben wir uns bereits angeschaut:
+      - Was sind Klassen und Objekte?
+      - Wie deklariert man Klassen?
+      - Wie erzeugt man Objekte?
+  ]
 
-#conclusion[
-  - Das haben wir uns bereits angeschaut:
-    - Was sind Klassen und Objekte?
-    - Wie deklariert man Klassen?
-    - Wie erzeugt man Objekte?
+  - Im Folgenden wollen wir uns folgende Aspekte anschauen:
+    - Zugriff auf Objektvariablen
+    - Initialisierung von Objektvariablen
+    - Zuweisung von Referenzen
+    - Automatische Speicherbereinigung
 ]
 
-- Im Folgenden wollen wir uns folgende Aspekte anschauen:
-  - Zugriff auf Objektvariablen
-  - Initialisierung von Objektvariablen
-  - Zuweisung von Referenzen
-  - Automatische Speicherbereinigung
-
 == Access to Object Variables
-
-- Zugriff auf Objektvariablen erfolgt mittels des Punkt-Operators:
-```java
-Objektreferenz.Member
-```
-- Dabei ist die `Objektreferenz` eine Referenz auf ein Objekt, die in einer
-  Variable gespeichert ist.
-- `Member` ist z.B. ein Attribut/Objektvariable
+#slide[
+  - Zugriff auf Objektvariablen erfolgt mittels des Punkt-Operators:
+  ```java
+  Objektreferenz.Member
+  ```
+  - Dabei ist die `Objektreferenz` eine Referenz auf ein Objekt, die in einer
+    Variable gespeichert ist.
+  - `Member` ist z.B. ein Attribut/Objektvariable
+]
 
 #slide[
   #question[Was wird ausgegeben?]
@@ -305,16 +310,18 @@ Objektreferenz.Member
   ]
 ]
 == Initialization of Classes
-#align(left + horizon)[
+#slide[
+  #align(left + horizon)[
 
-  #memo[
-    - *Objekt-/Instanzvariable*: In Klasse als Attribut eines Objektes deklariert.
-    - *Lokale Variable*: Lokal deklariert (z.B. in Methode oder Schleife).
-    - *Referenzvariable*: Hat Klasse als Datentyp, kann Referenz auf Objekt speichern.
+    #memo[
+      - *Objekt-/Instanzvariable*: In Klasse als Attribut eines Objektes deklariert.
+      - *Lokale Variable*: Lokal deklariert (z.B. in Methode oder Schleife).
+      - *Referenzvariable*: Hat Klasse als Datentyp, kann Referenz auf Objekt speichern.
+    ]
   ]
 ]
-#slide[
 
+#slide[
   - Zur Erinnerung:
     - Lokale Variablen werden nicht automatisch initialisiert. (Compiler verhindert
       Zugriff.)
@@ -322,7 +329,7 @@ Objektreferenz.Member
 
   #figure(
     image(
-      "../assets/img/2024_10_10_klassen_datentypen_initial_rev01.png",
+      "../assets/img/slides_3/2024_10_10_klassen_datentypen_initial_rev01.png",
       height: 40%,
     ),
     caption: [Initialwerte von Objektvariablen],
@@ -361,16 +368,16 @@ Objektreferenz.Member
 ]
 
 == Assignment of References
+#slide[
+  - Nehmen Sie an, wir haben den folgenden Zustand in unserem Code:
 
-- Nehmen Sie an, wir haben den folgenden Zustand in unserem Code:
-
-#figure(
-  image("../assets/img/2024_10_10_klassen_referenz_zuweisung_rev01.png"),
-  caption: [Zuweisung von Referenzen an Variablen],
-)
+  #figure(
+    image("../assets/img/slides_3/2024_10_10_klassen_referenz_zuweisung_rev01.png"),
+    caption: [Zuweisung von Referenzen an Variablen],
+  )
+]
 
 #slide[
-
   #question[
     Was passiert jetzt, wenn wir den folgenden Code hinzufügen:
     ```java
@@ -378,11 +385,13 @@ Objektreferenz.Member
     ```
   ]
 ]
-#align(left + horizon)[
-  #figure(
-    image("../assets/img/2024_10_10_klassen_referenzen_verschieben_rev01.png"),
-    caption: [Verschieben von Referenzen],
-  )
+#slide[
+  #align(left + horizon)[
+    #figure(
+      image("../assets/img/slides_3/2024_10_10_klassen_referenzen_verschieben_rev01.png"),
+      caption: [Verschieben von Referenzen],
+    )
+  ]
 ]
 
 #slide[
@@ -400,7 +409,7 @@ Objektreferenz.Member
     dann auch `lena`.
 
   #figure(
-    image("../assets/img/2024_10_14_referenzen_selbes_objekt_rev01.png"),
+    image("../assets/img/slides_3/2024_10_14_referenzen_selbes_objekt_rev01.png"),
     caption: [Beide Variablen zeigen zur gleichen Referenz],
   )
 
@@ -415,31 +424,31 @@ Objektreferenz.Member
   - Es gibt kein `free` oder `delete` wie in C!
 
     #figure(
-      image("../assets/img/2024_10_14_referenz_objekt_verschwindet_rev01.png"),
+      image("../assets/img/slides_3/2024_10_14_referenz_objekt_verschwindet_rev01.png"),
       caption: [Der Garbage Collector gibt Speicher frei],
     )
 ]
 
 = Methoden
-
 == Methods: Syntax
+#slide[
+  - Methoden entsprechen Funktionen aus C, die Sie ja bereits kennen.
+  #text(size: 24pt)[
+    ```java
+    Rückgabetyp Methodenname(Parameter) {
+     Anweisung;
+    }
+    ```
+  ]
 
-- Methoden entsprechen Funktionen aus C, die Sie ja bereits kennen.
-#text(size: 24pt)[
+  - Rückgabetyp
+    - Primitiver Datentyp, Klasse eines Objekts oder `void`.
+    - Rückgabe erfolgt wie in C mittels `return`.
+  - Methodenname
+    - Beliebiger gültiger Bezeichner (siehe Kapitel 2)
+    - Von unserem Coding Style: *camelCase* (ich erlaube auch *snake_case*)
 
-  ```java
-  Rückgabetyp Methodenname(Parameter) {
-   Anweisung;
-  }
-  ```
 ]
-
-- Rückgabetyp
-  - Primitiver Datentyp, Klasse eines Objekts oder `void`.
-  - Rückgabe erfolgt wie in C mittels `return`.
-- Methodenname
-  - Beliebiger gültiger Bezeichner (siehe Kapitel 2)
-  - Von unserem Coding Style: *camelCase* (ich erlaube auch *snake_case*)
 
 #slide[
   - Methoden entsprechen Funktionen aus C, die Sie ja bereits kennen.
@@ -451,7 +460,6 @@ Objektreferenz.Member
     }
     ```
   ]
-
   - Parameter
     - Leer oder durch Komma getrente Parameter
     - Jeder Parameter ist in der Form: `datentyp bezeichner`
@@ -570,7 +578,7 @@ Objektreferenz.Member
 #slide[
   #align(left + horizon)[
     #figure(
-      image("../assets/img/2024_10_14_methoden_callbyvalue_rev01.png"),
+      image("../assets/img/slides_3/2024_10_14_methoden_callbyvalue_rev01.png"),
       caption: [Diagramm für Call-by-Value],
     )
   ]
@@ -608,7 +616,7 @@ public class CallByValueDemo {
   - Ursprünglicher Zustand in `main()`-Methode:
 
   #figure(
-    image("../assets/img/2024_10_14_referenz_lena_objekt_rev01.png"),
+    image("../assets/img/slides_3/2024_10_14_referenz_lena_objekt_rev01.png"),
     caption: [Ausgangszustand],
   )
 ]
@@ -618,7 +626,7 @@ public class CallByValueDemo {
   - Aufruf der (unsinnigen) Methode `setNameBirgit()`:
 
   #figure(
-    image("../assets/img/2024_10_14_referenz_lena_student_verschieben_rev01.png"),
+    image("../assets/img/slides_3/2024_10_14_referenz_lena_student_verschieben_rev01.png"),
     caption: [Verschieben der Referenz in die Methode],
   )
 ]
@@ -628,7 +636,7 @@ public class CallByValueDemo {
   - Änderung des Objektes in der Methode `setNameBirgit()`:
 
   #figure(
-    image("../assets/img/2024_10_14_referenz_lena_student_birgit_rev01.png"),
+    image("../assets/img/slides_3/2024_10_14_referenz_lena_student_birgit_rev01.png"),
     caption: [Änderung des Objekts in Methode],
   )
 ]
@@ -688,7 +696,7 @@ public class Student {
       mit dem Memberoperator mit `.`.
 
   #figure(
-    image("../assets/img/2024_10_14_this_diagramm_rev01.png", height: 40%),
+    image("../assets/img/slides_3/2024_10_14_this_diagramm_rev01.png", height: 40%),
     caption: [`this`-Referenz],
   )
 ]
@@ -1148,7 +1156,7 @@ Anweisungen;
   ]
 
   #figure(
-    image("../assets/img/2024_10_14_objekt_circle_rev01.png", height: 40%),
+    image("../assets/img/slides_3/2024_10_14_objekt_circle_rev01.png", height: 40%),
     caption: [Speicher wird für jedes Objekt erneut reserviert.],
   )
 ]
@@ -1176,7 +1184,7 @@ Anweisungen;
   ]
 
   #figure(
-    image("../assets/img/2024_10_15_circle_count_rev01.png", height: 40%),
+    image("../assets/img/slides_3/2024_10_15_circle_count_rev01.png", height: 40%),
     caption: [Die Variable `count` wird immer wieder neu gemacht.],
   )
 ]
@@ -1193,7 +1201,7 @@ Anweisungen;
 
 #slide[
   #figure(
-    image("../assets/img/2024_10_15_klassenattribute_rev01.png"),
+    image("../assets/img/slides_3/2024_10_15_klassenattribute_rev01.png"),
     caption: [Klassenattribute in den verschiedenen Objekten],
   )
 ]
