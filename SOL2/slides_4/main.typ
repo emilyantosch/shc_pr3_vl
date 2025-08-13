@@ -1,7 +1,7 @@
 #import "@preview/touying:0.5.2": *
 #import themes.university: *
 
-#import "@preview/fletcher:0.5.1" as flechter: diagram, node, edge
+#import "@preview/fletcher:0.5.1" as flechter: diagram, edge, node
 
 #import "@preview/gentle-clues:1.0.0": *
 #import "@preview/pinit:0.2.0": *
@@ -72,13 +72,14 @@
 = Introduction
 
 == Where Are We Currently?
-
-- Last time we dealt with classes and objects.
-- You can now
-  - write simple classes in Java,
-  - create objects from classes, use attributes and call methods and
-  - use class variables and class methods.
-- Today we continue with *Class Libraries*.
+#slide[
+  - Last time we dealt with classes and objects.
+  - You can now
+    - write simple classes in Java,
+    - create objects from classes, use attributes and call methods and
+    - use class variables and class methods.
+  - Today we continue with *Class Libraries*.
+]
 
 #slide[
   1. Imperative Concepts
@@ -93,18 +94,16 @@
 ]
 
 == The Goal of This Chapter
-
-- You apply strings, for example, for formatted output of data.
-- You organize similar data in fields, matrices and lists.
-- You convert strings to numerical values and apply mathematical functions to
-  numerical values.
+#slide[
+  - You apply strings, for example, for formatted output of data.
+  - You organize similar data in fields, matrices and lists.
+  - You convert strings to numerical values and apply mathematical functions to
+    numerical values.
+]
 
 = Strings
-
 == Strings
-
 #slide[
-
   - Strings in C
     - Variables: Pointer to array of primitive data type `char`
     - Memory size managed by programmer
@@ -124,23 +123,23 @@
 ]
 
 == Creating Strings
-
-- Creation also using the `new` operator:
-```java
-String name = new String("Lena");
-```
-- Alternatively by assigning a literal:
-```java
-String name = "Lena";
-```
-- Assignment of a literal also possible after creation:
-```java
-String name = new String("Lena");
-name = "Birgit";
-```
+#slide[
+  - Creation also using the `new` operator:
+  ```java
+  String name = new String("Lena");
+  ```
+  - Alternatively by assigning a literal:
+  ```java
+  String name = "Lena";
+  ```
+  - Assignment of a literal also possible after creation:
+  ```java
+  String name = new String("Lena");
+  name = "Birgit";
+  ```
+]
 
 == Strings as Immutable
-
 #slide[
   #memo[
     - As in many object-oriented languages:
@@ -195,17 +194,17 @@ name = "Birgit";
 ]
 
 == String Concatenation
-
-- Strings can be concatenated using the plus operator:
-```java
-String name = "Lena " + "or " + "then ";
-  name = name + "after all " + "again ";
-  name += "Birgit?";
-```
-
-- Implicit conversion of other data types to a String object:
-  - Evaluation of plus operators from left to right
-  - Conversion to String if the other operand is not of type String
+#slide[
+  - Strings can be concatenated using the plus operator:
+  ```java
+  String name = "Lena " + "or " + "then ";
+    name = name + "after all " + "again ";
+    name += "Birgit?";
+  ```
+  - Implicit conversion of other data types to a String object:
+    - Evaluation of plus operators from left to right
+    - Conversion to String if the other operand is not of type String
+]
 
 #slide[
   #question[What will be output?]
@@ -219,14 +218,12 @@ String name = "Lena " + "or " + "then ";
 
 == `toString()` Method
 #slide[
-
   ```java
   public String toString() {
         // Method body
         // Return of an object of type String
     }
   ```
-
   - Method header prescribed
   - Method body freely programmable
   - Returns a String for objects that should describe the object
@@ -267,9 +264,7 @@ String name = "Lena " + "or " + "then ";
 ]
 
 == String Methods
-
 #slide[
-
   - Additional methods include, for example:
     - Length of the string
     - Character at specific position (First character has index 0!)
@@ -305,14 +300,15 @@ String name = "Lena " + "or " + "then ";
 ]
 
 == String Formatting
+#slide[
+  - Often asked:
+    - Can you also adjust the format of the string during output? *Yes, of course!*
 
-- Often asked:
-  - Can you also adjust the format of the string during output? *Yes, of course!*
-
-- Class method `format()`:
-  - Creates a formatted string
-  - No output to console occurs.
-  - Syntax (almost) identical to printf() from C/C++
+  - Class method `format()`:
+    - Creates a formatted string
+    - No output to console occurs.
+    - Syntax (almost) identical to printf() from C/C++
+]
 
 #slide[
   #question[What will be output?]
@@ -392,17 +388,18 @@ String name = "Lena " + "or " + "then ";
 ]
 = Arrays
 == Arrays
+#slide[
+  - Arrays in C:
+    - Variables: Pointer to first element of the array in memory
+    - Memory size managed by programmer
+    - Data type has no methods
 
-- Arrays in C:
-  - Variables: Pointer to first element of the array in memory
-  - Memory size managed by programmer
-  - Data type has no methods
-
-- Arrays in Java:
-  - Arrays are objects.
-  - Variables reference objects
-  - Memory size managed by object
-  - Data type provides methods
+  - Arrays in Java:
+    - Arrays are objects.
+    - Variables reference objects
+    - Memory size managed by object
+    - Data type provides methods
+]
 
 #slide[
   #figure(
@@ -835,7 +832,10 @@ Static declaration:
   - "Wrap" primitive data types into classes
   - Provide methods (e.g. for integers)
 
-#figure(image("../assets/img/slides_4/2024_10_16_wrapper_rev01.png"), caption: [Wrapper classes for primitive data types])
+#figure(
+  image("../assets/img/slides_4/2024_10_16_wrapper_rev01.png"),
+  caption: [Wrapper classes for primitive data types],
+)
 
 #slide[
   #text(size: 22pt)[
@@ -876,7 +876,10 @@ Static declaration:
 ]
 
 #slide[
-  #figure(image("../assets/img/slides_4/2024_10_16_wrapper_conversion_rev01.png"), caption: [Type conversion with wrapper classes])
+  #figure(
+    image("../assets/img/slides_4/2024_10_16_wrapper_conversion_rev01.png"),
+    caption: [Type conversion with wrapper classes],
+  )
 ]
 
 == `Math` Class

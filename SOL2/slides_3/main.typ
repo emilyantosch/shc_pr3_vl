@@ -110,7 +110,7 @@
   - Together, attributes and methods are called *members*.
   #align(left + horizon)[
     #figure(
-      image("../assets/img/slides_3/2024_10_03_class_person_explain_rev01.png", height: 50%),
+      image("../assets/img/slides_3/20250730_attributes_methods_rev01.png", height: 50%),
       caption: [UML notation of a Person class],
     )
   ]
@@ -215,7 +215,7 @@
   #question[What values do the variables `count`, `jan` and `lena` have?]
   #figure(
     image(
-      "../assets/img/slides_3/2024_10_10_klassen_primitiv_erklaerung_rev01.png",
+      "../assets/img/slides_3/20250813_class_vs_primitive_rev01.png",
       height: 50%,
     ),
     caption: [Primitive data types vs. Objects],
@@ -326,13 +326,24 @@
       access.)
     - Object variables, however, are initialized when an object is created.
 
-  #figure(
-    image(
-      "../assets/img/slides_3/2024_10_10_klassen_datentypen_initial_rev01.png",
-      height: 40%,
-    ),
-    caption: [Initial values of object variables],
-  )
+  #text(size: 22pt)[
+    #align(center + horizon)[
+      #figure(
+        table(
+          columns: (auto, auto, auto),
+          inset: 10pt,
+          align: left + horizon,
+          fill: (_, y) => if calc.odd(y) { green.lighten(90%) },
+          table.header([*Type*], [*Data Type*], [*Initial Value*]),
+          [Integer and Character], [`byte, short, int, long, char`], [0],
+          [Floating Point], [`float, double`], [0.0],
+          [Truth], [`boolean`], [`false`],
+          [Reference], [Any Class], [`null`],
+        ),
+        caption: [Value ranges of data types],
+      )
+    ]
+  ]
 ]
 
 #slide[
@@ -431,14 +442,13 @@
 == Methods: Syntax
 #slide[
   - Methods correspond to functions from C, which you already know.
-  #text(size: 24pt)[
+  #text(size: 22pt)[
     ```java
     ReturnType MethodName(Parameters) {
      Statement;
     }
     ```
   ]
-
   - Return type
     - Primitive data type, class of an object or `void`.
     - Return is done as in C using `return`.
@@ -449,22 +459,21 @@
 ]
 
 #slide[
-  - Methods correspond to functions from C, which you already know.
   #text(size: 24pt)[
-
-    ```java
-    ReturnType MethodName(Parameters) {
-     Statement;
-    }
-    ```
+    - Methods correspond to functions from C, which you already know.
+      ```java
+      ReturnType MethodName(Parameters) {
+       Statement;
+      }
+      ```
+    - Parameters
+      - Empty or comma-separated parameters
+      - Each parameter is in the form: `datatype identifier`
+    - Call
+      - Method name followed by parentheses
+      - Arguments in the parentheses
+      - Expression is replaced by return value
   ]
-  - Parameters
-    - Empty or comma-separated parameters
-    - Each parameter is in the form: `datatype identifier`
-  - Call
-    - Method name followed by parentheses
-    - Arguments in the parentheses
-    - Expression is replaced by return value
 ]
 
 == Methods: Examples
@@ -531,9 +540,11 @@
 ]
 
 == Getters and Setters
-#memo[
-  - *Getter*: Method that returns the value of an instance variable
-  - *Setter*: Method that assigns a (passed) value to an instance variable
+#slide[
+  #memo[
+    - *Getter*: Method that returns the value of an instance variable
+    - *Setter*: Method that assigns a (passed) value to an instance variable
+  ]
 ]
 
 #slide[
@@ -575,7 +586,7 @@
 #slide[
   #align(left + horizon)[
     #figure(
-      image("../assets/img/slides_3/2024_10_14_methoden_callbyvalue_rev01.png"),
+      image("../assets/img/slides_3/20250813_call_by_value_rev01.png", height: 90%),
       caption: [Diagram for Call-by-Value],
     )
   ]
@@ -672,7 +683,7 @@ public class Student {
     - Using `this` we can access the current instance we are
       currently in.
   ]
-  #text(size: 22pt)[
+  #text(size: 20pt)[
     ```java
     public class Student {
           String name;
@@ -1029,17 +1040,19 @@ Statements;
 ]
 == Task: Class Circle
 #slide[
-  #task[
-    - Let us write a class Circle:
-      - Represents a geometric circle
-        - Represented by
-        - x and y coordinates of the center point
-        - Radius r
-      - Constructors:
-        - Default constructor creates unit circle around coordinate origin (0 ; 0)
-        - Constructor with x, y and radius as parameters
-        - Constructor with radius as parameter
-        - Constructor with object of class Circle as parameter (creates copy)
+  #text(size: 21pt)[
+    #task[
+      - Let us write a class Circle:
+        - Represents a geometric circle
+          - Represented by
+          - x and y coordinates of the center point
+          - Radius r
+        - Constructors:
+          - Default constructor creates unit circle around coordinate origin (0 ; 0)
+          - Constructor with x, y and radius as parameters
+          - Constructor with radius as parameter
+          - Constructor with object of class Circle as parameter (creates copy)
+    ]
   ]
 ]
 

@@ -10,7 +10,7 @@
 
 #import "@preview/numbly:0.1.0": numbly
 
-#set text(lang: "en", font: "Roboto")
+#set text(lang: "en", font: ("Roboto", "JetBrainsMono NF"))
 #set heading(numbering: numbly("{1}.", default: "1.1"))
 
 #set align(left + top)
@@ -109,7 +109,7 @@
   - Variables that store the state in the computer's memory.
   - The content of the memory on the computer is interpreted based on the *data type*.
   #figure(
-    image("../assets/img/slides_2/2024_10_06_data_storage_rev01.png", height: 25%),
+    image("../assets/img/slides_2/20250730_memory_datastorage_rev01.png", height: 20%),
     caption: [Memory in the computer with values from the program],
   )
 ]
@@ -125,19 +125,35 @@
 
 == Data Types in Java
 #slide[
-  The following data structures are available in Java:
+  The following data types are available in Java:
   #figure(
-    image("../assets/img/slides_2/2024_10_06_data_types_java_rev01.png", height: 70%),
+    image("../assets/img/slides_2/20250813_data_types_rev01.png", height: 79%),
     caption: [Data types in Java],
   )
 ]
 
 #slide[
   - Memory sizes and the corresponding value ranges:
-  #figure(
-    image("../assets/img/slides_2/2024_10_06_data_types_ranges_java_rev01.png"),
-    caption: [Value ranges of data types in Java],
-  )
+  #align(center + horizon)[
+    #figure(
+      table(
+        columns: (auto, auto, auto, auto),
+        inset: 10pt,
+        align: left + horizon,
+        fill: (x, y) => if calc.odd(y) and x > 0 { green.lighten(90%) },
+        table.header([*Type*], [*Data Type*], [*Size*], [*Value*]),
+        table.cell(rowspan: 4, "Integer"), [`byte`], [1 Byte], [$-2^7 "to" 2^7-1$],
+        [`short`], [2 Byte], [$-2^15 "to" 2^15-1$],
+        [`int`], [4 Byte], [$-2^31 "to" 2^31-1$],
+        [`long`], [8 Byte], [$-2^63 "to" 2^63-1$],
+        [Character], [`char`], [2 Byte], [$0 "to" 2^16-1$],
+        table.cell(rowspan: 2, "Floating Point"), [`float`], [4 Byte], [],
+        [`double`], [8 Byte], [],
+        [Truth], [`boolean`], [1 Bit], [`true` or `false`],
+      ),
+      caption: [Value ranges of data types],
+    )
+  ]
 ]
 
 == Declaration of Variables
@@ -267,60 +283,69 @@
     System.out.println(age);
     ```
   ]
-  #task[
-    - Using the "+" operator, you can combine text and variables:
+]
 
-    ```java
-    int age = 24;
-    System.out.println("My age is " + 24);
-    System.out.println("My age is " + age);
-    ```
-  ]
-  #tip[
-    - Type ```java sout``` in IntelliJ IDEA and press the
-      Tab key. This saves time when writing ```java System.out.println()```!
+#slide[
+  #text(size: 22pt)[
+    #task[
+      - Using the "+" operator, you can combine text and variables:
+
+      ```java
+      int age = 24;
+      System.out.println("My age is " + 24);
+      System.out.println("My age is " + age);
+      ```
+    ]
+    #tip[
+      - Type ```java sout``` in IntelliJ IDEA and press the
+        Tab key. This saves time when writing ```java System.out.println()```!
+    ]
   ]
 ]
 
 == Coding Style
 #slide[
-  #question[What is a *Coding Style*? What does the term tell you?]
+  #text(size: 24pt)[
+    #question[What is a *Coding Style*? What does the term tell you?]
+    #pause
+    - The coding style is a collection of rules that determine how code
+      should be written.
+    - Uniform code is easier to read and maintain.
 
-  #pause
-  - The coding style is a collection of rules that determine how code
-    should be written.
-  - Uniform code is easier to read and maintain.
-
-  #memo[Compliance with the coding style will be evaluated in the exam!]
+    #memo[Compliance with the coding style will be evaluated in the exam!]
+  ]
 ]
 
 == Coding Style: Naming Conventions
 #slide[
-  - All names, and this applies to all identifiers, should be written in English!
-  - The following naming conventions should be followed:
-    - Classes: *CamelCase*
-    - Methods and variables: *camelCase*
-    - Constants: *UPPER_CASE*
-    - Packages: *lowercase*
-  #tip[From my experience: Make your variables as meaningful as possible!
-    Then the name can also be longer.]
+  #text(size: 24pt)[
+    - All names, and this applies to all identifiers, should be written in English!
+    - The following naming conventions should be followed:
+      - Classes: *CamelCase*
+      - Methods and variables: *camelCase*
+      - Constants: *UPPER_CASE*
+      - Packages: *lowercase*
+    #tip[From my experience: Make your variables as meaningful as possible!
+      Then the name can also be longer.]
+  ]
 ]
 
 
 = Comments and Identifiers
 == Character Set
 #slide[
-  - As already mentioned, Java uses the Unicode character set.
-  - This means more characters are possible (65,536 to be exact).
-  - So you can write your comments in German, English,
-    or Chinese without major restrictions.
-  - However, I would ask you to write your comments in *German* or *English*.
+  #text(size: 22pt)[
+    - As already mentioned, Java uses the Unicode character set.
+    - This means more characters are possible (65,536 to be exact).
+    - So you can write your comments in German, English, or Chinese without major restrictions.
+    - However, I would ask you to write your comments in *German* or *English*.
 
-  #memo[Since your keyboard doesn't have 65,536 characters, you can also copy
-    and paste the characters. Alternatively for #emoji.face.grin:
-    ```java
-    System.out.println("\u{1F600}");
-    ```
+    #memo[Since your keyboard doesn't have 65,536 characters, you can also copy
+      and paste the characters. Alternatively for #emoji.face.grin:
+      ```java
+      System.out.println("\u{1F600}");
+      ```
+    ]
   ]
 ]
 
@@ -330,7 +355,7 @@
   #question[What do you think about the following statement? Why are comments important?]
   #quotation[
     #quote(attribution: [Many Developers], block: true)[
-      Make the code readable? Who else is supposed to read it?
+      Make the code readable? Who else is supposed to read this?
     ]
   ]
 ]
@@ -370,23 +395,24 @@
 
 == Identifiers
 #slide[
-  - All things that you name in Java are called *identifiers*. Many
-    things you write need a name!
+  #text(size: 24pt)[
+    - All things that you name in Java are called *identifiers*. Many
+      things you write need a name!
 
-  #memo[
-    - Follow these rules for identifiers:
-      - Letters, numbers, underscores, and dollar signs are allowed.
-      - The first character may not be a number.
-      - Case sensitivity is observed.
-      - No spaces or keywords.
-      - Not the literals `true`, `false`, or `null`.
+    #memo[
+      - Follow these rules for identifiers:
+        - Letters, numbers, underscores, and dollar signs are allowed.
+        - The first character may not be a number.
+        - Case sensitivity is observed.
+        - No spaces or keywords.
+        - Not the literals `true`, `false`, or `null`.
+    ]
   ]
 ]
 
 #slide[
   - All reserved keywords in Java:
   #align(center + horizon)[
-
     #table(
       columns: 4,
       `abstract`, `double`, `int`, `super`,
@@ -433,29 +459,60 @@
 #slide[
   - There are the usual arithmetic operators.
   - In general, operators are also evaluated from left to right.
-
-  #figure(
-    image("../assets/img/slides_2/2024_10_08_arithmetische_operatoren_java_rev01.png"),
-    caption: [Arithmetic operators in Java],
-  )
+  #text(size: 13pt)[
+    #align(center + horizon)[
+      #figure(
+        table(
+          columns: (auto, auto, auto, auto),
+          inset: 10pt,
+          align: left + horizon,
+          fill: (_, y) => if calc.odd(y) { green.lighten(90%) },
+          table.header([*Operator*], [*Name*], [*Example*], [*Priority*]),
+          [`+`], [Prefix], [`a = 7`], [1],
+          [`-`], [Prefix], [`a = -7`], [1],
+          [`++`], [Increment], [`++count, count++`], [1],
+          [`--`], [Decrement], [`--count, count--`], [1],
+          [`*`], [Multiplication], [`area = length * width`], [2],
+          [`/`], [Division], [`mean = sum / count`], [2],
+          [`%`], [Modulo], [`11 % 4 (ergibt 3)`], [2],
+          [`+`], [Addition], [`a = b + c`], [3],
+          [`-`], [Substraction], [`a = b - c`], [3],
+        ),
+        caption: [Value ranges of data types],
+      )
+    ]
+  ]
 ]
 
 == Increment and Decrement
 #slide[
-  - There are also the same operators for incrementing and decrementing as
-    in C.
-    #figure(
-      image("../assets/img/slides_2/2024_10_08_increment_decrement_operatoren_rev01.png"),
-      caption: [Operators for increment and decrement in Java],
-    )
+  - There are also the same operators for incrementing and decrementing as in C.
+  #text(size: 24pt)[
+    #align(center + horizon)[
+      #figure(
+        table(
+          columns: (auto, auto, auto, auto),
+          inset: 10pt,
+          align: left + horizon,
+          fill: (_, y) => if calc.odd(y) { green.lighten(90%) },
+          table.header([*Operator*], [*Type*], [*Value of Expression*], [*Change of a*]),
+          [`++a`], [Prefix], [`a + 1`], [`a = a + 1`],
+          [`a++`], [Postfix], [`a`], [`a = a + 1`],
+          [`--a`], [Prefix], [`a - 7`], [`a = a - 1`],
+          [`a--`], [Postfix], [`a`], [`a = a - 1`],
+        ),
+        caption: [Value ranges of data types],
+      )
+    ]
+  ]
 ]
 
 #slide[
   #question[Think about it: What will appear on the console here?]
   ```java
   int a = 1;
-  System.out.println("a   : " + a);
   System.out.println("++a : " + ++a);
+  System.out.println("a   : " + a);
   System.out.println("a++ : " + a++);
   System.out.println("--a : " + --a);
   System.out.println("a-- : " + a--);
@@ -466,10 +523,26 @@
 #slide[
   - There are also the same comparison operators as in C!
 
-  #figure(
-    image("../assets/img/slides_2/2024_10_08_boolean_operatoren_rev01.png"),
-    caption: [Comparison operators in Java],
-  )
+  #text(size: 24pt)[
+    #align(center + horizon)[
+      #figure(
+        table(
+          columns: (auto, auto, auto),
+          inset: 10pt,
+          align: left + horizon,
+          fill: (_, y) => if calc.odd(y) { green.lighten(90%) },
+          table.header([*Operator*], [*Name*], [*Priority*]),
+          [`<`], [less than], [5],
+          [`<=`], [less than or equal to], [5],
+          [`>`], [larger than], [5],
+          [`>=`], [larger than or equal to], [5],
+          [`==`], [equal to], [6],
+          [`!=`], [not equal to], [6],
+        ),
+        caption: [Value ranges of data types],
+      )
+    ]
+  ]
 ]
 
 #slide[
@@ -487,11 +560,24 @@
 == Logical Operators
 #slide[
   - The result of logical operators is always a truth value, which is represented as `boolean` in Java.
-  #figure(
-    image("../assets/img/slides_2/2024_10_09_logische_operatoren_rev01.png"),
-    caption: [Logical operators in Java],
-  )
-
+  #text(size: 24pt)[
+    #align(center + horizon)[
+      #figure(
+        table(
+          columns: (auto, auto, auto),
+          inset: 10pt,
+          align: left + horizon,
+          fill: (_, y) => if calc.odd(y) { green.lighten(90%) },
+          table.header([*Operator*], [*Name*], [*Priority*]),
+          [`!`], [NOT], [1],
+          [`^`], [XOR], [8],
+          [`&&`], [AND], [10],
+          [`||`], [OR], [11],
+        ),
+        caption: [Value ranges of data types],
+      )
+    ]
+  ]
   #memo[
     - With logical operators, the right operand is not executed if the
       result is already determined. In the following example, `a` is not evaluated.
@@ -516,10 +602,22 @@
     combined with other operators.
   - The placeholder `<op>` stands for `*, /, +` and `-`, among others.
 
-  #figure(
-    image("../assets/img/slides_2/2024_10_09_zuweisungs_operatoren_rev01.png"),
-    caption: [Assignment operators in Java],
-  )
+  #text(size: 24pt)[
+    #align(center + horizon)[
+      #figure(
+        table(
+          columns: (auto, auto, auto),
+          inset: 10pt,
+          align: left + horizon,
+          fill: (_, y) => if calc.odd(y) { green.lighten(90%) },
+          table.header([*Operator*], [*Name*], [*Priority*]),
+          [`=`], [Assignment], [13],
+          [`<op>=`], [Combined Assignment:\ `a <op>= b <=> a = a <op> b`], [13],
+        ),
+        caption: [Value ranges of data types],
+      )
+    ]
+  ]
 ]
 
 #slide[
@@ -616,8 +714,8 @@
 #slide[
   #align(left + horizon)[
     #figure(
-      image("../assets/img/slides_2/2024_10_09_implizite_typkonvertierung_rev01.png"),
-      caption: [Implizite Typkonvertierung in Java],
+      image("../assets/img/slides_2/20250813_implizite_typkonvertierung_rev01.png"),
+      caption: [Implicit type conversion in Java],
     )
   ]
 
@@ -801,7 +899,7 @@
 #slide[
   #align(left + horizon)[]
   #figure(
-    image("../assets/img/slides_2/2024_10_09_while_loop_rev01.png"),
+    image("../assets/img/slides_2/20250730_while_loop_condition_rev01.png", height: 90%),
     caption: [while-Schleife in Java],
   )
 ]
@@ -821,7 +919,7 @@
 
   #align(left + horizon)[
     #figure(
-      image("../assets/img/slides_2/2024_10_09_dowhile_loop_rev01.png"),
+      image("../assets/img/slides_2/20250813_do_while_rev01.png", height: 90%),
       caption: [do-while-Schleife in Java],
     )
   ]
@@ -842,7 +940,7 @@
   - Update is executed after each iteration.
   #align(left + horizon)[
     #figure(
-      image("../assets/img/slides_2/2024_10_09_for_loop_rev01.png"),
+      image("../assets/img/slides_2/20250813_for_loop_rev01.png", height: 70%),
       caption: [for-Schleife in Java],
     )
   ]
@@ -854,7 +952,7 @@
   the loop and `continue` jumps to the next loop iteration.
 
   #figure(
-    image("../assets/img/slides_2/2024_10_09_break_continue_loop_rev01.png"),
+    image("../assets/img/slides_2/20250813_break_continue_rev01.png"),
     caption: [Visualisierung von break und continue in Java],
   )
 ]

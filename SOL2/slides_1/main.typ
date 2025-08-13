@@ -232,7 +232,7 @@
 
   #align(center + horizon)[
     #figure(
-      image("./../assets/img/slides_01/20250730_data_encapsulation_rev01.png", height: 75%),
+      image("./../assets/img/slides_01/20250730_data_encapsulation_rev01.png", height: 70%),
       caption: [Data encapsulation through classes],
     )<data-encapsulation>
   ]
@@ -257,7 +257,7 @@
   - Through inheritance, new classes can be created from other classes.
     - The methods and attributes of the base class are inherited and extended with additional code.
     - No duplicated code.
-  #figure(image("../assets/img/slides_01/20250812_inheritance_rev01.png", height: 63%))
+  #figure(image("../assets/img/slides_01/20250812_inheritance_rev01.png", height: 53%))
 ]
 
 == Composition
@@ -391,7 +391,7 @@
   #align(left + horizon)[
     #figure(
       image("../assets/img/slides_01/20250812_jre_jdk_rev01.png"),
-      caption: [The structure of the Java Toolchain#footnote(numbering: "*")[Application Programming Interface]],
+      caption: [The structure of the Java Toolchain],
     )
   ]
 ]
