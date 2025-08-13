@@ -43,8 +43,8 @@
 #show: university-theme.with(
   aspect-ratio: "16-9",
   config-info(
-    title: [Objektorientierte Programmierung in Java],
-    subtitle: [Vorlesung 9 - Eingabe und Ausgabe],
+    title: [Object-Oriented Programming in Java],
+    subtitle: [Lecture 9 - Input and Output],
     author: [Emily Lucia Antosch],
     date: datetime.today().display("[day].[month].[year]"),
     institution: [HAW Hamburg],
@@ -70,17 +70,17 @@
 
 #outline(depth: 1)
 
-= Einleitung
+= Introduction
 
-== Wo sind wir gerade?
+== Where are we now?
 
-- In der letzten Vorlesung haben wir uns mit dem Erstellen von graphischen
-  Oberflächen beschäftigt
-- Sie können nun
-  - Ausnahmen werfen und fangen,
-  - mit `try` und `catch` Ausnahmen behandeln
-  - und eigene Ausnahmetypen definieren.
-- Heute geht es weiter mit den *Ausnahmebehandlungen*.
+- In the last lecture, we dealt with creating graphical
+  user interfaces
+- You can now
+  - throw and catch exceptions,
+  - handle exceptions with `try` and `catch`
+  - and define your own exception types.
+- Today we continue with *Exception Handling*.
 
 #slide[
   1. Imperative Konzepte
@@ -90,27 +90,27 @@
   5. Schnittstellen
   6. Graphische Oberflächen
   7. Ausnahmebehandlung
-  8. *Eingaben und Ausgaben*
+  8. *Input and Output*
   9. Multithreading (Parallel Computing)
 ]
 
-== Das Ziel dieses Kapitels
+== The goal of this chapter
 
-- Sie lesen Zeichen, Zeichenketten sowie Zahlenwerte von der Tastatur ein.
-- Sie verketten und verwenden im Java SDK enthaltene Eingabe- und Ausgabeströme
-  zur Eingabe und Ausgabe von Bytes, Zeichen und Textzeilen.
-- Sie lesen und schreiben Zeichenketten aus bzw. in Textdateien.
+- You read characters, strings and numeric values from the keyboard.
+- You chain and use input and output streams contained in the Java SDK
+  for input and output of bytes, characters and text lines.
+- You read and write strings from and to text files.
 
-= Stream-Konzept & Bildschirmausgabe
-== Stream-Konzept
+= Stream concept & Screen output
+== Stream concept
 
 #slide[
   #text(size: 18pt)[
-    - Strom (Stream): Transportiert Daten von Sender („Quelle“) zu Empfänger („Senke“)
-    - Eingabe (Input): Einlesen von Daten in ein Programm
-    - Ausgabe (Output): Daten verlassen ein Programm
-    - Klassenbibliothek enthält etwa 50 Klassen für alle wichtigen Ein- und
-      Ausgabevarianten
+    - Stream: Transports data from sender ("source") to receiver ("sink")
+    - Input: Reading data into a program
+    - Output: Data leaves a program
+    - Class library contains about 50 classes for all important input and
+      output variants
 
     #figure(image("../assets/img/2024_10_08_eva_stream_rev01.png", height: 60%))
 
@@ -119,29 +119,29 @@
 
 #slide[
   #text(size: 18pt)[
-    - Mit dem, was wir schon gelernt haben:
-      - Was sind eigentlich die Bestandteile von `System.out.println()`?
+    - With what we have already learned:
+      - What are the components of `System.out.println()`?
 
-    - Nur das macht Sinn:
-      - `System`: Klasse (da keine Variable System deklariert)
-      - `out`: Klassenvariable von System, referenziert ein Objekt
-      - `println()`: Methode des über `out` referenzierten Objektes
+    - Only this makes sense:
+      - `System`: Class (since no variable System is declared)
+      - `out`: Class variable of System, references an object
+      - `println()`: Method of the object referenced via `out`
 
-    - Ausgabestrom:
-      - `System.out` referenziert Objekt der Klasse `PrintStream`
-      - Objekt ist mit Bildschirm verbunden
+    - Output stream:
+      - `System.out` references object of class `PrintStream`
+      - Object is connected to the screen
   ]
 ]
 
 #slide[
   #text(size: 13pt)[
-    - Ausgewählte Methoden der Klasse PrintStream:
+    - Selected methods of the PrintStream class:
 
       #figure(image("../assets/img/slides_9/2024_11_08_sout_prints_rev01.png", height: 40%))
 
     #question[
 
-      - Was wird ausgegeben?
+      - What is output?
     ]
     ```java
         public static void main(String[] args) {
@@ -154,23 +154,22 @@
 ]
 #slide[
   #text(size: 18pt)[
-    In `System` referenzierte Ströme:
+    Streams referenced in `System`:
 
     #figure(image("../assets/img/slides_9/2024_11_08_system_outerrin_rev01.png", height: 40%))
   ]
 ]
 
-= Tastatureingabe
-== Klasse `Scanner`
+= Keyboard input
+== Class `Scanner`
 #slide[
   #text(size: 18pt)[
-    - Bietet Methoden zum Einlesen von Texten und einfachen Datentypen (z.B. int)
-    - Texteingabe wird analysiert und interpretiert („Parsen“, z.B. in Ganzzahl
-      wandeln)
+    - Provides methods for reading texts and simple data types (e.g. int)
+    - Text input is analyzed and interpreted ("parsing", e.g. converting to integer)
 
-    - Erzeugung und Beendigung:
-      - Scanner-Objekt wird im Konstruktor mit Eingabestrom verbunden
-      - Die Verbindung sollte über die Scanner-Methode close() beendet werden.
+    - Creation and termination:
+      - Scanner object is connected to input stream in constructor
+      - The connection should be terminated via the Scanner method close().
 
         #example[
           ```java
@@ -190,39 +189,39 @@
 #slide[
   #text(size: 18pt)[
     #question[
-      - Hoppla, was passiert hier?
+      - Oops, what happens here?
     ]
     ```java
     public class ScannerToken {
         public static void main(String[] args) {
             Scanner scanner = new Scanner(System.in);
 
-            System.out.print("Bitte einen Satz eingeben: ");
+            System.out.print("Please enter a sentence: ");
             System.out.println(scanner.next());
             scanner.close();
         }
     }
     ```
-    - Methode `next()`: Nur erstes Wort anstatt ganzer Satz eingelesen und ausgegeben
-    - Es werden Wörter und Zeilen unterschieden.
+    - Method `next()`: Only first word instead of entire sentence is read and output
+    - Words and lines are distinguished.
   ]
 ]
 
 #slide[
   #text(size: 18pt)[
-    - Trennzeichen mehrerer Eingaben:
-      - Token: Einzelne Wörter oder Werte (z.B. Ganzzahl)
-      - Token in Eingabe durch Trennzeichen getrennt
-      - Standardtrennzeichen ist ein Whitespace (d.h. Leerzeichen, Tabulator,
-        Zeilenumbruch)
+    - Separators of multiple inputs:
+      - Token: Individual words or values (e.g. integer)
+      - Tokens in input separated by separators
+      - Default separator is a whitespace (i.e. space, tab,
+        line break)
 
-    - Methoden:
-      - Trennzeichen über Methode useDelimiter() änderbar
-      - Über Methode hasNext() Abfrage, ob noch Token vorhanden sind
+    - Methods:
+      - Separator changeable via method useDelimiter()
+      - Via method hasNext() query whether tokens are still available
 
     #task[
 
-      - Schreiben Sie ein Programm, das einen Satz über next() einliest.]
+      - Write a program that reads a sentence via next().]
 
   ]
 ]
@@ -242,8 +241,8 @@
     }
     ```
     #question[
-      - Was geschieht, wenn Sie scanner.hasNext() durch true ersetzen?
-      - Wie verhält sich next() sobald alle Wörter eingelesen sind?
+      - What happens if you replace scanner.hasNext() with true?
+      - How does next() behave once all words have been read?
     ]
   ]
 ]
@@ -260,8 +259,8 @@
         public static void main(String[] args) {
             Scanner scanner = new Scanner(System.in);
 
-            System.out.print("Bitte einen byte-Wert eingeben: ");
-            System.out.println("Eingegeben: " + scanner.nextByte());
+            System.out.print("Please enter a byte value: ");
+            System.out.println("Entered: " + scanner.nextByte());
             scanner.close();
         }
     }
@@ -270,34 +269,33 @@
 ]
 #slide[
   #text(size: 18pt)[
-    - Fehler beim Parsen:
-      - Eingaben „128“ und „Hamburg“: Ausnahme vom Typ `InputMismatchException`
-      - Hat Basisklasse `RuntimeException` (Ausnahmebehandlung nicht zwingend
-        erforderlich)
+    - Parsing errors:
+      - Inputs "128" and "Hamburg": Exception of type `InputMismatchException`
+      - Has base class `RuntimeException` (exception handling not mandatory)
         #task[
-          - Das Programm soll nicht durch eine Ausnahme beendet werden:
-            - Finden Sie zwei unterschiedliche Möglichkeiten, dies zu vermeiden.
-            - Implementieren Sie diese Möglichkeiten.
+          - The program should not be terminated by an exception:
+            - Find two different ways to avoid this.
+            - Implement these approaches.
         ]
 
-    - Ansätze:
-      - Fangen der Ausnahme
-      - Abfrage über `hasNextByte()`
+    - Approaches:
+      - Catch the exception
+      - Query via `hasNextByte()`
   ]
 ]
 #slide[
   #text(size: 18pt)[
-    - Ausnahme fangen:
+    - Catch exception:
     ```java
     public class ScannerByte2 {
         public static void main(String[] args) {
             Scanner scanner = new Scanner(System.in);
 
-            System.out.print("Bitte einen byte-Wert eingeben: ");
+            System.out.print("Please enter a byte value: ");
             try {
-                System.out.println("Eingegeben: " + scanner.nextByte());
+                System.out.println("Entered: " + scanner.nextByte());
             } catch (InputMismatchException e) {
-                System.out.println("Eingabe ist kein byte-Wert.");
+                System.out.println("Input is not a byte value.");
             } finally {
                 scanner.close();
             }
@@ -309,17 +307,17 @@
 
 #slide[
   #text(size: 18pt)[
-    - Datentyp abfragen:
+    - Query data type:
     ```java
     public class ScannerByte3 {
         public static void main(String[] args) {
             Scanner scanner = new Scanner(System.in);
 
-            System.out.print("Bitte einen byte-Wert eingeben: ");
+            System.out.print("Please enter a byte value: ");
             if (scanner.hasNextByte()) {
-                System.out.println("Eingegeben: " + scanner.nextByte());
+                System.out.println("Entered: " + scanner.nextByte());
             } else {
-                System.out.println("Kein byte-Wert: " + scanner.next());
+                System.out.println("Not a byte value: " + scanner.next());
             }
             scanner.close();
         }
@@ -331,13 +329,13 @@
 #slide[
   #text(size: 18pt)[
     #task[
-      - Einlesen der Komponenten eines Vektors (Datentyp `int`)
-      - Komponenten einlesen bis anderes Token (z. B. ein Buchstabe) eingegeben wurde
-      - Ausgabe des Vektors sowie des Betrages
+      - Read the components of a vector (data type `int`)
+      - Read components until another token (e.g. a letter) is entered
+      - Output the vector as well as the magnitude
     ]
 
     #example[
-      Integer-Komponenten (mit anderem Zeichen beenden): 7 4 0 15 Ende \
+      Integer components (terminate with different character): 7 4 0 15 End \
       $a = [7, 4, 0, 15]^T$\
       $||a|| = 17,03$
 
@@ -352,7 +350,7 @@
         public static void main(String[] args) {
             Scanner scanner = new Scanner(System.in);
             ArrayList<Integer> vector = new ArrayList<Integer>();
-            System.out.print("Integer-Komponenten (mit anderem Zeichen beenden): ");
+            System.out.print("Integer components (terminate with different character): ");
             while (scanner.hasNextInt())
                 vector.add(scanner.nextInt());
             scanner.close();
@@ -378,18 +376,17 @@
 
 #slide[
   #text(size: 15pt)[
-    - Was war nochmal die Besonderheit von Zeichen in Java?
-      - Alle Zeichen als 2 Byte (Unicode) codiert
-      - Unterscheide: Ströme, die Elemente aus 1 Byte oder 2 Byte („Zeichen“)
-        transportieren
+    - What was the special feature of characters in Java again?
+      - All characters encoded as 2 bytes (Unicode)
+      - Distinguish: Streams that transport elements of 1 byte or 2 bytes ("characters")
 
-    - Byteströme (byteorientierte Ströme):
-      - Transportierten einzelne Bytes
-      - Klassen InputStream und OutputStream sowie hiervon abgeleitete Klassen
+    - Byte streams (byte-oriented streams):
+      - Transport individual bytes
+      - Classes InputStream and OutputStream as well as classes derived from them
 
-    - Zeichenströme (characterorientierte Ströme):
-      - Transportierten Zeichen aus jeweils 2 Byte
-      - Abstrakte Klassen Reader und Writer sowie hiervon abgeleitete Klassen
+    - Character streams (character-oriented streams):
+      - Transport characters of 2 bytes each
+      - Abstract classes Reader and Writer as well as classes derived from them
 
         #figure(image("../assets/img/slides_9/2024_11_08_object_streams_rev01.png", height: 40%))
   ]
@@ -397,16 +394,15 @@
 
 #slide[
   #text(size: 18pt)[
-    - Tastatur liefert Strom aus einzelnen Bytes (z. B. `System.in` vom Datentyp
+    - Keyboard delivers stream of individual bytes (e.g. `System.in` of data type
       `InputStream`)
-      - Java-Zeichen bestehen aus 2 Bytes
-      - Bytestrom mit Zeichenstrom verbinden
+      - Java characters consist of 2 bytes
+      - Connect byte stream with character stream
 
-    - Anmerkungen:
-      - Ziel im Folgenden: Veranschaulichung der Verkettung von Strömen
-      - Ja, Tastatureingaben (Code $≤ 255$) müssten Sie nicht mit einem Zeichenstrom
-        verketten.
-      - Ja, verwenden Sie für Tastatureingaben ruhig Scanner.
+    - Notes:
+      - Goal in the following: Illustration of stream chaining
+      - Yes, keyboard inputs (code $\leq 255$) you wouldn't need to chain with a character stream.
+      - Yes, feel free to use Scanner for keyboard inputs.
     #figure(
       image(
         "../assets/img/slides_9/2024_11_08_tastatur_stream_programm_rev01.png",
@@ -424,7 +420,7 @@
         public static void main(String[] args) throws IOException {
             InputStreamReader reader = new InputStreamReader(System.in);
 
-            System.out.print("Bitte ein Zeichen eingeben: ");
+            System.out.print("Please enter a character: ");
             System.out.println(reader.read());
             System.out.println(reader.read());
             System.out.println(reader.read());
@@ -433,17 +429,17 @@
     }
     ```
     #question[
-      - Warum wird `read()` dreimal aufgerufen?
-      - Warum sind die zweite und dritte Ausgabe immer 13 und 10?
+      - Why is `read()` called three times?
+      - Why are the second and third outputs always 13 and 10?
     ]
   ]
 ]
 
 #slide[
   #text(size: 18pt)[
-    - `BufferedReader` liest einen Zeichenstrom und puffert die Zeichen
-    - Bietet z.B. Methode `readLine()` zum Auslesen einer Zeile
-    - Analog gibt Klasse `BufferedWriter` ganze Zeile über `newLine()` aus
+    - `BufferedReader` reads a character stream and buffers the characters
+    - Provides e.g. method `readLine()` for reading out a line
+    - Analogously, class `BufferedWriter` outputs entire line via `newLine()`
 
       #figure(
         image(
@@ -453,9 +449,9 @@
       )
 
       #task[
-        - Ändern Sie das vorherige Beispiel folgendermaßen ab:
-          - Einlesen zweier Zeilen über
-          - BufferedReader Anschließend beide Zeilen ausgeben
+        - Modify the previous example as follows:
+          - Read two lines via
+          - BufferedReader Then output both lines
       ]
   ]
 ]
@@ -468,9 +464,9 @@
             InputStreamReader reader = new InputStreamReader(System.in);
             BufferedReader bufferedReader = new BufferedReader(reader);
 
-            System.out.print("Bitte erste Zeile eingeben:  ");
+            System.out.print("Please enter first line:  ");
             String line1 = bufferedReader.readLine();
-            System.out.print("Bitte zweite Zeile eingeben: ");
+            System.out.print("Please enter second line: ");
             String line2 = bufferedReader.readLine();
 
             System.out.println(line1);
@@ -482,15 +478,15 @@
   ]
 ]
 
-= Dateien
-== Dateien und Verzeichnissen
+= Files
+== Files and Directories
 
 #slide[
   #text(size: 14pt)[
-    - Klasse `File` repräsentiert Datei oder Verzeichnis
-      - Objekte beinhalten Informationen über Datei, nicht deren Inhalt
-      - Intellij verwendet das Projekt-Verzeichnis als Stammverzeichnis zum
-        Lesen/Schreiben.
+    - Class `File` represents file or directory
+      - Objects contain information about file, not its content
+      - IntelliJ uses the project directory as root directory for
+        reading/writing.
     ```java
     public class CreateFile {
         public static void main(String[] args) throws IOException {
@@ -498,13 +494,13 @@
             boolean isExists = file.exists();
 
             if (!isExists) {
-                System.out.println("Datei erzeugen");
+                System.out.println("Create file");
                 isExists = file.createNewFile();
             }
 
             if (isExists && file.isFile()) {
-                System.out.println("Lesen: " + file.canRead());
-                System.out.println("Schreiben: " + file.canWrite());
+                System.out.println("Read: " + file.canRead());
+                System.out.println("Write: " + file.canWrite());
                 file.delete();
             }
         }
@@ -533,12 +529,12 @@
 ]
 #slide[
   #text(size: 18pt)[
-    - Byteströme:
-      - Dateien über Klassen FileInputStream lesen und über FileOutputStream schreiben
+    - Byte streams:
+      - Read files via FileInputStream classes and write via FileOutputStream
 
-    - Zeichenströme (z.B. Textdateien):
-      - Dateien über FileReader lesen und über FileWriter schreiben
-      - Gepufferte Zeichenströme über BufferedReader und BufferedWriter
+    - Character streams (e.g. text files):
+      - Read files via FileReader and write via FileWriter
+      - Buffered character streams via BufferedReader and BufferedWriter
 
         #figure(
           image(
@@ -551,10 +547,10 @@
 
 #slide[
   #text(size: 16pt)[
-    - Lassen Sie uns das anwenden:
-      - Erstellen Sie ein Programm, das eine Textdatei schreibt.
-      - Erstellen Sie ein weiteres Programm, das den Inhalt der Textdatei einliest und
-        ausgibt.
+    - Let's apply this:
+      - Create a program that writes a text file.
+      - Create another program that reads the content of the text file and
+        outputs it.
 
     ```java
     public class WriteFile {
@@ -563,9 +559,9 @@
             FileWriter writer = new FileWriter(file);
             BufferedWriter bufferedWriter = new BufferedWriter(writer);
 
-            bufferedWriter.write("Dies ist die erste Zeile.");
+            bufferedWriter.write("This is the first line.");
             bufferedWriter.newLine();
-            bufferedWriter.write("Und hier kommt die zweite Zeile.");
+            bufferedWriter.write("And here comes the second line.");
             bufferedWriter.newLine();
             bufferedWriter.close();
         }

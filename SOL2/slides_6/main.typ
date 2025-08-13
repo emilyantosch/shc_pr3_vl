@@ -11,7 +11,7 @@
 
 #import "@preview/numbly:0.1.0": numbly
 
-#set text(lang: "de", font: "Roboto")
+#set text(lang: "en", font: "Roboto")
 #set heading(numbering: numbly("{1}.", default: "1.1"))
 
 #set align(left + top)
@@ -43,8 +43,8 @@
 #show: university-theme.with(
   aspect-ratio: "16-9",
   config-info(
-    title: [Objektorientierte Programmierung in Java],
-    subtitle: [Vorlesung 6 - Abstrakte Elemente],
+    title: [Object-Oriented Programming in Java],
+    subtitle: [Lecture 6 - Abstract Elements],
     author: [Emily Lucia Antosch],
     date: datetime.today().display("[day].[month].[year]"),
     institution: [HAW Hamburg],
@@ -70,51 +70,51 @@
 
 #outline(depth: 1)
 
-= Einleitung
+= Introduction
 
-== Wo sind wir gerade?
+== Where Are We Currently?
 
-- In der letzten Vorlesung ging es um Vererbung
-- Sie können nun
-  - einfache Vererbungslinien erzeugen und verwenden,
-  - Methoden aus der Basisklasse überlagern,
-  - die `equals()`-Methode verwenden, um Objekte miteinander zu vergleichen,
-  - Objekte über die jeweilige Basisklasse referenzieren
-- Heute geht es weiter mit den *Schnittstellen*.
+- The last lecture was about inheritance
+- You can now
+  - create and use simple inheritance lines,
+  - override methods from the base class,
+  - use the `equals()` method to compare objects with each other,
+  - reference objects via the respective base class
+- Today we continue with *Interfaces*.
 
 #slide[
-  1. Imperative Konzepte
-  2. Klassen und Objekte
-  3. Klassenbibliothek
-  4. Vererbung
-  5. *Schnittstellen*
-  6. Graphische Oberflächen
-  7. Ausnahmebehandlung
-  8. Eingaben und Ausgaben
+  1. Imperative Concepts
+  2. Classes and Objects
+  3. Class Library
+  4. Inheritance
+  5. *Interfaces*
+  6. Graphical User Interfaces
+  7. Exception Handling
+  8. Input and Output
   9. Multithreading (Parallel Computing)
 ]
 
-== Das Ziel dieses Kapitels
+== The Goal of This Chapter
 
-- Sie bilden gemeinsame Eigenschaften von Klassen ab, indem Sie Klassen um gemeinsame Schnittstellen (in Form von abstrakten Basisklassen oder Interfaces) erweitern.
-- Sie verbergen den Datentyp von Objekten, indem Sie Objekte beim Zugriff auf gemeinsame Eigenschaften unterschiedlicher Klassen über Schnittstellen referenzieren.
-- Sie sortieren eine Sammlung von Objekten gleichen Datentyps nach beliebigen Kriterie
+- You model common properties of classes by extending classes with common interfaces (in the form of abstract base classes or interfaces).
+- You hide the data type of objects by referencing objects via interfaces when accessing common properties of different classes.
+- You sort a collection of objects of the same data type according to arbitrary criteria
 
-= Abstrakte Elemente & Methoden
-== Abstrakte Elemente
+= Abstract Elements & Methods
+== Abstract Elements
 #slide[
   #text(size: 18pt)[
     #question[
-      - Erinnern Sie sich an unsere geometrischen Objekte?
-      - Was stört Sie am bisherigen Aufbau unserer Klassen?
-      - Was ergibt keinen Sinn bzw. ist „unschön“?
+      - Do you remember our geometric objects?
+      - What bothers you about the current structure of our classes?
+      - What doesn't make sense or is "ugly"?
 
     ]
   ]
   #pause
   #figure(
     image("../assets/img/slides_6/2024_10_23_geometrische_form_ohneAbstrakt_rev01.png", height: 50%),
-    caption: [Überlagern der Methode aus Shape],
+    caption: [Overriding the method from Shape],
   )
 
 ]
@@ -125,11 +125,11 @@
 
     #text(size: 16pt)[
 
-      - Klasse wird durch Schlüsselwort abstract zu abstrakter Klasse
-      - Effekt: Es können keine Objekte der Klasse erstellt werden.
-      - Stattdessen:
-        - Klasse ableiten und in (konkreten = nicht abstrakten) Subklassen erweitern
-        - Objekte der Subklassen erstellen
+      - Class becomes abstract class through keyword abstract
+      - Effect: No objects of the class can be created.
+      - Instead:
+        - Derive class and extend in (concrete = non-abstract) subclasses
+        - Create objects of the subclasses
       ```java
       	public abstract class A {
       	    // ...
@@ -162,8 +162,8 @@
   #text(size: 18pt)[
 
     #let top = [
-      - Methode wird durch das Schlüsselwort abstract zur abstrakten Methode
-      - Abstrakte Methode enthält nur die Deklaration, aber keine Implementierung
+      - Method becomes abstract method through the keyword abstract
+      - Abstract method contains only the declaration, but no implementation
     ]
     #let mid = [
       #let left = [
@@ -184,8 +184,8 @@
     ]
     #let bot = [
       #memo[
-        - Abstrakte Methoden können nicht aufgerufen werden (existiert keine Implementierung!)
-        - Gibt stattdessen vor, welche Methoden Subklassen besitzen müssen
+        - Abstract methods cannot be called (no implementation exists!)
+        - Instead specifies which methods subclasses must have
       ]
     ]
     #grid(rows: (auto, 30%, auto), gutter: 2.5em, top, mid, bot)
@@ -197,11 +197,11 @@
 
     #let body = [
 
-      - Klassen mit abstrakten Methoden müssen abstrakt sein.
-      - Ansonsten könnten für Objekte nicht implementierte Methoden aufgerufen werden.
-      - Vererbung:
-        - Abstrakte Methoden werden vererbt.
-        - Subklassen abstrakt, solange nicht alle abstrakten Methoden implementier
+      - Classes with abstract methods must be abstract.
+      - Otherwise, non-implemented methods could be called for objects.
+      - Inheritance:
+        - Abstract methods are inherited.
+        - Subclasses remain abstract as long as not all abstract methods are implemented
 
       ```java
       	public abstract class ImageSource {
@@ -229,26 +229,26 @@
 #slide[
   #figure(
     image("../assets/img/slides_6/2024_10_24_abstrakt_klasse_methode_baum_rev01.png", height: 90%),
-    caption: [Großer Overview über Abstrakte Klassen und Methoden],
+    caption: [Large overview of abstract classes and methods],
   )
 ]
 
 #slide[
   #task[
-    - Verbessern Sie nun den Aufbau der Klassenstruktur.
-    - Verwenden Sie hierfür abstrakte Elemente.
+    - Now improve the structure of the class hierarchy.
+    - Use abstract elements for this.
   ]
   #figure(image("../assets/img/slides_6/2024_10_24_geom_form_ohne_erkl_rev01.png", height: 50%))
 ]
 
 #slide[
   #text(size: 18pt)[
-    - Keine Objekte der Klasse Shape, sondern nur von konkreten geometrischen Formen
-    - Alle Klassen für geometrischen Formen besitzen getArea().
-    - Implementierung je nach Typ der geometrischen Form
+    - No objects of class Shape, but only of concrete geometric shapes
+    - All classes for geometric shapes have getArea().
+    - Implementation depends on the type of geometric shape
       #figure(
         image("../assets/img/slides_6/2024_10_24_geom_formen_abst_impl_rev01.png", height: 60%),
-        caption: [Abstrakte und implementierte Methoden],
+        caption: [Abstract and implemented methods],
       )
 
   ]
@@ -256,31 +256,31 @@
 = Interfaces
 == Interfaces
 #slide[
-  - Klassen (zur Erinnerung):
-    - Konkrete Klassen können keine abstrakten Methoden enthalten.
-    - Abstrakte Klassen können zusätzlich abstrakte Methoden enthalten.
+  - Classes (as a reminder):
+    - Concrete classes cannot contain abstract methods.
+    - Abstract classes can additionally contain abstract methods.
 
-  - Grundlegende Idee einer Schnittstelle:
-    - Deklariert lediglich abstrakte Methoden
-    - Gibt also vor, welche Methoden eine Klasse implementieren muss
-    - Enthält keine Variablen (Kein Objekt erzeugbar: keine Konstruktoren benötigt)
-    - Beschreiben oft Eigenschaften (z.B. Comparable, Cloneable, Scalable, …)
+  - Basic idea of an interface:
+    - Declares only abstract methods
+    - Therefore specifies which methods a class must implement
+    - Contains no variables (No object creatable: no constructors needed)
+    - Often describe properties (e.g. Comparable, Cloneable, Scalable, ...)
 ]
 
 #slide[
-  - Sichtbarkeit:
-    - Alle Methoden sind public abstract (auch wenn Modifier fehlen).
-    - Alle Attribute sind public static final (auch wenn Modifier fehlten).
+  - Visibility:
+    - All methods are public abstract (even when modifiers are missing).
+    - All attributes are public static final (even when modifiers were missing).
 
-  - Ab Java 8 auch implementierte Methoden:
-    - Default-Methoden: Vergleichbar mit herkömmlichen Methoden in einer Klasse
-    - Statische Methoden
+  - From Java 8 also implemented methods:
+    - Default methods: Comparable to conventional methods in a class
+    - Static methods
 ]
 
 #slide[
   #figure(
     image("../assets/img/slides_6/2024_10_24_abstufung_klas_abst_inter_rev01.png"),
-    caption: [Abstufung zwischen Konkret, Abstrakt und Interface],
+    caption: [Gradation between Concrete, Abstract and Interface],
   )
 ]
 
@@ -288,16 +288,16 @@
   #text(size: 20pt)[
 
     #let body = [
-      - Deklaration einer Schnittstelle:
+      - Declaration of an interface:
       ```java
-      	  Modifier interface Schnittstellenname {
-      		Konstanten
-      		Abstrakte Methoden
-      		Default-Methoden und statische Methoden
+      	  Modifier interface InterfaceName {
+      		Constants
+      		Abstract Methods
+      		Default methods and static methods
       	  }
       ```
 
-      - Deklariere Methode `resize()`, um Größe eines Objektes zu ändern
+      - Declare method `resize()` to change size of an object
       ```java
       	public interface Scalable {
       	    void resize(double factor);
@@ -317,8 +317,8 @@
   #text(size: 16pt)[
     #let body = [
 
-      - Klassen implementieren Schnittstellen über das Schlüsselwort implements
-      - Klasse erbt Elemente der Schnittstelle und implementiert abstrakte Methoden
+      - Classes implement interfaces via the keyword implements
+      - Class inherits elements of the interface and implements abstract methods
       ```java
       	public class Vector2D implements Scalable {
       	    private double x, y;
@@ -332,7 +332,7 @@
       	        x *= factor;
       	        y *= factor;
       	    }
-      	    // Weitere Methoden ...
+      	    // Additional methods ...
       	}
       ```
     ]
@@ -347,15 +347,15 @@
 
 #slide[
   #text(size: 18pt)[
-    - Interface-Methode nicht implementiert: Methode bleibt abstrakt
-    - Daher dann auch die Klasse abstrakt
-    - Subklassen erst dann konkret, wenn alle abstrakten Methoden implementiert
+    - Interface method not implemented: Method remains abstract
+    - Therefore the class is also abstract
+    - Subclasses only become concrete when all abstract methods are implemented
 
   ]
 
   #figure(
     image("../assets/img/slides_6/2024_10_24_scalable_interface_abstrakt_vector_rev01.png", height: 60%),
-    caption: [Abstrakte Klassen und Interfaces],
+    caption: [Abstract classes and interfaces],
   )
 ]
 
@@ -363,8 +363,8 @@
   #text(size: 18pt)[
     #let body = [
 
-      - Zur Erinnerung: Mehrfachvererbung für Klassen nicht erlaubt
-      - Aber: Implementierung beliebig vieler Schnittstellen (durch Kommas getrennt) erlaubt
+      - As a reminder: Multiple inheritance for classes not allowed
+      - But: Implementation of any number of interfaces (separated by commas) allowed
 
       ```java
       	interface Interface1 {
@@ -391,12 +391,12 @@
 
 #slide[
   #text(size: 16pt)[
-    Klasse GrayImage implementiert Scalable, Drawable und Rotateable
+    Class GrayImage implements Scalable, Drawable and Rotateable
     ```java
     	public class GrayImage implements Scalable, Drawable, Rotateable {
-    	    // Attribute und Konstruktoren
-    	    // Methoden der Schnittstellen
-    	    // Weitere Methoden
+    	    // Attributes and constructors
+    	    // Interface methods
+    	    // Additional methods
     }
     ```
 
@@ -408,8 +408,8 @@
   #text(size: 16pt)[
     #let body = [
 
-      - Schnittstellen können durch extends abgeleitet werden.
-      - Für Schnittstellen ist Mehrfachvererbung erlaubt!
+      - Interfaces can be derived through extends.
+      - Multiple inheritance is allowed for interfaces!
 
       ```java
       	interface Interface1 {
@@ -441,11 +441,11 @@
 #slide[
   #text(size: 16pt)[
     #let body = [
-      - Genauso wie bei Basisklassen:
-        - Objekte über Datentypen ihrer implementierten Schnittstellen referenzierbar
-        - Referenzvariable kann nur auf Attribute und Methoden ihrer Schnittstelle zugreifen
+      - Just like with base classes:
+        - Objects referenceable via data types of their implemented interfaces
+        - Reference variable can only access attributes and methods of its interface
         #question[
-          - Welche Zugriffe auf Attribute sind zulässig und welche nicht?
+          - Which accesses to attributes are allowed and which are not?
         ]
 
       ```java
@@ -473,34 +473,34 @@
 #slide[
   #text(size: 18pt)[
     #task[
-      - Erstellen Sie eine Schnittstelle Transformable mit folgenden Methoden:
-        - Verschieben
-        - Rotation um 90° (je eine Methode für Rotation nach links und nach rechts)
-        - Skalieren
-        - Implementieren Sie die Schnittstelle in allen Klassen geometrischer Formen
+      - Create an interface Transformable with the following methods:
+        - Move
+        - Rotation by 90° (one method each for rotation left and right)
+        - Scale
+        - Implement the interface in all classes of geometric shapes
     ]
     #figure(image("../assets/img/slides_6/2024_10_24_geom_form_ohne_erkl_rev01.png", height: 45%))
   ]
 ]
 
-= Vergleich (Interface `Comparable`)
+= Comparison (Interface `Comparable`)
 
 == Interface `Comparable`
 
 #slide[
   #text(size: 18pt)[
     #let body = [
-      - Vergleich von Objekten (Welches ist „größer“, welches „kleiner“?)
+      - Comparison of objects (Which is "larger", which is "smaller"?)
 
       ```java
       	public interface Comparable<Type> {
       	    public int compareTo(Type other);
       	}
       ```
-      - Verwendung:
-        - Schnittstelle in eigener Klasse implementieren
-        - Platzhalter Type durch eigenen Klassennamen ersetzen
-        - Rückgabewert wird wie folgt gedeutet:
+      - Usage:
+        - Implement interface in own class
+        - Replace placeholder Type with own class name
+        - Return value is interpreted as follows:
         #figure(image("../assets/img/slides_6/2024_10_24_comparable_returnvalue_rev01.png"))
     ]
 
@@ -516,7 +516,7 @@
 #slide[
   #text(size: 15pt)[
     #let body = [
-      - Vergleich von Vektoren anhand des Betrages:
+      - Comparison of vectors based on magnitude:
       ```java
       	public class Vector2D implements Comparable<Vector2D> {
       	    double x, y;
@@ -549,9 +549,9 @@
 #slide[
   #text(size: 15pt)[
     #let body = [
-      - Listen über Klassenmethode `Collections.sort()` sortieren
-      - Voraussetzung: Elemente in Liste implementieren Comparable
-      - Methode `sort()` verwendet paarweise die Vergleichsmethode `compareTo()`
+      - Sort lists via class method `Collections.sort()`
+      - Prerequisite: Elements in list implement Comparable
+      - Method `sort()` uses the comparison method `compareTo()` pairwise
       ```java
       	public static void main(String[] args) {
       	    ArrayList<Vector2D> vectors = new ArrayList<Vector2D>();
@@ -581,8 +581,8 @@
 #slide[
   #text(size: 18pt)[
     #task[
-      - Implementieren Sie `Comparable<Type>` für geometrische Objekte.
-      - Kriterium für den Vergleich ist die Fläche der Objekte.
+      - Implement `Comparable<Type>` for geometric objects.
+      - Criterion for the comparison is the area of the objects.
     ]
     #figure(image("../assets/img/slides_6/2024_10_24_geom_form_ohne_erkl_rev01.png", height: 50%))
 
@@ -592,8 +592,8 @@
 #slide[
   #text(size: 18pt)[
     #memo[
-      - Nur die Klasse `Shape` muss `Comparable` implementieren.
-      - Die übrigen Klassen erben die Schnittstelle und Implementierung.
+      - Only the class `Shape` must implement `Comparable`.
+      - The remaining classes inherit the interface and implementation.
     ]
     #figure(image("../assets/img/slides_6/2024_10_24_comparable_shape_rev01.png", height: 50%))
 
@@ -602,10 +602,10 @@
 
 #slide[
   #text(size: 15pt)[
-    - Implementierung in Shape:
+    - Implementation in Shape:
     ```java
     public abstract class Shape implements Comparable<Shape> {
-        // Attribute und andere Methoden ...
+        // Attributes and other methods ...
 
         public int compareTo(Shape other) {
             double thisArea = getArea();
@@ -634,13 +634,13 @@
     	    shapes.add(new Rectangle(0.0, 0.0, 10.0, 5.0));
     	    shapes.add(new Square(0.0, 0.0, 0.5));
 
-    	    System.out.println("Flächen (unsortiert):");
+    	    System.out.println("Areas (unsorted):");
     	    for (Shape shape : shapes) {
     	        System.out.println(shape.getArea());
     	    }
 
     	    Collections.sort(shapes);
-    	    System.out.println("\nFlächen (sortiert):");
+    	    System.out.println("\nAreas (sorted):");
     	    for (Shape shape : shapes) {
                 System.out.println(shape.getArea());
             }

@@ -43,8 +43,8 @@
 #show: university-theme.with(
   aspect-ratio: "16-9",
   config-info(
-    title: [Objektorientierte Programmierung in Java],
-    subtitle: [Vorlesung 10 - Parallel Computing],
+    title: [Object-Oriented Programming in Java],
+    subtitle: [Lecture 10 - Parallel Computing],
     author: [Emily Lucia Antosch],
     date: datetime.today().display("[day].[month].[year]"),
     institution: [HAW Hamburg],
@@ -70,16 +70,16 @@
 
 #outline(depth: 1)
 
-= Einleitung
+= Introduction
 
-== Wo sind wir gerade?
+== Where are we now?
 
-- In der letzten Vorlesung haben wir uns mit der Ausgabe und Eingabe beschäftigt
-- Sie können nun
-  - Ausgabe auf der Konsole in den richtigen Kanal senden und formatieren,
-  - Eingabe vom User einfordern
-  - und Dateien in Java einlesen.
-- Heute geht es weiter mit der *Parallelverarbeitung*.
+- In the last lecture, we dealt with output and input
+- You can now
+  - send and format output to the console in the right channel,
+  - request input from the user
+  - and read files in Java.
+- Today we continue with *parallel processing*.
 
 #slide[
   1. Imperative Konzepte
@@ -87,31 +87,31 @@
   3. Klassenbibliothek
   4. Vererbung
   5. Schnittstellen
-  6. Graphische Oberflächen
-  7. Ausnahmebehandlung
-  8. Eingaben und Ausgaben
+  6. Graphical User Interfaces
+  7. Exception Handling
+  8. Input and Output
   9. *Multithreading (Parallel Computing)*
 ]
 
-== Das Ziel dieses Kapitels
+== The goal of this chapter
 
-- Sie führen Programmcode zeitgleich in nebenläufigen Ausführungssträngen (Threads) aus.
-- Sie verändern die Zustände aktiver Threads zur Erzeugung der geforderten Funktionalität.
-- Sie synchronisieren Threads und Objekte, um fehlerhafte Datenzustände durch nicht korrekte Ausführungsreihenfolgen zu verhindern.
+- You execute program code simultaneously in concurrent execution threads (threads).
+- You modify the states of active threads to generate the required functionality.
+- You synchronize threads and objects to prevent erroneous data states due to incorrect execution orders.
 
-= Parallelverarbeitung
-== Beispiel: Rührei und Pudding
+= Parallel processing
+== Example: Scrambled eggs and pudding
 
 #slide[
   #text(size: 18pt)[
 
-    - Sie machen Rührei und Pudding.
-    - Möglicher Ablauf:
+    - You make scrambled eggs and pudding.
+    - Possible sequence:
     #figure(image("../assets/img/slides_10/2024_11_07_serial_ruehrei_rev01.png", height: 40%))
 
     #question[
-      - Wie könnte der Ablauf aussehen, wenn Sie zu viert kochen?
-      - Einschränkung: Es gibt nur eine Herdplatte
+      - What could the sequence look like if four of you are cooking?
+      - Constraint: There is only one stove burner
     ]
   ]
 ]
@@ -119,8 +119,8 @@
 #slide[
   #text(size: 18pt)[
 
-    - Mögliche Reihenfolge
-    - Ressourcenkonflikt: Herdplatte
+    - Possible sequence
+    - Resource conflict: stove burner
 
     #figure(image("../assets/img/slides_10/2024_11_07_parallel_ruehrei_rev01.png", height: 80%))
 
@@ -129,80 +129,80 @@
 
 #slide[
   #text(size: 18pt)[
-    - Mögliche Aufteilung auf vier Personen
+    - Possible distribution among four people
     #figure(image("../assets/img/slides_10/2024_11_07_parallel_swimlane_rev01.png", height: 80%))
   ]
 ]
 
 #slide[
   #text(size: 18pt)[
-    - Aufgabe wird in Teilaufgaben zerlegt, die parallel ausgeführt werden können
-    - Ergebnisse der Teilaufgaben müssen ausgetauscht werden
+    - Task is divided into subtasks that can be executed in parallel
+    - Results of subtasks must be exchanged
 
-    - Probleme:
-      - Abhängigkeiten: Teilaufgaben benötigen Ergebnisse anderer Teilaufgaben
-      - Ressourcenkonflikt: Teilaufgaben benötigen dieselbe Ressource
-      - Kommunikations-Overhead: Austausch von Ergebnissen benötigt Ressourcen und Zeit
+    - Problems:
+      - Dependencies: Subtasks need results of other subtasks
+      - Resource conflict: Subtasks need the same resource
+      - Communication overhead: Exchange of results requires resources and time
 
-    - Aufgaben können nicht beliebig oder automatisch parallelisiert werden.
+    - Tasks cannot be parallelized arbitrarily or automatically.
   ]
 ]
 
 #slide[
   #text(size: 18pt)[
-    - Begriffe:
-      - Thread (engl. für „Faden“): Ausführungsstrang innerhalb eines Programmes
-      - Multithreading: Mehrere (parallele) Ausführungsstränge innerhalb eines Programmes
+    - Terms:
+      - Thread (English for "thread"): Execution thread within a program
+      - Multithreading: Multiple (parallel) execution threads within a program
 
-    - Speicher:
-      - Threads teilen sich Speicherbereich des Programmes:
-      - Teilen sich daher Variablen und Objekte
-      - Können effizient (aber unsicher!) über Variablen und Objekte kommunizieren
-    - Aber: Jeder Thread hat eigenen Aufruf-Stack der aufgerufenen Methoden
+    - Memory:
+      - Threads share the memory area of the program:
+      - Therefore share variables and objects
+      - Can communicate efficiently (but unsafely!) via variables and objects
+    - But: Each thread has its own call stack of called methods
   ]
 ]
 
 #slide[
   #text(size: 18pt)[
     #question[
-      - Kleines Rätsel zwischendurch:
-      - Zumindest einen parallelen Thread haben wir bereits kennengelernt. Welchen?
+      - Small riddle in between:
+      - We have already learned about at least one parallel thread. Which one?
     ]
     #pause
-    - Antwort:
-      - Garbage Collector (Speicher nicht referenzierter Objekte freigeben)
+    - Answer:
+      - Garbage Collector (free memory of unreferenced objects)
 
-    - Beachte:
-      - Java-Programme erzeugen beim Start einen main-Thread
-      - Setzen hierbei main() als unterste Methode auf den Aufruf-Stack
-      - Bei Bedarf zusätzlich ein Thread für den Garbage Collector gestartet
-      - Programm beendet, sobald der letzte zugehörige Thread beendet wurde
+    - Note:
+      - Java programs create a main thread on startup
+      - Set main() as the bottom method on the call stack
+      - If needed, additionally a thread for the Garbage Collector is started
+      - Program terminates as soon as the last associated thread has terminated
   ]
 ]
 
 #slide[
   #text(size: 18pt)[
-    - Teilt Programmen und Threads Rechenzeit (d.h. Prozessoren bzw. Prozessorkerne) zu
-    - Wartezeiten anderer Threads oder Programme genutzt
+    - Allocates computing time (i.e. processors or processor cores) to programs and threads
+    - Waiting times of other threads or programs are used
 
-    - Pseudo-Parallelität:
-      - Falls mehr parallele Ausführungsstränge als Prozessoren bzw. Prozessorkerne
-      - Scheduler verteilt Rechenzeit scheibchenweise:
-        - Ausführung im zeitlichen Wechsel
-        - Eindruck, dass Dinge parallel prozessiert werden
+    - Pseudo-parallelism:
+      - If there are more parallel execution threads than processors or processor cores
+      - Scheduler distributes computing time in slices:
+        - Execution in temporal alternation
+        - Impression that things are processed in parallel
   ]
 ]
 
-= Klassenbasierte Threads
-== Klasse Thread
+= Class-based threads
+== Class Thread
 
 #slide[
   #text(size: 18pt)[
 
-    - Threads werden durch Objekte der Klasse Thread erzeugt:
-    - Methode `start()` erzeugt und startet parallelen Ausführungsstrang
-    - Methode `run()` enthält Code, der in Ausführungsstrang ausgeführt werden soll
-    - Ausführungsstrang wird beendet, sobald `run()` beendet wird
+    - Threads are created by objects of the Thread class:
+    - Method `start()` creates and starts parallel execution thread
+    - Method `run()` contains code to be executed in execution thread
+    - Execution thread is terminated as soon as `run()` is terminated
 
     #figure(image("../assets/img/slides_10/2024_11_07_klasse_thread_uml_rev01.png", height: 40%))
   ]
@@ -211,7 +211,7 @@
 #slide[
   #text(size: 18pt)[
 
-    - Veranschaulichung
+    - Illustration
     #figure(image("../assets/img/slides_10/2024_11_07_programmfluss_thread_rev01.png", height: 60%))
   ]
 ]
@@ -219,34 +219,34 @@
 #slide[
   #text(size: 13pt)[
     #task[
-      - Lassen Sie uns dies implementieren:
-      - Schreiben Sie ein Programm, das einen zusätzlichen Thread erzeugt.
+      - Let's implement this:
+      - Write a program that creates an additional thread.
     ]
 
     ```java
     public class RunThread1 {
         public static void main(String[] args) {
             Thread thread = new Thread();
-            System.out.println("Objekt erzeugt");
+            System.out.println("Object created");
             thread.start();
-            System.out.println("Thread gestartet");
+            System.out.println("Thread started");
         }
     }
     ```
     #question[
-      - Aber man sieht ja gar nichts vom Thread!
-        - Die run()-Methode der Klasse Thread ist „leer“.
-        - Wie können wir den Thread einen Text auf Konsole ausgeben lassen?
+      - But you can't see anything from the thread!
+        - The run() method of the Thread class is "empty".
+        - How can we make the thread output text to the console?
     ]
   ]
 ]
 #slide[
   #text(size: 18pt)[
-    - Ansatz:
-      - Die eigentliche Arbeit findet in der run()-Methode statt.
-      - Die run()-Methode der Klasse Thread ist „leer“.
+    - Approach:
+      - The actual work takes place in the run() method.
+      - The run() method of the Thread class is "empty".
 
-    - Eigene Thread-Klasse von Thread ableiten und run() überlagern
+    - Derive your own Thread class from Thread and override run()
 
     #figure(image("../assets/img/slides_10/2024_11_07_vererbung_thread_uml_rev01.png", height: 40%))
   ]
@@ -255,41 +255,41 @@
 #slide[
   #text(size: 15pt)[
     #task[
-      - Erzeugen Sie in einem zusätzlichen Thread eine Konsolenausgabe.
+      - Generate console output in an additional thread.
     ]
 
     ```java
     public class PrintThread extends Thread {
         public void run() {
-            System.out.println("Hurra, ich laufe parallel!");
+            System.out.println("Hooray, I'm running in parallel!");
         }
     }
 
     public class RunThread2 {
         public static void main(String[] args) {
             PrintThread thread = new PrintThread();
-            System.out.println("Objekt erzeugt");
+            System.out.println("Object created");
             thread.start();
-            System.out.println("Thread gestartet");
+            System.out.println("Thread started");
         }
     }
     ```
   ]
 ]
 
-= Interface-basierte Threads
+= Interface-based threads
 == Interface Runnable
 
 #slide[
   #text(size: 18pt)[
 
-    - Alternativ zum Ableiten von Thread:
-      - Eigene Klasse implementiert Interface `Runnable` mit `run()`-Methode
-      - Runnable-Objekt wird an Thread-Objekt übergeben: Keine Vererbung erforderlich
+    - Alternative to deriving from Thread:
+      - Own class implements interface `Runnable` with `run()` method
+      - Runnable object is passed to Thread object: No inheritance required
 
-    - Verantwortlichkeiten:
-      - Runnable-Objekt beinhaltet, was ausgeführt werden soll
-      - Thread-Objekt beinhaltet alles, was zur Nebenläufigkeit benötigt wird
+    - Responsibilities:
+      - Runnable object contains what should be executed
+      - Thread object contains everything needed for concurrency
 
     #figure(image("../assets/img/slides_10/2024_11_07_interface_Runnable_rev01.png", height: 40%))
   ]
@@ -300,7 +300,7 @@
     ```java
     public class PrintRunnable implements Runnable {
         public void run() {
-            System.out.println("Hurra, ich laufe parallel!");
+            System.out.println("Hooray, I'm running in parallel!");
         }
     }
 
@@ -309,9 +309,9 @@
             PrintRunnable runnable = new PrintRunnable();
             Thread thread = new Thread(runnable);
 
-            System.out.println("Objekte erzeugt");
+            System.out.println("Objects created");
             thread.start();
-            System.out.println("Thread gestartet");
+            System.out.println("Thread started");
         }
     }
     ```
@@ -321,7 +321,7 @@
   #text(size: 13pt)[
 
     #question[
-      - Was wird ausgegeben?
+      - What is output?
     ]
 
     ```java
@@ -350,12 +350,12 @@
   #text(size: 18pt)[
     #let body = [
 
-      - Methoden `run()` und `main()` zählen bis 9
-      - Nicht vorhersagbar, wer zuerst fertig ist
+      - Methods `run()` and `main()` count to 9
+      - Unpredictable who finishes first
 
-      - Beispielausgabe (rechts):
-        - `main`-Thread zuerst beendet
-        - Thread mit `run()` läuft weiter
+      - Example output (right):
+        - `main` thread finished first
+        - Thread with `run()` continues running
     ]
     #let fig = figure(image("../assets/img/slides_10/2024_11_07_thread_counter_rev01.png"))
     #grid(
@@ -366,31 +366,31 @@
   ]
 ]
 
-= Zustände und ausgewählte Methoden
-== Thread-Zustände
+= States and selected methods
+== Thread states
 
 #slide[
   #text(size: 18pt)[
     #question[
-      - Stellen Sie sich vor, Sie wären ein Thread:
-        - Welche Zustände könnten Sie sinnvoller Weise einnehmen?
-        - Welche Zustandsübergänge wären sinnvoll?
+      - Imagine you were a thread:
+        - What states could you reasonably take?
+        - What state transitions would make sense?
     ]
 
-    - Vergessen Sie Folgendes nicht:
-      - Was passiert, wenn mehr Threads als Prozessoren existieren?
-      - Was sollten Sie machen, wenn Sie auf eine Eingabe warten?
+    - Don't forget the following:
+      - What happens when there are more threads than processors?
+      - What should you do when waiting for input?
   ]
 ]
 
 #slide[
   #text(size: 18pt)[
 
-    - Neu: Java-Objekt erstellt, aber noch nicht als Thread gestartet
-    - Lauffähig: Bereit, ausgeführt zu werden. Wartet auf Prozessor.
-    - Laufend: Hat Prozessor und wird gerade ausgeführt
-    - Blockiert: Wird nicht ausgeführt und würde es auch bei freiem Prozessor nicht
-    - Terminiert: Thread beendet. Java-Objekt existiert weiterhin!
+    - New: Java object created, but not yet started as a thread
+    - Runnable: Ready to be executed. Waiting for processor.
+    - Running: Has processor and is currently being executed
+    - Blocked: Is not executed and would not be even with a free processor
+    - Terminated: Thread terminated. Java object still exists!
 
     #figure(image("../assets/img/slides_10/2024_11_07_ablauf_thread_queue_rev01.png", height: 50%))
   ]
@@ -399,16 +399,16 @@
 #slide[
   #text(size: 16pt)[
 
-    - Weist Threads Rechenzeit zu (d.h. Lauffähig wird Laufend)
-    - Entzieht Threads Prozessor wieder (d.h. Laufend wird Lauffähig):
-      - Benötigt, falls mehr Threads als Prozessoren existieren
-      - Idee: Threads erhalten abwechselnd Rechenzeit
+    - Assigns computing time to threads (i.e. Runnable becomes Running)
+    - Withdraws processor from threads again (i.e. Running becomes Runnable):
+      - Required if more threads than processors exist
+      - Idea: Threads receive computing time alternately
 
-    - Steuerung des Verhaltens:
-      - Scheduler ist nicht steuerbar
-      - Keine Garantie, dass Threads abwechselnd Rechenzeit erhalten
-      - `setPriority()` setzt Priorität, aber keine Garantie wie Scheduler sie berücksichtigt
-      - „Der Scheduler ist eine Diva!“
+    - Control of behavior:
+      - Scheduler is not controllable
+      - No guarantee that threads receive computing time alternately
+      - `setPriority()` sets priority, but no guarantee how scheduler considers it
+      - "The scheduler is a diva!"
 
     #figure(image("../assets/img/slides_10/2024_11_07_lauffaehig_laeuft_rev01.png", height: 35%))
   ]
@@ -417,12 +417,12 @@
 #slide[
   #text(size: 18pt)[
     #let body = [
-      - Laufenden Thread eine bestimmte Zeit in Zustand Blockiert versetzen
-      - Wartezeit in Millisekunden als Parameter (Datentyp long) übergeben
+      - Put running thread in blocked state for a certain time
+      - Pass waiting time in milliseconds as parameter (data type long)
 
-      - Vorzeitiges Aufwecken:
-        - Thread kann durch Methode interrupt() vorzeitig „aufgeweckt“ werden
-        - Wirft hierbei Ausnahme vom Typ InterruptedException
+      - Early wake-up:
+        - Thread can be "woken up" prematurely by interrupt() method
+        - Throws exception of type InterruptedException
 
       ```java
       MyThread thread = new MyThread();
@@ -446,13 +446,13 @@
 #slide[
   #text(size: 13pt)[
 
-    - Lassen Sie das Fenster blinken (alle 0,75 s Wechsel zwischen gelb und hellgrau):
+    - Make the window blink (every 0.75 s alternating between yellow and light gray):
     ```java
     public class FlashLight {
         private boolean isLightOn;
         private JFrame frame;
         private FlashLight() {
-            frame = new JFrame("Blinklicht");
+            frame = new JFrame("Flashing light");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(300, 250);
             frame.setVisible(true);
@@ -474,8 +474,8 @@
 #slide[
   #text(size: 14pt)[
 
-    - Zum Blinken benötigt:
-      - Thread, der alle 0,75 s die Methode switchLight() aufruft
+    - Required for blinking:
+      - Thread that calls the switchLight() method every 0.75 s
 
     ```java
     class FlashThread extends Thread {
@@ -501,7 +501,7 @@
 
 #slide[
   #text(size: 18pt)[
-    - Erzeugung und Starten des Threads in FlashLight:
+    - Creation and starting of the thread in FlashLight:
     ```java
     public static void main(String[] args) {
         FlashLight flashLight = new FlashLight();
@@ -518,11 +518,11 @@
   #text(size: 18pt)[
 
     #let body = [
-      - Laufenden Thread auf Ende eines anderen Threads warten lassen
+      - Make running thread wait for the end of another thread
 
-      - Beispiel:
-        - Wartet bei `thread.join()`, bis `thread` terminiert
-        - Erst dann erfolgt die Konsolenausgabe
+      - Example:
+        - Waits at `thread.join()` until `thread` terminates
+        - Only then console output occurs
 
       ```java
       public static void main(String[] args) {
@@ -532,9 +532,9 @@
           System.out.println("We have joined!");
       }
       ```
-      - Maximale Wartezeit:
-        - Maximale Wartezeit kann als Parameter (Datentyp `long`) angegeben werden
-        - Wozu wird dies benötigt? (Man wartet ja schließlich nicht ohne Grund)
+      - Maximum waiting time:
+        - Maximum waiting time can be specified as parameter (data type `long`)
+        - What is this needed for? (After all, you don't wait for no reason)
 
     ]
     #let fig = figure(image("../assets/img/slides_10/2024_11_11_blocked_join_rev01.png"))
@@ -549,7 +549,7 @@
 #slide[
   #text(size: 15pt)[
     #question[
-      - Was macht dieser Thread?
+      - What does this thread do?
     ]
 
     ```java
@@ -572,10 +572,10 @@
 
 #slide[
   #text(size: 15pt)[
-    - Es geht noch weiter:
-      - Welche Ausgabe wird erzeugt?
-      - Welche Ausgabe würde ohne die Zeile sleepy.join() erzeugt?
-      - Welche Ausgabe würde mit sleepy.join(1500) erzeugt?
+    - It continues:
+      - What output is produced?
+      - What output would be produced without the line sleepy.join()?
+      - What output would be produced with sleepy.join(1500)?
     ```java
     public class JoinThreads {
         public static void main(String[] args) throws InterruptedException {
@@ -594,12 +594,12 @@
   ]
 ]
 
-= Synchronisation
-== Synchronisation
+= Synchronization
+== Synchronization
 #slide[
   #text(size: 13pt)[
-    - Klasse repräsentiert ein Bankkonto mit Methoden für Ein- und Auszahlungen
-    - Kontobewegungen parallel über Threads (z.B. Geldautomat, Schalter, Lastschrift)
+    - Class represents a bank account with methods for deposits and withdrawals
+    - Account movements in parallel via threads (e.g. ATM, counter, direct debit)
 
     ```java
     public class Account {
@@ -618,17 +618,17 @@
         }
     }
     ```
-    - Was ist denn da passiert?!
-      - Sie heben 50 € ab, während 50 € als Überweisung gutgeschrieben werden.
-      - Anschließend sind 50 € weniger als zuvor auf dem Konto.
+    - What happened there?!
+      - You withdraw 50 € while 50 € is credited as a transfer.
+      - Afterwards there are 50 € less than before in the account.
 
   ]
 ]
 #slide[
   #text(size: 18pt)[
-    - Ursache:
-      - Threads führen gleichzeitig Methoden deposit() und withdraw() aus
-      - Beide Methoden greifen auf Variable balance zu.
+    - Cause:
+      - Threads simultaneously execute methods deposit() and withdraw()
+      - Both methods access variable balance.
 
     #figure(image("../assets/img/slides_10/2024_11_11_deposit_withdraw_thread_rev01.png", height: 50%))
 
@@ -637,16 +637,16 @@
 
 #slide[
   #text(size: 15pt)[
-    - Zwei Threads teilen sich eine Variable.
-      - Race Condition: Ergebnis des Programmes hängt von Zugriffsreihenfolge ab
+    - Two threads share a variable.
+      - Race Condition: Result of the program depends on access order
 
-    - Wann ist das Ergebnis davon abhängig, welcher Thread „schneller ist“?
-      - Beide Threads lesen die Variable
-      - Ein Thread liest, ein Thread schreibt in die Variable
-      - Beide Threads schreiben in die Variable
+    - When does the result depend on which thread is "faster"?
+      - Both threads read the variable
+      - One thread reads, one thread writes to the variable
+      - Both threads write to the variable
 
-    - Antwort:
-      - Race Condition, wenn mindestens ein Thread schreibt
+    - Answer:
+      - Race condition when at least one thread writes
 
     #figure(image("../assets/img/slides_10/2024_11_11_race_conditions_rev01.png", height: 40%))
   ]
@@ -654,20 +654,20 @@
 
 #slide[
   #text(size: 18pt)[
-    - Schlüsselwort `synchronized` für Methoden:
-      - Objekt wird gesperrt, sobald ein Thread eine synchronisierte Methode betritt
-      - Objekt wird wieder freigegeben, wenn Thread die Methode wieder verlässt
+    - Keyword `synchronized` for methods:
+      - Object is locked as soon as a thread enters a synchronized method
+      - Object is released again when thread leaves the method
 
-    - Synchronisierte Methoden (gegenseitiger Ausschluss):
-      - Objekt gesperrt: Threads können keine synchronisierten Methoden betreten. (Alle synchronisierten Methoden sind gesperrt, nicht nur die gerade ausgeführte!)
-      - Threads warten im Zustand Blockiert bis das Objekt wieder freigegeben wurde.
+    - Synchronized methods (mutual exclusion):
+      - Object locked: Threads cannot enter synchronized methods. (All synchronized methods are locked, not just the one currently being executed!)
+      - Threads wait in blocked state until the object is released again.
 
-    - Nicht-synchronisierte Methoden:
-      - Threads können aber bei gesperrtem Objekt nicht-synchronisierte Methoden betreten.
+    - Non-synchronized methods:
+      - Threads can enter non-synchronized methods when object is locked.
 
     #task[
-      - Helfen Sie Ihrer Bank:
-        - Sorgen Sie dafür, dass bei Einzahlungen und Auszahlungen nichts mehr schief geht.
+      - Help your bank:
+        - Ensure that nothing goes wrong with deposits and withdrawals.
     ]
   ]
 ]
@@ -675,7 +675,7 @@
 #slide[
   #text(size: 16pt)[
 
-    Synchronisierung über `synchronized`:
+    Synchronization via `synchronized`:
     ```java
     public class Account {
         private double balance;

@@ -43,8 +43,8 @@
 #show: university-theme.with(
   aspect-ratio: "16-9",
   config-info(
-    title: [Objektorientierte Programmierung in Java],
-    subtitle: [Vorlesung 8 - Ausnahmebehandlung],
+    title: [Object-Oriented Programming in Java],
+    subtitle: [Lecture 8 - Exception Handling],
     author: [Emily Lucia Antosch],
     date: datetime.today().display("[day].[month].[year]"),
     institution: [HAW Hamburg],
@@ -70,17 +70,17 @@
 
 #outline(depth: 1)
 
-= Einleitung
+= Introduction
 
-== Wo sind wir gerade?
+== Where are we now?
 
-- In der letzten Vorlesung haben wir uns mit dem Erstellen von graphischen
-  Oberflächen beschäftigt
-- Sie können nun
-  - Fenster erzeugen, in dem andere Elemente leben können,
-  - Elemente mittels Layouts und Panels arrangieren
-  - und Grafiken direkt in Java erzeugen.
-- Heute geht es weiter mit den *Ausnahmebehandlungen*.
+- In the last lecture, we dealt with creating graphical
+  user interfaces
+- You can now
+  - create windows in which other elements can live,
+  - arrange elements using layouts and panels
+  - and create graphics directly in Java.
+- Today we continue with *Exception Handling*.
 
 #slide[
   1. Imperative Konzepte
@@ -89,16 +89,16 @@
   4. Vererbung
   5. Schnittstellen
   6. Graphische Oberflächen
-  7. *Ausnahmebehandlung*
-  8. Eingaben und Ausgaben
+  7. *Exception Handling*
+  8. Input and Output
   9. Multithreading (Parallel Computing)
 ]
 
-== Das Ziel dieses Kapitels
-- Sie behandeln bei Programmausführung auftretende Ausnahmen und Fehler, um in
-  aufgetretenen Ausnahmesituationen einen geordneten Programmfluss herzustellen.
-- Sie definieren eigene, an die Bedürfnisse Ihrer konkreten Anwendung angepasste,
-  Ausnahmeklassen.
+== The goal of this chapter
+- You handle exceptions and errors that occur during program execution to
+  establish an orderly program flow in exceptional situations.
+- You define your own exception classes adapted to the needs of your specific
+  application.
 
 = Exception Handling
 == Introductory Example
@@ -106,7 +106,7 @@
 #slide[
   #text(size: 13pt)[
     #question[
-      - Was wird von folgendem Programm ausgegeben?
+      - What output is produced by the following program?
     ]
 
     ```java
@@ -125,7 +125,7 @@
     }
     ```
     #question[
-      - Und was wird für a = 7 und b = 0 ausgegeben?
+      - And what output is produced for a = 7 and b = 0?
     ]
   ]
 ]
@@ -133,18 +133,18 @@
 #slide[
   #text(size: 18pt)[
     #question[
-      - Was kann in einem Programm alles „schief gehen“?
-      - Wann muss der normale Programmfluss unterbrochen werden?
-      - Wann muss ein Programm beendet werden, wann kann es fortgeführt werden?
+      - What can go "wrong" in a program?
+      - When must the normal program flow be interrupted?
+      - When must a program be terminated, when can it be continued?
     ]
 
     #example[
-      - Division durch Null
-      - Aufruf `a.method()`, obwohl Variable `a` den Wert null hat
-      - Negativer oder zu hoher Index für Arrays
-      - Wandeln der Zeichenkette „Dies ist Text“ in eine Ganzzahl vom Typ `int`
-      - Datei nicht gefunden
-      - Kein Speicher mehr verfügbar
+      - Division by zero
+      - Calling `a.method()` although variable `a` has the value null
+      - Negative or too high index for arrays
+      - Converting the string "This is text" to an integer of type `int`
+      - File not found
+      - No more memory available
     ]
   ]
 ]
@@ -152,14 +152,14 @@
 #slide[
   #text(size: 18pt)[
 
-    - Ausnahmen und Fehler durch Objekte spezieller Klassen dargestellt
-    - Basisklasse aller Ausnahmeklassen ist Throwable
+    - Exceptions and errors are represented by objects of special classes
+    - Base class of all exception classes is Throwable
 
     #figure(image("../assets/img/slides_8/2024_11_04_throwable_rev01.png"))
 
-    - Man unterscheide:
-      - Exception (Ausnahme): Behandelbar, Programm kann fortgeführt werden
-      - Error bzw. fatal error (Fehler): Nicht behandelbar, Programm beenden
+    - One distinguishes:
+      - Exception: Handleable, program can be continued
+      - Error or fatal error: Not handleable, terminate program
 
   ]
 ]
@@ -167,17 +167,17 @@
 #slide[
   #text(size: 15pt)[
     #memo[
-      - Ausnahme wird auch als Oberbegriff für Ausnahmen und Fehler verwendet.
-      - Ausnahmebehandlung wird auch als Exception handling bezeichnet.
+      - Exception is also used as a collective term for exceptions and errors.
+      - Exception handling is also called Exception handling.
 
     ]
 
-    - Einige Klassen für Ausnahmen:
-      - Division durch Null (ArithmeticException)
-      - Zugriff auf Methode oder Attribut über null-Referenz (NullPointerException)
-      - Unzulässiger Feldindex (ArrayIndexOutOfBoundsException)
-      - Unzulässige Zeichen beim Lesen einer Zahl (NumberFormatException)
-      - Datei nicht gefunden (FileNotFoundException)
+    - Some classes for exceptions:
+      - Division by zero (ArithmeticException)
+      - Access to method or attribute via null reference (NullPointerException)
+      - Invalid array index (ArrayIndexOutOfBoundsException)
+      - Invalid characters when reading a number (NumberFormatException)
+      - File not found (FileNotFoundException)
 
     ```java
     int[] array = {1, 2, 3, 4};
@@ -192,15 +192,15 @@
   ]
 ]
 
-== Ablauf der Ausnahmebehandlung
+== Exception handling flow
 
 #slide[
   #text(size: 18pt)[
-    1. Ausnahme werfen:
-      - Programmfluss wird unmittelbar unterbrochen
-      - Objekt erzeugt, das Ausnahme repräsentiert
-    2. Ausnahme fangen:
-      - Programmierer kann Ausnahme abfangen und behandeln
+    1. Throwing an exception:
+      - Program flow is immediately interrupted
+      - Object is created that represents the exception
+    2. Catching an exception:
+      - Programmer can catch and handle the exception
 
     #figure(image("../assets/img/slides_8/2024_11_04_programmfluss_throwable_rev01.png", height: 50%))
 
@@ -209,26 +209,26 @@
 
 #slide[
   #text(size: 18pt)[
-    - Falls keine Ausnahmebehandlung programmiert: Programm wird beendet
+    - If no exception handling is programmed: program is terminated
 
       #figure(image("../assets/img/slides_8/2024_11_04_programmfluss_noexceptionhandling_rev01.png"))
 
   ]
 ]
 
-= Ausnahme werfen
-== Ausnahme werfen
+= Throwing exceptions
+== Throwing exceptions
 
 #slide[
   #text(size: 18pt)[
-    - Im Fehlerfall werden Ausnahmen automatisch erzeugt (z.B. Division durch Null).
-    - Ausnahmen lassen sich aber auch explizit werfen.
+    - In case of error, exceptions are automatically generated (e.g. division by zero).
+    - However, exceptions can also be thrown explicitly.
 
     ```java
     throw ExceptionObject;
     ```
 
-    - Konstruktor kann String (z.B. als Fehlerbeschreibung) übergeben werden
+    - Constructor can be passed a string (e.g. as error description)
 
       #example[
         ```java
@@ -243,8 +243,8 @@
 
 #slide[
   #text(size: 18pt)[
-    - Zur Veranschaulichung:
-      - Werfen Sie eine Ausnahme, bevor versucht wird, durch Null zu teilen.
+    - For illustration:
+      - Throw an exception before attempting to divide by zero.
     ```java
     public class ThrowException {
         public static void main(String[] args) {
@@ -265,7 +265,7 @@
 
 #slide[
   #text(size: 17pt)[
-    - Beispiellösung:
+    - Example solution:
 
     ```java
     public class ThrowException {
@@ -289,10 +289,10 @@
 
 #slide[
   #text(size: 18pt)[
-    - Ausgabe im Fehlerfall:
-      - Ausnahmetyp (z.B. ArithmeticException)
-      - Fehlermeldung (z.B. „Division by zero“)
-      - Stacktrace (d.h. Kette der aufgerufenen Methoden)
+    - Output in case of error:
+      - Exception type (e.g. ArithmeticException)
+      - Error message (e.g. "Division by zero")
+      - Stack trace (i.e. chain of called methods)
 
     #example[
       #text(fill: red)[
@@ -306,40 +306,40 @@
 
     ]
 
-    - Methode `main()` hat in Zeile 14 `printRatio()` aufgerufen
-    - Methode `printRatio()` hat in Zeile 20 die Ausnahme geworfen
+    - Method `main()` called `printRatio()` at line 14
+    - Method `printRatio()` threw the exception at line 20
   ]
 ]
 
-= Ausnahmen fangen
+= Catching exceptions
 == Exception Handling
 
 
 #slide[
   #text(size: 18pt)[
-    - Ausnahmen lassen sich fangen und behandeln:
+    - Exceptions can be caught and handled:
     ```java
      try {
-         // Aweisungen ...
-     } catch (ExceptionTyp e) {
-         // Aweisungen ...
+         // Statements ...
+     } catch (ExceptionType e) {
+         // Statements ...
      }
     ```
 
-    - Try-Block enthält Code, der Ausnahme werfen kann
-    - Falls Ausnahme im try-Block geworfen wird:
-      1. Try-Block unmittelbar beendet
-      2. Catch-Block ausgeführt, sofern Ausnahmetyp (ExceptionType) passt
-      3. Programm läuft nach catch-Block weiter
-    - Ausnahmetyp des catch-Blocks passt nicht: Ausnahme wird nicht gefangen!
-    - Keine Ausnahme geworfen: Catch-Block wird übersprungen
+    - Try block contains code that can throw an exception
+    - If an exception is thrown in the try block:
+      1. Try block is immediately terminated
+      2. Catch block is executed if the exception type (ExceptionType) matches
+      3. Program continues after the catch block
+    - Exception type of catch block doesn't match: Exception is not caught!
+    - No exception thrown: Catch block is skipped
   ]
 ]
 
 #slide[
   #text(size: 18pt)[
-    - Vermeiden Sie den „Absturz“:
-      - Fangen Sie die geworfene Ausnahme!
+    - Avoid the "crash":
+      - Catch the thrown exception!
     ```java
     public class TryCatch {
         public static void main(String[] args) {
@@ -360,7 +360,7 @@
 
 #slide[
   #text(size: 17pt)[
-    - Bespiellösung:
+    - Example solution:
     ```java
     public static void printRatio(int a, int b) {
         try {
@@ -374,7 +374,7 @@
         System.out.println("Exiting printRatio()");
     }
     ```
-    - Ausgewählte Methoden für Ausnahmeobjekte:
+    - Selected methods for exception objects:
       - `getMessage()`
       - `printStackTrace()`
       - `toString()`
@@ -384,7 +384,7 @@
 #slide[
   #text(size: 13pt)[
     #question[
-      Und nun?
+      And now?
     ]
     ```java
     public class TryCatchChain1 {
@@ -411,7 +411,7 @@
 #slide[
   #text(size: 13pt)[
     #question[
-      Und nun?
+      And now?
     ]
     ```java
     public class TryCatchChain2 {
@@ -437,17 +437,17 @@
 
 #slide[
   #text(size: 18pt)[
-    - Können mehrere Ausnahmearten auftreten, werden mehrere catch-Blöcke benötigt.
-    - Ausnahmetypen der catch-Blöcke müssen sich unterscheiden
-    - Es wird der erste passende catch-Block ausgeführt.
+    - If multiple exception types can occur, multiple catch blocks are needed.
+    - Exception types of catch blocks must be different
+    - The first matching catch block is executed.
     ```java
      try {
          // ...
-     } catch (ExceptionTyp1 e) {
+     } catch (ExceptionType1 e) {
          // ...
-     } catch (ExceptionTyp2 e) {
+     } catch (ExceptionType2 e) {
          // ...
-     } catch (ExceptionTyp3 e) {
+     } catch (ExceptionType3 e) {
          // ...
      }
     ```
@@ -457,8 +457,8 @@
 #slide[
   #text(size: 14pt)[
     #question[
-      - Folgender Quelltext enthält zwei Fehlerquellen. Welche?
-      - Welche Ausgabe erzeugt das Programm?
+      - The following source code contains two error sources. Which ones?
+      - What output does the program produce?
     ]
     ```java
     public class ExceptionTypes1 {
@@ -483,7 +483,7 @@
 #slide[
   #text(size: 13pt)[
     #task[
-      - Ändern Sie den vorherigen Quelltext derart, dass beide Fehlerquellen gefangen werden.
+      - Modify the previous source code so that both error sources are caught.
     ]
     ```java
     public class ExceptionTypes2 {
@@ -510,8 +510,8 @@
 #slide[
   #text(size: 13pt)[
     #question[
-      - Hoppla, unten läuft etwas im catch-Block schief!
-      - Wird die erneute Ausnahme behandelt? Was wird ausgegeben?
+      - Oops, something goes wrong in the catch block below!
+      - Is the new exception handled? What is output?
     ]
     ```java
     public class ExceptionTypes3 {
@@ -536,10 +536,10 @@
 
 #slide[
   #text(size: 18pt)[
-    - Ein catch-Block bezieht sich nur auf den zugehörigen try-Block.
-    - Wirft catch-Block Ausnahme, wird diese nicht durch nachfolgende Blöcke gefangen
+    - A catch block only refers to its associated try block.
+    - If catch block throws an exception, it is not caught by subsequent blocks
     #question[
-      - Wie können wir die im catch-Block erzeugte Ausnahme fangen?
+      - How can we catch the exception generated in the catch block?
     ]
   ]
 ]
@@ -547,7 +547,7 @@
 
 #slide[
   #text(size: 17pt)[
-    - Quelltext, der Ausnahme erzeugt, in geschachteltem try-Block
+    - Source code that generates exception in nested try block
     ```java
     public static void main(String[] args) {
         int[] a = new int[4];
@@ -570,21 +570,21 @@
 
 #slide[
   #text(size: 18pt)[
-    - Mitunter muss bestimmter Code auf jeden Fall ausgeführt werden.
-    - Beispiel: Schließen geöffneter Dateien oder Datenströme
+    - Sometimes certain code must be executed in any case.
+    - Example: Closing open files or data streams
 
-    - Optionaler finally-Block:
-      - Steht immer als letztes (d.h. nach try- und catch-Blöcken)
-      - Code wird am Ende des Konstruktes ausgeführt … wirklich immer … ganz ehrlich!
+    - Optional finally block:
+      - Always comes last (i.e. after try and catch blocks)
+      - Code is executed at the end of the construct ... really always ... honestly!
     ```java
      try {
          // ...
-     } catch (ExceptionTyp1 e) {
+     } catch (ExceptionType1 e) {
          // ...
-     } catch (ExceptionTyp2 e) {
+     } catch (ExceptionType2 e) {
          // ...
      } finally {
-         // Wird garantiert ausgeführt
+         // Is guaranteed to be executed
      }
     ```
   ]
@@ -593,7 +593,7 @@
 #slide[
   #text(size: 13pt)[
     #question[
-      - Was wird ausgegeben?
+      - What is output?
     ]
     ```java
     public class TryCatchFinally1 {
@@ -620,7 +620,7 @@
 #slide[
   #text(size: 13pt)[
     #question[
-      - Was wird ausgegeben?
+      - What is output?
     ]
     ```java
     public class TryCatchFinally2 {
@@ -646,13 +646,13 @@
 
 #slide[
   #text(size: 13pt)[
-    - Regeln für Blöcke:
-      - Genau einen try-Block als ersten Block
-      - Keinen oder beliebig viele catch-Blöcke nach dem try-Block
-      - Keinen oder einen finally-Block als letzten Block
-      - Ein try-Block muss mindestens einen catch- oder finally-Block haben.
+    - Rules for blocks:
+      - Exactly one try block as the first block
+      - None or any number of catch blocks after the try block
+      - None or one finally block as the last block
+      - A try block must have at least one catch or finally block.
 
-    - Folgender Aufbau ist zulässig:
+    - The following structure is allowed:
     ```java
     try {
          // ...
@@ -663,12 +663,12 @@
   ]
 ]
 
-= Eigene Ausnahmen definieren
-== Eigene Ausnahmen
+= Defining custom exceptions
+== Custom exceptions
 
 #slide[
   #text(size: 15pt)[
-    - Betrachten wir folgendes Programm:
+    - Let's consider the following program:
     ```java
     public class OwnException1 {
         public static void main(String[] args) {
@@ -682,16 +682,16 @@
     }
     ```
     #question[
-      - Methode squareRoot() soll für negative Parameter eine Ausnahme werfen
-      - Wie könnten wir einen eigenen Typ (z.B. NegativeParameterException) definieren?
+      - Method squareRoot() should throw an exception for negative parameters
+      - How could we define our own type (e.g. NegativeParameterException)?
     ]
   ]
 ]
 
 #slide[
   #text(size: 15pt)[
-    - Eigenen Ausnahmetyp durch Ableiten einer bestehenden Klasse
-    - Erster Ansatz: Ableiten der Klasse Exception
+    - Custom exception type by deriving from an existing class
+    - First approach: Derive from the Exception class
 
     #figure(image("../assets/img/slides_8/2024_11_05_vererbung_throwable_rev01.png", height: 60%))
 
@@ -700,8 +700,8 @@
 
 #slide[
   #text(size: 15pt)[
-    - Ansatz erzeugt Fehlermeldung („Unbehandelte Ausnahme“)
-    - Wieso denn das jetzt?!
+    - Approach generates error message ("Unhandled exception")
+    - Why is that now?!
 
     ```java
     class NegativeParamException extends Exception {
@@ -725,9 +725,9 @@
 ]
 #slide[
   #text(size: 17pt)[
-    - Hintergrund:
-      - Ausnahmen müssen gefangen werden ODER
-      - Methode muss über throws deklarieren, dass sie einen Ausnahmetyp werfen kann.
+    - Background:
+      - Exceptions must be caught OR
+      - Method must declare via throws that it can throw an exception type.
 
     ```java
     public class OwnException2 {
@@ -750,9 +750,9 @@
 
 #slide[
   #text(size: 18pt)[
-    - Dies gilt für alle Ausnahmetypen (d.h. Throwable und davon abgeleitet) außer für:
-      - Klasse RuntimeException
-      - Von RuntimeException (direkt oder indirekt) abgeleitete Klassen
+    - This applies to all exception types (i.e. Throwable and derived from it) except for:
+      - Class RuntimeException
+      - Classes derived (directly or indirectly) from RuntimeException
         #figure(image("../assets/img/slides_8/2024_11_05_vererbung_runtimeexception_rev01.png"))
   ]
 ]
@@ -785,7 +785,7 @@
 #slide[
   #text(size: 17pt)[
 
-    - Beschreibung („message“) an Konstruktor der Basisklasse übergeben
+    - Description ("message") passed to constructor of base class
     ```java
     class MyException extends Exception {
         public MyException(String message) {

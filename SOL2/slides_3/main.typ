@@ -132,35 +132,34 @@
 ]
 == Relationship Between Class and Object
 #slide[
-  - Klasse: Beschreibung („Bauplan“) eines Datentyps
-  - Objekt einer Klasse: Erzeugtes Element des Datentyps
-  - Es können beliebig viele Objekte einer Klasse erzeugt werden.
+  - Class: Description ("blueprint") of a data type
+  - Object of a class: Created element of the data type
+  - Any number of objects of a class can be created.
 
   #figure(
     image("../assets/img/slides_3/2024_10_10_klassen_mehr_objekte_rev01.png", height: 60%),
-    caption: [Mehrere Objekte aus einer Klasse],
+    caption: [Multiple objects from one class],
   )
 ]
 
 == Classes in Java
 #slide[
-  - Klassen können über den folgenden Code deklariert werden:
+  - Classes can be declared using the following code:
   ```java
-  class Klassenname {
-      Attribute
-      Methoden
+  class ClassName {
+      Attributes
+      Methods
       }
   ```
 
-  #tip[Legen Sie jede Klasse in einer eigenen Datei an!]
+  #tip[Create each class in its own file!]
 
 ]
 
 == Example: Simple Class
 #slide[
-  #task[Lassen Sie uns diese einfache Klasse erstellen:
-    - Klasse Student, beschrieben durch Name, Matrikelnummer und Studienbeginn (in
-      Jahren)
+  #task[Let us create this simple class:
+    - Class Student, described by name, student number and year of enrollment
   ]
 
   #pause
@@ -173,34 +172,34 @@
     }
   ```
 
-  - Die Klasse hat weder Methoden noch eine Datenkapselung gegen Einfluss von außen.
+  - The class has neither methods nor data encapsulation against external influence.
 
   #figure(
     image("../assets/img/slides_3/2024_10_10_klassen_uml_student_rev01.png"),
-    caption: [UML-Darstellung der Klasse, die wir eben erstellt haben],
+    caption: [UML representation of the class we just created],
   )
 ]
 
 == Example: One Class, Many Objects
 #slide[
-  - Klasse („Eine Klasse für alle Studierenden“):
-    - Die Klasse ist ein neuer Datentyp.
-    - Legt fest, durch welche Daten Studierende beschrieben werden
+  - Class ("One class for all students"):
+    - The class is a new data type.
+    - Defines what data describes students
 
-  - Objekte („Für jede/n Studierende/n ein eigenes Objekt“):
-    - Objekte sind Instanzen im Speicher.
-    - Besitzen Struktur der Klasse, sind aber mit Daten gefüllt
-    - Es können beliebig viele Objekte erzeugt werden.
+  - Objects ("A separate object for each student"):
+    - Objects are instances in memory.
+    - Have the structure of the class, but are filled with data
+    - Any number of objects can be created.
 
   #figure(
     image("../assets/img/slides_3/2024_10_10_klassen_mehr_objekte_uml_rev01.png"),
-    caption: [Aus einer Klasse lassen sich mehrere Objekte erstellen],
+    caption: [Multiple objects can be created from one class],
   )
 ]
 
 == Example: Local Variables
 #slide[
-  #question[Welche Werte haben die Variablen `count`, `jan` und `lena`?]
+  #question[What values do the variables `count`, `jan` and `lena` have?]
 
   ```java
   public class StudentDemo {
@@ -213,19 +212,19 @@
 ]
 
 #slide[
-  #question[Welche Werte haben die Variablen `count`, `jan` und `lena`?]
+  #question[What values do the variables `count`, `jan` and `lena` have?]
   #figure(
     image(
       "../assets/img/slides_3/2024_10_10_klassen_primitiv_erklaerung_rev01.png",
       height: 50%,
     ),
-    caption: [Primitive Datentypen vs. Objekte],
+    caption: [Primitive data types vs. Objects],
   )
 ]
 
 == Example: `new` Operator
 #slide[
-  - Objekte werden durch den `new`-Operator erzeugt.
+  - Objects are created using the `new` operator.
     ```java
     public class StudentDemo {
         public static void main(String[] args) {
@@ -241,58 +240,58 @@
 ]
 
 #slide[
-  - Schritt 1: `new`-Operator erzeugt Objekt.
-    - Speicherplatz für Objekt (mit Objektvariablen) reservieren.
-    - Objektvariablen mit Standardwerten initialisieren (mehr dazu gleich).
+  - Step 1: `new` operator creates object.
+    - Reserve memory space for object (with object variables).
+    - Initialize object variables with default values (more on this soon).
 
     #figure(
       image("../assets/img/slides_3/2024_10_10_klassen_primitv_vergleich.png"),
-      caption: [Erstellen von Referenz mit `new`],
+      caption: [Creating reference with `new`],
     )
 
 ]
 
 #slide[
-  - Schritt 2: Zuweisung
-    - Schreibt Referenz ("Adresse") des neuen Objekts in Variable `lena`.
-    - Ist unabhängig vom `new`-Operator und der Erzeugung des Objekts
+  - Step 2: Assignment
+    - Writes reference ("address") of the new object to variable `lena`.
+    - Is independent of the `new` operator and the creation of the object
 
     #figure(
       image("../assets/img/slides_3/2024_10_10_klassen_primitiv_zuordnung_rev01.png"),
-      caption: [Zuweisung von Referenz an Variable],
+      caption: [Assignment of reference to variable],
     )
 ]
 
-= Variablen und Speicher
+= Variables and Memory
 == Objective
 #slide[
   #conclusion[
-    - Das haben wir uns bereits angeschaut:
-      - Was sind Klassen und Objekte?
-      - Wie deklariert man Klassen?
-      - Wie erzeugt man Objekte?
+    - We have already looked at this:
+      - What are classes and objects?
+      - How do you declare classes?
+      - How do you create objects?
   ]
 
-  - Im Folgenden wollen wir uns folgende Aspekte anschauen:
-    - Zugriff auf Objektvariablen
-    - Initialisierung von Objektvariablen
-    - Zuweisung von Referenzen
-    - Automatische Speicherbereinigung
+  - In the following we want to look at the following aspects:
+    - Access to object variables
+    - Initialization of object variables
+    - Assignment of references
+    - Automatic memory management
 ]
 
 == Access to Object Variables
 #slide[
-  - Zugriff auf Objektvariablen erfolgt mittels des Punkt-Operators:
+  - Access to object variables is done using the dot operator:
   ```java
-  Objektreferenz.Member
+  ObjectReference.Member
   ```
-  - Dabei ist die `Objektreferenz` eine Referenz auf ein Objekt, die in einer
-    Variable gespeichert ist.
-  - `Member` ist z.B. ein Attribut/Objektvariable
+  - The `ObjectReference` is a reference to an object that is stored in a
+    variable.
+  - `Member` is, for example, an attribute/object variable
 ]
 
 #slide[
-  #question[Was wird ausgegeben?]
+  #question[What will be output?]
   #text(size: 16pt)[
 
     ```java
@@ -314,34 +313,34 @@
   #align(left + horizon)[
 
     #memo[
-      - *Objekt-/Instanzvariable*: In Klasse als Attribut eines Objektes deklariert.
-      - *Lokale Variable*: Lokal deklariert (z.B. in Methode oder Schleife).
-      - *Referenzvariable*: Hat Klasse als Datentyp, kann Referenz auf Objekt speichern.
+      - *Object/Instance variable*: Declared in class as an attribute of an object.
+      - *Local variable*: Declared locally (e.g. in method or loop).
+      - *Reference variable*: Has class as data type, can store reference to object.
     ]
   ]
 ]
 
 #slide[
-  - Zur Erinnerung:
-    - Lokale Variablen werden nicht automatisch initialisiert. (Compiler verhindert
-      Zugriff.)
-    - Objektvariablen werden hingegen bei Erzeugung eines Objektes initialisiert.
+  - As a reminder:
+    - Local variables are not automatically initialized. (Compiler prevents
+      access.)
+    - Object variables, however, are initialized when an object is created.
 
   #figure(
     image(
       "../assets/img/slides_3/2024_10_10_klassen_datentypen_initial_rev01.png",
       height: 40%,
     ),
-    caption: [Initialwerte von Objektvariablen],
+    caption: [Initial values of object variables],
   )
 ]
 
 #slide[
-  - Initiale Werte können auch in der Klasse selbst festgelegt werden.
+  - Initial values can also be set in the class itself.
 
   ```java
   class Student {
-    String name = "Unbekannt";
+    String name = "Unknown";
     int matrNumber;
     int enrolledYear = 2019;
   }
@@ -349,7 +348,7 @@
 ]
 
 #slide[
-  #question[Was wird ausgegeben in dem folgenden Code?]
+  #question[What will be output in the following code?]
   #text(size: 16pt)[
 
     ```java
@@ -369,17 +368,17 @@
 
 == Assignment of References
 #slide[
-  - Nehmen Sie an, wir haben den folgenden Zustand in unserem Code:
+  - Assume we have the following state in our code:
 
   #figure(
     image("../assets/img/slides_3/2024_10_10_klassen_referenz_zuweisung_rev01.png"),
-    caption: [Zuweisung von Referenzen an Variablen],
+    caption: [Assignment of references to variables],
   )
 ]
 
 #slide[
   #question[
-    Was passiert jetzt, wenn wir den folgenden Code hinzufügen:
+    What happens now if we add the following code:
     ```java
     jan = lena;
     ```
@@ -389,13 +388,13 @@
   #align(left + horizon)[
     #figure(
       image("../assets/img/slides_3/2024_10_10_klassen_referenzen_verschieben_rev01.png"),
-      caption: [Verschieben von Referenzen],
+      caption: [Moving references],
     )
   ]
 ]
 
 #slide[
-  #question[Was wird ausgegeben, wenn Sie den folgenden Code danach ausführen?]
+  #question[What will be output when you execute the following code afterwards?]
   ```java
   lena.name = "Birgit";
   jan.name = "Kai";
@@ -405,74 +404,73 @@
 ]
 
 #slide[
-  - Jan und Lena, referenzieren nun *dasselbe* Objekt. Änderungen von Werten über `jan` betreffen
-    dann auch `lena`.
+  - Jan and Lena now reference the *same* object. Changes to values via `jan` also affect
+    `lena`.
 
   #figure(
     image("../assets/img/slides_3/2024_10_14_referenzen_selbes_objekt_rev01.png"),
-    caption: [Beide Variablen zeigen zur gleichen Referenz],
+    caption: [Both variables point to the same reference],
   )
 
 ]
 
 #slide[
-  - Das Objekt, was vorher über `jan` referenziert wurde, hat nun keine Referenz
-    mehr.
-  - Damit gibt es *keine* Möglichkeit mehr, auf das Objekt zuzugreifen.
-  - Der *Garbage Collector* wird mittels *Reference Counting* den Speicher wieder
-    freigeben.
-  - Es gibt kein `free` oder `delete` wie in C!
+  - The object that was previously referenced via `jan` now has no reference
+    anymore.
+  - Thus there is *no* way to access the object anymore.
+  - The *Garbage Collector* will free the memory again using *Reference Counting*.
+  - There is no `free` or `delete` like in C!
 
     #figure(
       image("../assets/img/slides_3/2024_10_14_referenz_objekt_verschwindet_rev01.png"),
-      caption: [Der Garbage Collector gibt Speicher frei],
+      caption: [The Garbage Collector frees memory],
     )
 ]
 
-= Methoden
+= Methods
 == Methods: Syntax
 #slide[
-  - Methoden entsprechen Funktionen aus C, die Sie ja bereits kennen.
+  - Methods correspond to functions from C, which you already know.
   #text(size: 24pt)[
     ```java
-    Rückgabetyp Methodenname(Parameter) {
-     Anweisung;
+    ReturnType MethodName(Parameters) {
+     Statement;
     }
     ```
   ]
 
-  - Rückgabetyp
-    - Primitiver Datentyp, Klasse eines Objekts oder `void`.
-    - Rückgabe erfolgt wie in C mittels `return`.
-  - Methodenname
-    - Beliebiger gültiger Bezeichner (siehe Kapitel 2)
-    - Von unserem Coding Style: *camelCase* (ich erlaube auch *snake_case*)
+  - Return type
+    - Primitive data type, class of an object or `void`.
+    - Return is done as in C using `return`.
+  - Method name
+    - Any valid identifier (see Chapter 2)
+    - From our coding style: *camelCase* (I also allow *snake_case*)
 
 ]
 
 #slide[
-  - Methoden entsprechen Funktionen aus C, die Sie ja bereits kennen.
+  - Methods correspond to functions from C, which you already know.
   #text(size: 24pt)[
 
     ```java
-    Rückgabetyp Methodenname(Parameter) {
-     Anweisung;
+    ReturnType MethodName(Parameters) {
+     Statement;
     }
     ```
   ]
-  - Parameter
-    - Leer oder durch Komma getrente Parameter
-    - Jeder Parameter ist in der Form: `datentyp bezeichner`
-  - Aufruf
-    - Methodenname gefolgt von Klammern
-    - Argumente in den Klammern
-    - Ausdruck wird durch Rückgabewert ersetzt
+  - Parameters
+    - Empty or comma-separated parameters
+    - Each parameter is in the form: `datatype identifier`
+  - Call
+    - Method name followed by parentheses
+    - Arguments in the parentheses
+    - Expression is replaced by return value
 ]
 
 == Methods: Examples
 
 #slide[
-  #task[Berechnen Sie den Mittelwert von zwei Fließkommazahlen.]
+  #task[Calculate the average of two floating-point numbers.]
 
   #pause
 
@@ -500,7 +498,7 @@
 ]
 
 #slide[
-  #task[Berechnen Sie die Summer aller Ziffern einer Ganzzahl.]
+  #task[Calculate the sum of all digits of an integer.]
 
   #pause
 
@@ -534,8 +532,8 @@
 
 == Getters and Setters
 #memo[
-  - *Getter*: Methode, die den Wert einer Instanzvariable zurückgibt
-  - *Setter*: Methode, die einer Instanzvariable einen (zu übergebenen) Wert zuweist
+  - *Getter*: Method that returns the value of an instance variable
+  - *Setter*: Method that assigns a (passed) value to an instance variable
 ]
 
 #slide[
@@ -561,11 +559,10 @@
 
 #slide[
 
-  - Parameterübergabe bei Aufruf einer Methode:
-    - Grundsätzlich der Wert der Variablen übergeben („Call by value“).
-    - Nicht möglich, eine Art „Zeiger“ auf die Variable zu übergeben.
-    - In Methode kann die beim Methodenaufruf verwendete Variable nicht verändert
-      werden.
+  - Parameter passing when calling a method:
+    - Basically the value of the variable is passed ("Call by value").
+    - Not possible to pass a kind of "pointer" to the variable.
+    - In method, the variable used in the method call cannot be changed.
 
   ```java
   double square(double a) {
@@ -579,16 +576,16 @@
   #align(left + horizon)[
     #figure(
       image("../assets/img/slides_3/2024_10_14_methoden_callbyvalue_rev01.png"),
-      caption: [Diagramm für Call-by-Value],
+      caption: [Diagram for Call-by-Value],
     )
   ]
 ]
 
 == Methods: Objects as Parameters
 
-- Referenzvariablen als Parameter:
-  - Wert (d.h. gespeicherte Referenz) der übergebenen Variable wird nicht verändert.
-  - Aber: Das referenzierte Objekt kann verändert werden!
+- Reference variables as parameters:
+  - Value (i.e. stored reference) of the passed variable is not changed.
+  - But: The referenced object can be changed!
 
 ```java
 public class CallByValueDemo {
@@ -613,37 +610,37 @@ public class CallByValueDemo {
 
 #slide[
 
-  - Ursprünglicher Zustand in `main()`-Methode:
+  - Original state in `main()` method:
 
   #figure(
     image("../assets/img/slides_3/2024_10_14_referenz_lena_objekt_rev01.png"),
-    caption: [Ausgangszustand],
+    caption: [Initial state],
   )
 ]
 
 #slide[
 
-  - Aufruf der (unsinnigen) Methode `setNameBirgit()`:
+  - Call of the (meaningless) method `setNameBirgit()`:
 
   #figure(
     image("../assets/img/slides_3/2024_10_14_referenz_lena_student_verschieben_rev01.png"),
-    caption: [Verschieben der Referenz in die Methode],
+    caption: [Moving the reference to the method],
   )
 ]
 
 #slide[
 
-  - Änderung des Objektes in der Methode `setNameBirgit()`:
+  - Modification of the object in the method `setNameBirgit()`:
 
   #figure(
     image("../assets/img/slides_3/2024_10_14_referenz_lena_student_birgit_rev01.png"),
-    caption: [Änderung des Objekts in Methode],
+    caption: [Modification of object in method],
   )
 ]
 
 == this Reference
 
-#question[Schauen Sie sich den folgenden Code an. Was ist unschön?]
+#question[Look at the following code. What is unsightly?]
 
 ```java
 public class Student {
@@ -656,9 +653,9 @@ public class Student {
 ```
 
 #slide[
-  - Wir würden gerne den Parameter des Setters auch `name` nennen!
+  - We would like to name the parameter of the setter `name` as well!
 
-  #question[Funktioniert der folgende Aufruf?]
+  #question[Does the following call work?]
 
   ```java
   void setName(String name) {
@@ -666,14 +663,14 @@ public class Student {
   }
   ```
   #pause
-  - Nein! Der Compiler würde jeweils auf die lokale Variable verwenden.
-  - Wie können wir auf die Instanzvariable zugreifen?
+  - No! The compiler would use the local variable in each case.
+  - How can we access the instance variable?
 ]
 
 #slide[
   #memo[
-    - Mittels `this` können wir auf die derzeitige Instanz zugreifen, in der wir uns
-      gerade befinden.
+    - Using `this` we can access the current instance we are
+      currently in.
   ]
   #text(size: 22pt)[
     ```java
@@ -689,22 +686,22 @@ public class Student {
 ]
 
 #slide[
-  - Also
-    - Wenn Sie auf eine lokale Variable zugreifen wollen, verwenden Sie einfach den
-      Bezeichner der Variable
-    - Wenn Sie auf eine Instanzvariable zugreifen wollen, verwenden Sie die `this`-Referenz
-      mit dem Memberoperator mit `.`.
+  - So
+    - If you want to access a local variable, simply use the
+      identifier of the variable
+    - If you want to access an instance variable, use the `this` reference
+      with the member operator with `.`.
 
   #figure(
     image("../assets/img/slides_3/2024_10_14_this_diagramm_rev01.png", height: 40%),
-    caption: [`this`-Referenz],
+    caption: [`this` reference],
   )
 ]
 
 == Overloading
 
 #slide[
-  #task[Schreiben Sie eine Methode, die das Maximum zweier Integerzahlen berechnet.]
+  #task[Write a method that calculates the maximum of two integers.]
   #text(size: 22pt)[
     ```java
     int max(int a, int b) {
@@ -719,8 +716,7 @@ public class Student {
 ]
 
 #slide[
-  #task[Schreiben Sie eine weitere Methode in der selben Klasse, die das Maximum zweier `double`-Zahlen
-    berechnet.]
+  #task[Write another method in the same class that calculates the maximum of two `double` numbers.]
 
   ```java
   double max(double a, double b) {
@@ -730,8 +726,8 @@ public class Student {
 ]
 
 #slide[
-  #task[Schreiben Sie noch eine weitere Methode in der selben Klasse, die das Maximum
-    von drei Integerzahlen zurückgibt.]
+  #task[Write yet another method in the same class that returns the maximum
+    of three integers.]
 
   ```java
   int max(int a, int b, int c) {
@@ -741,10 +737,10 @@ public class Student {
 ]
 
 #slide[
-  - Überladene Methoden (overloading):
-    - In einer Klasse existieren mehrere Methoden mit demselben Namen.
-    - Nur möglich, falls Parametertypen unterschiedlich.
-    - Compiler wählt anhand der Parameter die richtige Methode aus.
+  - Overloaded methods (overloading):
+    - Multiple methods with the same name exist in a class.
+    - Only possible if parameter types are different.
+    - Compiler selects the correct method based on the parameters.
 
   ```java
   int max(int, int)
@@ -754,14 +750,14 @@ public class Student {
 ]
 
 #slide[
-  - Beachte:
-    - Signatur: Methodenname und Parametertypen
-    - Nur Datentypen der Parameter relevant (Unterscheidung durch Namen nicht möglich)
-    - Unterscheidung durch Rückgabetyp reicht nicht (Warum?)
+  - Note:
+    - Signature: Method name and parameter types
+    - Only data types of parameters relevant (distinction by names not possible)
+    - Distinction by return type is not sufficient (Why?)
 ]
 
 #slide[
-  #memo[- Das sind nicht die gleichen Methoden!]
+  #memo[- These are not the same methods!]
   #text(size: 18pt)[
     #align(left + horizon)[
       #grid(
@@ -791,12 +787,12 @@ public class Student {
   ]
 ]
 
-== Methoden: Coding Style
+== Methods: Coding Style
 #slide[
-  - Leerzeilen sollen die Lesbarkeit des Codes erhöhen.
-  - Eine Leerzeile steht zwingend zwischen Methoden oder Klassen (1).
-  - Eine Leerzeile steht in der Regel nach Deklarationen (2).
-  - Eine Leerzeile steht in der Regel zwischen logischen Abschnitten.
+  - Blank lines should increase code readability.
+  - A blank line is mandatory between methods or classes (1).
+  - A blank line is usually placed after declarations (2).
+  - A blank line is usually placed between logical sections.
 ]
 
 #slide[
@@ -824,9 +820,9 @@ public class Student {
 ]
 
 #slide[
-  - Leerzeichen sollen die Lesbarkeit des Codes erhöhen.
-  - Ein Leerzeichen steht zwingend zwischen Ausdrücken.
-  - Ein Leerzeichen steht in der Regel zwischen Operanden.
+  - Spaces should increase code readability.
+  - A space is mandatory between expressions.
+  - A space is usually placed between operands.
 
     #text(size: 18pt)[
       #align(left + horizon)[
@@ -860,42 +856,42 @@ public class Student {
     ]
 ]
 
-== Was ein Kapitel!
+== What a chapter!
 
-- Wir haben in diesem Abschnitt eine Menge geschafft!
-  - Syntax von Methoden
-  - Parameter (call by value)
-  - this-Referenz
-  - Überladen von Methoden
+- We have accomplished a lot in this section!
+  - Syntax of methods
+  - Parameters (call by value)
+  - this reference
+  - Overloading methods
   - Coding Style
 
-Lassen Sie uns nun betrachten, wie man Objekte gezielt erzeugen und
-initialisieren kann.
+Let us now look at how to specifically create and
+initialize objects.
 
-= Konstruktoren
+= Constructors
 
-== Konstruktoren
+== Constructors
 
 #memo[
-  - Spezielle Methoden zur Initialisierung eines Objektes
-    - Werden bei Erzeugung eines Objektes ausgeführt
-    - Beachte: Konstruktoren haben keinen Rückgabetyp
+  - Special methods for initializing an object
+    - Are executed when an object is created
+    - Note: Constructors have no return type
 ]
 
 ```java
-Klassenname(Parameter){
-Anweisungen;
+ClassName(Parameters){
+Statements;
 }
 ```
 
 #slide[
-  - Mittels des folgenden Codes könnte man einen Konstruktor für die Klasse `Student` erstellen:
+  - Using the following code, one could create a constructor for the class `Student`:
 
   ```java
   public class Student {
         String name;
 
-        Student(String name) {  // Achtung: Kein Rückgabetyp
+        Student(String name) {  // Attention: No return type
             this.name = name;
         }
     }
@@ -903,15 +899,15 @@ Anweisungen;
 ]
 
 #slide[
-  - Standardkonstruktor: Konstruktor mit leerer Parameterliste
-  - Initialisiert Instanzvariablen je nach Typ mit 0, 0.0, `false` oder `null`
+  - Default constructor: Constructor with empty parameter list
+  - Initializes instance variables depending on type with 0, 0.0, `false` or `null`
 
   #example[
     ```java
     public class Student {
           String name;
 
-          Student() {      // Standardkonstruktor
+          Student() {      // Default constructor
           }
       }
     ```
@@ -919,12 +915,12 @@ Anweisungen;
 ]
 
 #slide[
-  - Das vorige Beispiel könnte man auch so darstellen:
+  - The previous example could also be represented like this:
   ```java
   public class Student {
         String name;
 
-        Student() {      // Standardkonstruktor
+        Student() {      // Default constructor
             name = null;
         }
     }
@@ -932,28 +928,27 @@ Anweisungen;
 ]
 
 #slide[
-  - Compiler erzeugt unter bestimmten Bedingungen automatisch den
-    Standardkonstruktor
-  - Einfache Regeln:
-  1. Falls Sie für eine Klasse keinen Konstruktor schreiben:
-    - Der Compiler erzeugt automatisch den Standardkonstruktor
-  2. Falls Sie für eine Klasse mindestens einen Konstruktor schreiben:
-    - Der Compiler erzeugt keinen Konstruktor
-    - Es existieren nur die von Ihnen implementierten Konstruktoren
+  - Compiler automatically generates the default constructor under certain conditions
+  - Simple rules:
+  1. If you don't write a constructor for a class:
+    - The compiler automatically generates the default constructor
+  2. If you write at least one constructor for a class:
+    - The compiler does not generate a constructor
+    - Only the constructors you implemented exist
 ]
 
-== `this`: Referenz vs. Methode
+== `this`: Reference vs. Method
 #slide[
-  - `this`-Referenz (zur Erinnerung):
-    - Verwendung innerhalb beliebiger (Instanz-)Methode
-    - Wie eine Variable verwendet
-    - Enthält Referenz auf Objekt, für das die Methode aufgerufen wurde
+  - `this` reference (as a reminder):
+    - Use within any (instance) method
+    - Used like a variable
+    - Contains reference to object for which the method was called
 
-  - `this()`-Methode
-    - Verwendung nur innerhalb eines Konstruktors.
-    - Ist ein Methodenaufruf.
-    - this(Parameterliste) ruft Konstruktor mit passender Parameterliste auf.
-    - Darf nur als erste Anweisung im Konstruktor stehen.
+  - `this()` method
+    - Use only within a constructor.
+    - Is a method call.
+    - this(parameter list) calls constructor with matching parameter list.
+    - May only stand as the first statement in the constructor.
 ]
 
 #slide[
@@ -982,10 +977,10 @@ Anweisungen;
   ]
 ]
 
-== Konstruktoren: Beispiele
+== Constructors: Examples
 
 #slide[
-  #question[Wird der folgende Code kompilieren? Was denken Sie?]
+  #question[Will the following code compile? What do you think?]
   ```java
   public class Aircraft {
         String model;
@@ -999,13 +994,13 @@ Anweisungen;
 
 #slide[
   #success[
-    - Ja, wird er!
-      - Der Compiler erzeugt einen Standardkonstruktor, weil die Klasse keinen enthält.
-      - Dieser wird dann in der `main()`-Methode nun aufgerufen!
+    - Yes, it will!
+      - The compiler generates a default constructor because the class does not contain one.
+      - This is then called in the `main()` method!
   ]
 ]
 #slide[
-  #question[Wird der folgende Code kompilieren? Was denken Sie?]
+  #question[Will the following code compile? What do you think?]
   #text(size: 16pt)[
 
     ```java
@@ -1026,25 +1021,25 @@ Anweisungen;
 
 #slide[
   #error[
-    - Nein, wird er nicht!
-      - Da die Klasse einen Konstruktor enthält, erzeugt der Compiler keinen
-        Standardkonstruktor.
-      - Der verwendete Konstruktor in der `main()`-Methode existiert daher nicht.
+    - No, it will not!
+      - Since the class contains a constructor, the compiler does not generate a
+        default constructor.
+      - The constructor used in the `main()` method therefore does not exist.
   ]
 ]
-== Aufgabe: Klasse Circle
+== Task: Class Circle
 #slide[
   #task[
-    - Lassen Sie uns eine Klasse Circle schreiben:
-      - Repräsentiert einen geometrischen Kreis
-        - Dargestellt durch
-        - x- und y-Koordinate des Mittelpunktes
+    - Let us write a class Circle:
+      - Represents a geometric circle
+        - Represented by
+        - x and y coordinates of the center point
         - Radius r
-      - Konstruktoren:
-        - Standardkonstruktor erzeugt Einheitskreis um den Koordinatenursprung (0 ; 0)
-        - Konstruktor mit x, y und Radius als Parametern
-        - Konstruktor mit Radius als Parameter
-        - Konstruktor mit Objekt der Klasse Circle als Parameter (erzeugt Kopie)
+      - Constructors:
+        - Default constructor creates unit circle around coordinate origin (0 ; 0)
+        - Constructor with x, y and radius as parameters
+        - Constructor with radius as parameter
+        - Constructor with object of class Circle as parameter (creates copy)
   ]
 ]
 
@@ -1078,7 +1073,7 @@ Anweisungen;
 
 #slide[
   #text(size: 18pt)[
-    - Die Klasse, die wir eben geschrieben haben, können wir wie folgt erzeugen:
+    - The class we just wrote can be created as follows:
 
       ```java
       public class CircleDemo {
@@ -1092,16 +1087,16 @@ Anweisungen;
       ```
 
     #tip[
-      Folgender Menüpunkt in IntelliJ IDEA kann Ihnen viel Arbeit ersparen: Code /
+      The following menu item in IntelliJ IDEA can save you a lot of work: Code /
       Generate / Constructor
     ]
   ]
 ]
 
 #slide[
-  #task[Erweitern Sie die Klasse um Getter und Setter-Methoden.]
-  #tip[Über die Menüpunkte Code / Generate / Getter and Setter können Sie sich weitere
-    Zeit sparen!]
+  #task[Extend the class with getter and setter methods.]
+  #tip[Via the menu items Code / Generate / Getter and Setter you can save even more
+    time!]
 ]
 
 #slide[
@@ -1111,7 +1106,7 @@ Anweisungen;
         return x;
     }
 
-    // getY() und getRadius() entsprechend
+    // getY() and getRadius() accordingly
 
     void setX(double x) {
         this.x = x;
@@ -1122,7 +1117,7 @@ Anweisungen;
     }
 
     void setRadius(double radius) {
-        if (radius >= 0.0) {        // Nicht erlaubte Daten verhindern
+        if (radius >= 0.0) {        // Prevent disallowed data
             this.radius = radius;
         }
     }
@@ -1130,12 +1125,12 @@ Anweisungen;
   ]
 ]
 
-= Klassenvariablen & Klassenmethoden
+= Class Variables & Class Methods
 
-== Klassenvariablen
+== Class Variables
 
 #slide[
-  #question[Glauben Sie, dass Sie die Variable `PI` nur einmal im Speicher reservieren?]
+  #question[Do you think you reserve the variable `PI` only once in memory?]
   #text(size: 18pt)[
     ```java
     public class Circle {
@@ -1152,17 +1147,17 @@ Anweisungen;
 
 #slide[
   #error[
-    - Antwort: Nein, für jedes Objekt erneut!
+    - Answer: No, again for each object!
   ]
 
   #figure(
     image("../assets/img/slides_3/2024_10_14_objekt_circle_rev01.png", height: 40%),
-    caption: [Speicher wird für jedes Objekt erneut reserviert.],
+    caption: [Memory is reserved again for each object.],
   )
 ]
 
 #slide[
-  #question[Was meinen Sie, zählt die Variable `count` die Anzahl der Objekte?]
+  #question[What do you think, does the variable `count` count the number of objects?]
   #text(size: 17pt)[
     ```java
     public class Circle {
@@ -1180,34 +1175,34 @@ Anweisungen;
 
 #slide[
   #error[
-    - Antwort: Nein, jedes Objekt bekommt eine neue Variable `count`!
+    - Answer: No, each object gets a new variable `count`!
   ]
 
   #figure(
     image("../assets/img/slides_3/2024_10_15_circle_count_rev01.png", height: 40%),
-    caption: [Die Variable `count` wird immer wieder neu gemacht.],
+    caption: [The variable `count` is created again and again.],
   )
 ]
 
 #slide[
 
-  - Eine Lösung sind *Klassenvariablen*!
-  - Klassenvariablen werden nur einmal für die gesamte Klasse angelegt
-  - Werden nicht für ein bestimmtes (nicht für jedes Objekt) angelegt
-  - Werden bereits bei Programmstart (Laden der Klasse) erzeugt
-    - Sie existieren auch dann, wenn es (noch) kein Objekt der Klasse gibt.
-  - Syntax: Variable mit Schlüsselwort static
+  - One solution is *class variables*!
+  - Class variables are created only once for the entire class
+  - Are not created for a specific (not for each object) object
+  - Are already created at program start (loading the class)
+    - They exist even when there is (still) no object of the class.
+  - Syntax: Variable with keyword static
 ]
 
 #slide[
   #figure(
     image("../assets/img/slides_3/2024_10_15_klassenattribute_rev01.png"),
-    caption: [Klassenattribute in den verschiedenen Objekten],
+    caption: [Class attributes in the different objects],
   )
 ]
 
 #slide[
-  - Klasse `Circle` mit Klassenvariablen:
+  - Class `Circle` with class variables:
     #text(size: 17pt)[
 
       ```java
@@ -1230,9 +1225,9 @@ Anweisungen;
 ]
 
 #slide[
-  - Zugriff auf Klassenvariablen
-    - Innerhalb der Methode der Klasse entspricht es dem Zugriff auf Instanzvariablen
-    - Außerhalb der Klasse ```java Klassenname.Variablenname```
+  - Access to class variables
+    - Within the method of the class it corresponds to access to instance variables
+    - Outside the class ```java ClassName.VariableName```
     #text(size: 18pt)[
 
       ```java
@@ -1242,7 +1237,7 @@ Anweisungen;
                   Circle circle2 = new Circle();
                   Circle circle3 = new Circle();
 
-                  System.out.println("Anzahl Objekte: " + Circle.count);
+                  System.out.println("Number of objects: " + Circle.count);
               }
           }
       ```
@@ -1250,33 +1245,33 @@ Anweisungen;
     ]
 ]
 
-== Klassenmethoden
+== Class Methods
 
 #slide[
 
-  - Vollkommen analog zu Klassenvariablen:
-    - Klassenmethoden werden für eine Klasse aufgerufen
-    - Werden nicht für ein bestimmtes Objekt aufgerufen
-    - Methode wird durch Schlüsselwort static zur Klassenmethode
-    - Können aufgerufen werden, ohne dass Objekt der Klasse erzeugt wurde
+  - Completely analogous to class variables:
+    - Class methods are called for a class
+    - Are not called for a specific object
+    - Method becomes class method through keyword static
+    - Can be called without object of the class being created
 
-  - Aufruf außerhalb der Klasse:
+  - Call outside the class:
   ```java
-  Klassenname.Methodenname
+  ClassName.MethodName
   ```
 ]
 
 #slide[
   #memo[
-    - Wichtige Konsequenzen:
-      - `this`-Referenz existiert nicht in Klassenmethoden
-      - Instanzvariablen existieren nicht in Klassenmethoden
+    - Important consequences:
+      - `this` reference does not exist in class methods
+      - Instance variables do not exist in class methods
   ]
 ]
 
 #slide[
   #example[
-    - In diesem Beispiel sind zwei Klassenmethoden!
+    - In this example there are two class methods!
       #text(size: 14pt)[
 
         ```java

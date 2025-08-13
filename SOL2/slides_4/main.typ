@@ -73,32 +73,31 @@
 
 == Where Are We Currently?
 
-- Zuletzt haben wir uns mit Klassen und Objekten beschäftigt.
-- Sie können nun
-  - einfache Klassen in Java schreiben,
-  - aus den Klassen Objekte erzeugen, Attribute verwenden und Methoden aufrufen und
-  - Klassenvariablen und Klassenmethoden verwenden.
-- Heute geht es weiter mit *Klassenbibliotheken*.
+- Last time we dealt with classes and objects.
+- You can now
+  - write simple classes in Java,
+  - create objects from classes, use attributes and call methods and
+  - use class variables and class methods.
+- Today we continue with *Class Libraries*.
 
 #slide[
-  1. Imperative Konzepte
-  2. Klassen und Objekte
-  3. *Klassenbibliothek*
-  4. Vererbung
-  5. Schnittstellen
-  6. Graphische Oberflächen
-  7. Ausnahmebehandlung
-  8. Eingaben und Ausgaben
+  1. Imperative Concepts
+  2. Classes and Objects
+  3. *Class Library*
+  4. Inheritance
+  5. Interfaces
+  6. Graphical User Interfaces
+  7. Exception Handling
+  8. Input and Output
   9. Multithreading (Parallel Computing)
 ]
 
 == The Goal of This Chapter
 
-- Sie wenden Zeichenketten beispielsweise für eine formatierte Ausgabe von Daten
-  an.
-- Sie organisieren gleichartige Daten in Feldern, Matrizen sowie Listen.
-- Sie wandeln Zeichenketten in Zahlenwerte und wenden mathematische Funktionen auf
-  Zahlenwerte an.
+- You apply strings, for example, for formatted output of data.
+- You organize similar data in fields, matrices and lists.
+- You convert strings to numerical values and apply mathematical functions to
+  numerical values.
 
 = Strings
 
@@ -106,35 +105,35 @@
 
 #slide[
 
-  - Zeichenketten in C
-    - Variablen: Zeiger auf Array des primitiven Datentyps `char`
-    - Speichergröße vom Programmierer verwaltet
-    - Datentyp hat keine Methoden
-  - Zeichenketten in Java:
-    - Zeichenketten sind Objekte der Klasse String.
-    - Variablen referenzieren Objekte
-    - Speichergröße vom Objekt verwaltet
-    - Datentyp stellt Methoden zur Verfügung
+  - Strings in C
+    - Variables: Pointer to array of primitive data type `char`
+    - Memory size managed by programmer
+    - Data type has no methods
+  - Strings in Java:
+    - Strings are objects of class String.
+    - Variables reference objects
+    - Memory size managed by object
+    - Data type provides methods
 ]
 
 #slide[
   #figure(
     image("../assets/img/slides_4/2024_10_16_strings_c_java_rev01.png"),
-    caption: [Zeichenketten: Unterschiede C und Java],
+    caption: [Strings: Differences between C and Java],
   )
 ]
 
 == Creating Strings
 
-- Erzeugung erfolgt auch über den `new`-Operator:
+- Creation also using the `new` operator:
 ```java
 String name = new String("Lena");
 ```
-- Alternativ auch durch Zuweisung eines Literales:
+- Alternatively by assigning a literal:
 ```java
 String name = "Lena";
 ```
-- Zuweisung eines Literales auch nach Erzeugung möglich:
+- Assignment of a literal also possible after creation:
 ```java
 String name = new String("Lena");
 name = "Birgit";
@@ -144,15 +143,15 @@ name = "Birgit";
 
 #slide[
   #memo[
-    - Wie in vielen objektorientierten Sprachen:
-      - Objekte der Klasse String sind unveränderbar (immutable).
-      - Ihr Wert kann nach Erzeugung nicht modifiziert werden.
-      - Zum mehrstufigen Aufbau existiert die Klasse StringBuilder
+    - As in many object-oriented languages:
+      - Objects of class String are immutable.
+      - Their value cannot be modified after creation.
+      - For multi-stage construction, the StringBuilder class exists
   ]
 ]
 
 #slide[
-  #question[Welche Ausgabe erzeugt folgendes Programm?]
+  #question[What output does the following program produce?]
   #text(size: 16pt)[
 
     ```java
@@ -161,18 +160,18 @@ name = "Birgit";
         String lena2 = lena1;
 
         System.out.println("lena1: " + lena1 + "\nlena2: " + lena2);
-        System.out.println("Referenzen gleich: " + (lena1 == lena2));
+        System.out.println("References equal: " + (lena1 == lena2));
 
         lena2 += " B.";
         System.out.println("\nlena1: " + lena1 + "\nlena2: " + lena2);
-        System.out.println("Referenzen gleich: " + (lena1 == lena2));
+        System.out.println("References equal: " + (lena1 == lena2));
     }
     ```
   ]
 ]
 
 #slide[
-  - Zur Veranschaulichung
+  - For illustration
 
   ```java
   String lena1 = new String("Lena");
@@ -181,7 +180,7 @@ name = "Birgit";
 
   #figure(
     image("../assets/img/slides_4/2024_10_16_string_immut_objects_rev01.png"),
-    caption: [Referenz auf Zeichenkette],
+    caption: [Reference to string],
   )
 ]
 
@@ -191,54 +190,54 @@ name = "Birgit";
   ```
   #figure(
     image("../assets/img/slides_4/2024_10_16_string_immut_two_objects_rev01.png"),
-    caption: [Änderung der Zeichenkette führt zu neuem Objekt],
+    caption: [Changing the string leads to new object],
   )
 ]
 
 == String Concatenation
 
-- Zeichenketten sind über den Plus-Operator verknüpfbar:
+- Strings can be concatenated using the plus operator:
 ```java
-String name = "Lena " + "oder " + "dann ";
-  name = name + "doch " + "wieder ";
+String name = "Lena " + "or " + "then ";
+  name = name + "after all " + "again ";
   name += "Birgit?";
 ```
 
-- Implizite Umwandlung anderer Datentypen in ein String-Objekt:
-  - Auswertung der Plus-Operatoren von links nach rechts
-  - Umwandlung in String, sofern der andere Operand nicht vom Typ String ist
+- Implicit conversion of other data types to a String object:
+  - Evaluation of plus operators from left to right
+  - Conversion to String if the other operand is not of type String
 
 #slide[
-  #question[Was wird ausgegeben?]
+  #question[What will be output?]
   ```java
   int a = 20;
   int b = 22;
-  System.out.println("Jahr: " + a + b);
-  System.out.println(a + b + " (Jahr)");
+  System.out.println("Year: " + a + b);
+  System.out.println(a + b + " (Year)");
   ```
 ]
 
-== `toString()`-Methode
+== `toString()` Method
 #slide[
 
   ```java
   public String toString() {
-        // Methodenrumpf
-        // Rückgabe eines Objektes vom Typ String
+        // Method body
+        // Return of an object of type String
     }
   ```
 
-  - Methodenkopf vorgeschrieben
-  - Methodenrumpf frei programmierbar
-  - Gibt für Objekte einen String zurück, der Objekt beschreiben sollte
-  - Wird bei impliziter Umwandlung eines Objektes in einen String aufgerufen
+  - Method header prescribed
+  - Method body freely programmable
+  - Returns a String for objects that should describe the object
+  - Is called during implicit conversion of an object to a String
 ]
 
 #slide[
-  #task[Lassen Sie uns das einmal ausprobieren!
-    - Erzeugen Sie eine Klasse Person und implementieren Sie die `toString()`-Methode
+  #task[Let's try this out!
+    - Create a Person class and implement the `toString()` method
   ]
-  - Überprüfen Sie den impliziten Aufruf mittels der Konsolenausgabe.
+  - Check the implicit call using console output.
 ]
 
 #slide[
@@ -271,33 +270,33 @@ String name = "Lena " + "oder " + "dann ";
 
 #slide[
 
-  - Weitere Methoden beinhalten z.B.:
-    - Länge der Zeichenkette
-    - Zeichen an bestimmten Position (Erstes Zeichen hat Index 0!)
-    - Bestimmtes Zeichen ersetzen
-    - Bestimmtes Zeichen oder Teilzeichenkette suchen
-    - Zeichenkette teilen
-    - Umwandlung in Kleinbuchstaben oder Großbuchstaben
-    - Vergleich zweier Zeichenketten
-    - Und noch einige Weitere!
+  - Additional methods include, for example:
+    - Length of the string
+    - Character at specific position (First character has index 0!)
+    - Replace specific character
+    - Search for specific character or substring
+    - Split string
+    - Conversion to lowercase or uppercase
+    - Comparison of two strings
+    - And several more!
 ]
 
 #slide[
   #task[
-    - Ersetzen Sie "Humbug" durch "Hamburg".
+    - Replace "Humbug" with "Hamburg".
   ]
   ```java
-  String hamburg = "Willkommen in Humbug!";
+  String hamburg = "Welcome to Humbug!";
   hamburg = hamburg.replace("Humbug", "Hamburg");
   System.out.println(hamburg);
   ```
 ]
 
 #slide[
-  #question[Was wird ausgegeben?]
+  #question[What will be output?]
   ```java
-  String upper = "Willkommen in Hamburg!";
-  String lower = "willkommen in hamburg!";
+  String upper = "Welcome to Hamburg!";
+  String lower = "welcome to hamburg!";
 
   System.out.println(lower.equals(upper));
   System.out.println(lower.equals(upper.toLowerCase()));
@@ -307,16 +306,16 @@ String name = "Lena " + "oder " + "dann ";
 
 == String Formatting
 
-- Gerne gefragt:
-  - Kann man auch das Format des Strings bei der Ausgabe anpassen? *Ja, natürlich!*
+- Often asked:
+  - Can you also adjust the format of the string during output? *Yes, of course!*
 
-- Klassenmethode `format()`:
-  - Erzeugt eine formatierte Zeichenkette
-  - Es erfolgt keine Ausgabe auf Konsole.
-  - Syntax (fast) identisch mit printf() aus C/C++
+- Class method `format()`:
+  - Creates a formatted string
+  - No output to console occurs.
+  - Syntax (almost) identical to printf() from C/C++
 
 #slide[
-  #question[Was wird ausgegeben?]
+  #question[What will be output?]
 
   ```java
     double wind = 21.4532;
@@ -324,22 +323,22 @@ String name = "Lena " + "oder " + "dann ";
     System.out.println(weather);
   ```
   #pause
-  - *Ausgabe:* Station 7: 21,5 km/h
+  - *Output:* Station 7: 21.5 km/h
 ]
 
 #slide[
-  - Formatangaben:
+  - Format specifications:
 
-  ```java %[ArgumentNr.] [Flags] [MindestanzahlZeichen] [.Genauigkeit] Format```
+  ```java %[ArgumentNo.] [Flags] [MinimumNumberCharacters] [.Precision] Format```
 
   #figure(
     image("../assets/img/slides_4/2024_10_16_string_formats_rev01.png", height: 60%),
-    caption: [Formate und Flags],
+    caption: [Formats and Flags],
   )
 ]
 
 #slide[
-  #question[Was wird ausgegeben?]
+  #question[What will be output?]
   #text(size: 20pt)[
 
     ```java
@@ -350,33 +349,33 @@ String name = "Lena " + "oder " + "dann ";
     ```
   ]
   #pause
-  - Ausgabe:
-    - 21,45 km/h
-    - 21,45 km/h
-    - 00021,45 km/h
+  - Output:
+    - 21.45 km/h
+    - 21.45 km/h
+    - 00021.45 km/h
 ]
 
 
 #slide[
   #memo[
-    - Mindestanzahl der Zeichen:
-      - Schließt Nachkommastellen, sowie das Komma ein
-      - Schneidet keine Vorkommastellen ab
+    - Minimum number of characters:
+      - Includes decimal places as well as the comma
+      - Does not cut off any digits before the decimal point
   ]
 ]
 
 #slide[
   #question[
-    - Was fällt auf?
+    - What do you notice?
   ]
   ```java
   double wind = 21.4532;
   System.out.println(String.format("%2.2f km/h", wind));
   ```
-  - Ausgabe: 21,45 km/h
+  - Output: 21.45 km/h
     #pause
-  - Oben bei Ausgabe „deutsches Nachkomma“ statt „englischer Punkt“
-  - Durch Lokalisierung vorgegeben
+  - Above in output "German decimal comma" instead of "English point"
+  - Specified by localization
 ]
 
 #slide[
@@ -387,7 +386,7 @@ String name = "Lena " + "oder " + "dann ";
       System.out.println(String.format(Locale.GERMAN, "%2.2f km/h", wind));
     ```
 
-    - Ausgabe: 21.45 km/h 21,45 km/h
+    - Output: 21.45 km/h 21.45 km/h
   ]
 
 ]
@@ -395,48 +394,48 @@ String name = "Lena " + "oder " + "dann ";
 == Arrays
 
 - Arrays in C:
-  - Variablen: Zeiger auf erstes Element des Arrays im Speicher
-  - Speichergröße vom Programmierer verwaltet
-  - Datentyp hat keine Methoden
+  - Variables: Pointer to first element of the array in memory
+  - Memory size managed by programmer
+  - Data type has no methods
 
 - Arrays in Java:
-  - Arrays sind Objekte.
-  - Variablen referenzieren Objekte
-  - Speichergröße vom Objekt verwaltet
-  - Datentyp stellt Methoden zur Verfügung
+  - Arrays are objects.
+  - Variables reference objects
+  - Memory size managed by object
+  - Data type provides methods
 
 #slide[
   #figure(
     image("../assets/img/slides_4/2024_10_16_arrays_c_java_rev01.png"),
-    caption: [Arrays in Java und C],
+    caption: [Arrays in Java and C],
   )
 ]
 
 == Creating Arrays
 
-- Sammlung von Elementen mit gleichem Datentyp
-- Datentyp wird durch eckige Klammern zum Array (z.B. `int[]`, `String[]`)
-- Array-Klassen sind eigene (weitere) Datentypen
+- Collection of elements with the same data type
+- Data type becomes array through square brackets (e.g. `int[]`, `String[]`)
+- Array classes are separate (additional) data types
 
-- Deklaration:
-  - Erfordert keine Angabe der Länge
-  - Variable kann Arrays beliebiger Länge referenzieren
-  - Deklaration erzeugt kein Objekt, sondern Referenzvariable
+- Declaration:
+  - Does not require specification of length
+  - Variable can reference arrays of any length
+  - Declaration does not create object, but reference variable
 
 ```java
 int[] filter;
 ```
-#memo[- Klammern hinter Variablennamen zulässig, aber nicht empfohlen (Warum?)]
+#memo[- Brackets after variable names allowed, but not recommended (Why?)]
 ```java
 int filter[];
 ```
 
 == Creation: Dynamic Declaration
 
-- Array-Objekt mittels new-Operator erzeugen
-- Anzahl der Felder in eckigen Klammern
-- Beachte: Keine runden „Konstruktor-Klammern“ hinter Datentyp
-- Werte im Array werden mit 0, 0.0, false bzw. null initialisiert
+- Create array object using new operator
+- Number of fields in square brackets
+- Note: No round "constructor brackets" after data type
+- Values in array are initialized with 0, 0.0, false or null
 
 ```java
 int[] filter = new int[];
@@ -444,13 +443,13 @@ int[] filter = new int[];
 
 #figure(
   image("../assets/img/slides_4/2024_10_16_filter_array_empty_rev01.png"),
-  caption: [Erstellung eines Arrays],
+  caption: [Creation of an array],
 )
 
 == Creation: Assigning Elements
 
-- Zugriff auf Array-Element über Index in eckigen Klammern
-- Erstes Element besitzt Index 0
+- Access to array element via index in square brackets
+- First element has index 0
 
 ```java
 int[] filter = new int[3];
@@ -461,14 +460,14 @@ int[] filter = new int[3];
 
 #figure(
   image("../assets/img/slides_4/2024_10_16_filter_array_filled_single_rev01.png"),
-  caption: [Zuweisen von Werten durch Indexzugriff],
+  caption: [Assigning values through index access],
 )
 
 == Creation: Static Declaration
 
-- Man kann einem Array bereits bei Erzeugung des Objektes die Werte zuweisen.
-- Werte in geschweiften Klammern und durch Kommas getrennt
-- Mit und ohne Verwendung des new-Operators zulässig
+- You can assign values to an array already when creating the object.
+- Values in curly braces and separated by commas
+- Allowed with and without use of the new operator
 
 ```java
 int[] filter = {1, 2, 1};
@@ -477,16 +476,16 @@ int[] filter = new int[] {1, 2, 1};
 
 #figure(
   image("../assets/img/slides_4/2024_10_16_filter_array_filled_single_rev01.png"),
-  caption: [Füllen bei Deklaration],
+  caption: [Filling during declaration],
 )
 
 == Properties: Array Classes
 
-- Arrays sind Objekte der entsprechenden Klasse:
-  - Arrays besitzen Methoden.
-  - Anzahl der Elemente über Instanzvariable length
+- Arrays are objects of the corresponding class:
+  - Arrays have methods.
+  - Number of elements via instance variable length
 
-#question[Welches Array wird durch den Code erzeugt?]
+#question[Which array is created by the code?]
 
 #text(size: 22pt)[
 
@@ -500,17 +499,17 @@ int[] filter = new int[] {1, 2, 1};
 
 #figure(
   image("../assets/img/slides_4/2024_10_16_filter_array_question_rev01.png"),
-  caption: [Befüllen durch `for`-Schleife],
+  caption: [Filling through `for` loop],
 )
 
 #slide[
 
-  - Indizes:
-    - Bei Zugriff auf Element überprüft, ob Index im erlaubten Bereich liegt
-    - Mehr im Kapitel über Ausnahmen und Fehlerbehandlung
+  - Indices:
+    - When accessing element, checks whether index is in allowed range
+    - More in chapter on exceptions and error handling
 
     #example[
-      Beispiele erlaubter und nicht erlaubter Indizes:
+      Examples of allowed and disallowed indices:
       ```java
       int[] filter = new int[3];
       filter[0] = -1;
@@ -521,14 +520,14 @@ int[] filter = new int[] {1, 2, 1};
     ]
     #figure(
       image("../assets/img/slides_4/2024_10_16_filter_array_index_rev01.png"),
-      caption: [Indizes des Arrays `filter`],
+      caption: [Indices of array `filter`],
     )
 ]
 
 #slide[
-  - Arrays für beliebige Datentypen (auch eigene Klassen) deklarierbar
-  - Objekte müssen vom gleichen Typ sein (oder Subtyp, hierzu mehr bei Vererbung)
-  - Nicht die Objekte gespeichert, sondern Referenzen zu den Objekten
+  - Arrays can be declared for any data types (including custom classes)
+  - Objects must be of the same type (or subtype, more on this with inheritance)
+  - Not the objects stored, but references to the objects
 
   ```java
   Person[] friends = new Person[3];
@@ -539,14 +538,14 @@ int[] filter = new int[] {1, 2, 1};
 
   #figure(
     image("../assets/img/slides_4/2024_10_16_friends_array_classes_rev01.png"),
-    caption: [Arrays aus Objekten],
+    caption: [Arrays of objects],
   )
 ]
 
 == Questions
 #slide[
   #question[
-    Was wird ausgegeben?
+    What will be output?
   ]
 
   ```java
@@ -559,7 +558,7 @@ int[] filter = new int[] {1, 2, 1};
 ]
 
 #slide[
-  #question[Was wird ausgegeben?]
+  #question[What will be output?]
 
   ```java
   int[] a = {1, 2, 3, 4, 5};
@@ -569,7 +568,7 @@ int[] filter = new int[] {1, 2, 1};
 ]
 
 #slide[
-  #question[Was wird ausgegeben?]
+  #question[What will be output?]
   #text(size: 18pt)[
 
     ```java
@@ -592,9 +591,8 @@ int[] filter = new int[] {1, 2, 1};
 
 #slide[
   #task[
-    - Schreiben Sie eine Methode, die die Elemente eines `int[]`-Arrays aufsteigend
-      sortiert.
-    - Testen Sie die Methode anhand des Arrays `{10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 7}`.
+    - Write a method that sorts the elements of an `int[]` array in ascending order.
+    - Test the method using the array `{10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 7}`.
   ]
 
 ]
@@ -621,29 +619,29 @@ int[] filter = new int[] {1, 2, 1};
   ]
 ]
 
-= Mehrdimensionale Arrays
+= Multidimensional Arrays
 
 == Multidimensional Arrays
 
-- Mehrdimensionale Arrays sind „Felder von Feldern“.
-- Beispiel: `int[][]` ist Array, dessen Elemente vom Datentyp `int[]` sind.
+- Multidimensional arrays are "arrays of arrays".
+- Example: `int[][]` is array whose elements are of data type `int[]`.
 
-Dynamische Deklaration:
+Dynamic declaration:
 ```java
   int[][] filter = new int[3][4];
 ```
-Statische Deklaration:
+Static declaration:
 ```java
   int[][] filter = {{1,2,3}, {4,5,6}, {7,8,9}};
 ```
 
 #figure(
   image("../assets/img/slides_4/2024_10_16_filter_array_dim_rev01.png"),
-  caption: [Mehrdimensionales Array],
+  caption: [Multidimensional array],
 )
 
 #slide[
-  #question[Was wird ausgegeben?]
+  #question[What will be output?]
 
   ```java
    int[][] a = {{1,2}, {3,4}, {5,6}};
@@ -659,12 +657,12 @@ Statische Deklaration:
 #slide[
   #figure(
     image("../assets/img/slides_4/2024_10_16_a_array_question_dim_rev01.png"),
-    caption: [Mehrdimensionale Arrays mit Werten],
+    caption: [Multidimensional arrays with values],
   )
 ]
 
 #slide[
-  #question[Was wird ausgegeben?]
+  #question[What will be output?]
 
   ```java
   int[][] a = {{1,2}, {3,4}, {5,6}};
@@ -680,15 +678,15 @@ Statische Deklaration:
 #slide[
   #figure(
     image("../assets/img/slides_4/2024_10_16_a_b_c_array_question_rev01.png"),
-    caption: [Komplizierte mehrdimensionale Arrays],
+    caption: [Complex multidimensional arrays],
   )
 ]
 
 #slide[
-  - Mehrdimensionale Arrays müssen nicht rechteckig sein
-  - Beispiel: Jeder Zeile eines zweidimensionalen Arrays eigenes Array zuweisen
+  - Multidimensional arrays do not have to be rectangular
+  - Example: Assign own array to each row of a two-dimensional array
 
-  #task[Erstellen Sie eine Dreiecksmatrix mittels einer `for`-Schleife!]
+  #task[Create a triangle matrix using a `for` loop!]
 
   #pause
 
@@ -704,18 +702,18 @@ Statische Deklaration:
 #slide[
   #figure(
     image("../assets/img/slides_4/2024_10_17_triangle_array_rev01.png"),
-    caption: [Mehrdimensionales Array in der Form eines Dreiecks],
+    caption: [Multidimensional array in the shape of a triangle],
   )
 ]
 
-= Listen
+= Lists
 
 == ArrayList
 
 #slide[
-  - Arrays: Größe nach Erzeugung nicht mehr änderbar („semidynamisch“)
-  - Listen: Elemente können hinzugefügt oder entfernt werden („dynamisch“)
-    - Datentyp zu speichernder Elemente in spitzen Klammern (siehe unten: String)
+  - Arrays: Size cannot be changed after creation ("semi-dynamic")
+  - Lists: Elements can be added or removed ("dynamic")
+    - Data type of elements to be stored in angle brackets (see below: String)
 ]
 
 #slide[
@@ -734,11 +732,11 @@ Statische Deklaration:
   ]
 ]
 #slide[
-  - Beispiele:
-    - Anzahl der Elemente (`size()`)
-    - Zugriff auf Elemente (`get()`)
-    - Abfrage, ob bestimmtes Element in Liste ist (`contains()`)
-    - Element aus Liste entfernen (`remove()`)
+  - Examples:
+    - Number of elements (`size()`)
+    - Access to elements (`get()`)
+    - Query whether specific element is in list (`contains()`)
+    - Remove element from list (`remove()`)
 ]
 
 #slide[
@@ -761,32 +759,32 @@ Statische Deklaration:
   ]
 ]
 
-= foreach-Schleife
+= foreach Loop
 
 == foreach Loop
 
 #slide[
   ```java
-  for (Datentyp Variable : Iterationsobjekt) {
-      Anweisungen
+  for (DataType Variable : IterationObject) {
+      Statements
   }
   ```
 
   - Motivation:
-    - Mitunter jedes Element z.B. eines Arrays oder einer Liste benötigt
-    - Aber: Position innerhalb des Arrays oder der Liste wird nicht benötigt
-    - Daher auch kein Schleifenzähler als Index benötigt
+    - Sometimes every element e.g. of an array or a list is needed
+    - But: Position within the array or list is not needed
+    - Therefore no loop counter as index needed
 ]
 
 #slide[
-  - Schleife iteriert vom ersten bis zum letzten Element durch Array (oder Liste):
-  - Beim ersten Durchlauf hat Variable den Wert des 1. Elements
-  - Beim zweiten Durchlauf hat Variable den Wert des 2. Elements und so weiter
-  - Beim letzten Durchlauf hat Variable den Wert des letzten Elements
+  - Loop iterates through array (or list) from first to last element:
+  - On first pass, variable has the value of the 1st element
+  - On second pass, variable has the value of the 2nd element and so on
+  - On last pass, variable has the value of the last element
 ]
 
 #slide[
-  #question[Was wird ausgegeben?]
+  #question[What will be output?]
   ```java
   int[] a = {7, 1, 3, 8};
 
@@ -794,14 +792,14 @@ Statische Deklaration:
   	    System.out.println("Element: " + element);
   	}
   ```
-  #figure(image("../assets/img/slides_4/2024_10_16_foreach_rev01.png"), caption: [Ergebnis der foreach-Schleife])
+  #figure(image("../assets/img/slides_4/2024_10_16_foreach_rev01.png"), caption: [Result of foreach loop])
 ]
 
 #slide[
   #task[
-    - Erstellen Sie Folgendes unter Verwendung einer foreach-Schleife:
-    - Methode, die den Mittelwert der in einem Array enthaltenen Zahlen zurückgibt
-    - Programm, das die Methode verwendet
+    - Create the following using a foreach loop:
+    - Method that returns the average of the numbers contained in an array
+    - Program that uses the method
   ]
 ]
 
@@ -825,33 +823,33 @@ Statische Deklaration:
   ]
 ]
 
-= Wrapperklassen & `Math`-Klasse
+= Wrapper Classes & `Math` Class
 
 == Wrapper Classes
 
-- Primitive Datentypen:
-  - Speichern Wert (z.B. Ganzzahl) direkt
-  - Besitzen keine Methoden
+- Primitive data types:
+  - Store value (e.g. integer) directly
+  - Have no methods
 
-- Wrapperklassen:
-  - „Packen“ (to wrap) primitive Datentypen in Klassen ein
-  - Stellen Methoden (z.B. für Ganzzahlen) zur Verfügung
+- Wrapper classes:
+  - "Wrap" primitive data types into classes
+  - Provide methods (e.g. for integers)
 
-#figure(image("../assets/img/slides_4/2024_10_16_wrapper_rev01.png"), caption: [Wrapperklassen für primitive Datentypen])
+#figure(image("../assets/img/slides_4/2024_10_16_wrapper_rev01.png"), caption: [Wrapper classes for primitive data types])
 
 #slide[
   #text(size: 22pt)[
-    - Primitiven Datentypen in String umwandeln
+    - Convert primitive data types to String
     ```java
     	int a = 7;
     	Integer b = new Integer(a);
     	String c = b.toString();
     ```
-    - Kürzere Alternative über Klassenmethode:
+    - Shorter alternative via class method:
     ```java
     	String a = Integer.toString(7);
     ```
-    - String in primitiven Datentypen umwandeln:
+    - Convert String to primitive data types:
     ```java
     	String a = "7";
     	int b = Integer.parseInt(a);
@@ -861,15 +859,15 @@ Statische Deklaration:
 
 #slide[
   #text(size: 22pt)[
-    - Umwandlungen:
-      - Boxing: Umwandlung primitiver Datentyp in Objekt einer Wrapperklasse
-      - Unboxing: Umwandlung Objekt einer Wrapperklasse in primitiven Datentyp
+    - Conversions:
+      - Boxing: Conversion of primitive data type to object of wrapper class
+      - Unboxing: Conversion of object of wrapper class to primitive data type
     ```java
     	Integer object = new Integer(24); //Boxing of int value
     	int noObject = object.intValue(); //Unboxing of object
     ```
 
-    - Autoboxing: Automatische Umwandlungen (beide Richtungen)
+    - Autoboxing: Automatic conversions (both directions)
     ```java
     	Integer object = 24; //Automatic boxing of int value
     	int noObject = object; //Automatic unboxing of object
@@ -878,22 +876,22 @@ Statische Deklaration:
 ]
 
 #slide[
-  #figure(image("../assets/img/slides_4/2024_10_16_wrapper_conversion_rev01.png"), caption: [Typumwandlung mit Wrapperklassen])
+  #figure(image("../assets/img/slides_4/2024_10_16_wrapper_conversion_rev01.png"), caption: [Type conversion with wrapper classes])
 ]
 
-== `Math`-Klasse
+== `Math` Class
 
 #slide[
 
-  - Mathematische Konstanten: Eulerzahl e, Kreiszahl $pi$
-  - Mathematische Funktionen (als Klassenmethoden), z.B.:
-    - Trigonometrische Funktionen
-    - Rundung
-    - Betrag
-    - Exponentialfunktion und Logarithmus
-    - Maximum und Minimum
-    - Wurzeln
-    - Zufallszahlen
+  - Mathematical constants: Euler's number e, pi $pi$
+  - Mathematical functions (as class methods), e.g.:
+    - Trigonometric functions
+    - Rounding
+    - Absolute value
+    - Exponential function and logarithm
+    - Maximum and minimum
+    - Roots
+    - Random numbers
 
     #example[
       ```java

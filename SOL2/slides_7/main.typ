@@ -11,7 +11,7 @@
 
 #import "@preview/numbly:0.1.0": numbly
 
-#set text(lang: "de", font: "Roboto", size: 18pt)
+#set text(lang: "en", font: "Roboto", size: 18pt)
 #set heading(numbering: numbly("{1}.", default: "1.1"))
 
 #set align(left + top)
@@ -43,8 +43,8 @@
 #show: university-theme.with(
   aspect-ratio: "16-9",
   config-info(
-    title: [Objektorientierte Programmierung in Java],
-    subtitle: [Vorlesung 6 - Abstrakte Elemente],
+    title: [Object-Oriented Programming in Java],
+    subtitle: [Lecture 7 - Graphical User Interfaces],
     author: [Emily Lucia Antosch],
     date: datetime.today().display("[day].[month].[year]"),
     institution: [HAW Hamburg],
@@ -70,44 +70,44 @@
 
 #outline(depth: 1)
 
-= Einleitung
+= Introduction
 
-== Wo sind wir gerade?
+== Where Are We Currently?
 
-- In der letzten Vorlesung ging es um Schnittstellen und abstrakte Klassen
-- Sie können nun
-  - abstrakte Klassen verwenden, um ihren Code noch genau zu strukturieren,
-  - Schnittstellen implementieren, um Eigenschaften von Klassen darzustellen,
-  - Klassen und Objekten mit einer Ordnung mittels `Comparable` belegen,
-- Heute geht es weiter mit den *graphischen Oberflächen*.
+- The last lecture was about interfaces and abstract classes
+- You can now
+  - use abstract classes to structure your code more precisely,
+  - implement interfaces to represent properties of classes,
+  - assign classes and objects with an order using `Comparable`,
+- Today we continue with *graphical user interfaces*.
 
 #slide[
-  1. Imperative Konzepte
-  2. Klassen und Objekte
-  3. Klassenbibliothek
-  4. Vererbung
-  5. Schnittstellen
-  6. *Graphische Oberflächen*
-  7. Ausnahmebehandlung
-  8. Eingaben und Ausgaben
+  1. Imperative Concepts
+  2. Classes and Objects
+  3. Class Library
+  4. Inheritance
+  5. Interfaces
+  6. *Graphical User Interfaces*
+  7. Exception Handling
+  8. Input and Output
   9. Multithreading (Parallel Computing)
 ]
 
-== Das Ziel dieses Kapitels
-- Sie erstellen grafische Oberflächen mit z.B. Menüs, Buttons und Textfeldern.
-- Sie zeichnen Diagramme aus einfachen geometrischen Formen (z.B. Linien, Kreise).
-- Sie reagieren auf Ereignisse (z.B. Drücken eines Buttons), indem Sie grafische Elemente mit bei Benutzereingaben auszuführenden Methoden verbinden.
-- Sie verwenden das Observer-Pattern, damit Objekte beliebiger Datentypen auf Ereignisse reagieren können.
+== The Goal of This Chapter
+- You create graphical user interfaces with e.g. menus, buttons and text fields.
+- You draw diagrams from simple geometric shapes (e.g. lines, circles).
+- You respond to events (e.g. pressing a button) by connecting graphical elements with methods to be executed on user input.
+- You use the Observer pattern so that objects of any data type can react to events.
 
 
-= Grundlegende Struktur
-== Graphische UI
+= Basic Structure
+== Graphical UI
 
 #slide[
   #text(size: 18pt)[
     #question[
-      - Welche Arten von Elementen sehen Sie?
-      - Wie reagieren die Elemente? Hängen hierbei Elemente zusammen?
+      - What types of elements do you see?
+      - How do the elements react? Do elements interact with each other?
     ]
   ]
   #figure(image("../assets/img/slides_7/2024_10_25_windows_explorer_rev01.png", height: 50%), caption: [Windows 7 Explorer])
@@ -116,56 +116,56 @@
 #slide[
   #text(size: 18pt)[
 
-    - Grafische Benutzeroberfläche: Graphical user interface (GUI)
-    - Klassenbibliotheken AWT und Swing bereits im Java SDK enthalten
+    - Graphical user interface: Graphical user interface (GUI)
+    - Class libraries AWT and Swing already included in the Java SDK
 
     - Abstract Window Toolkit (AWT):
-      - Bereits mit Java 1.0 eingeführt
-      - Nur grundlegende Oberflächenelemente, um möglichst viele Betriebssysteme zu unterstützen („Kleinster gemeinsamer Nenner“)
-      - Setzt die nativen Elemente („Widgets“) des Betriebssystems ein
-      - Ursprünglich voller Design-Fehler, da unter großem Druck in nur knapp zwei Monaten entstanden
+      - Already introduced with Java 1.0
+      - Only basic interface elements to support as many operating systems as possible ("Lowest common denominator")
+      - Uses the native elements ("widgets") of the operating system
+      - Originally full of design errors, as it was created under great pressure in just under two months
 
     - Swing:
-      - Erweiterung des AWT
-      - Kein direktes Ansprechen der Fensterfunktionen der aktuellen Plattform mehr
-      - Komplette Kontrolle über die Anzeigeelemente
+      - Extension of AWT
+      - No more direct addressing of window functions of the current platform
+      - Complete control over display elements
   ]
 ]
 
 #slide[
   #text(size: 18pt)[
-    - Basiselement: Rahmen (Frame)
-    - Beinhaltet Fensterleiste mit Titel und Steuerelementen (z.B. „Schließen“)
-    - Beinhaltet Bereich, in dem Elemente platziert werden können (Content pane)
-    - Kann zusätzlich Menüleiste (Menu bar) enthalten
+    - Base element: Frame
+    - Contains window bar with title and control elements (e.g. "Close")
+    - Contains area where elements can be placed (Content pane)
+    - Can additionally contain menu bar
 
     #figure(
       image("../assets/img/slides_7/2024_10_25_window_frame_aufbau_rev01.png", height: 50%),
-      caption: [Aufbau eines Frames],
+      caption: [Structure of a frame],
     )
   ]
 ]
 
 #slide[
   #text(size: 18pt)[
-    - Elemente werden hierarchisch hinzugefügt.
-    - Für Elemente, die andere Elemente aufnehmen, lässt sich das Layout angeben.
+    - Elements are added hierarchically.
+    - For elements that contain other elements, the layout can be specified.
     #figure(
       image("../assets/img/slides_7/2024_10_25_window_frame_hierarchie_rev01.png", height: 70%),
-      caption: [Hierarchie eines Windows],
+      caption: [Hierarchy of a window],
     )
   ]
 ]
 
 
-= Graphische Oberflächen erzeugen
-== Einfaches Programm
+= Creating Graphical User Interfaces
+== Simple Program
 
 #slide[
   #text(size: 18pt)[
-    - Ausführbare main()-Methode erzeugt Objekt der Klasse
-    - Klasse erzeugt im Konstruktur Frame mit grafischer Oberfläche
-    - „Close Operation“ so angeben, dass Anwendung bei Schließen des Fensters beendet wird
+    - Executable main() method creates object of the class
+    - Class creates frame with graphical interface in constructor
+    - Specify "Close Operation" so that application terminates when window is closed
 
     ```java
     	public class HelloWorld {
@@ -187,13 +187,13 @@
 
   #text(size: 18pt)[
     #question[
-      - Was passiert, wenn die „Close Operation“ nicht auf „Exit on close“ gesetzt wird?
-      - Warum muss man das Fenster extra über setVisible(true) anzeigen?
+      - What happens if the "Close Operation" is not set to "Exit on close"?
+      - Why do you have to explicitly display the window via setVisible(true)?
     ]
     #let left = [
-      - Und es sieht nicht wirklich schön aus:
-        - Das Fenster ist zu klein!
-        - Das Fenster „klebt“ in der linken oberen Ecke!
+      - And it doesn't look really nice:
+        - The window is too small!
+        - The window "sticks" in the upper left corner!
     ]
     #let right = figure(image("../assets/img/slides_7/2024_10_25_window_frame_mini_rev01.png", height: 20%))
     #grid(
@@ -203,9 +203,9 @@
     )
 
     #task[
-      - Vergrößern Sie es auf 400 x 300 Pixel (Breite x Höhe).
-      - Platzieren Sie es jeweils 50 Pixel vom linken und vom oberen Rand.
-      - Hinweis: Lassen Sie sich die Methoden von frame anzeigen.
+      - Enlarge it to 400 x 300 pixels (width x height).
+      - Place it 50 pixels from the left and top edge respectively.
+      - Hint: Display the methods of frame.
     ]
   ]
 ]
@@ -214,7 +214,7 @@
 #slide[
   #text(size: 18pt)[
     #let body = [
-      - Korrigierte Größe und Position:
+      - Corrected size and position:
 
       ```java
       	public class HelloWorld {
@@ -248,17 +248,17 @@
 
     #let body = [
       - Klassen:
-        - JMenuBar: Menüleiste
-        - JMenu: Menü in Menüleiste (z.B. Datei, Hilfe)
-        - JMenuItem: Eintrag in einem Menü (z.B. Neu, Speichern als)
+        - JMenuBar: Menu bar
+        - JMenu: Menu in menu bar (e.g. File, Help)
+        - JMenuItem: Entry in a menu (e.g. New, Save as)
 
-      - Fügen Sie unserem Programm folgende Menüs hinzu:
-        - Menü File mit den Menüpunkten Open, Save und Exit
-        - Menü Help mit den Menüpunkten Help und About
+      - Add the following menus to our program:
+        - Menu File with menu items Open, Save and Exit
+        - Menu Help with menu items Help and About
 
       #tip[
-        - Elemente werden meist über add() hinzugefügt.
-        - Die Menüleiste wird über setJMenuBar() hinzugefügt.
+        - Elements are usually added via add().
+        - The menu bar is added via setJMenuBar().
       ]
     ]
     #let fig = figure(image("../assets/img/slides_7/2024_10_25_window_frame_tree_rev01.png"))
@@ -312,16 +312,16 @@
 #slide[
   #text(size: 18pt)[
     #let body = [
-      - Klasse JLabel stellt nicht editierbaren Text dar
-        - Kann horizontal und vertikal ausgerichtet werden (z.B. zentriert)
-        - Kann Rahmen zeichnen
-        - Kann auch Bilder darstellen
+      - Class JLabel displays non-editable text
+        - Can be aligned horizontally and vertically (e.g. centered)
+        - Can draw borders
+        - Can also display images
 
-      - Erzeugen wir das rechts abgebildete Fenster:
-        - Bild über new ImageIcon() laden
-        - Rahmen über BorderFactory.createEtchedBorder()
-        - Label der Content pane über add() hinzufügen
-        - Layout über frame.setLayout(new GridLayout(2, 1))
+      - Let's create the window shown on the right:
+        - Load image via new ImageIcon()
+        - Border via BorderFactory.createEtchedBorder()
+        - Add label to content pane via add()
+        - Layout via frame.setLayout(new GridLayout(2, 1))
     ]
     #let fig = [
       #figure(image("../assets/img/slides_7/2024_10_25_window_frame_lena_rev01.png"))
@@ -378,17 +378,17 @@
 #slide[
   #text(size: 18pt)[
 
-    - Legen die Anordnung der GUI-Elemente fest
+    - Define the arrangement of GUI elements
 
-    - Verschiedene Layout-Manager definiert, z. B.:
+    - Various layout managers defined, e.g.:
       - BoxLayout:
-        - Elemente übereinander („vertikal“) oder nebeneinander („horizontal“)
+        - Elements on top of each other ("vertical") or next to each other ("horizontal")
       - GridLayout:
-        - Elemente in gleichmäßigem Gitter platziert
-        - Alle Zellen haben die gleiche Größe
+        - Elements placed in uniform grid
+        - All cells have the same size
       - FlowLayout:
-        - Elemente wie bei horizontalem BoxLayout in Zeile platziert
-        - Allerdings Zeilenumbruch, sobald eine Zeile „voll“ ist
+        - Elements placed in row like horizontal BoxLayout
+        - However, line break as soon as a line is "full"
   ]
 ]
 
@@ -404,9 +404,9 @@
       	// Create contents
       	Container contentPane = frame.getContentPane();
       	contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-      	contentPane.add(new JButton("Auf die"));
-      	contentPane.add(new JButton("Plätze"));
-      	contentPane.add(new JButton("fertig"));
+      	contentPane.add(new JButton("Ready"));
+      	contentPane.add(new JButton("Set"));
+      	contentPane.add(new JButton("Go"));
       	contentPane.add(new JButton("los!"));
 
       	frame.pack();
@@ -427,7 +427,7 @@
 #slide[
   #text(size: 18pt)[
 
-    - Horizontales BoxLayout:
+    - Horizontal BoxLayout:
     ```java
     	contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
     ```
@@ -443,12 +443,12 @@
 
 #slide[
   #text(size: 18pt)[
-    - Elemente lassen sich in Objekten der Klasse JPanel gruppieren.
-    - Jedes JPanel-Objekt besitzt einen eigenen Layout-Manager.
+    - Elements can be grouped in objects of class JPanel.
+    - Each JPanel object has its own layout manager.
 
       #question[
-        - Welche Elemente beinhaltet das gezeigte Fenster?
-        - Über welche Objekte und Layout-Manager sind diese angeordnet?
+        - Which elements does the shown window contain?
+        - Via which objects and layout managers are these arranged?
       ]
 
       #figure(image("../assets/img/slides_7/2024_10_25_window_frame_groups_rev01.png"))
@@ -463,20 +463,20 @@
 
       JPanel panel1 = new JPanel();
       panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
-      panel1.add(new JButton("Rechts"));
-      panel1.add(new JButton("oben"));
+      panel1.add(new JButton("Right"));
+      panel1.add(new JButton("top"));
 
       JPanel panel2 = new JPanel();
       panel2.setLayout(new BoxLayout(panel2, BoxLayout.X_AXIS));
-      panel2.add(new JButton("Links"));
-      panel2.add(new JButton("unten"));
+      panel2.add(new JButton("Left"));
+      panel2.add(new JButton("bottom"));
 
       Container contentPane = frame.getContentPane();
       contentPane.setLayout(new GridLayout(2, 2));
-      contentPane.add(new JLabel("Links oben", JLabel.CENTER));
+      contentPane.add(new JLabel("Top left", JLabel.CENTER));
       contentPane.add(panel1);
       contentPane.add(panel2);
-      contentPane.add(new JLabel("Rechts unten", JLabel.CENTER));
+      contentPane.add(new JLabel("Bottom right", JLabel.CENTER));
 
       frame.pack();
       frame.setVisible(true);
@@ -495,18 +495,18 @@
 #slide[
   #text(size: 18pt)[
     #let body = [
-      - Klasse JPanel als Zeichenfläche:
-        - Auf Panel lässt sich frei zeichnen.
+      - Class JPanel as drawing surface:
+        - Can draw freely on panel.
 
-      - Zeichenmethode:
-        - System führt zum Zeichnen Methode paintComponent() aus
-        - Wird automatisch bei Änderungen am Fenster aufgerufen
-        - Methode erhält Parameter vom Typ Graphics (Grafik-Kontext)
-        - Graphics besitzt Methoden zum Zeichnen (Texte, Linien, Rechtecke, Bögen, …)
+      - Drawing method:
+        - System executes paintComponent() method for drawing
+        - Is automatically called when window changes
+        - Method receives parameter of type Graphics (graphics context)
+        - Graphics has methods for drawing (texts, lines, rectangles, arcs, ...)
 
-      - Explizites Neuzeichnen:
-        - Neuzeichnen kann auch über Methode repaint() veranlasst werden.
-        - Diese ruft intern paintComponent() auf.
+      - Explicit redrawing:
+        - Redrawing can also be initiated via repaint() method.
+        - This internally calls paintComponent().
     ]
     #let fig = figure(image("../assets/img/slides_7/2024_10_25_window_frame_jpanel_uml_rev01.png"))
     #grid(
@@ -520,13 +520,13 @@
 #slide[
   #text(size: 18pt)[
     #let body = [
-      - Okay, es gibt also JPanel mit der Methode paintComponent().
-      - Es wird gezeichnet, was in paintComponent() steht.
-      - Aber wie kann man Zeichenbefehle zu dieser Methode hinzufügen?!
+      - Okay, so there is JPanel with the paintComponent() method.
+      - What is drawn is what is in paintComponent().
+      - But how can you add drawing commands to this method?!
 
-      - Lösung:
-        - Leiten Sie von JPanel ab und überlagern Sie paintComponent().
-        - Hierdurch: Panel-Klasse mit frei definierbarer Zeichenmethode
+      - Solution:
+        - Derive from JPanel and override paintComponent().
+        - This results in: Panel class with freely definable drawing method
 
       ```java
       	class MyPaintPanel extends JPanel {
@@ -585,7 +585,7 @@
 #slide[
   #text(size: 16pt)[
     #let body = [
-      - Einbinden in graphische Oberfläche:
+      - Integration into graphical interface:
 
       ```java
       public class PaintPanel {
@@ -617,35 +617,35 @@
 #slide[
   #text(size: 18pt)[
     #task[
-      - Entdecken Sie Ihre künstlerische Ader!
-      - Erstellen Sie ein Programm, das eine Ampel anzeigt.
+      - Discover your artistic streak!
+      - Create a program that displays a traffic light.
     ]
     #figure(image("../assets/img/slides_7/2024_10_25_window_frame_ampel_rev01.png"))
   ]
 ]
 
-= Buttons & Ereignisse
-== Aufgabe
+= Buttons & Events
+== Task
 
 #slide[
   #text(size: 18pt)[
 
-    - Unser Ziel ist folgende Anwendung:
-      - Fenster mit drei Buttons und einem Panel
-      - Auswahl der Buttons färben das Panel rot, blau bzw. in zufälliger Farbe
+    - Our goal is the following application:
+      - Window with three buttons and one panel
+      - Selection of buttons color the panel red, blue or in random color
 
-    #figure(image("../assets/img/slides_7/2024_10_29_button_color_rev01.png"), caption: [Buttons, die eine Farbe ändern])
+    #figure(image("../assets/img/slides_7/2024_10_29_button_color_rev01.png"), caption: [Buttons that change a color])
 
-    - Wir benötigen hierzu:
-      - Buttons als Elemente
-      - Möglichkeit auf gedrückten Button zu reagieren
+    - We need for this:
+      - Buttons as elements
+      - Possibility to react to pressed button
   ]
 ]
 
 #slide[
   #text(size: 18pt)[
     #task[
-      - Erzeugen Sie zunächst die GUI mit ihren Elementen.
+      - First create the GUI with its elements.
     ]
 
     #figure(image("../assets/img/slides_7/2024_10_29_button_color_explain_rev01.png"))
@@ -654,7 +654,7 @@
 
 #slide[
   #text(size: 13pt)[
-    - Erzeugen von Elementen der Klasse JButton:
+    - Creating elements of class JButton:
     ```java
     	public class ButtonEvent {
     	    public ButtonEvent() {
@@ -682,25 +682,25 @@
 
 #slide[
   #text(size: 18pt)[
-    - Wie können wir aber darauf reagieren, wenn ein Button gedrückt wird?
+    - But how can we react when a button is pressed?
 
-    - Beteiligte Objekte:
-      - Button mit Zustand (z.B. „nicht gedrückt“, „gedrückt“)
-      - Objekt, das bei Änderungen des Buttons benachrichtigt werden soll
-    - Prinzipielles Vorgehen:
-      - Registrierung:
-        - Objekt „sagt dem Button“, dass es bei Änderungen benachrichtigt werden möchte
-        - Button merkt sich (z. B. in Liste), welche Objekte benachrichtigt werden sollen
-      - Button wird gedrückt:
-        - Button benachrichtigt Objekte in der Liste, dass sein Zustand geändert wurde
+    - Involved objects:
+      - Button with state (e.g. "not pressed", "pressed")
+      - Object that should be notified when the button changes
+    - Basic approach:
+      - Registration:
+        - Object "tells the button" that it wants to be notified of changes
+        - Button remembers (e.g. in list) which objects should be notified
+      - Button is pressed:
+        - Button notifies objects in the list that its state has changed
   ]
 ]
 
 #slide[
   #text(size: 18pt)[
-    - Mögliche Umsetzung:
-      - Button: Methode register(), um Beobachter zur Liste hinzuzufügen
-      - Observer: Methode notify(), die Button-Objekt zur Benachrichtigung aufruft
+    - Possible implementation:
+      - Button: Method register() to add observers to the list
+      - Observer: Method notify() that button object calls for notification
 
     #figure(image("../assets/img/slides_7/2024_10_29_button_event_diagram_rev01.png", height: 70%))
   ]
@@ -710,25 +710,25 @@
 #slide[
   #text(size: 18pt)[
 
-    - Aaaaaaaber:
-      - JButton kann von uns erstellte Klassen nicht kennen.
-      - Kann daher auch nicht wissen, ob wir Methode notify() implementiert haben.
-    - Lösung:
-      - Beobachter implementieren ein definiertes Interface
-      - Button braucht die Klasse des Beobachters nicht kennen, nur das Interface
+    - Buuuuuut:
+      - JButton cannot know classes we created.
+      - Therefore cannot know if we implemented method notify().
+    - Solution:
+      - Observers implement a defined interface
+      - Button doesn't need to know the observer's class, only the interface
 
     #figure(
       image("../assets/img/slides_7/2024_10_29_observer_interface_rev01.png", height: 50%),
-      caption: [Interface `Oberserver`],
+      caption: [Interface `Observer`],
     )
   ]
 ]
 
 #slide[
   #text(size: 18pt)[
-    - Ansatz wird auch Observer pattern genannt
-    - Es können sich mehr als ein Beobachter registrieren.
-    - In Swing Namen des Interfaces und der Methoden anders gewählt:
+    - Approach is also called Observer pattern
+    - More than one observer can register.
+    - In Swing, names of interface and methods chosen differently:
 
     #figure(image("../assets/img/slides_7/2024_10_29_actionlistener_rev01.png"))
   ]
@@ -737,8 +737,8 @@
 #slide[
   #text(size: 18pt)[
     #task[
-      - Ausführbare Klasse implementiert Interface ActionListener
-      - Objekt der ausführbaren Klasse registriert sich bei den Buttons
+      - Executable class implements interface ActionListener
+      - Object of executable class registers itself with the buttons
     ]
 
     #figure(image("../assets/img/slides_7/2024_10_29_button_color_noexplain_rev01.png"))
@@ -748,7 +748,7 @@
 #slide[
   #text(size: 14pt)[
 
-    - Auszug aus Quelltext:
+    - Excerpt from source code:
     ```java
     	public class ButtonEvent implements ActionListener {
     	    private JPanel panel;
@@ -775,8 +775,8 @@
 
 #slide[
   #text(size: 15pt)[
-    - Reaktion auf Ereignisse (Auszug aus Quelltext):
-      - Button über Methode `getSource()` des Ereignisobjektes identifiziert
+    - Reaction to events (excerpt from source code):
+      - Button identified via `getSource()` method of event object
     ```java
     	public class ButtonEvent implements ActionListener {
     	    public void actionPerformed(ActionEvent event) {
@@ -800,14 +800,14 @@
 
 #slide[
   #text(size: 14pt)[
-    - Alternativ (in actionPerformed() herausfinden, welcher Button gedrückt wurde):
-    - Buttons mit einem String verbinden, z.B.:
+    - Alternatively (find out in actionPerformed() which button was pressed):
+    - Connect buttons with a string, e.g.:
     ```java
     	buttonRed.setActionCommand("Change color to red");
     	buttonBlue.setActionCommand("Change color to blue");
     	buttonRandom.setActionCommand("Change to random color");
     ```
-    - String in Methode `actionPerformed()` abfragen und nutzen:
+    - Query and use string in `actionPerformed()` method:
     ```java
     	public void actionPerformed(ActionEvent event) {
     	    String actionCommand = event.getActionCommand();
@@ -826,7 +826,7 @@
 
 #slide[
   #text(size: 14pt)[
-    - Neuen `ActionListener` mit Methode `actionPerformed()` inline definieren
+    - Define new `ActionListener` with `actionPerformed()` method inline
 
     ```java
     public class ButtonEvent2 {
@@ -853,22 +853,22 @@
 ]
 #slide[
   #text(size: 18pt)[
-    - Alle Swing-Komponenten können folgende Beobachter registrieren:
-      - Component listener: Änderungen der Größe, Position oder Sichtbarkeit
-      - Focus listener: Komponente erhält oder verliert den Tastatur-Fokus
-      - Key listener: Tastatur-Ereignisse (nur wenn die Komponente den Keyboard-Fokus hat)
-      - Mouse listener: Maus-Klicks, Drücken, Loslassen und Mausbewegungen
-      - Mouse motion listener: Änderungen der Cursor-Position über der Komponente
-      - Mouse wheel listener: Änderung des Mausrads über der Komponente
+    - All Swing components can register the following observers:
+      - Component listener: Changes in size, position or visibility
+      - Focus listener: Component gains or loses keyboard focus
+      - Key listener: Keyboard events (only when component has keyboard focus)
+      - Mouse listener: Mouse clicks, pressing, releasing and mouse movements
+      - Mouse motion listener: Changes in cursor position over the component
+      - Mouse wheel listener: Changes of mouse wheel over the component
   ]
 ]
 
-= Einfache Dialoge
-== Einfache Dialoge
+= Simple Dialogs
+== Simple Dialogs
 #slide[
   #text(size: 13pt)[
     #let body = [
-      - Beispiele für Dialoge über JOptionPane:
+      - Examples for dialogs via JOptionPane:
       ```java
       public class MessageDialogs {
           public MessageDialogs() {
@@ -904,17 +904,17 @@
   ]
 ]
 
-= Anregungen
-== Ideen zum Experimentieren
+= Suggestions
+== Ideas for Experimenting
 
 #slide[
   #text(size: 18pt)[
-    - Einige weitere GUI-Elemente:
-      - Textfelder über `JTextField`, `JPasswordField` und `JTextArea`
-      - Auswahlboxen über `JCheckBox`
-      - Listen über `JComboBox` und `JList`
-      - Tooltips über Methode `setToolTipText()`
-      - Datei auswählen über `JFileChooser`
+    - Some additional GUI elements:
+      - Text fields via `JTextField`, `JPasswordField` and `JTextArea`
+      - Selection boxes via `JCheckBox`
+      - Lists via `JComboBox` and `JList`
+      - Tooltips via method `setToolTipText()`
+      - File selection via `JFileChooser`
   ]
 ]
 

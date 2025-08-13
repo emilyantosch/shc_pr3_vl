@@ -74,60 +74,60 @@
 
 == Where Are We Currently?
 
-- In der letzten Vorlesung ging es um Klassenbibliotheken
-- Sie können nun
-  - einfache Klassenbibliotheken verwenden, um Strings oder Arrays zu manipulieren
-  - aus einem Array alle Items über eine `foreach`-Schleife auslesen
-  - mithilfe von Wrapperklassen Typumwandlungen durchführen,
-  - einfache mathematische Rechnung mithilfe der `Math`-Klasse ausführen.
-- Heute geht es weiter mit der *Vererbung*.
+- The last lecture was about class libraries
+- You can now
+  - use simple class libraries to manipulate strings or arrays
+  - read all items from an array via a `foreach` loop
+  - perform type conversions using wrapper classes,
+  - perform simple mathematical calculations using the `Math` class.
+- Today we continue with *Inheritance*.
 
 #slide[
-  1. Imperative Konzepte
-  2. Klassen und Objekte
-  3. Klassenbibliothek
-  4. *Vererbung*
-  5. Schnittstellen
-  6. Graphische Oberflächen
-  7. Ausnahmebehandlung
-  8. Eingaben und Ausgaben
+  1. Imperative Concepts
+  2. Classes and Objects
+  3. Class Library
+  4. *Inheritance*
+  5. Interfaces
+  6. Graphical User Interfaces
+  7. Exception Handling
+  8. Input and Output
   9. Multithreading (Parallel Computing)
 ]
 
 == The Goal of This Chapter
 
-- Sie erzeugen neue Datentypen, indem Sie bestehende Klassen um zusätzliche
-  Eigenschaften erweitern, um beispielsweise duplizierten Quelltext zu vermeiden.
-- Sie verwenden Sichtbarkeits-Modifizierer, um die Attribute einer Klasse vor
-  direktem Zugriff von außen zu schützen.
+- You create new data types by extending existing classes with additional
+  properties, for example to avoid duplicated source code.
+- You use visibility modifiers to protect the attributes of a class from
+  direct external access.
 
 = Inheritance
 == Inheritance
 #slide[
-  - Klasse übernimmt („erbt“) Variablen und Methoden einer vorhandener Klassen
-  - Ziel: Wiederverwendung existierender Klassen
+  - Class takes over ("inherits") variables and methods of an existing class
+  - Goal: Reuse of existing classes
 
-  - Beispiel und UML-Notation:
-    - Klasse A ist vorhanden
-    - Klasse B wird erstellt und erbt von A
+  - Example and UML notation:
+    - Class A exists
+    - Class B is created and inherits from A
 
-  - Begriffe:
-    - Klasse A: Superklasse (Basisklasse, Oberklasse)
-    - Klasse B: Subklasse (abgeleitete Klasse, Unterklasse)
-    - Vererbung: Ableitung, engl.: inheritance
+  - Terms:
+    - Class A: Superclass (base class, parent class)
+    - Class B: Subclass (derived class, child class)
+    - Inheritance: Derivation, English: inheritance
 
     #figure(
       image("../assets/img/slides_5/2024_10_20_vererbung_AB_rev01.png"),
-      caption: [Einfaches Beispiel für Vererbung],
+      caption: [Simple example of inheritance],
     )
 ]
 
 #slide[
-  - Ableitung der Basisklasse mittels `extends`:
+  - Derivation from base class using `extends`:
   ```java
-  class Klassenname extends Basisklasse {
-      Attribute
-      Methoden
+  class ClassName extends BaseClass {
+      Attributes
+      Methods
       }
   ```
   #example[
@@ -146,10 +146,10 @@
 #slide[
   #text(size: 20pt)[
     #task[
-      - Erstellen Sie folgende Klassen:
-        - Person: Objekte beinhalten den Namen
-        - Pilot: Objekte beinhalten den Namen und die bisherigen Flugstunden
-        - Ausführbare Klasse, die ein Objekt Pilot erzeugt und den Namen ausgibt
+      - Create the following classes:
+        - Person: Objects contain the name
+        - Pilot: Objects contain the name and previous flight hours
+        - Executable class that creates a Pilot object and outputs the name
     ]
   ]
   #figure(
@@ -157,7 +157,7 @@
       "../assets/img/slides_5/2024_10_20_vererbung_person_pilot_rev01.png",
       height: 40%,
     ),
-    caption: [Pilot erbt von Person],
+    caption: [Pilot inherits from Person],
   )
 ]
 
@@ -193,21 +193,21 @@
       image("../assets/img/slides_5/2024_10_20_vererbung_uml_person_pilot_rev01.png"),
       image("../assets/img/slides_5/2024_10_20_vererbung_pilot_objekt_rev01.png"),
     ),
-    caption: [Vererbung von Attributen],
+    caption: [Inheritance of attributes],
   )
 ]
 
 #slide[
   #let body = [
-    - Klasse B kann neue Variablen und Methoden hinzufügen
+    - Class B can add new variables and methods
 
-    - Begriffe:
-      - Spezialisierung: Klasse B ist spezieller als Klasse A
-      - Generalisierung: Klasse A ist allgemeiner als Klasse B
+    - Terms:
+      - Specialization: Class B is more specialized than Class A
+      - Generalization: Class A is more general than Class B
 
-    - Beispiel:
-      - Klasse Pilot hat von Person geerbt und flightHours hinzugefügt
-      - Ein Pilot ist eine Person, d.h. Person ist allgemeiner als Pilot.
+    - Example:
+      - Class Pilot has inherited from Person and added flightHours
+      - A Pilot is a Person, i.e. Person is more general than Pilot.
   ]
   #let fig = figure(
     grid(
@@ -236,26 +236,26 @@
 ]
 
 #slide[
-  - Datenkapselung (information hiding): Variablen vor Zugriff von außen geschützt
-  - Einschränkungen des Zugriffs auf Klassen, Variablen und Methoden durch
-    Modifizierer
-  - Gedankenbild: „Sichtbarkeit“ (d.h. ist Element sichtbar bzw. bekannt?)
+  - Data encapsulation (information hiding): Variables protected from external access
+  - Restrictions on access to classes, variables and methods through
+    modifiers
+  - Mental model: "Visibility" (i.e. is element visible or known?)
 
     #figure(
       image("../assets/img/slides_5/2024_10_20_klassen_modifier_rev01.png"),
-      caption: [Modifier für Klassen, Methoden und Attribute],
+      caption: [Modifiers for classes, methods and attributes],
     )
-    #question[Ist `private` als Modifier für Konstruktoren erlaubt?]
+    #question[Is `private` allowed as a modifier for constructors?]
 ]
 
 #slide[
   #let body = [
-    - Klasse B erbt alle sichtbaren Variablen und Methoden der Klasse A
-    - Klasse B besitzt Variablen und Methoden von A und kann diese verwenden (so als
-      ob diese in Klasse B definiert worden wären)
+    - Class B inherits all visible variables and methods of Class A
+    - Class B possesses variables and methods from A and can use them (as if
+      they were defined in Class B)
 
-    - Beispiel:
-      - Objekt von Klasse Pilot nutzt Variable name der Basisklasse Person
+    - Example:
+      - Object of Class Pilot uses variable name from base class Person
   ]
   #let fig = figure(
     grid(
@@ -288,38 +288,36 @@
 ]
 #slide[
   #question[
-    - Was meinen Sie, welche Bestandteile einer Klasse werden nicht vererbt?
+    - What do you think, which components of a class are not inherited?
   ]
 
-  - Nicht an abgeleitete Klasse weitergegeben:
-    - Konstruktoren und Destruktoren
-    - Klassenvariablen und Klassenmethoden (Modifizierer static)
-    - Private Variablen und Methoden (Modifizierer private)
+  - Not passed to derived class:
+    - Constructors and destructors
+    - Class variables and class methods (modifier static)
+    - Private variables and methods (modifier private)
 ]
 
 #slide[
-  - Hinweise:
-    - Statische Elemente nie vererbt, da an eine Klasse und nicht an konkretes Objekt
-      gebunden
-    - Private Elemente sind in Subklasse vorhanden, sie kann aber nicht direkt darauf
-      zugreifen
+  - Notes:
+    - Static elements never inherited, as they are bound to a class and not to a concrete object
+    - Private elements are present in subclass, but it cannot directly access them
 ]
 
 #slide[
-  - Subklassen können weitervererbt werden.
-  - Von einer Klasse können beliebig viele Subklassen abgeleitet werden.
-  - Das Erben von mehreren Basisklassen ist hingegen nicht möglich
-    (Mehrfachvererbung)
+  - Subclasses can be further inherited.
+  - Any number of subclasses can be derived from one class.
+  - However, inheriting from multiple base classes is not possible
+    (multiple inheritance)
 
     #figure(
       image("../assets/img/slides_5/2024_10_20_vererbung_strukturen_rev01.png", height: 50%),
-      caption: [Mögliche Strukturen zur Vererbung],
+      caption: [Possible structures for inheritance],
     )
 ]
 
 #slide[
   #question[
-    - Was meinen Sie, welche Basisklasse besitzt Person?
+    - What do you think, which base class does Person have?
   ]
   #text(size: 20pt)[
     ```java
@@ -328,40 +326,40 @@
       }
     ```
   ]
-  - Sie konnten es bisher nicht wissen:
-    - In Java ist eine Klasse Object definiert.
-    - Keine Basisklasse angegeben. Implizit von Object abgeleitet (extends Object)
+  - You couldn't have known this before:
+    - In Java a class Object is defined.
+    - No base class specified. Implicitly derived from Object (extends Object)
 ]
 
 #slide[
   #figure(
     image("../assets/img/slides_5/2024_10_20_vererbung_uml_person_pilot_rev01.png"),
-    caption: [Object als Superklasse von Person],
+    caption: [Object as superclass of Person],
   )
 ]
 
 #slide[
-  - Wichtige Konsequenz:
-    - Object ist Basisklasse jeder Vererbungshierarchie
+  - Important consequence:
+    - Object is the base class of every inheritance hierarchy
     #figure(
       image("../assets/img/slides_5/2024_10_20_vererbung_object_klasse_rev01.png"),
-      caption: [Object als Teil jeder Vererbung],
+      caption: [Object as part of every inheritance],
     )
 ]
 
 #slide[
   #question[
-    - Was meinen Sie?
-      - Wie viele Klassen besitzen keine Basisklasse?
-      - Wie viele Klassen besitzen mehr als eine direkte Basisklasse?
+    - What do you think?
+      - How many classes have no base class?
+      - How many classes have more than one direct base class?
   ]
 ]
 
 #slide[
 
-  - Wichtige Konsequenz:
-  - Jede Klasse erbt die in Object definierten Methoden (z. B. toString())
-  - Beispiel:
+  - Important consequence:
+  - Every class inherits the methods defined in Object (e.g. toString())
+  - Example:
     #text(size: 16pt)[
       ```java
       public class Person {
@@ -384,9 +382,9 @@
   #text(size: 20pt)[
 
     #task[
-      - Implementieren Sie Klassen für geometrische Objekte Kreis, Rechteck und Quadrat.
-      - Verwenden Sie zunächst nur öffentliche Variablen.
-      - Implementieren Sie zunächst keine Methoden.
+      - Implement classes for geometric objects Circle, Rectangle and Square.
+      - Use only public variables for now.
+      - Don't implement any methods for now.
     ]
   ]
   #figure(
@@ -394,7 +392,7 @@
       "../assets/img/slides_5/2024_10_20_vererbung_geometrische_Formen_rev01.png",
       height: 40%,
     ),
-    caption: [Geometrische Formen als Objekte],
+    caption: [Geometric shapes as objects],
   )
 ]
 
@@ -416,7 +414,7 @@
           public double width;
       }
     ```
-    #task[Erstellen Sie nun eine gemeinsame Basisklasse!]
+    #task[Now create a common base class!]
   ]
 ]
 
@@ -453,10 +451,10 @@
 
 #slide[
   #question[
-    - Welche Variablen sind in den jeweiligen Klassen deklariert?
+    - Which variables are declared in the respective classes?
   ]
   #task[
-    - Ergänzen Sie für die Klasse Circle einen Konstruktor!
+    - Add a constructor for the Circle class!
   ]
 ]
 
@@ -478,9 +476,8 @@
       }
     ```
     #memo[
-      - Beachte: Variablen x und y der Basisklasse werden wie „eigene“ Variablen
-        verwendet
-      - Verstecken Sie die Variablen der Klasse Shape durch den Modifizierer private.
+      - Note: Variables x and y of the base class are used like "own" variables
+      - Hide the variables of the Shape class through the private modifier.
 
     ]
 
@@ -506,8 +503,8 @@
       }
     ```
     #error[
-      - Die Variablen x und y der Basisklasse sind in Circle nicht sichtbar.
-      - Fehler: Im Konstruktor der Klasse Circle sind x und y unbekannt.
+      - The variables x and y of the base class are not visible in Circle.
+      - Error: In the constructor of class Circle, x and y are unknown.
     ]
   ]
 ]
@@ -521,7 +518,7 @@
           public void setX(double x) {
               this.x = x;
           }
-          // Zusätzlich Getter sowie entsprechende Methoden für y ...
+          // Additionally getter and corresponding methods for y ...
       }
 
       public class Circle extends Shape {
@@ -537,29 +534,28 @@
   ]
 ]
 
-= Instanziierung von Objekten
-== Erzeugung von Objekten
+= Object Instantiation
+== Object Creation
 
 #slide[
   #let fig = figure(image("../assets/img/slides_5/2024_10_20_vererbung_ABC_rev01.png"))
 
   #let body = [
     #text(size: 18pt)[
-      - Klasse C enthält eigene Methoden sowie Methoden der Klassen A und B.
-      - Klasse C enthält eigene Variablen sowie Variablen der Klassen A und B.
+      - Class C contains its own methods as well as methods from classes A and B.
+      - Class C contains its own variables as well as variables from classes A and B.
       #question[
-        - Was meinen Sie?
-          - Wie werden Methoden eines neuen Objektes der Klasse C erzeugt?
-          - Wie werden Variablen eines Objektes der Klasse C erzeugt und initialisiert?
+        - What do you think?
+          - How are methods of a new object of class C created?
+          - How are variables of an object of class C created and initialized?
       ]
-      - Methoden:
-        - Werden nicht für jedes Objekt neu erzeugt, sondern sind für Klasse definiert
+      - Methods:
+        - Are not created anew for each object, but are defined for the class
 
-      - Variablen:
-        - An Basisklasse der Vererbungshierarchie beginnen
-        - In jedem Schritt Variablen der entsprechenden (Basis-)Klasse erzeugen und
-          initialisieren
-        - Initialisierung über Konstruktor der jeweiligen (Basis-)Klasse
+      - Variables:
+        - Start at the base class of the inheritance hierarchy
+        - In each step, create and initialize variables of the corresponding (base) class
+        - Initialization via constructor of the respective (base) class
 
     ]
 
@@ -574,34 +570,34 @@
 
 #slide[
 
-  - Variablen für Objekte der Klasse C:
-    - Objekt enthält die in der Klasse C deklarierten Variablen
-    - Enthält zusätzlich von Klasse B geerbte Variablen
-    - Diese enthalten die von Klasse A geerbten Variablen
+  - Variables for objects of class C:
+    - Object contains the variables declared in class C
+    - Additionally contains variables inherited from class B
+    - These contain the variables inherited from class A
 
     #figure(
       image("../assets/img/slides_5/2024_10_20_vererbung_ABC_aufbau_rev01.png"),
-      caption: [Zusammensetzung des Objekts der Klasse C],
+      caption: [Composition of the object of class C],
     )
 ]
 
 #slide[
-  - Neues Objekt der Klasse C:
-    - Vererbungshierarchie nach oben durchlaufen:
-    - Klasse C hat Basisklasse B: Aufruf, um Variablen von B zu erzeugen
-    - Klasse B hat Basisklasse A: Aufruf, um Variablen von A zu erzeugen
+  - New object of class C:
+    - Traverse inheritance hierarchy upward:
+    - Class C has base class B: Call to create variables from B
+    - Class B has base class A: Call to create variables from A
 
-  - Variablen „von innen nach außen“ erzeugen und initialisieren
-    (Konstruktorverkettung):
-    - Variablen von A erzeugen und über Konstruktor A() initialisieren
-    - Variablen von B erzeugen und über Konstruktor B() initialisieren
-    - Variablen von C erzeugen und über Konstruktor C() initialisieren
+  - Create and initialize variables "from inside out"
+    (constructor chaining):
+    - Create variables from A and initialize via constructor A()
+    - Create variables from B and initialize via constructor B()
+    - Create variables from C and initialize via constructor C()
 ]
 
 #slide[
   #figure(
     image("../assets/img/slides_5/2024_10_20_vererbung_variablen_speicher_rev01.png"),
-    caption: [Variablen der Klasse C im Speicher],
+    caption: [Variables of class C in memory],
   )
 ]
 
@@ -609,21 +605,21 @@
   #let body = [
 
     #text(size: 17pt)[
-      - Konstruktor der Basisklasse:
-        - Aufruf über super() als erste Anweisung im Konstruktor der abgeleiteten Klasse
-        - Fehlt super(…) wird der Standardkonstruktor der Basisklasse aufgerufen.
+      - Constructor of the base class:
+        - Call via super() as first statement in constructor of derived class
+        - If super(...) is missing, the default constructor of the base class is called.
 
       ```java
         public class A {
             double a;
-            // Standardkonstruktor wird automatisch erzeugt
+            // Default constructor is automatically generated
         }
 
         public class B extends A {
             double b;
 
             public B(double b) {
-                super();    // Aufruf Standardkonstruktor Klasse A
+                super();    // Call default constructor of class A
                 this.b = b;
             }
         }
@@ -640,7 +636,7 @@
 
 #slide[
 
-  - Sie erinnern sich?
+  - Do you remember?
     #text(size: 18pt)[
       ```java
         public class Shape {
@@ -659,8 +655,8 @@
       ```
     ]
     #task[
-      - Die Variablen x und y sind in Circle unbekannt.
-      - Lösen Sie das Problem durch Ergänzen eines Konstruktors für die Basisklasse
+      - The variables x and y are unknown in Circle.
+      - Solve the problem by adding a constructor for the base class
         Shape.
     ]
 ]
@@ -682,7 +678,7 @@
         public double radius;
 
         public Circle(double x, double y, double radius) {
-            super(x, y);  // Passende Signatur zum Konstruktor der Basisklasse!
+            super(x, y);  // Matching signature to the constructor of the base class!
             this.radius = radius;
         }
     }
@@ -692,8 +688,8 @@
 
 #slide[
   #task[
-    - Schützen Sie alle Attribute durch den Modifizierer private.
-    - Erzeugen Sie gegebenenfalls geeignete Getter und Setter.
+    - Protect all attributes through the private modifier.
+    - Create appropriate getters and setters if necessary.
   ]
 
   #figure(
@@ -701,7 +697,7 @@
       "../assets/img/slides_5/2024_10_20_vererbung_uml_geom_formen_rev01.png",
       height: 40%,
     ),
-    caption: [Aufbau der Vererbung],
+    caption: [Structure of inheritance],
   )
 ]
 
@@ -728,14 +724,14 @@
   ]
 ]
 
-= Referenzieren über die Basisklasse
-== Referenz Basisklasse
+= Referencing via Base Class
+== Base Class Reference
 
 #slide[
   #let body = [
     #text(size: 16pt)[
 
-      - Betrachten wir folgende Vererbungslinie:
+      - Let's consider the following inheritance line:
       ```java
         public class Person {
             String name;
@@ -769,7 +765,7 @@
   #let body = [
     #text(size: 18pt)[
 
-      - Was meinen Sie zu folgendem Programm?
+      - What do you think about the following program?
 
         ```java
           public class ReferenceDemo {
@@ -784,8 +780,8 @@
         ```
 
         #memo[
-          Es gibt nur ein Objekt (mit Datentyp Pilot). Objekt wird über Variablen mit
-          anderen Datentypen als Pilot referenziert
+          There is only one object (with data type Pilot). Object is referenced via variables with
+          other data types than Pilot
         ]
 
     ]
@@ -802,27 +798,27 @@
 
 #slide[
 
-  - Klasse Pilot erbt von Klasse Person und erweitert diese
-  - Pilot beinhaltet Person („Pilot is a Person“) Als Person referenzierbar
-  - Objekt wird hierdurch nicht verändert (d.h. Objekt bleibt vom Typ Pilot)!
+  - Class Pilot inherits from class Person and extends it
+  - Pilot contains Person ("Pilot is a Person") Referenceable as Person
+  - Object is not changed by this (i.e. object remains of type Pilot)!
     #figure(
       image("../assets/img/slides_5/2024_10_20_vererbung_referenzen_rev01.png", height: 40%),
-      caption: [Referenzen auf ein Objekt mit Basisklasse],
+      caption: [References to an object with base class],
     )
 ]
 
 #slide[
 
-  - Allgemein:
-    - Objekte können wie Objekte ihrer Basisklassen behandelt werden.
-    - Objekte über Datentypen ihrer Basisklassen referenzierbar
-    - Referenzvariable kann nur auf Attribute und Methoden ihrer Klasse zugreifen
+  - In general:
+    - Objects can be treated like objects of their base classes.
+    - Objects referenceable via data types of their base classes
+    - Reference variable can only access attributes and methods of its class
 ]
 #slide[
   #text(size: 18pt)[
 
     #question[
-      - Welche Zugriffe auf Attribute sind zulässig und welche nicht?
+      - Which accesses to attributes are allowed and which are not?
     ]
     ```java
       public static void main(String[] args) {
@@ -838,14 +834,14 @@
     ```
   ]
 ]
-= Überlagern
-== Überlagern von Methoden
+= Overriding
+== Overriding Methods
 #slide[
 
   #let body = [
     #text(size: 16pt)[
-      - Klasse Person ist von Object abgeleitet und erbt daher toString() von Object und
-        definiert daher eine weitere toString()-Methode
+      - Class Person is derived from Object and therefore inherits toString() from Object and
+        therefore defines another toString() method
 
       ```java
         public class Person {
@@ -879,9 +875,9 @@
 
   #let body = [
     #text(size: 18pt)[
-      - Klasse Pilot:
-        - Von Person abgeleitet und erbt daher toString() von Person
-        - Definiert noch eine toString()-Methode
+      - Class Pilot:
+        - Derived from Person and therefore inherits toString() from Person
+        - Defines another toString() method
       ```java
         public class Pilot extends Person {
             private String airline;
@@ -911,7 +907,7 @@
 #slide[
   #text(size: 20pt)[
     #question[
-      Was wird ausgegeben?
+      What will be output?
     ]
     ```java
     public static void main(String[] args) {
@@ -929,14 +925,14 @@
 #slide[
   #let body = [
     #text(size: 18pt)[
-      - Ausgabe:
+      - Output:
         - `person`: Birgit Janssen
         - `person.toString()`: Birgit Janssen
         - `pilot.toString()`: Jan Birgerson (Winglet Airways)
 
         #memo[
-          - Jeweils Methode der entsprechenden Klasse, nicht der Superklasse(n), ausgeführt
-          - Begriff: Methode der Superklasse durch neu definierte Methoden überlagert
+          - Respective method of the corresponding class, not the superclass(es), executed
+          - Term: Method of the superclass overridden by newly defined methods
         ]
     ]
   ]
@@ -953,7 +949,7 @@
   #let body = [
     #text(size: 18pt)[
       #question[
-        - Was wird ausgegeben?
+        - What will be output?
       ]
       ```java
       public static void main(String[] args) {
@@ -966,7 +962,7 @@
       }
       ```
       #pause
-      - Ausgabe:
+      - Output:
         - `objectRef`: Jan Birgerson (Winglet Airways)
         - `personRef`: Jan Birgerson (Winglet Airways)
 
@@ -982,7 +978,7 @@
 ]
 #slide[
   #memo[
-    Methode der entsprechenden Klasse ausgeführt, selbst bei Referenz über Superklasse(n)
+    Method of the corresponding class executed, even when referenced via superclass(es)
   ]
 ]
 
@@ -990,11 +986,11 @@
   #let body = [
     #text(size: 14pt)[
 
-      - Zugriff auf überlagerte Methoden der Basisklasse über Referenz super
-      - Beispiel:
+      - Access to overridden methods of the base class via reference super
+      - Example:
       ```java
       	public class Pilot extends Person {
-      	    // Instanzvariable, Konstruktor, toString() ...
+      	    // Instance variable, constructor, toString() ...
 
       	    public String toStringOfSuperClass() {
       	        return super.toString();
@@ -1008,7 +1004,7 @@
       	}
       ```
       #pause
-      - Ausgabe:
+      - Output:
         - `Pilot.toString()`: Jan Birgerson (Winglet Airways)
         - `super.toString()`: Jan Birgerson
     ]
@@ -1028,23 +1024,23 @@
   #let body = [
     #text(size: 14pt)[
 
-      - Variablen mit Modifier final sind Konstanten.
-        - Wert kann nach erster Zuweisung nicht mehr geändert werden
+      - Variables with modifier final are constants.
+        - Value cannot be changed after first assignment
       #question[
-        - Was meinen Sie?
-          - Was bewirkt final für Klassen?
-          - Was bewirkt final für Methoden?
+        - What do you think?
+          - What does final do for classes?
+          - What does final do for methods?
       ]
       #pause
-      - Klassen:
-        - Klasse mit Modifier final kann nicht abgeleitet werden
-        - Beispiel: Klasse String
+      - Classes:
+        - Class with modifier final cannot be derived
+        - Example: String class
 
-      - Methoden:
-        - Methode mit Modifier final kann nicht in Subklasse überlagert werden
+      - Methods:
+        - Method with modifier final cannot be overridden in subclass
       #figure(
         image("../assets/img/slides_5/2024_10_20_vererbung_final_rev01.png"),
-        caption: [`final`-Schlüsselwort in der Vererbung],
+        caption: [`final` keyword in inheritance],
       )
     ]
   ]
@@ -1059,22 +1055,22 @@
 
 #slide[
 
-  - Überlagern von Methoden:
-    - Von der Basisklasse geerbte Methoden dürfen neu definiert werden.
-    - Begriffe: Überlagern (oder auch Überschreiben)
-    - Beim Aufruf wird die überlagernde Methode („neueste Version“) ausgeführt
-    - Aufruf der verdeckten Methode `name()` der Basisklasse über `super.name()`
-    - Modifier `final` unterbindet Überlagern in Subklassen
+  - Overriding methods:
+    - Methods inherited from the base class may be redefined.
+    - Terms: Overriding (or also overwriting)
+    - When called, the overriding method ("newest version") is executed
+    - Call the hidden method `name()` of the base class via `super.name()`
+    - Modifier `final` prevents overriding in subclasses
 
-  - Überlagern von Attributen:
-    - Abgeleitete Klasse kann auf gleiche Weise Variablen der Basisklasse überlagern
+  - Overriding attributes:
+    - Derived class can override variables of the base class in the same way
 ]
 
 #slide[
   #text(size: 18pt)[
     #question[
-      - Welche Methoden hat Jason, die Katze?
-      - Aus welchen Klassen stammt jeweils die Methoden-Definition?
+      - Which methods does Jason, the cat, have?
+      - From which classes does each method definition come?
     ]
     #figure(image("../assets/img/slides_5/2024_10_20_vererbung_katze_frage_rev01.png", height: 60%))
 
@@ -1083,8 +1079,8 @@
 #slide[
   #text(size: 18pt)[
     #question[
-      - Welche Methoden hat Jason, die Katze?
-      - Aus welchen Klassen stammt jeweils die Methoden-Definition?
+      - Which methods does Jason, the cat, have?
+      - From which classes does each method definition come?
     ]
     #figure(image("../assets/img/slides_5/2024_10_20_vererbung_katze_antwort_rev01.png", height: 60%))
 
@@ -1094,10 +1090,10 @@
 #slide[
   #text(size: 18pt)[
     #task[
-      - Ergänzen Sie Methoden `getArea()` zur Bestimmung der Fläche eines Objekts.
-      - Erstellen Sie folgendes ausführbares Programm:
-        - Speichert je ein Objekt `Circle`, `Rectangle` und `Square` in einer gemeinsamen Liste
-        - Bestimmt Summe der Flächeninhalte aus dieser Liste
+      - Add methods `getArea()` to determine the area of an object.
+      - Create the following executable program:
+        - Stores one object each `Circle`, `Rectangle` and `Square` in a common list
+        - Determines sum of areas from this list
     ]
 
   ]
@@ -1130,7 +1126,7 @@
 #slide[
   #text(size: 16pt)[
 
-    - Ausführbares Programm:
+    - Executable program:
     ```java
     	public static void main(String[] args) {
     	    ArrayList<Shape> shapes = new ArrayList<Shape>();
@@ -1146,9 +1142,9 @@
     	    System.out.println("Overall area of shapes = " + sumArea);
     	}
     ```
-    - Methode `getArea()` muss auch in `Shape` implementiert sein
-    - Wird allerdings nicht verwendet, sondern von Subklassen überlagert: Sehr unschön!
-    - Wir werden später eine elegantere Lösung kennenlernen.
+    - Method `getArea()` must also be implemented in `Shape`
+    - However, it is not used, but overridden by subclasses: Very ugly!
+    - We will learn a more elegant solution later.
 
   ]
 ]
@@ -1157,46 +1153,46 @@
 == Polymorphismus
 
 #slide[
-  - Die gute Nachricht:
-    - Nur ein neuer Begriff, ansonsten ist alles bereits bekannt
-    - Nein, wirklich. Ganz ehrlich. Echt wahr …
+  - The good news:
+    - Only a new term, otherwise everything is already known
+    - No, really. Honestly. Really true ...
 
-  - Polymorphismus:
-    - Wortlaut: „Vielgestaltigkeit“
-    - Methoden mit gleichem Namen können mehrere Gestalten annehmen.
-    - Sprich: Mehrere Implementierungen von Methoden mit gleichem Namen
-    - Typische Eigenschaft objektorientierter Sprachen
+  - Polymorphism:
+    - Literal meaning: "Many forms"
+    - Methods with the same name can take multiple forms.
+    - In other words: Multiple implementations of methods with the same name
+    - Typical characteristic of object-oriented languages
 
 ]
 
 #slide[
 
   #question[
-    - Wo ist uns das bereits begegnet?
+    - Where have we already encountered this?
   ]
   #pause
-  - Methoden gleichen Namens in derselben Klasse: Überladen
-  - Methoden gleichen Namens in Vererbungslinie: Überlagern (auch: Überschreiben)
+  - Methods with the same name in the same class: Overloading
+  - Methods with the same name in inheritance line: Overriding (also: Overwriting)
 ]
 
 #slide[
   #let left = [
     #text(size: 18pt)[
-      - Überladen (Overloading):
-        - Methoden in Klasse haben gleichen Namen
-        - Müssen unterschiedliche Signatur haben (d.h. unterschiedliche Parametertypen)
-        #figure(image("../assets/img/slides_5/2024_10_20_vererbung_mathfunctions_rev01.png"), caption: [Klasse MathFunctions])
+      - Overloading:
+        - Methods in class have the same name
+        - Must have different signatures (i.e. different parameter types)
+        #figure(image("../assets/img/slides_5/2024_10_20_vererbung_mathfunctions_rev01.png"), caption: [Class MathFunctions])
 
     ]
 
   ]
   #let right = [
     #text(size: 18pt)[
-      - Überlagern / Überschreiben (Overriding):
-        - Methode in Vererbungslinie haben gleichen Namen
-        - Müssen gleiche Signatur haben (d.h. gleichen Namen und Parametertypen)
+      - Overriding / Overwriting:
+        - Methods in inheritance line have the same name
+        - Must have the same signature (i.e. same name and parameter types)
 
-        #figure(image("../assets/img/slides_5/2024_10_20_vererbung_toString_rev01.png"), caption: [Vererbung von `toString()`])
+        #figure(image("../assets/img/slides_5/2024_10_20_vererbung_toString_rev01.png"), caption: [Inheritance of `toString()`])
 
     ]
   ]
@@ -1206,14 +1202,14 @@
     left, right,
   )
 ]
-= Vergleich von Objekten
+= Comparing Objects
 
-== Vergleichsoperator (==)
+== Comparison Operator (==)
 
 #slide[
   #question[
-    - Klasse Point beinhalte die Variablen x und y
-    - Was wird ausgegeben?
+    - Class Point contains the variables x and y
+    - What will be output?
 
   ]
   ```java
@@ -1226,7 +1222,7 @@
 
 #slide[
   #question[
-    - Und nun?
+    - And now?
   ]
   ```java
   	Point a = new Point(1, 2);
@@ -1251,9 +1247,9 @@
 
   #let body = [
     #text(size: 14pt)[
-      - Vergleichsoperator vergleicht, ob Variablen denselben Inhalt haben
-        - Inhalt ist jeweils Referenz auf ein Objekt
-        - Vergleich nur dann wahr (true), wenn Variablen dasselbe Objekt referenzieren
+      - Comparison operator compares whether variables have the same content
+        - Content is respectively a reference to an object
+        - Comparison only true when variables reference the same object
 
         #example[
           ```java
@@ -1264,12 +1260,12 @@
           ```
         ]
       #error[
-        - `a == b`: Verschiedene Objekte (mit gleichen Werten)
-        - `a == c`: Verschiedene Objekte (und Werte)
+        - `a == b`: Different objects (with same values)
+        - `a == c`: Different objects (and values)
       ]
 
       #success[
-        - `a == d`: Dasselbe Objekt: gleiche Referenz
+        - `a == d`: Same object: same reference
       ]
     ]
 
@@ -1287,26 +1283,26 @@
   #text(size: 22pt)[
     ```java
     	public boolean equals(Object obj) {
-    	    // Methodenrumpf
-    	    // Rückgabe eines Wertes vom Typ boolean
+    	    // Method body
+    	    // Return a value of type boolean
     	}
     ```
 
-    - Vergleich, ob alle Variablen zweier referenzierter Objekte gleiche Werte haben
-    - Methode ist bereits in Klasse Object definiert
+    - Comparison whether all variables of two referenced objects have the same values
+    - Method is already defined in class Object
 
-    - Überlagern in eigenen Klassen:
-      - Klasse Object kann nicht wissen, welchen Variablen Sie in Subklassen hinzufügen
-      - Methode daher gegebenenfalls überlagern, um hinzugefügte Attribute zu vergleichen
-      - In IntelliJ IDEA ist das bequem über das Generate-Menü möglich.
+    - Overriding in own classes:
+      - Class Object cannot know which variables you add in subclasses
+      - Therefore override method if necessary to compare added attributes
+      - In IntelliJ IDEA this is conveniently possible via the Generate menu.
   ]
 ]
 
 #slide[
   #text(size: 20pt)[
     #question[
-      - Gegeben sei Klasse Point mit x- und y-Koordinate
-      - Welches Ergebnis liefern die Vergleiche in der Tabelle?
+      - Given class Point with x and y coordinates
+      - What result do the comparisons in the table provide?
     ]
   ]
   #figure(image("../assets/img/slides_5/2024_10_20_vererbung_referenzen_frage_rev01.png", height: 60%))
@@ -1315,8 +1311,8 @@
 #slide[
   #text(size: 20pt)[
     #question[
-      - Gegeben sei Klasse Point mit x- und y-Koordinate
-      - Welches Ergebnis liefern die Vergleiche in der Tabelle?
+      - Given class Point with x and y coordinates
+      - What result do the comparisons in the table provide?
     ]
   ]
   #figure(image("../assets/img/slides_5/2024_10_20_vererbung_referenzen_antwort_rev01.png", height: 60%))
