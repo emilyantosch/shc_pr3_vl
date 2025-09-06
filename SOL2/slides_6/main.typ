@@ -1,7 +1,7 @@
 #import "@preview/touying:0.5.2": *
 #import themes.university: *
 
-#import "@preview/fletcher:0.5.1" as flechter: diagram, node, edge
+#import "@preview/fletcher:0.5.1" as flechter: diagram, edge, node
 #import "@preview/wrap-it:0.1.0": wrap-content
 
 #import "@preview/gentle-clues:1.0.0": *
@@ -113,7 +113,7 @@
   ]
   #pause
   #figure(
-    image("../assets/img/slides_6/2024_10_23_geometrische_form_ohneAbstrakt_rev01.png", height: 50%),
+    image("../assets/img/slides_6/20250813_inheritance_overriding_abstract_rev01.png", height: 45%),
     caption: [Overriding the method from Shape],
   )
 
@@ -148,7 +148,7 @@
   ]
   #let fig = [
     #align(center + horizon)[
-      #figure(image("../assets/img/slides_6/2024_10_23_abstrakte_klasse_rev01.png"))
+      #figure(image("../assets/img/slides_6/20250813_inheritance_overriding_abstract_italic_rev01.png"))
     ]
   ]
   #grid(
@@ -175,7 +175,7 @@
         	}
         ```
       ]
-      #let right = figure(image("../assets/img/slides_6/2024_10_23_abstrakte_methoden_rev01.png"))
+      #let right = figure(image("../assets/img/slides_6/20250813_inheritance_overriding_abstract_italic_rev01.png"))
       #grid(
         columns: (60%, 40%),
         gutter: 0.05em,
@@ -188,7 +188,13 @@
         - Instead specifies which methods subclasses must have
       ]
     ]
-    #grid(rows: (auto, 30%, auto), gutter: 2.5em, top, mid, bot)
+    #grid(
+      rows: (auto, 30%, auto),
+      gutter: 2.5em,
+      top,
+      mid,
+      bot,
+    )
   ]
 ]
 
@@ -278,10 +284,12 @@
 ]
 
 #slide[
-  #figure(
-    image("../assets/img/slides_6/2024_10_24_abstufung_klas_abst_inter_rev01.png"),
-    caption: [Gradation between Concrete, Abstract and Interface],
-  )
+  #align(center + horizon)[
+    #figure(
+      image("../assets/img/slides_6/20250813_interface_abstract_real_rev01.png"),
+      caption: [Gradient between Real, Abstract and Interface],
+    )
+  ]
 ]
 
 #slide[
@@ -400,7 +408,10 @@
     }
     ```
 
-    #figure(image("../assets/img/slides_6/2024_10_24_grayimage_interface_rev01.png", height: 50%), caption: [GrayImage-Beispiel])
+    #figure(
+      image("../assets/img/slides_6/2024_10_24_grayimage_interface_rev01.png", height: 50%),
+      caption: [GrayImage-Beispiel],
+    )
   ]
 ]
 
@@ -501,7 +512,23 @@
         - Implement interface in own class
         - Replace placeholder Type with own class name
         - Return value is interpreted as follows:
-        #figure(image("../assets/img/slides_6/2024_10_24_comparable_returnvalue_rev01.png"))
+      #text(size: 16pt)[
+        #align(center + horizon)[
+          #figure(
+            table(
+              columns: (auto, auto),
+              inset: 10pt,
+              align: left + horizon,
+              fill: (_, y) => if calc.odd(y) { green.lighten(90%) },
+              table.header([*Return Value*], [*Meaning*]),
+              [Negative], [`this < other`],
+              [Null], [`this == other`],
+              [Positive], [`this > other`],
+            ),
+            caption: [Formats and Flags],
+          )
+        ]
+      ]
     ]
 
     #let fig = figure(image("../assets/img/slides_6/2024_10_24_comparable_A_rev01.png"))

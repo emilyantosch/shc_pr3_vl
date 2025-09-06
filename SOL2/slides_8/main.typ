@@ -1,7 +1,7 @@
 #import "@preview/touying:0.5.2": *
 #import themes.university: *
 
-#import "@preview/fletcher:0.5.1" as flechter: diagram, node, edge
+#import "@preview/fletcher:0.5.1" as flechter: diagram, edge, node
 #import "@preview/wrap-it:0.1.0": wrap-content
 
 #import "@preview/gentle-clues:1.0.0": *
@@ -11,7 +11,7 @@
 
 #import "@preview/numbly:0.1.0": numbly
 
-#set text(lang: "de", font: "Roboto", size: 18pt)
+#set text(lang: "en", font: "Roboto", size: 18pt)
 #set heading(numbering: numbly("{1}.", default: "1.1"))
 
 #set align(left + top)
@@ -71,16 +71,16 @@
 #outline(depth: 1)
 
 = Introduction
-
 == Where are we now?
-
-- In the last lecture, we dealt with creating graphical
-  user interfaces
-- You can now
-  - create windows in which other elements can live,
-  - arrange elements using layouts and panels
-  - and create graphics directly in Java.
-- Today we continue with *Exception Handling*.
+#slide[
+  - In the last lecture, we dealt with creating graphical
+    user interfaces
+  - You can now
+    - create windows in which other elements can live,
+    - arrange elements using layouts and panels
+    - and create graphics directly in Java.
+  - Today we continue with *Exception Handling*.
+]
 
 #slide[
   1. Imperative Konzepte
@@ -95,10 +95,10 @@
 ]
 
 == The goal of this chapter
-- You handle exceptions and errors that occur during program execution to
-  establish an orderly program flow in exceptional situations.
-- You define your own exception classes adapted to the needs of your specific
-  application.
+#slide[
+  - You handle exceptions and errors that occur during program execution to establish an orderly program flow in exceptional situations.
+  - You define your own exception classes adapted to the needs of your specific application.
+]
 
 = Exception Handling
 == Introductory Example
@@ -155,7 +155,7 @@
     - Exceptions and errors are represented by objects of special classes
     - Base class of all exception classes is Throwable
 
-    #figure(image("../assets/img/slides_8/2024_11_04_throwable_rev01.png"))
+    #figure(image("../assets/img/slides_8/20250813_exception_error_rev01.png"))
 
     - One distinguishes:
       - Exception: Handleable, program can be continued
@@ -202,20 +202,10 @@
     2. Catching an exception:
       - Programmer can catch and handle the exception
 
-    #figure(image("../assets/img/slides_8/2024_11_04_programmfluss_throwable_rev01.png", height: 50%))
+    #figure(image("../assets/img/slides_8/20250813_exception_error_handling_rev01.png", height: 65%))
 
   ]
 ]
-
-#slide[
-  #text(size: 18pt)[
-    - If no exception handling is programmed: program is terminated
-
-      #figure(image("../assets/img/slides_8/2024_11_04_programmfluss_noexceptionhandling_rev01.png"))
-
-  ]
-]
-
 = Throwing exceptions
 == Throwing exceptions
 
@@ -753,7 +743,7 @@
     - This applies to all exception types (i.e. Throwable and derived from it) except for:
       - Class RuntimeException
       - Classes derived (directly or indirectly) from RuntimeException
-        #figure(image("../assets/img/slides_8/2024_11_05_vererbung_runtimeexception_rev01.png"))
+        #figure(image("../assets/img/slides_8/20250813_exception_error_runtime_rev01.png", height: 78%))
   ]
 ]
 

@@ -1,7 +1,7 @@
 #import "@preview/touying:0.5.2": *
 #import themes.university: *
 
-#import "@preview/fletcher:0.5.1" as flechter: diagram, node, edge
+#import "@preview/fletcher:0.5.1" as flechter: diagram, edge, node
 #import "@preview/wrap-it:0.1.0": wrap-content
 
 #import "@preview/gentle-clues:1.0.0": *
@@ -74,22 +74,21 @@
 
 == Where are we now?
 
-- In the last lecture, we dealt with creating graphical
-  user interfaces
+- In the last lecture, we dealt with handling exceptions
 - You can now
   - throw and catch exceptions,
   - handle exceptions with `try` and `catch`
   - and define your own exception types.
-- Today we continue with *Exception Handling*.
+- Today we continue with *Input and Output*.
 
 #slide[
-  1. Imperative Konzepte
-  2. Klassen und Objekte
-  3. Klassenbibliothek
-  4. Vererbung
-  5. Schnittstellen
-  6. Graphische Oberflächen
-  7. Ausnahmebehandlung
+  1. Imperative Concepts
+  2. Classes and Objects
+  3. Class Libraries
+  4. Inheritance
+  5. Interfaces
+  6. Graphical User Interfaces
+  7. Exception Handling
   8. *Input and Output*
   9. Multithreading (Parallel Computing)
 ]
@@ -112,7 +111,7 @@
     - Class library contains about 50 classes for all important input and
       output variants
 
-    #figure(image("../assets/img/2024_10_08_eva_stream_rev01.png", height: 60%))
+    #figure(image("../assets/img/slides_9/20250813_data_stream_rev01.png", height: 60%))
 
   ]
 ]
@@ -134,29 +133,62 @@
 ]
 
 #slide[
-  #text(size: 13pt)[
+  #text(size: 24pt)[
     - Selected methods of the PrintStream class:
-
-      #figure(image("../assets/img/slides_9/2024_11_08_sout_prints_rev01.png", height: 40%))
-
-    #question[
-
-      - What is output?
+    #text(size: 18pt)[
+      #align(center + horizon)[
+        #figure(
+          table(
+            columns: (auto, auto),
+            inset: 10pt,
+            align: left + horizon,
+            fill: (_, y) => if calc.odd(y) { green.lighten(90%) },
+            table.header([*Methods*], [*Meaning*]),
+            [`println(String message)`], [Output with line break(`print line`)],
+            [`print(String message)`], [Output without line break],
+            [`printf(String format, Object... arg)`], [Formatted Output (see `String.format()`)],
+            [`format(String format, Object... arg)`], [Formatted Output (see `String.format()`)],
+          ),
+          caption: [Formats and Flags],
+        )
+      ]
     ]
-    ```java
-        public static void main(String[] args) {
-        double tempHawaiiCelsius = 15.97;
-        double tempHamburgCelsius = 22.71;
-        String.format("Hawaii: %.1f °C", tempHawaiiCelsius); System.out.printf("Hamburg:%.1f °C", tempHamburgCelsius);
-        }
-    ```
   ]
 ]
 #slide[
-  #text(size: 18pt)[
+  #question[
+    - What is output?
+  ]
+  ```java
+      public static void main(String[] args) {
+      double tempHawaiiCelsius = 15.97;
+      double tempHamburgCelsius = 22.71;
+      String.format("Hawaii: %.1f °C", tempHawaiiCelsius); System.out.printf("Hamburg:%.1f °C", tempHamburgCelsius);
+      }
+  ```
+]
+
+#slide[
+  #text(size: 24pt)[
     Streams referenced in `System`:
 
-    #figure(image("../assets/img/slides_9/2024_11_08_system_outerrin_rev01.png", height: 40%))
+    #text(size: 22pt)[
+      #align(center + horizon)[
+        #figure(
+          table(
+            columns: (auto, auto, auto),
+            inset: 15pt,
+            align: left + horizon,
+            fill: (_, y) => if calc.odd(y) { green.lighten(90%) },
+            table.header([*Reference*], [*Data Type*], [*Meaning*]),
+            [`System.out`], [`PrintStream`], [Output on screen],
+            [`System.err`], [`PrintStream`], [Error output on screen],
+            [`System.in`], [`InputStream`], [Input from keyboard],
+          ),
+          caption: [Formats and Flags],
+        )
+      ]
+    ]
   ]
 ]
 
@@ -371,8 +403,8 @@
   ]
 ]
 
-= Byte Streams & Character Streams
-== Byte Streams & Character Streams
+= Byte & Character Streams
+== Byte & Character Streams
 
 #slide[
   #text(size: 15pt)[
@@ -405,8 +437,8 @@
       - Yes, feel free to use Scanner for keyboard inputs.
     #figure(
       image(
-        "../assets/img/slides_9/2024_11_08_tastatur_stream_programm_rev01.png",
-        height: 40%,
+        "../assets/img/slides_9/20250813_keyboard_to_program_rev01.png",
+        height: 33%,
       ),
     )
 
@@ -443,8 +475,8 @@
 
       #figure(
         image(
-          "../assets/img/slides_9/2024_11_08_tastatur_stream_buffered_rev01.png",
-          height: 30%,
+          "../assets/img/slides_9/20250813_keyboard_to_program_buffered_reader_rev01.png",
+          height: 25%,
         ),
       )
 

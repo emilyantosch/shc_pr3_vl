@@ -1,7 +1,7 @@
 #import "@preview/touying:0.5.2": *
 #import themes.university: *
 
-#import "@preview/fletcher:0.5.1" as flechter: diagram, node, edge
+#import "@preview/fletcher:0.5.1" as flechter: diagram, edge, node
 #import "@preview/wrap-it:0.1.0": wrap-content
 
 #import "@preview/gentle-clues:1.0.0": *
@@ -241,11 +241,25 @@
     modifiers
   - Mental model: "Visibility" (i.e. is element visible or known?)
 
-    #figure(
-      image("../assets/img/slides_5/2024_10_20_klassen_modifier_rev01.png"),
-      caption: [Modifiers for classes, methods and attributes],
-    )
-    #question[Is `private` allowed as a modifier for constructors?]
+  #text(size: 20pt)[
+    #align(center + horizon)[
+      #figure(
+        table(
+          columns: (auto, auto, auto, auto, auto, auto),
+          inset: 10pt,
+          align: (x, y) => if x >= 0 and x <= 2 { left + horizon } else { center + horizon },
+          fill: (_, y) => if calc.odd(y) { green.lighten(90%) },
+          table.header([*Modifier*], [*UML*], [*Visibility*], [*Class*], [*Attributes*], [*Methods*]),
+          [`public`], [`+`], [All Classes], [x], [x], [x],
+          [`protected`], [`#`], [Subclasses, classes of the package], [], [x], [x],
+          [`private`], [`-`], [Within the class], [], [x], [x],
+          [`<none>`], [`~`], [Classes of the package], [x], [x], [x],
+        ),
+        caption: [Formats and Flags],
+      )
+    ]
+  ]
+  #question[Is `private` allowed as a modifier for constructors?]
 ]
 
 #slide[
@@ -310,7 +324,7 @@
     (multiple inheritance)
 
     #figure(
-      image("../assets/img/slides_5/2024_10_20_vererbung_strukturen_rev01.png", height: 50%),
+      image("../assets/img/slides_5/20250813_inheritance_models_rev01.png", height: 53%),
       caption: [Possible structures for inheritance],
     )
 ]
@@ -357,10 +371,10 @@
 
 #slide[
 
-  - Important consequence:
-  - Every class inherits the methods defined in Object (e.g. toString())
-  - Example:
-    #text(size: 16pt)[
+  #text(size: 18pt)[
+    - Important consequence:
+    - Every class inherits the methods defined in Object (e.g. toString())
+    - Example:
       ```java
       public class Person {
         String name;
@@ -375,7 +389,7 @@
         }
       }
       ```
-    ]
+  ]
 ]
 
 #slide[
@@ -576,7 +590,7 @@
     - These contain the variables inherited from class A
 
     #figure(
-      image("../assets/img/slides_5/2024_10_20_vererbung_ABC_aufbau_rev01.png"),
+      image("../assets/img/slides_5/20250813_inheritance_attributes_rev01.png", height: 51%),
       caption: [Composition of the object of class C],
     )
 ]
@@ -596,7 +610,7 @@
 
 #slide[
   #figure(
-    image("../assets/img/slides_5/2024_10_20_vererbung_variablen_speicher_rev01.png"),
+    image("../assets/img/slides_5/20250813_inheritance_attributes_tower_rev01.png", height: 90%),
     caption: [Variables of class C in memory],
   )
 ]
@@ -702,7 +716,7 @@
 ]
 
 #slide[
-  #text(size: 18pt)[
+  #text(size: 16pt)[
     ```java
     public class Circle extends Shape {
         private double radius;
@@ -1072,7 +1086,7 @@
       - Which methods does Jason, the cat, have?
       - From which classes does each method definition come?
     ]
-    #figure(image("../assets/img/slides_5/2024_10_20_vererbung_katze_frage_rev01.png", height: 60%))
+    #figure(image("../assets/img/slides_5/20250813_inheritance_overriding_methods_rev01.png", height: 60%))
 
   ]
 ]
@@ -1082,7 +1096,7 @@
       - Which methods does Jason, the cat, have?
       - From which classes does each method definition come?
     ]
-    #figure(image("../assets/img/slides_5/2024_10_20_vererbung_katze_antwort_rev01.png", height: 60%))
+    #figure(image("../assets/img/slides_5/20250813_inheritance_overriding_methods_colors_rev01.png", height: 60%))
 
   ]
 ]
@@ -1181,7 +1195,10 @@
       - Overloading:
         - Methods in class have the same name
         - Must have different signatures (i.e. different parameter types)
-        #figure(image("../assets/img/slides_5/2024_10_20_vererbung_mathfunctions_rev01.png"), caption: [Class MathFunctions])
+        #figure(
+          image("../assets/img/slides_5/2024_10_20_vererbung_mathfunctions_rev01.png"),
+          caption: [Class MathFunctions],
+        )
 
     ]
 
@@ -1192,7 +1209,10 @@
         - Methods in inheritance line have the same name
         - Must have the same signature (i.e. same name and parameter types)
 
-        #figure(image("../assets/img/slides_5/2024_10_20_vererbung_toString_rev01.png"), caption: [Inheritance of `toString()`])
+        #figure(
+          image("../assets/img/slides_5/2024_10_20_vererbung_toString_rev01.png"),
+          caption: [Inheritance of `toString()`],
+        )
 
     ]
   ]

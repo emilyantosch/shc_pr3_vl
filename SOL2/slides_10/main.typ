@@ -1,7 +1,7 @@
 #import "@preview/touying:0.5.2": *
 #import themes.university: *
 
-#import "@preview/fletcher:0.5.1" as flechter: diagram, node, edge
+#import "@preview/fletcher:0.5.1" as flechter: diagram, edge, node
 #import "@preview/wrap-it:0.1.0": wrap-content
 
 #import "@preview/gentle-clues:1.0.0": *
@@ -71,15 +71,15 @@
 #outline(depth: 1)
 
 = Introduction
-
 == Where are we now?
-
-- In the last lecture, we dealt with output and input
-- You can now
-  - send and format output to the console in the right channel,
-  - request input from the user
-  - and read files in Java.
-- Today we continue with *parallel processing*.
+#slide[
+  - In the last lecture, we dealt with output and input
+  - You can now
+    - send and format output to the console in the right channel,
+    - request input from the user
+    - and read files in Java.
+  - Today we continue with *parallel computing*.
+]
 
 #slide[
   1. Imperative Konzepte
@@ -100,14 +100,14 @@
 - You synchronize threads and objects to prevent erroneous data states due to incorrect execution orders.
 
 = Parallel processing
-== Example: Scrambled eggs and pudding
+== Scrambled eggs and pudding
 
 #slide[
   #text(size: 18pt)[
 
     - You make scrambled eggs and pudding.
     - Possible sequence:
-    #figure(image("../assets/img/slides_10/2024_11_07_serial_ruehrei_rev01.png", height: 40%))
+    #figure(image("../assets/img/slides_10/20250813_scrambled_egg_serial_rev01.png", height: 40%))
 
     #question[
       - What could the sequence look like if four of you are cooking?
@@ -122,17 +122,11 @@
     - Possible sequence
     - Resource conflict: stove burner
 
-    #figure(image("../assets/img/slides_10/2024_11_07_parallel_ruehrei_rev01.png", height: 80%))
+    #figure(image("../assets/img/slides_10/20250813_scrambled_egg_parallel_rev01.png", height: 80%))
 
   ]
 ]
 
-#slide[
-  #text(size: 18pt)[
-    - Possible distribution among four people
-    #figure(image("../assets/img/slides_10/2024_11_07_parallel_swimlane_rev01.png", height: 80%))
-  ]
-]
 
 #slide[
   #text(size: 18pt)[
@@ -204,7 +198,7 @@
     - Method `run()` contains code to be executed in execution thread
     - Execution thread is terminated as soon as `run()` is terminated
 
-    #figure(image("../assets/img/slides_10/2024_11_07_klasse_thread_uml_rev01.png", height: 40%))
+    #figure(image("../assets/img/slides_10/20250813_thread_comp_rev01.png", height: 65%))
   ]
 ]
 
@@ -212,7 +206,7 @@
   #text(size: 18pt)[
 
     - Illustration
-    #figure(image("../assets/img/slides_10/2024_11_07_programmfluss_thread_rev01.png", height: 60%))
+    #figure(image("../assets/img/slides_10/20250813_runnable_thread_class_rev01.png", height: 85%))
   ]
 ]
 
@@ -248,7 +242,7 @@
 
     - Derive your own Thread class from Thread and override run()
 
-    #figure(image("../assets/img/slides_10/2024_11_07_vererbung_thread_uml_rev01.png", height: 40%))
+    #figure(image("../assets/img/slides_10/20250813_runnable_thread_inherit_rev01.png", height: 65%))
   ]
 ]
 
@@ -291,7 +285,7 @@
       - Runnable object contains what should be executed
       - Thread object contains everything needed for concurrency
 
-    #figure(image("../assets/img/slides_10/2024_11_07_interface_Runnable_rev01.png", height: 40%))
+    #figure(image("../assets/img/slides_10/20250813_runnable_thread__rev01.png", height: 55%))
   ]
 ]
 
@@ -392,7 +386,7 @@
     - Blocked: Is not executed and would not be even with a free processor
     - Terminated: Thread terminated. Java object still exists!
 
-    #figure(image("../assets/img/slides_10/2024_11_07_ablauf_thread_queue_rev01.png", height: 50%))
+    #figure(image("../assets/img/slides_10/20250813_runnable_scheduler_new_to_end_rev01.png", height: 63%))
   ]
 ]
 
@@ -410,7 +404,7 @@
       - `setPriority()` sets priority, but no guarantee how scheduler considers it
       - "The scheduler is a diva!"
 
-    #figure(image("../assets/img/slides_10/2024_11_07_lauffaehig_laeuft_rev01.png", height: 35%))
+    #figure(image("../assets/img/slides_10/20250813_runnable_scheduler_rev01.png", height: 40%))
   ]
 ]
 
@@ -434,7 +428,7 @@
       }
       ```
     ]
-    #let fig = figure(image("../assets/img/slides_10/2024_11_07_laufend_sleep_block_rev01.png"))
+    #let fig = figure(image("../assets/img/slides_10/20250813_running_to_blocked_sleep_rev01.png"))
     #grid(
       columns: (80%, 20%),
       gutter: 0.25em,
@@ -537,7 +531,7 @@
         - What is this needed for? (After all, you don't wait for no reason)
 
     ]
-    #let fig = figure(image("../assets/img/slides_10/2024_11_11_blocked_join_rev01.png"))
+    #let fig = figure(image("../assets/img/slides_10/20250813_running_to_blocked_rev01.png"))
     #grid(
       columns: (80%, 20%),
       gutter: 0.5em,
@@ -618,7 +612,7 @@
         }
     }
     ```
-    - What happened there?!
+    - What happened here?!
       - You withdraw 50 € while 50 € is credited as a transfer.
       - Afterwards there are 50 € less than before in the account.
 
@@ -648,7 +642,23 @@
     - Answer:
       - Race condition when at least one thread writes
 
-    #figure(image("../assets/img/slides_10/2024_11_11_race_conditions_rev01.png", height: 40%))
+    #text(size: 20pt)[
+      #align(center + horizon)[
+        #figure(
+          table(
+            columns: (auto, auto, auto),
+            inset: 10pt,
+            align: left + horizon,
+            fill: (_, y) => if calc.odd(y) { green.lighten(90%) },
+            table.header([*Thread 1*], [*Thread 2*], [*Race Condition*]),
+            [`read`], [`read`], [None, both threads read the same data],
+            [`read`], [`write`], [Thread 1 may read value before _or_ after thread 2 writes],
+            [`write`], [`write`], [Last-written value remains],
+          ),
+          caption: [Formats and Flags],
+        )
+      ]
+    ]
   ]
 ]
 
@@ -674,7 +684,6 @@
 
 #slide[
   #text(size: 16pt)[
-
     Synchronization via `synchronized`:
     ```java
     public class Account {
@@ -696,15 +705,13 @@
   ]
 ]
 
-
 = License Notice
-
 == Attribution
-
-- This work is shared under the CC BY-NC-SA 4.0 License and the respective Public
-  License
-- link("https://creativecommons.org/licenses/by-nc-sa/4.0/")
-- This work is based off of the work Prof. Dr. Marc Hensel.
-- Some of the images and texts, as well as the layout were changed.
-- The base material was supplied in private, therefore the link to the source
-  cannot be shared with the audience.
+#slide[
+  - This work is shared under the CC BY-NC-SA 4.0 License and the respective Public License
+  - link("https://creativecommons.org/licenses/by-nc-sa/4.0/")
+  - This work is based off of the work Prof. Dr. Marc Hensel.
+  - Some of the images and texts, as well as the layout were changed.
+  - The base material was supplied in private, therefore the link to the source
+    cannot be shared with the audience.
+]

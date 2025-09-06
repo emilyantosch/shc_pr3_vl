@@ -1,7 +1,7 @@
 #import "@preview/touying:0.5.2": *
 #import themes.university: *
 
-#import "@preview/fletcher:0.5.1" as flechter: diagram, node, edge
+#import "@preview/fletcher:0.5.1" as flechter: diagram, edge, node
 #import "@preview/wrap-it:0.1.0": wrap-content
 
 #import "@preview/gentle-clues:1.0.0": *
@@ -71,15 +71,15 @@
 #outline(depth: 1)
 
 = Introduction
-
 == Where Are We Currently?
-
-- The last lecture was about interfaces and abstract classes
-- You can now
-  - use abstract classes to structure your code more precisely,
-  - implement interfaces to represent properties of classes,
-  - assign classes and objects with an order using `Comparable`,
-- Today we continue with *graphical user interfaces*.
+#slide[
+  - The last lecture was about interfaces and abstract classes
+  - You can now
+    - use abstract classes to structure your code more precisely,
+    - implement interfaces to represent properties of classes,
+    - assign classes and objects with an order using `Comparable`,
+  - Today we continue with *graphical user interfaces*.
+]
 
 #slide[
   1. Imperative Concepts
@@ -94,15 +94,15 @@
 ]
 
 == The Goal of This Chapter
-- You create graphical user interfaces with e.g. menus, buttons and text fields.
-- You draw diagrams from simple geometric shapes (e.g. lines, circles).
-- You respond to events (e.g. pressing a button) by connecting graphical elements with methods to be executed on user input.
-- You use the Observer pattern so that objects of any data type can react to events.
-
+#slide[
+  - You create graphical user interfaces with e.g. menus, buttons and text fields.
+  - You draw diagrams from simple geometric shapes (e.g. lines, circles).
+  - You respond to events (e.g. pressing a button) by connecting graphical elements with methods to be executed on user input.
+  - You use the Observer pattern so that objects of any data type can react to events.
+]
 
 = Basic Structure
 == Graphical UI
-
 #slide[
   #text(size: 18pt)[
     #question[
@@ -110,12 +110,14 @@
       - How do the elements react? Do elements interact with each other?
     ]
   ]
-  #figure(image("../assets/img/slides_7/2024_10_25_windows_explorer_rev01.png", height: 50%), caption: [Windows 7 Explorer])
+  #figure(
+    image("../assets/img/slides_7/2024_10_25_windows_explorer_rev01.png", height: 50%),
+    caption: [Windows 7 Explorer],
+  )
 ]
 
 #slide[
   #text(size: 18pt)[
-
     - Graphical user interface: Graphical user interface (GUI)
     - Class libraries AWT and Swing already included in the Java SDK
 
@@ -730,7 +732,7 @@
     - More than one observer can register.
     - In Swing, names of interface and methods chosen differently:
 
-    #figure(image("../assets/img/slides_7/2024_10_29_actionlistener_rev01.png"))
+    #figure(image("../assets/img/slides_7/20250813_jbutton_al_co_rev01.png", height: 70%), caption: [Observer pattern])
   ]
 ]
 
@@ -765,7 +767,6 @@
     	        buttonRed.addActionListener(this);
     	        buttonBlue.addActionListener(this);
     	        buttonRandom.addActionListener(this);
-
     	        // ...
     	    }
     	}
@@ -834,7 +835,6 @@
 
         public ButtonEvent2() {
             // ...
-
             buttonRed.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
                     panel.setBackground(Color.RED);

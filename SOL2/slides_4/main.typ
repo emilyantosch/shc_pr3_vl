@@ -238,20 +238,22 @@
 ]
 
 #slide[
-  ```
-  public class Person {
-        String firstName, surname;
+  #text(size: 22pt)[
+    ```
+    public class Person {
+          String firstName, surname;
 
-        public Person(String firstName, String surname) {
-            this.firstName = firstName;
-            this.surname = surname;
-        }
+          public Person(String firstName, String surname) {
+              this.firstName = firstName;
+              this.surname = surname;
+          }
 
-        public String toString() {
-            return firstName + " " + surname;
-        }
-    }
-  ```
+          public String toString() {
+              return firstName + " " + surname;
+          }
+      }
+    ```
+  ]
 ]
 
 #slide[
@@ -327,28 +329,60 @@
 
   ```java %[ArgumentNo.] [Flags] [MinimumNumberCharacters] [.Precision] Format```
 
-  #figure(
-    image("../assets/img/slides_4/2024_10_16_string_formats_rev01.png", height: 60%),
-    caption: [Formats and Flags],
-  )
+  #text(size: 20pt)[
+    #align(center + horizon)[
+      #figure(
+        grid(
+          columns: (auto, auto),
+          gutter: 30pt,
+          table(
+            columns: (auto, auto),
+            inset: 7pt,
+            align: left + horizon,
+            fill: (_, y) => if calc.odd(y) { green.lighten(90%) },
+            table.header([*Format*], [*Meaning*]),
+            [`f,e,g`], [float],
+            [`d`], [Integer],
+            [`o`], [Octal],
+            [`x, X`], [Hexadecimal],
+            [`s`], [String],
+            [`t`], [time],
+            [`b`], [boolean],
+          ),
+          table(
+            columns: (auto, auto),
+            inset: 10pt,
+            align: left + horizon,
+            fill: (_, y) => if calc.odd(y) { green.lighten(90%) },
+            table.header([*Flag*], [*Meaning*]),
+            [`-`], [Left Alignment],
+            [`+`], [Print Prefix],
+            [`0`], [Fill empty space with 0],
+            [`,`], [Add commas for thousands],
+            [`(`], [Add parentheses for negative numbers],
+          ),
+        ),
+        caption: [Formats and Flags],
+      )
+    ]
+  ]
 ]
 
 #slide[
-  #question[What will be output?]
-  #text(size: 20pt)[
-
+  #text(size: 22pt)[
+    #question[What will be the output?]
     ```java
     double wind = 21.4532;
     System.out.println(String.format("%2.2f km/h", wind));
     System.out.println(String.format("%8.2f km/h", wind));
     System.out.println(String.format("%08.2f km/h", wind));
     ```
+    #pause
+    - Output:
+      - 21.45 km/h
+      - 21.45 km/h
+      - 00021.45 km/h
   ]
-  #pause
-  - Output:
-    - 21.45 km/h
-    - 21.45 km/h
-    - 00021.45 km/h
 ]
 
 
@@ -381,11 +415,10 @@
       System.out.println(String.format(Locale.US, "%2.2f km/h", wind));
       System.out.println(String.format(Locale.GERMAN, "%2.2f km/h", wind));
     ```
-
     - Output: 21.45 km/h 21.45 km/h
   ]
-
 ]
+
 = Arrays
 == Arrays
 #slide[
@@ -409,98 +442,104 @@
 ]
 
 == Creating Arrays
+#slide[
+  - Collection of elements with the same data type
+  - Data type becomes array through square brackets (e.g. `int[]`, `String[]`)
+  - Array classes are separate (additional) data types
 
-- Collection of elements with the same data type
-- Data type becomes array through square brackets (e.g. `int[]`, `String[]`)
-- Array classes are separate (additional) data types
+  - Declaration:
+    - Does not require specification of length
+    - Variable can reference arrays of any length
+    - Declaration does not create object, but reference variable
+]
 
-- Declaration:
-  - Does not require specification of length
-  - Variable can reference arrays of any length
-  - Declaration does not create object, but reference variable
-
-```java
-int[] filter;
-```
-#memo[- Brackets after variable names allowed, but not recommended (Why?)]
-```java
-int filter[];
-```
-
-== Creation: Dynamic Declaration
-
-- Create array object using new operator
-- Number of fields in square brackets
-- Note: No round "constructor brackets" after data type
-- Values in array are initialized with 0, 0.0, false or null
-
-```java
-int[] filter = new int[];
-```
-
-#figure(
-  image("../assets/img/slides_4/2024_10_16_filter_array_empty_rev01.png"),
-  caption: [Creation of an array],
-)
-
-== Creation: Assigning Elements
-
-- Access to array element via index in square brackets
-- First element has index 0
-
-```java
-int[] filter = new int[3];
-  filter[0] = 1;
-  filter[1] = 2;
-  filter[2] = 1;
-```
-
-#figure(
-  image("../assets/img/slides_4/2024_10_16_filter_array_filled_single_rev01.png"),
-  caption: [Assigning values through index access],
-)
-
-== Creation: Static Declaration
-
-- You can assign values to an array already when creating the object.
-- Values in curly braces and separated by commas
-- Allowed with and without use of the new operator
-
-```java
-int[] filter = {1, 2, 1};
-int[] filter = new int[] {1, 2, 1};
-```
-
-#figure(
-  image("../assets/img/slides_4/2024_10_16_filter_array_filled_single_rev01.png"),
-  caption: [Filling during declaration],
-)
-
-== Properties: Array Classes
-
-- Arrays are objects of the corresponding class:
-  - Arrays have methods.
-  - Number of elements via instance variable length
-
-#question[Which array is created by the code?]
-
-#text(size: 22pt)[
-
+#slide[
   ```java
-  int[] filter = new int[3];
-    for (int i = 0; i < filter.length; i++) {
-        filter[i] = i * i;
-    }
+  int[] filter;
+  ```
+  #memo[- Brackets after variable names allowed, but not recommended (Why?)]
+  ```java
+  int filter[];
   ```
 ]
 
-#figure(
-  image("../assets/img/slides_4/2024_10_16_filter_array_question_rev01.png"),
-  caption: [Filling through `for` loop],
-)
+== Creation: Dynamic Declaration
+#slide[
+  - Create array object using new operator
+  - Number of fields in square brackets
+  - Note: No round "constructor brackets" after data type
+  - Values in array are initialized with 0, 0.0, false or null
+
+  ```java
+  int[] filter = new int[];
+  ```
+  #figure(
+    image("../assets/img/slides_4/2024_10_16_filter_array_empty_rev01.png"),
+    caption: [Creation of an array],
+  )
+]
+
+
+== Creation: Assigning Elements
+#slide[
+  - Access to array element via index in square brackets
+  - First element has index 0
+
+  ```java
+  int[] filter = new int[3];
+    filter[0] = 1;
+    filter[1] = 2;
+    filter[2] = 1;
+  ```
+
+  #figure(
+    image("../assets/img/slides_4/2024_10_16_filter_array_filled_single_rev01.png"),
+    caption: [Assigning values through index access],
+  )
+]
+
+== Creation: Static Declaration
+#slide[
+  - You can assign values to an array already when creating the object.
+  - Values in curly braces and separated by commas
+  - Allowed with and without use of the new operator
+
+  ```java
+  int[] filter = {1, 2, 1};
+  int[] filter = new int[] {1, 2, 1};
+  ```
+
+  #figure(
+    image("../assets/img/slides_4/2024_10_16_filter_array_filled_single_rev01.png"),
+    caption: [Filling during declaration],
+  )
+]
+
+== Properties: Array Classes
+#slide[
+  - Arrays are objects of the corresponding class:
+    - Arrays have methods.
+    - Number of elements via instance variable length
+
+  #question[Which array is created by the code?]
+
+  #text(size: 22pt)[
+
+    ```java
+    int[] filter = new int[3];
+      for (int i = 0; i < filter.length; i++) {
+          filter[i] = i * i;
+      }
+    ```
+  ]
+
+  #figure(
+    image("../assets/img/slides_4/2024_10_16_filter_array_question_rev01.png"),
+    caption: [Filling through `for` loop],
+  )
+]
 
 #slide[
-
   - Indices:
     - When accessing element, checks whether index is in allowed range
     - More in chapter on exceptions and error handling
@@ -617,25 +656,25 @@ int[] filter = new int[] {1, 2, 1};
 ]
 
 = Multidimensional Arrays
-
 == Multidimensional Arrays
+#slide[
+  - Multidimensional arrays are "arrays of arrays".
+  - Example: `int[][]` is array whose elements are of data type `int[]`.
 
-- Multidimensional arrays are "arrays of arrays".
-- Example: `int[][]` is array whose elements are of data type `int[]`.
+  Dynamic declaration:
+  ```java
+    int[][] filter = new int[3][4];
+  ```
+  Static declaration:
+  ```java
+    int[][] filter = {{1,2,3}, {4,5,6}, {7,8,9}};
+  ```
 
-Dynamic declaration:
-```java
-  int[][] filter = new int[3][4];
-```
-Static declaration:
-```java
-  int[][] filter = {{1,2,3}, {4,5,6}, {7,8,9}};
-```
-
-#figure(
-  image("../assets/img/slides_4/2024_10_16_filter_array_dim_rev01.png"),
-  caption: [Multidimensional array],
-)
+  #figure(
+    image("../assets/img/slides_4/2024_10_16_filter_array_dim_rev01.png"),
+    caption: [Multidimensional array],
+  )
+]
 
 #slide[
   #question[What will be output?]
@@ -704,9 +743,7 @@ Static declaration:
 ]
 
 = Lists
-
 == ArrayList
-
 #slide[
   - Arrays: Size cannot be changed after creation ("semi-dynamic")
   - Lists: Elements can be added or removed ("dynamic")
@@ -728,6 +765,7 @@ Static declaration:
     ```
   ]
 ]
+
 #slide[
   - Examples:
     - Number of elements (`size()`)
@@ -757,9 +795,7 @@ Static declaration:
 ]
 
 = foreach Loop
-
 == foreach Loop
-
 #slide[
   ```java
   for (DataType Variable : IterationObject) {
@@ -821,21 +857,39 @@ Static declaration:
 ]
 
 = Wrapper Classes & `Math` Class
-
 == Wrapper Classes
+#slide[
+  - Primitive data types:
+    - Store value (e.g. integer) directly
+    - Have no methods
 
-- Primitive data types:
-  - Store value (e.g. integer) directly
-  - Have no methods
+  - Wrapper classes:
+    - "Wrap" primitive data types into classes
+    - Provide methods (e.g. for integers)
 
-- Wrapper classes:
-  - "Wrap" primitive data types into classes
-  - Provide methods (e.g. for integers)
-
-#figure(
-  image("../assets/img/slides_4/2024_10_16_wrapper_rev01.png"),
-  caption: [Wrapper classes for primitive data types],
-)
+  #text(size: 20pt)[
+    #align(center + horizon)[
+      #figure(
+        table(
+          columns: (auto, auto),
+          inset: 10pt,
+          align: left + horizon,
+          fill: (_, y) => if calc.odd(y) { green.lighten(90%) },
+          table.header([*Primitive*], [*Wrapper Class*]),
+          [`boolean`], [Boolean],
+          [`byte`], [Byte],
+          [`short`], [Short],
+          [`int`], [Integer],
+          [`long`], [Long],
+          [`char`], [Character],
+          [`float`], [Float],
+          [`double`], [Double],
+        ),
+        caption: [Formats and Flags],
+      )
+    ]
+  ]
+]
 
 #slide[
   #text(size: 22pt)[
@@ -883,9 +937,7 @@ Static declaration:
 ]
 
 == `Math` Class
-
 #slide[
-
   - Mathematical constants: Euler's number e, pi $pi$
   - Mathematical functions (as class methods), e.g.:
     - Trigonometric functions
@@ -895,7 +947,6 @@ Static declaration:
     - Maximum and minimum
     - Roots
     - Random numbers
-
     #example[
       ```java
       double angleDeg = 127.5;
@@ -903,19 +954,16 @@ Static declaration:
       System.out.printf("cos(%.2f) = %.2f\n", angleRad, Math.cos(angleRad));
       ```
     ]
-
-
-
 ]
 
 = License Notice
-
 == Attribution
-
-- This work is shared under the CC BY-NC-SA 4.0 License and the respective Public
-  License
-- #link("https://creativecommons.org/licenses/by-nc-sa/4.0/")
-- This work is based off of the work Prof. Dr. Marc Hensel.
-- Some of the images and texts, as well as the layout were changed.
-- The base material was supplied in private, therefore the link to the source
-  cannot be shared with the audience.
+#slide[
+  - This work is shared under the CC BY-NC-SA 4.0 License and the respective Public
+    License
+  - #link("https://creativecommons.org/licenses/by-nc-sa/4.0/")
+  - This work is based off of the work Prof. Dr. Marc Hensel.
+  - Some of the images and texts, as well as the layout were changed.
+  - The base material was supplied in private, therefore the link to the source
+    cannot be shared with the audience.
+]
