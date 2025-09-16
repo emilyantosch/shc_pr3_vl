@@ -26,10 +26,11 @@
   institute: [TI - IE],
   seminar: [SO2L],
   abstract: [
-    In this lab, the first knowledge in the Java programming language
-    should be consolidated. You need the first four lectures to be able to
-    complete this lab. A name management system should be programmed with which
-    you can modify a list of names according to certain rules.
+    This lab introduces fundamental Java programming concepts through three progressive tasks.
+    Students will learn basic object-oriented programming by creating classes and objects,
+    practice user input handling and control structures, and work with strings and character processing.
+    The exercises progress from building a name management system to implementing a number guessing game
+    and creating a Roman numeral converter, establishing core programming skills essential for software development.
   ],
   show-outline: true,
   author: "Emily Antosch",
@@ -239,5 +240,4 @@ int getValue(char c) {
 ```
 
 = Lab Execution
-
 If your program is not yet working without issue, we will try to correct this during the course of the lab. With good preparation, this should not be a problem. Every student is required to be able to explain their thought process at the beginning of the lab. By the end of the lab, the task needs to be completed. Of course, we will support you, but your personal commitment must also be clearly recognizable! Julian Moldenhauer, Furkan Yildirim, and Emily Antosch wish you lots of fun and success!
