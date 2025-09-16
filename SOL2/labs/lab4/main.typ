@@ -63,20 +63,7 @@ Your program should:
 5. Display the final path through the maze
 
 == Preparation
-Represent the labyrinth in a two-dimensional array. Use
-two more fields than specified by the labyrinth and fill
-the border fields with walls (corresponding to the hatched elements in the
-labyrinth). Since the mouse is located in the upper left, there are initially only two
-meaningful paths. However, from the second step onward, use a method that checks all
-four directions and calls itself recursively to find the
-path. Tip: Use a marking character to mark the path that
-the mouse has taken, as the mouse should not go backwards.
-(This will be helpful when implementing the algorithm. If
-the chosen path was not successful, the mouse goes back along this path,
-deletes the marking again, and starts the search anew.) At the end, the path through the labyrinth should be drawn. If you
-want, you can recreate the labyrinth with graphical methods and also
-enter the mouse's path to the cheese. A modification of the labyrinth
-or a larger number of fields is also possible.
+Represent the labyrinth in a two-dimensional array. Use a method that checks all four directions and calls itself recursively to find the path. Tip: Use a marking character to mark the path that the mouse has taken, as the mouse should not go backwards. If you want, you can recreate the labyrinth with graphical methods and also enter the mouse's path to the cheese. A modification of the labyrinth or a larger number of fields is also possible.
 
 == Assistance
 
@@ -95,51 +82,6 @@ public class MazeSolver {
 
     private int startRow = 1, startCol = 1;
     private int endRow = 5, endCol = 5;
-}
-```
-
-*Recursive pathfinding structure:*
-```java
-public boolean findPath(int row, int col) {
-    // Base cases
-    if (row < 0 || row >= maze.length || col < 0 || col >= maze[0].length) {
-        return false; // Out of bounds
-    }
-    if (maze[row][col] == '#' || maze[row][col] == 'X') {
-        return false; // Wall or already visited
-    }
-    if (row == endRow && col == endCol) {
-        maze[row][col] = 'P'; // Mark path
-        return true; // Found cheese!
-    }
-
-    // Mark current cell as visited
-    maze[row][col] = 'X';
-
-    // Try all four directions
-    if (findPath(row-1, col) || // North
-        findPath(row+1, col) || // South
-        findPath(row, col-1) || // West
-        findPath(row, col+1)) { // East
-        maze[row][col] = 'P'; // Mark as part of solution path
-        return true;
-    }
-
-    // Backtrack: unmark this cell
-    maze[row][col] = ' ';
-    return false;
-}
-```
-
-*Display the maze:*
-```java
-public void printMaze() {
-    for (int i = 0; i < maze.length; i++) {
-        for (int j = 0; j < maze[i].length; j++) {
-            System.out.print(maze[i][j] + " ");
-        }
-        System.out.println();
-    }
 }
 ```
 
@@ -215,32 +157,6 @@ private boolean isValid(int[][] grid, int row, int col, int num) {
     return true;
 }
 ```
-
-*Recursive solving:*
-```java
-public boolean solveSudoku(int[][] grid) {
-    for (int row = 0; row < SIZE; row++) {
-        for (int col = 0; col < SIZE; col++) {
-            if (grid[row][col] == EMPTY) {
-                for (int num = 1; num <= 9; num++) {
-                    if (isValid(grid, row, col, num)) {
-                        grid[row][col] = num;
-
-                        if (solveSudoku(grid)) {
-                            return true;
-                        }
-
-                        grid[row][col] = EMPTY; // Backtrack
-                    }
-                }
-                return false; // No valid number found
-            }
-        }
-    }
-    return true; // All cells filled
-}
-```
-
 
 = Lab Execution
 If your program is not yet working without issue, we will try to correct this during the course of the lab. With good preparation, this should not be a problem. Every student is required to be able to explain their thought process at the beginning of the lab. By the end of the lab, the task needs to be completed. Of course, we will support you, but your personal commitment must also be clearly recognizable! Julian Moldenhauer, Furkan Yildirim, and Emily Antosch wish you lots of fun and success!
