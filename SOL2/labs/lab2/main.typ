@@ -238,5 +238,252 @@ public class BankAccount {
 }
 ```
 
+#pagebreak()
+
+= Task 4: Array Sorting and Searching
+
+Create a Java program that demonstrates array manipulation techniques including sorting and searching. This task will help you understand algorithm implementation and array processing.
+
+Write a program that:
+- Creates an array of 10 random integers (1-100)
+- Implements bubble sort to sort the array
+- Implements linear search to find specific values
+- Implements binary search (on sorted array)
+- Displays arrays before/after sorting and search results
+
+Your program should:
+1. Generate and display an array of 10 random integers
+2. Implement the following methods:
+  - `void bubbleSort(int[] arr)` - sorts array using bubble sort
+  - `int linearSearch(int[] arr, int target)` - returns index or -1
+  - `int binarySearch(int[] arr, int target)` - returns index or -1 (requires sorted array)
+  - `void printArray(int[] arr)` - displays array contents
+3. Demonstrate all methods with user input for search values
+4. Compare performance by counting comparisons in each search method
+
+== Requirements
+- Use bubble sort algorithm for sorting
+- Implement both linear and binary search
+- Count and display number of comparisons for each search
+- Handle cases where target value is not found
+
+== Assistance
+
+*Random array generation:*
+```java
+import java.util.Random;
+
+Random random = new Random();
+int[] numbers = new int[10];
+for (int i = 0; i < numbers.length; i++) {
+    numbers[i] = random.nextInt(100) + 1; // 1-100
+}
+```
+
+*Bubble sort implementation:*
+```java
+public static void bubbleSort(int[] arr) {
+    int n = arr.length;
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                // Swap elements
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+}
+```
+
+*Binary search implementation:*
+```java
+public static int binarySearch(int[] arr, int target) {
+    int left = 0, right = arr.length - 1;
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+        if (arr[mid] == target) return mid;
+        if (arr[mid] < target) left = mid + 1;
+        else right = mid - 1;
+    }
+    return -1; // Not found
+}
+```
+
+#pagebreak()
+
+= Task 5: Object Comparison and Equality
+
+Develop a comprehensive understanding of object comparison in Java by creating a Student class that implements proper equality checking and comparison methods.
+
+Create a `Student` class with the following features:
+- Private fields: studentID (int), name (String), grade (double)
+- Override `equals()` and `hashCode()` methods
+- Implement `Comparable<Student>` interface for natural ordering
+- Create methods to compare students by different criteria
+
+Your program should:
+1. Create an array of Student objects with sample data
+2. Demonstrate equality checking between students
+3. Sort students by grade (natural ordering)
+4. Sort students by name using a custom comparator
+5. Find duplicate students and display them
+6. Search for students by ID and name
+
+== Requirements
+- Override `equals()` and `hashCode()` correctly
+- Implement `Comparable` for grade-based sorting
+- Create custom comparators for different sorting criteria
+- Demonstrate all comparison methods with test data
+
+== Assistance
+
+*Student class with equals and hashCode:*
+```java
+import java.util.Objects;
+
+public class Student implements Comparable<Student> {
+    private int studentID;
+    private String name;
+    private double grade;
+
+    public Student(int studentID, String name, double grade) {
+        this.studentID = studentID;
+        this.name = name;
+        this.grade = grade;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Student student = (Student) obj;
+        return studentID == student.studentID && 
+               Objects.equals(name, student.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(studentID, name);
+    }
+
+    @Override
+    public int compareTo(Student other) {
+        return Double.compare(this.grade, other.grade);
+    }
+}
+```
+
+*Using Arrays.sort with custom comparator:*
+```java
+import java.util.Arrays;
+import java.util.Comparator;
+
+// Sort by name
+Arrays.sort(students, Comparator.comparing(Student::getName));
+
+// Sort by grade (descending)
+Arrays.sort(students, Comparator.comparing(Student::getGrade).reversed());
+```
+
+#pagebreak()
+
+= Task 6: Simple Inventory Management System
+
+Create a comprehensive inventory management system that combines all concepts learned in previous tasks. This capstone task integrates arrays, methods, encapsulation, and object-oriented design.
+
+Develop an `Item` class and `Inventory` class to manage a collection of items with the following features:
+- Item class with name, ID, quantity, and price
+- Inventory class to manage multiple items
+- Methods for adding, removing, updating, and searching items
+- Generate reports and handle low stock warnings
+
+Your program should:
+1. Create an Inventory system with Item objects
+2. Implement the following functionality:
+  - Add new items to inventory
+  - Update item quantities (restock/sell)
+  - Search items by name or ID
+  - Display low stock warnings (quantity < 5)
+  - Calculate total inventory value
+  - Generate inventory reports
+3. Use arrays to store items and implement dynamic resizing
+4. Provide a menu-driven interface for all operations
+
+== Requirements
+- Use proper encapsulation with private variables
+- Implement input validation for all operations
+- Handle array resizing when adding new items
+- Calculate and display inventory statistics
+- Use static variables to track total number of items
+
+== Assistance
+
+*Item class structure:*
+```java
+public class Item {
+    private String name;
+    private int itemID;
+    private int quantity;
+    private double price;
+    private static int totalItems = 0;
+
+    public Item(String name, int itemID, int quantity, double price) {
+        this.name = name;
+        this.itemID = itemID;
+        this.quantity = quantity;
+        this.price = price;
+        totalItems++;
+    }
+
+    public double getTotalValue() {
+        return quantity * price;
+    }
+
+    public boolean isLowStock() {
+        return quantity < 5;
+    }
+
+    // Getters and setters...
+}
+```
+
+*Inventory class with dynamic array:*
+```java
+public class Inventory {
+    private Item[] items;
+    private int itemCount;
+    private static final int INITIAL_CAPACITY = 10;
+
+    public Inventory() {
+        items = new Item[INITIAL_CAPACITY];
+        itemCount = 0;
+    }
+
+    public void addItem(Item item) {
+        if (itemCount >= items.length) {
+            resizeArray();
+        }
+        items[itemCount++] = item;
+    }
+
+    private void resizeArray() {
+        Item[] newItems = new Item[items.length * 2];
+        System.arraycopy(items, 0, newItems, 0, itemCount);
+        items = newItems;
+    }
+
+    public Item findItemByID(int id) {
+        for (int i = 0; i < itemCount; i++) {
+            if (items[i].getItemID() == id) {
+                return items[i];
+            }
+        }
+        return null;
+    }
+}
+```
+
 = Lab Execution
 If your program is not yet working without issue, we will try to correct this during the course of the lab. With good preparation, this should not be a problem. Every student is required to be able to explain their thought process at the beginning of the lab. By the end of the lab, the task needs to be completed. Of course, we will support you, but your personal commitment must also be clearly recognizable! Julian Moldenhauer, Furkan Yildirim, and Emily Antosch wish you lots of fun and success!

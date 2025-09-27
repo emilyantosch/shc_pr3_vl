@@ -1,5 +1,7 @@
 #import "@preview/grape-suite:3.1.0": exercise, german-dates
 
+#import "@preview/gentle-clues:1.0.0": *
+
 #set text(lang: "en")
 
 #import "@preview/codly:1.0.0": *
@@ -26,16 +28,25 @@
   institute: [TI - IE],
   seminar: [SO2L],
   abstract: [
-    This lab introduces fundamental Java programming concepts through three progressive tasks.
+    This lab introduces fundamental Java programming concepts through six progressive tasks.
     Students will learn basic object-oriented programming by creating classes and objects,
     practice user input handling and control structures, and work with strings and character processing.
-    The exercises progress from building a name management system to implementing a number guessing game
-    and creating a Roman numeral converter, establishing core programming skills essential for software development.
+    The exercises progress from building a name management system to implementing a number guessing game,
+    creating a Roman numeral converter, developing a simple grade calculator, building a basic calculator with methods, and implementing a word counting program, establishing core programming skills essential for software development.
   ],
   show-outline: true,
   author: "Emily Antosch",
   show-solutions: false,
 )
+
+#memo[
+  == Submission Deadline
+  Deadline to upload the solutions for all tasks is Saturday, 11:59 pm before the lab date.
+
+  == General Information
+  The following tasks are to be worked on in fixed teams of two. Each team member must be able to explain all solutions. Please submit only one solution for each team of two. The submission must be a PDF file in our Moodle room with the name and matriculation number. Solutions must be in digital format with intermediate steps and detailed explanations (no handwritten scans). You can use any tool or drawing program of your choice to create the diagrams. If you have questions or need support, use the forum in our Moodle room and help each other.
+]
+
 
 = Task 1: Name Management System
 
@@ -238,6 +249,232 @@ int getValue(char c) {
     return 0;
 }
 ```
+
+#pagebreak()
+
+= Task 4: Grade Manager
+
+Create a Java program that calculates and manages student grades. This task will help you practice working with arrays, loops, mathematical operations, and basic data processing in Java.
+
+Your program should implement a simple grade management system that:
+- Stores grades for multiple students
+- Calculates statistics like average, highest, and lowest grades
+- Determines letter grades based on numerical scores
+- Provides a summary report
+
+== Program Requirements
+
+Your program should:
+1. Ask the user how many students they want to enter grades for
+2. Create an array to store the grades
+3. Prompt the user to enter each student's grade (0-100)
+4. Calculate and display:
+  - The average grade
+  - The highest grade
+  - The lowest grade
+  - How many students passed (grade >= 60)
+  - How many students failed (grade < 60)
+5. Display each student's numerical grade along with their letter grade
+
+== Letter Grade Scale
+Use the following grading scale:
+- A: 90-100
+- B: 80-89
+- C: 70-79
+- D: 60-69
+- F: 0-59
+
+== Requirements
+- Use an array to store the grades
+- Use loops to process the data
+- Use the `Scanner` class for user input
+- Display results in a clear, formatted way
+- Assume the user will always enter valid numbers between 0-100
+
+== Assistance
+
+*Creating and working with arrays:*
+```java
+// Create an array to hold grades
+int numberOfStudents = 5;
+double[] grades = new double[numberOfStudents];
+
+// Store a grade in the array
+grades[0] = 85.5;  // First student's grade
+
+// Get a grade from the array
+double firstGrade = grades[0];
+```
+
+*Sample output format:*
+```
+=== Grade Report ===
+Student 1: 85.5 (B)
+Student 2: 92.0 (A)
+Student 3: 78.5 (C)
+Student 4: 67.0 (D)
+Student 5: 88.5 (B)
+
+=== Statistics ===
+Average Grade: 82.3
+Highest Grade: 92.0
+Lowest Grade: 67.0
+Students Passed: 5
+Students Failed: 0
+```
+
+#pagebreak()
+
+= Task 5: Simple Calculator with Methods
+
+Create a Java program that implements a basic calculator using methods. This task will help you practice method creation, parameter passing, return values, and program organization in Java.
+
+Your calculator should be able to perform basic arithmetic operations (addition, subtraction, multiplication, division) and be organized using separate methods for each operation.
+
+== Program Requirements
+
+Your program should:
+1. Display a menu of available operations to the user
+2. Ask the user to select an operation
+3. Prompt for two numbers
+4. Perform the calculation using the appropriate method
+5. Display the result
+6. Allow the user to perform multiple calculations
+7. Exit when the user chooses to quit
+
+== Menu Options
+```
+=== Simple Calculator ===
+1. Addition (+)
+2. Subtraction (-)
+3. Multiplication (*)
+4. Division (/)
+5. Exit
+Choose an operation (1-5):
+```
+
+== Requirements
+- Create separate methods for each arithmetic operation
+- Each method should take two parameters and return the result
+- Handle division by zero appropriately
+- Use a loop to allow multiple calculations
+- Use the `Scanner` class for user input
+- Display results in a clear format
+
+== Assistance
+
+*Sample program execution:*
+```
+=== Simple Calculator ===
+1. Addition (+)
+2. Subtraction (-)
+3. Multiplication (*)
+4. Division (/)
+5. Exit
+Choose an operation (1-5): 1
+Enter first number: 15.5
+Enter second number: 8.3
+Result: 15.5 + 8.3 = 23.8
+
+=== Simple Calculator ===
+1. Addition (+)
+2. Subtraction (-)
+3. Multiplication (*)
+4. Division (/)
+5. Exit
+Choose an operation (1-5): 4
+Enter first number: 10
+Enter second number: 0
+Error: Division by zero!
+Result: 10.0 / 0.0 = 0.0
+
+=== Simple Calculator ===
+1. Addition (+)
+2. Subtraction (-)
+3. Multiplication (*)
+4. Division (/)
+5. Exit
+Choose an operation (1-5): 5
+Thank you for using the calculator!
+```
+
+#pagebreak()
+
+= Task 6: Word Counter Program
+
+Create a Java program that analyzes text input and counts various statistics about words and characters. This task will help you practice string manipulation, character analysis, and data processing in Java.
+
+Your program should analyze a sentence or paragraph entered by the user and provide detailed statistics about the text.
+
+== Program Requirements
+
+Your program should:
+1. Ask the user to enter a sentence or paragraph
+2. Count and display:
+  - Total number of characters (including spaces)
+  - Total number of characters (excluding spaces)
+  - Total number of words
+  - Total number of sentences (based on periods, exclamation marks, question marks)
+  - Number of vowels (a, e, i, o, u - case insensitive)
+  - Number of consonants
+  - The longest word in the text
+3. Display all results in a clear, formatted report
+
+== Requirements
+- Use string methods for text processing
+- Handle both uppercase and lowercase letters
+- Consider punctuation appropriately
+- Display results in a well-formatted report
+- Use the `Scanner` class for user input
+
+== Assistance
+
+*Character analysis loop:*
+```java
+String text = "Hello World!";
+int vowelCount = 0;
+int consonantCount = 0;
+int totalChars = text.length();
+int charsWithoutSpaces = 0;
+
+for (int i = 0; i < text.length(); i++) {
+    char c = text.charAt(i);
+
+    if (Character.isLetter(c)) {
+        charsWithoutSpaces++;
+        if (isVowel(c)) {
+            vowelCount++;
+        } else {
+            consonantCount++;
+        }
+    } else if (c != ' ') {
+        charsWithoutSpaces++; // Count non-space, non-letter characters
+    }
+}
+```
+
+*Sample program output:*
+```
+Enter a sentence or paragraph to analyze:
+Hello world! This is a great example of text analysis. How cool is that?
+
+=== TEXT ANALYSIS REPORT ===
+Original text: "Hello world! This is a great example of text analysis. How cool is that?"
+
+Character Statistics:
+- Total characters (with spaces): 78
+- Total characters (without spaces): 64
+- Number of vowels: 24
+- Number of consonants: 40
+
+Word Statistics:
+- Total number of words: 14
+- Longest word: "analysis"
+
+Sentence Statistics:
+- Total number of sentences: 2
+```
+
 
 = Lab Execution
 If your program is not yet working without issue, we will try to correct this during the course of the lab. With good preparation, this should not be a problem. Every student is required to be able to explain their thought process at the beginning of the lab. By the end of the lab, the task needs to be completed. Of course, we will support you, but your personal commitment must also be clearly recognizable! Julian Moldenhauer, Furkan Yildirim, and Emily Antosch wish you lots of fun and success!
