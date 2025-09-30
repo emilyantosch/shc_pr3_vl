@@ -1,5 +1,6 @@
 #import "@preview/grape-suite:3.1.0": exercise, german-dates
 
+#import "@preview/gentle-clues:1.0.0": *
 #set text(lang: "en")
 
 #import "@preview/codly:1.0.0": *
@@ -36,6 +37,14 @@
   author: "Emily Antosch",
   show-solutions: false,
 )
+
+#memo[
+  == Submission Deadline
+  Deadline to upload the solutions for all tasks is Saturday, 11:59 pm before the lab date.
+
+  == General Information
+  The following tasks are to be worked on in fixed teams of two. Each team member must be able to explain all solutions. Please submit only one solution for each team of two. The submission must be a PDF file in our Moodle room with the name and matriculation number. Solutions must be in digital format with intermediate steps and detailed explanations (no handwritten scans). You can use any tool or drawing program of your choice to create the diagrams. If you have questions or need support, use the forum in our Moodle room and help each other.
+]
 
 = Task 1: Enhanced Name Management System
 
@@ -121,9 +130,22 @@ persons[2] = new Person("Bob", "Johnson");
 
 #pagebreak()
 
-= Task 2: Student Grade Calculator
+= Task 2: Student Grade Calculator (Continuation of Lab 1, Task 4)
 
-Create a Java program that manages student grades using arrays and methods. This task will help you practice working with arrays, methods, and calculations.
+== Preparation
+Before implementing the solution, you must:
+1. Design a class structure for the grade calculator system
+2. Create a UML class diagram showing:
+  - Class name (e.g., GradeCalculator)
+  - All methods with their parameters and return types
+  - Any necessary attributes/fields
+3. Transfer your implementation into this class structure
+4. Only after completing the UML diagram should you begin coding
+
+This preparation step ensures you think about the object-oriented design before writing code.
+
+== Task
+This task continues the grade management system from Lab 1, Task 4. Create a Java program that manages student grades using arrays and methods. This task will help you practice working with arrays, methods, and calculations.
 
 Write a program that:
 - Stores grades for 5 students in an array
@@ -149,8 +171,8 @@ Your program should:
 - Use loops to process the array
 - Display results with clear formatting
 
-== Assistance
 
+== Assistance
 *Array declaration and initialization:*
 ```java
 int[] grades = new int[5];
@@ -178,6 +200,20 @@ public static double calculateAverage(int[] grades) {
 
 = Task 3: Simple Bank Account Simulator
 
+== Preparation
+Before implementing the solution, you must:
+1. Design a class structure for the bank account system
+2. Create a UML class diagram showing:
+  - Class name (BankAccount)
+  - All private attributes (balance, accountHolder, etc.)
+  - All public methods with their parameters and return types
+  - Constructor(s)
+3. Transfer your implementation into this class structure
+4. Only after completing the UML diagram should you begin coding
+
+This preparation step ensures you think about encapsulation and class design before writing code.
+
+== Task
 Create a simple bank account class that demonstrates encapsulation and method design. This task focuses on object-oriented programming principles.
 
 Create a `BankAccount` class with the following features:
@@ -240,9 +276,16 @@ public class BankAccount {
 
 #pagebreak()
 
-= Task 4: Array Sorting and Searching
 
+= Task 4: Array Sorting and Searching
 Create a Java program that demonstrates array manipulation techniques including sorting and searching. This task will help you understand algorithm implementation and array processing.
+
+- *Bubble sort*
+  - Bubble Sort works by repeatedly stepping through the array, comparing adjacent elements and swapping them if they are in the wrong order, with larger elements "bubbling" to the end after each pass.
+- *Linear Search*
+  - Linear Search is a simple algorithm that examines each element in an array sequentially from the beginning until it finds the target value or reaches the end of the array, making it straightforward to implement but less efficient for large datasets.
+- *Binary search*
+  - Binary Search is an efficient algorithm that works on sorted arrays by repeatedly dividing the search space in half, comparing the target with the middle element to determine which half to search next. Both algorithms demonstrate different approaches to common programming problems with varying time complexities.
 
 Write a program that:
 - Creates an array of 10 random integers (1-100)
@@ -280,47 +323,14 @@ for (int i = 0; i < numbers.length; i++) {
 }
 ```
 
-*Bubble sort implementation:*
-```java
-public static void bubbleSort(int[] arr) {
-    int n = arr.length;
-    for (int i = 0; i < n - 1; i++) {
-        for (int j = 0; j < n - i - 1; j++) {
-            if (arr[j] > arr[j + 1]) {
-                // Swap elements
-                int temp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = temp;
-            }
-        }
-    }
-}
-```
-
-*Binary search implementation:*
-```java
-public static int binarySearch(int[] arr, int target) {
-    int left = 0, right = arr.length - 1;
-    while (left <= right) {
-        int mid = left + (right - left) / 2;
-        if (arr[mid] == target) return mid;
-        if (arr[mid] < target) left = mid + 1;
-        else right = mid - 1;
-    }
-    return -1; // Not found
-}
-```
-
 #pagebreak()
 
 = Task 5: Object Comparison and Equality
-
 Develop a comprehensive understanding of object comparison in Java by creating a Student class that implements proper equality checking and comparison methods.
 
 Create a `Student` class with the following features:
 - Private fields: studentID (int), name (String), grade (double)
 - Override `equals()` and `hashCode()` methods
-- Implement `Comparable<Student>` interface for natural ordering
 - Create methods to compare students by different criteria
 
 Your program should:
@@ -332,18 +342,15 @@ Your program should:
 6. Search for students by ID and name
 
 == Requirements
-- Override `equals()` and `hashCode()` correctly
-- Implement `Comparable` for grade-based sorting
+- Override `equals()` correctly
 - Create custom comparators for different sorting criteria
 - Demonstrate all comparison methods with test data
 
 == Assistance
 
-*Student class with equals and hashCode:*
+*Example Student class with equals:*
 ```java
-import java.util.Objects;
-
-public class Student implements Comparable<Student> {
+public class Student {
     private int studentID;
     private String name;
     private double grade;
@@ -354,43 +361,33 @@ public class Student implements Comparable<Student> {
         this.grade = grade;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        Student student = (Student) obj;
-        return studentID == student.studentID && 
-               Objects.equals(name, student.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(studentID, name);
-    }
-
-    @Override
-    public int compareTo(Student other) {
-        return Double.compare(this.grade, other.grade);
-    }
 }
-```
-
-*Using Arrays.sort with custom comparator:*
-```java
-import java.util.Arrays;
-import java.util.Comparator;
-
-// Sort by name
-Arrays.sort(students, Comparator.comparing(Student::getName));
-
-// Sort by grade (descending)
-Arrays.sort(students, Comparator.comparing(Student::getGrade).reversed());
 ```
 
 #pagebreak()
 
 = Task 6: Simple Inventory Management System
 
+== Preparation
+Before implementing the solution, you must:
+1. Design the complete class structure for the inventory management system
+2. Create UML class diagrams for both classes showing:
+  - *Item class*:
+    - All private attributes (name, itemID, quantity, price, static variables)
+    - All public methods with their parameters and return types
+    - Constructor(s)
+  - *Inventory class*:
+    - All private attributes (items array, itemCount, etc.)
+    - All public methods with their parameters and return types
+    - Private helper methods (e.g., resizeArray)
+    - Constructor(s)
+3. Show the relationship between the two classes (composition/aggregation)
+4. Transfer your implementation into this class structure
+5. Only after completing the UML diagrams should you begin coding
+
+This preparation step ensures you think about multi-class system design and relationships before writing code.
+
+== Task
 Create a comprehensive inventory management system that combines all concepts learned in previous tasks. This capstone task integrates arrays, methods, encapsulation, and object-oriented design.
 
 Develop an `Item` class and `Inventory` class to manage a collection of items with the following features:

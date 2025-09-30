@@ -1,5 +1,6 @@
 #import "@preview/grape-suite:3.1.0": exercise, german-dates
 
+#import "@preview/gentle-clues:1.0.0": *
 #set text(lang: "en")
 
 #import "@preview/codly:1.0.0": *
@@ -37,8 +38,15 @@
   show-solutions: false,
 )
 
-= Task 1: Student Management with Inheritance
+#memo[
+  == Submission Deadline
+  Deadline to upload the solutions for all tasks is Saturday, 11:59 pm before the lab date.
 
+  == General Information
+  The following tasks are to be worked on in fixed teams of two. Each team member must be able to explain all solutions. Please submit only one solution for each team of two. The submission must be a PDF file in our Moodle room with the name and matriculation number. Solutions must be in digital format with intermediate steps and detailed explanations (no handwritten scans). You can use any tool or drawing program of your choice to create the diagrams. If you have questions or need support, use the forum in our Moodle room and help each other.
+]
+
+= Task 1: Student Management with Inheritance
 Extend your Java program from Lab 2 to demonstrate inheritance by creating a Student class that inherits from the Person class. This task introduces class inheritance, scalability, and advanced object management.
 
 Extend your name management program as follows:
@@ -117,7 +125,6 @@ public class StudentManager {
 #pagebreak()
 
 = Task 2: Vehicle Hierarchy with Polymorphism
-
 Create a vehicle management system that demonstrates inheritance and polymorphism. This task will help you understand method overriding and polymorphic behavior.
 
 Create a class hierarchy for different types of vehicles:
@@ -206,7 +213,6 @@ for (Vehicle v : vehicles) {
 #pagebreak()
 
 = Task 3: Animal Classification System
-
 Create an animal classification system that demonstrates advanced inheritance concepts including abstract classes and interfaces. This task focuses on designing hierarchical relationships.
 
 Design a system that models different types of animals with their behaviors:
@@ -285,6 +291,289 @@ public class Duck extends Animal implements Flyable, Swimmable {
     @Override
     public void swim() {
         System.out.println(name + " is swimming in the water!");
+    }
+}
+```
+
+#pagebreak()
+
+= Task 4: Collections in Java Programming
+Enhance your student management system by implementing generic collections and data structures. This task introduces Java Collections Framework, generics, and advanced data manipulation techniques.
+
+Create a comprehensive student management system using Java collections:
+- Replace arrays with appropriate Collection class called ArrayList
+- Add search and sorting functionality
+- Create custom comparators for different sorting criteria
+
+Your program should:
+1. Convert your Student array to use `ArrayList<Student>`
+2. Implement a `StudentRegistry` class that uses:
+  - `ArrayList<Student>` for maintaining insertion order
+4. Implement multiple sorting options with your favorite sorting algorithm (refer to the last lab):
+  - Sort by name (alphabetical)
+  - Sort by matriculation number
+  - Sort by age (if birth date is available)
+5. Add advanced search functionality with your favorite search algortihm:
+  - Find students by partial name match
+  - Find students by matriculation number range
+  - Find students older/younger than specific age
+
+== Requirements
+- Use appropriate Collection interfaces and implementations
+- Implement generic methods with proper type parameters
+- Use lambda expressions for predicates and comparators
+- Demonstrate the difference between List, Set, and Map usage
+- Handle duplicate prevention using Set characteristics
+
+== Assistance
+
+*Collection usage patterns:*
+```java
+public class StudentRegistry {
+    private List<Student> students = new ArrayList<>();
+
+    public void addStudent(Student student) {
+        students.add(student);
+    }
+}
+```
+
+#pagebreak()
+
+= Task 5: Design Patterns Implementation
+Implement common design patterns to improve your student management system's architecture. This task introduces Singleton, Observer, and Factory patterns in a practical context.
+
+Apply design patterns to create a robust and maintainable system:
+- Singleton pattern for system-wide configuration
+- Observer pattern for real-time notifications
+- Factory pattern for creating different types of academic entities
+- Strategy pattern for different grading systems
+
+Your program should:
+1. Implement `ConfigurationManager` using Singleton pattern:
+  - Manage system-wide settings (max students, university info)
+  - Ensure only one instance exists throughout the application
+  - Provide thread-safe access to configuration data
+2. Create Observer pattern for student events:
+  - `StudentObserver` interface for notifications
+  - `StudentSubject` for managing observers
+  - Notify observers when students are added, removed, or modified
+3. Use Factory pattern for academic entities:
+  - `PersonFactory` that creates different types (Student, Professor, Staff)
+  - `CourseFactory` for different course types (Lecture, Lab, Seminar)
+4. Implement Strategy pattern for grading:
+  - Different grading strategies (German grades, ECTS, Pass/Fail)
+  - Allow runtime switching between grading systems
+
+== Requirements
+- Implement at least three different design patterns
+- Demonstrate loose coupling between components
+- Use interfaces to define contracts between classes
+- Show how patterns improve code maintainability and extensibility
+
+== Assistance
+
+*Singleton implementation:*
+```java
+public class ConfigurationManager {
+    private static volatile ConfigurationManager instance;
+    private int maxStudents = 500;
+    private String universityName = "HAW Hamburg";
+
+    private ConfigurationManager() {}
+
+    public static ConfigurationManager getInstance() {
+        if (instance == null) {
+            synchronized (ConfigurationManager.class) {
+                if (instance == null) {
+                    instance = new ConfigurationManager();
+                }
+            }
+        }
+        return instance;
+    }
+
+    public int getMaxStudents() { return maxStudents; }
+    public void setMaxStudents(int max) { this.maxStudents = max; }
+}
+```
+
+*Observer pattern structure:*
+```java
+public interface StudentObserver {
+    void onStudentAdded(Student student);
+    void onStudentRemoved(Student student);
+    void onStudentModified(Student student);
+}
+
+public class StudentRegistry {
+    private List<StudentObserver> observers = new ArrayList<>();
+    private List<Student> students = new ArrayList<>();
+
+    public void addObserver(StudentObserver observer) {
+        observers.add(observer);
+    }
+
+    public void addStudent(Student student) {
+        students.add(student);
+        notifyObservers(observer -> observer.onStudentAdded(student));
+    }
+
+    private void notifyObservers(Consumer<StudentObserver> action) {
+        observers.forEach(action);
+    }
+}
+```
+
+*Factory pattern example:*
+```java
+public abstract class PersonFactory {
+    public static Person createPerson(String type, String firstName, String lastName) {
+        switch (type.toLowerCase()) {
+            case "student":
+                return new Student(firstName, lastName);
+            case "professor":
+                return new Professor(firstName, lastName);
+            case "staff":
+                return new Staff(firstName, lastName);
+            default:
+                throw new IllegalArgumentException("Unknown person type: " + type);
+        }
+    }
+}
+```
+
+#pagebreak()
+
+= Task 6: Exception Handling and File I/O
+Implement comprehensive error handling and data persistence for your student management system. This task covers exception handling, file operations, and data serialization.
+
+Add robust error handling and file-based data persistence:
+- Custom exception classes for domain-specific errors
+- File I/O operations for saving and loading student data
+- Data validation with appropriate exception handling
+- Logging system for tracking system events
+
+Your program should:
+1. Create custom exception classes:
+  - `StudentNotFoundException` for lookup failures
+  - `InvalidMatriculationNumberException` for number conflicts
+  - `StudentRegistryFullException` when capacity is exceeded
+  - `DataPersistenceException` for file operation errors
+2. Implement file-based persistence:
+  - Save student data to CSV and JSON formats
+  - Load student data from files with error recovery
+  - Backup and restore functionality
+3. Add comprehensive input validation:
+  - Validate name formats, matriculation numbers, dates
+  - Handle malformed input gracefully
+  - Provide meaningful error messages to users
+4. Implement logging system:
+  - Log system events, errors, and user actions
+  - Different log levels (INFO, WARNING, ERROR)
+  - Configurable log output (console, file)
+
+== Requirements
+- Create custom exception hierarchy with meaningful inheritance
+- Use try-with-resources for proper resource management
+- Implement both checked and unchecked exceptions appropriately
+- Demonstrate exception propagation and handling at different levels
+- Use proper file I/O with error recovery mechanisms
+
+== Assistance
+
+*Custom exception hierarchy:*
+```java
+public class StudentManagementException extends Exception {
+    public StudentManagementException(String message) {
+        super(message);
+    }
+
+    public StudentManagementException(String message, Throwable cause) {
+        super(message, cause);
+    }
+}
+
+public class StudentNotFoundException extends StudentManagementException {
+    public StudentNotFoundException(int matriculationNumber) {
+        super("Student with matriculation number " + matriculationNumber + " not found");
+    }
+}
+
+public class StudentRegistryFullException extends StudentManagementException {
+    public StudentRegistryFullException(int maxCapacity) {
+        super("Student registry is full. Maximum capacity: " + maxCapacity);
+    }
+}
+```
+
+*File I/O with exception handling:*
+```java
+public class StudentDataManager {
+    public void saveToFile(List<Student> students, String filename)
+            throws DataPersistenceException {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(filename))) {
+            writer.println("MatriculationNumber,FirstName,LastName,Age");
+            for (Student student : students) {
+                writer.printf("%d,%s,%s,%d%n",
+                    student.getMatriculationNumber(),
+                    student.getFirstName(),
+                    student.getLastName(),
+                    student.getAge());
+            }
+        } catch (IOException e) {
+            throw new DataPersistenceException("Failed to save student data", e);
+        }
+    }
+
+    public List<Student> loadFromFile(String filename)
+            throws DataPersistenceException {
+        List<Student> students = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            String line = reader.readLine(); // Skip header
+            while ((line = reader.readLine()) != null) {
+                try {
+                    Student student = parseStudentLine(line);
+                    students.add(student);
+                } catch (IllegalArgumentException e) {
+                    System.err.println("Skipping invalid line: " + line);
+                }
+            }
+        } catch (IOException e) {
+            throw new DataPersistenceException("Failed to load student data", e);
+        }
+        return students;
+    }
+
+    private Student parseStudentLine(String line) {
+        String[] parts = line.split(",");
+        if (parts.length != 4) {
+            throw new IllegalArgumentException("Invalid data format");
+        }
+        // Parse and validate data, throw exceptions for invalid formats
+        return new Student(parts[1], parts[2]);
+    }
+}
+```
+
+*Input validation with exceptions:*
+```java
+public class InputValidator {
+    public static void validateName(String name) throws IllegalArgumentException {
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Name cannot be empty");
+        }
+        if (!name.matches("[a-zA-ZäöüÄÖÜß\\s-]+")) {
+            throw new IllegalArgumentException("Name contains invalid characters");
+        }
+    }
+
+    public static void validateMatriculationNumber(int number)
+            throws InvalidMatriculationNumberException {
+        if (number < 1001 || number > 999999) {
+            throw new InvalidMatriculationNumberException(
+                "Matriculation number must be between 1001 and 999999");
+        }
     }
 }
 ```
