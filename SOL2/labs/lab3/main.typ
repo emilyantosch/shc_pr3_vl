@@ -22,10 +22,10 @@
 )
 
 #show: exercise.project.with(
-  title: "Lab 3 - Extension of Name Management Considering Realistic Student Numbers",
+  title: "Lab 3 - Inheritance, Polymorphism, and Class Hierarchies",
   university: [HAW Hamburg],
   institute: [TI],
-  seminar: [SOL2],
+  seminar: [SO2],
   abstract: [
     This lab introduces inheritance and advanced object-oriented programming concepts through three progressive tasks.
     Students will learn class inheritance by extending the Person class to create a Student class,
@@ -34,15 +34,15 @@
     emphasizing inheritance relationships, code reusability, and polymorphic behavior.
   ],
   show-outline: true,
-  author: "Emily Antosch",
+  author: "Emily Antosch & Furkan Yildirim & Julian Moldenhauer",
   show-solutions: false,
 )
 
 #memo[
-  == Submission Deadline
+  #heading(numbering: none)[Submission Deadline]
   Deadline to upload the solutions for all tasks is Saturday, 11:59 pm before the lab date.
 
-  == General Information
+  #heading(numbering: none)[General Information]
   The following tasks are to be worked on in fixed teams of two. Each team member must be able to explain all solutions. Please submit only one solution for each team of two. The submission must be a PDF file in our Moodle room with the name and matriculation number. Solutions must be in digital format with intermediate steps and detailed explanations (no handwritten scans). You can use any tool or drawing program of your choice to create the diagrams. If you have questions or need support, use the forum in our Moodle room and help each other.
 ]
 

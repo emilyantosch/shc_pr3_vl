@@ -96,6 +96,37 @@
   #memo[If you don't understand something, please ask immediately! I'm more than happy to repeat any part of the lecture!]
 ]
 
+== Laboratory Sessions
+#slide[
+  - There will be *4 labs* throughout the semester.
+  - *Successful participation in the labs is mandatory* for taking the exam.
+  - You will work in *teams of two*.
+  - Lab selection happens in *myHAW*.
+
+  #warning[Without successful lab participation, you cannot take the exam!]
+]
+
+== Lab Preparation and Participation
+#slide[
+  - Each lab requires you to *prepare the tasks beforehand*.
+  - If you struggle with some tasks:
+    - You still need to understand what you did and what the task entails.
+    - Lab lecturers will help you complete tasks you couldn't finish.
+
+  #memo[Preparation is key! Come to the lab with questions, not blank pages.]
+]
+
+== Lab Presentations
+#slide[
+  - You must *present at least two tasks* during the semester to your lab class.
+  - Important points:
+    - You do *not* have full authority over which tasks you present.
+    - *Don't wait* until the last lab to present both tasks.
+    - Be prepared to present any task you've worked on.
+
+  #tip[Start presenting early in the semester to reduce pressure later!]
+]
+
 == Lecture Focus
 #slide[
   - We want to build upon your prior knowledge.
