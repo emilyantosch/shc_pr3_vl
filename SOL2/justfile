@@ -1,29 +1,34 @@
 # Justfile for compiling all Typst files in the project
 
 # Compile all Typst files (labs, slides, and exams)
-compile_all: compile_labs compile_slides compile_exams
+compile_all rev: (compile_labs rev) (compile_slides rev) compile_exams
 
-# Compile all lab exercises
-compile_labs:
-    @echo "Compiling lab exercises..."
-    typst compile --root ~/projects/projects/shc_pr3_vl/SOL2/ labs/lab1/main.typ labs/lab1/{{ datetime("%Y%m%d") }}_lab1_antosch_rev01.pdf
-    typst compile --root ~/projects/projects/shc_pr3_vl/SOL2/ labs/lab2/main.typ labs/lab2/{{ datetime("%Y%m%d") }}_lab2_antosch_rev01.pdf
-    typst compile --root ~/projects/projects/shc_pr3_vl/SOL2/ labs/lab3/main.typ labs/lab3/{{ datetime("%Y%m%d") }}_lab3_antosch_rev01.pdf
-    typst compile --root ~/projects/projects/shc_pr3_vl/SOL2/ labs/lab4/main.typ labs/lab4/{{ datetime("%Y%m%d") }}_lab4_antosch_rev01.pdf
+# Compile all lab exercises with and without solutions
+compile_labs rev:
+    @echo "Compiling lab exercises with solutions..."
+    typst compile --root ~/projects/projects/shc_pr3_vl/SOL2/ --input solution=true labs/lab1/main.typ labs/lab1/{{ datetime("%Y%m%d") }}_lab1_antosch_solution_rev{{rev}}.pdf
+    typst compile --root ~/projects/projects/shc_pr3_vl/SOL2/ --input solution=true labs/lab2/main.typ labs/lab2/{{ datetime("%Y%m%d") }}_lab2_antosch_solution_rev{{rev}}.pdf
+    typst compile --root ~/projects/projects/shc_pr3_vl/SOL2/ --input solution=true labs/lab3/main.typ labs/lab3/{{ datetime("%Y%m%d") }}_lab3_antosch_solution_rev{{rev}}.pdf
+    typst compile --root ~/projects/projects/shc_pr3_vl/SOL2/ --input solution=true labs/lab4/main.typ labs/lab4/{{ datetime("%Y%m%d") }}_lab4_antosch_solution_rev{{rev}}.pdf
+    @echo "Compiling lab exercises without solutions..."
+    typst compile --root ~/projects/projects/shc_pr3_vl/SOL2/ --input solution=false labs/lab1/main.typ labs/lab1/{{ datetime("%Y%m%d") }}_lab1_antosch_rev{{rev}}.pdf
+    typst compile --root ~/projects/projects/shc_pr3_vl/SOL2/ --input solution=false labs/lab2/main.typ labs/lab2/{{ datetime("%Y%m%d") }}_lab2_antosch_rev{{rev}}.pdf
+    typst compile --root ~/projects/projects/shc_pr3_vl/SOL2/ --input solution=false labs/lab3/main.typ labs/lab3/{{ datetime("%Y%m%d") }}_lab3_antosch_rev{{rev}}.pdf
+    typst compile --root ~/projects/projects/shc_pr3_vl/SOL2/ --input solution=false labs/lab4/main.typ labs/lab4/{{ datetime("%Y%m%d") }}_lab4_antosch_rev{{rev}}.pdf
 
 # Compile all slide sets
-compile_slides:
+compile_slides rev:
     @echo "Compiling slides..."
-    typst compile --root ~/projects/projects/shc_pr3_vl/SOL2/ slides_1/main.typ slides_1/{{ datetime("%Y%m%d") }}_lab1_antosch_rev01.pdf
-    typst compile --root ~/projects/projects/shc_pr3_vl/SOL2/ slides_2/main.typ slides_2/{{ datetime("%Y%m%d") }}_lab2_antosch_rev01.pdf
-    typst compile --root ~/projects/projects/shc_pr3_vl/SOL2/ slides_3/main.typ slides_3/{{ datetime("%Y%m%d") }}_lab3_antosch_rev01.pdf
-    typst compile --root ~/projects/projects/shc_pr3_vl/SOL2/ slides_4/main.typ slides_4/{{ datetime("%Y%m%d") }}_lab4_antosch_rev01.pdf
-    typst compile --root ~/projects/projects/shc_pr3_vl/SOL2/ slides_5/main.typ slides_5/{{ datetime("%Y%m%d") }}_lab5_antosch_rev01.pdf
-    typst compile --root ~/projects/projects/shc_pr3_vl/SOL2/ slides_6/main.typ slides_6/{{ datetime("%Y%m%d") }}_lab6_antosch_rev01.pdf
-    typst compile --root ~/projects/projects/shc_pr3_vl/SOL2/ slides_7/main.typ slides_7/{{ datetime("%Y%m%d") }}_lab7_antosch_rev01.pdf
-    typst compile --root ~/projects/projects/shc_pr3_vl/SOL2/ slides_8/main.typ slides_8/{{ datetime("%Y%m%d") }}_lab8_antosch_rev01.pdf
-    typst compile --root ~/projects/projects/shc_pr3_vl/SOL2/ slides_9/main.typ slides_9/{{ datetime("%Y%m%d") }}_lab9_antosch_rev01.pdf
-    typst compile --root ~/projects/projects/shc_pr3_vl/SOL2/ slides_10/main.typ slides_10/{{ datetime("%Y%m%d") }}_lab10_antosch_rev01.pdf
+    typst compile --root ~/projects/projects/shc_pr3_vl/SOL2/ slides_1/main.typ slides_1/{{ datetime("%Y%m%d") }}_slides1_antosch_rev{{rev}}.pdf
+    typst compile --root ~/projects/projects/shc_pr3_vl/SOL2/ slides_2/main.typ slides_2/{{ datetime("%Y%m%d") }}_slides2_antosch_rev{{rev}}.pdf
+    typst compile --root ~/projects/projects/shc_pr3_vl/SOL2/ slides_3/main.typ slides_3/{{ datetime("%Y%m%d") }}_slides3_antosch_rev{{rev}}.pdf
+    typst compile --root ~/projects/projects/shc_pr3_vl/SOL2/ slides_4/main.typ slides_4/{{ datetime("%Y%m%d") }}_slides4_antosch_rev{{rev}}.pdf
+    typst compile --root ~/projects/projects/shc_pr3_vl/SOL2/ slides_5/main.typ slides_5/{{ datetime("%Y%m%d") }}_slides5_antosch_rev{{rev}}.pdf
+    typst compile --root ~/projects/projects/shc_pr3_vl/SOL2/ slides_6/main.typ slides_6/{{ datetime("%Y%m%d") }}_slides6_antosch_rev{{rev}}.pdf
+    typst compile --root ~/projects/projects/shc_pr3_vl/SOL2/ slides_7/main.typ slides_7/{{ datetime("%Y%m%d") }}_slides7_antosch_rev{{rev}}.pdf
+    typst compile --root ~/projects/projects/shc_pr3_vl/SOL2/ slides_8/main.typ slides_8/{{ datetime("%Y%m%d") }}_slides8_antosch_rev{{rev}}.pdf
+    typst compile --root ~/projects/projects/shc_pr3_vl/SOL2/ slides_9/main.typ slides_9/{{ datetime("%Y%m%d") }}_slides9_antosch_rev{{rev}}.pdf
+    typst compile --root ~/projects/projects/shc_pr3_vl/SOL2/ slides_10/main.typ slides_10/{{ datetime("%Y%m%d") }}_slides10_antosch_rev{{rev}}.pdf
 
 # Compile all exams
 compile_exams:

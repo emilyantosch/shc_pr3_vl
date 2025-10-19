@@ -7,6 +7,8 @@
 #import "@preview/codly:1.0.0": *
 #show: codly-init.with()
 
+#let solution = true;
+
 #codly(
   languages: (
     java: (
@@ -106,6 +108,150 @@ public class InputExample {
   }
 }
 ```
+#if solution [
+== Solution
+
+*Person.java:*
+```java
+public class Person {
+  String first_name;
+  String last_name;
+  int day;
+  int month;
+  int year;
+
+  // Constructor to initialize a person
+  public Person(String firstName, String lastName, int d, int m, int y) {
+    this.first_name = firstName;
+    this.last_name = lastName;
+    this.day = d;
+    this.month = m;
+    this.year = y;
+  }
+
+  // Display person information
+  public void displayInfo() {
+    System.out.println("Name: " + first_name + " " + last_name);
+    System.out.println("Name change date: " + day + "." + month + "." + year);
+  }
+
+  // Check if three years have passed since last name change
+  public boolean canChangeName(int newDay, int newMonth, int newYear) {
+    // Calculate years difference
+    int yearsDiff = newYear - this.year;
+
+    // If less than 3 years, return false
+    if (yearsDiff < 3) {
+      return false;
+    }
+
+    // If exactly 3 years, check month and day
+    if (yearsDiff == 3) {
+      if (newMonth < this.month) {
+        return false;
+      }
+      if (newMonth == this.month && newDay < this.day) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  // Change person's name
+  public void changeName(String newFirst, String newLast, int d, int m, int y) {
+    this.first_name = newFirst;
+    this.last_name = newLast;
+    this.day = d;
+    this.month = m;
+    this.year = y;
+  }
+}
+```
+
+*NameManagement.java:*
+```java
+import java.util.Scanner;
+
+public class NameManagement {
+  public static void main(String[] args) {
+    Scanner scanner = new Scanner(System.in);
+
+    // Hamburg greeting
+    System.out.println("Moin!");
+
+    // Create three Person objects with initial data
+    Person person_1 = new Person("Max", "Mustermann", 1, 1, 2020);
+    Person person_2 = new Person("Anna", "Schmidt", 15, 6, 2019);
+    Person person_3 = new Person("Peter", "Mueller", 20, 12, 2021);
+
+    boolean running = true;
+
+    while (running) {
+      System.out.println("\n=== Name Management System ===");
+      System.out.println("Which person wants to change their name?");
+      System.out.println("Enter 1, 2, or 3 for the person");
+      System.out.println("Enter 4 to display all persons");
+      System.out.println("Enter 0 to exit");
+      System.out.print("Your choice: ");
+
+      int choice = scanner.nextInt();
+      scanner.nextLine(); // Consume newline
+
+      if (choice == 0) {
+        System.out.println("Program terminated.");
+        running = false;
+      } else if (choice == 4) {
+        // Display all persons
+        System.out.println("\n=== All Persons ===");
+        System.out.println("\nPerson 1:");
+        person_1.displayInfo();
+        System.out.println("\nPerson 2:");
+        person_2.displayInfo();
+        System.out.println("\nPerson 3:");
+        person_3.displayInfo();
+      } else if (choice >= 1 && choice <= 3) {
+        // Select the person to change
+        Person selectedPerson = null;
+        if (choice == 1) selectedPerson = person_1;
+        else if (choice == 2) selectedPerson = person_2;
+        else if (choice == 3) selectedPerson = person_3;
+
+        // Get new name information
+        System.out.print("Enter new first name: ");
+        String newFirst = scanner.nextLine();
+
+        System.out.print("Enter new last name: ");
+        String newLast = scanner.nextLine();
+
+        System.out.print("Enter day of name change: ");
+        int newDay = scanner.nextInt();
+
+        System.out.print("Enter month of name change: ");
+        int newMonth = scanner.nextInt();
+
+        System.out.print("Enter year of name change: ");
+        int newYear = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+
+        // Check if three years have passed
+        if (selectedPerson.canChangeName(newDay, newMonth, newYear)) {
+          selectedPerson.changeName(newFirst, newLast, newDay, newMonth, newYear);
+          System.out.println("\nName change successful!");
+          selectedPerson.displayInfo();
+        } else {
+          System.out.println("\nError: Three years have not passed since last name change!");
+        }
+      } else {
+        System.out.println("Invalid choice!");
+      }
+    }
+
+    scanner.close();
+  }
+}
+```
+]
 
 #pagebreak()
 
@@ -162,6 +308,56 @@ while (gameRunning) {
     }
 }
 ```
+
+#if solution [
+== Solution
+
+```java
+import java.util.Random;
+import java.util.Scanner;
+
+public class NumberGuessingGame {
+  public static void main(String[] args) {
+    Scanner scanner = new Scanner(System.in);
+    Random random = new Random();
+
+    // Generate random number between 1 and 100
+    int targetNumber = random.nextInt(100) + 1;
+    int attempts = 0;
+    boolean guessedCorrectly = false;
+
+    // Welcome message
+    System.out.println("=== Number Guessing Game ===");
+    System.out.println("I have chosen a number between 1 and 100.");
+    System.out.println("Try to guess it!");
+
+    // Game loop
+    while (!guessedCorrectly) {
+      System.out.print("\nEnter your guess: ");
+      int userGuess = scanner.nextInt();
+      attempts++;
+
+      // Check the guess
+      if (userGuess < targetNumber) {
+        System.out.println("Too small!");
+      } else if (userGuess > targetNumber) {
+        System.out.println("Too big!");
+      } else {
+        System.out.println("You guessed it!");
+        guessedCorrectly = true;
+      }
+    }
+
+    // Display final message
+    System.out.println("\nCongratulations! You found the number " + targetNumber);
+    System.out.println("It took you " + attempts + " attempts.");
+
+    scanner.close();
+  }
+}
+```
+]
+
 
 #pagebreak()
 
@@ -250,6 +446,69 @@ int getValue(char c) {
 }
 ```
 
+== Solution
+#if solution [
+```java
+import java.util.Scanner;
+
+public class RomanNumeralConverter {
+  public static void main(String[] args) {
+    Scanner scanner = new Scanner(System.in);
+
+    System.out.println("=== Roman Numeral Converter ===");
+    System.out.print("Enter a Roman numeral: ");
+    String roman = scanner.nextLine().toUpperCase();
+
+    int result = convertRomanToInteger(roman);
+    System.out.println(roman + " = " + result);
+
+    scanner.close();
+  }
+
+  // Convert a Roman numeral character to its integer value
+  public static int getValue(char romanChar) {
+    switch (romanChar) {
+      case 'I': return 1;
+      case 'V': return 5;
+      case 'X': return 10;
+      case 'L': return 50;
+      case 'C': return 100;
+      case 'D': return 500;
+      case 'M': return 1000;
+      default: return 0;
+    }
+  }
+
+  // Convert a full Roman numeral string to an integer
+  public static int convertRomanToInteger(String roman) {
+    int total = 0;
+
+    for (int i = 0; i < roman.length(); i++) {
+      int currentValue = getValue(roman.charAt(i));
+
+      // Check if we need to subtract (when current < next)
+      if (i < roman.length() - 1) {
+        int nextValue = getValue(roman.charAt(i + 1));
+
+        if (currentValue < nextValue) {
+          // Subtraction case (e.g., IV, IX, XL)
+          total -= currentValue;
+        } else {
+          // Normal addition
+          total += currentValue;
+        }
+      } else {
+        // Last character, always add
+        total += currentValue;
+      }
+    }
+
+    return total;
+  }
+}
+```
+]
+
 #pagebreak()
 
 = Task 4: Grade Manager
@@ -322,6 +581,92 @@ Lowest Grade: 67.0
 Students Passed: 5
 Students Failed: 0
 ```
+
+== Solution
+#if solution [
+```java
+import java.util.Scanner;
+
+public class GradeManager {
+  public static void main(String[] args) {
+    Scanner scanner = new Scanner(System.in);
+
+    // Ask for number of students
+    System.out.print("How many students do you want to enter grades for? ");
+    int numStudents = scanner.nextInt();
+
+    // Create array to store grades
+    double[] grades = new double[numStudents];
+
+    // Input grades
+    for (int i = 0; i < numStudents; i++) {
+      System.out.print("Enter grade for student " + (i + 1) + ": ");
+      grades[i] = scanner.nextDouble();
+    }
+
+    // Calculate statistics
+    double sum = 0;
+    double highest = grades[0];
+    double lowest = grades[0];
+    int passed = 0;
+    int failed = 0;
+
+    for (int i = 0; i < numStudents; i++) {
+      sum += grades[i];
+
+      if (grades[i] > highest) {
+        highest = grades[i];
+      }
+
+      if (grades[i] < lowest) {
+        lowest = grades[i];
+      }
+
+      if (grades[i] >= 60) {
+        passed++;
+      } else {
+        failed++;
+      }
+    }
+
+    double average = sum / numStudents;
+
+    // Display grade report
+    System.out.println("\n=== Grade Report ===");
+    for (int i = 0; i < numStudents; i++) {
+      String letterGrade = getLetterGrade(grades[i]);
+      System.out.println("Student " + (i + 1) + ": " + grades[i] + " (" + letterGrade + ")");
+    }
+
+    // Display statistics
+    System.out.println("\n=== Statistics ===");
+    System.out.println("Average Grade: " + average);
+    System.out.println("Highest Grade: " + highest);
+    System.out.println("Lowest Grade: " + lowest);
+    System.out.println("Students Passed: " + passed);
+    System.out.println("Students Failed: " + failed);
+
+    scanner.close();
+  }
+
+  // Convert numerical grade to letter grade
+  public static String getLetterGrade(double grade) {
+    if (grade >= 90) {
+      return "A";
+    } else if (grade >= 80) {
+      return "B";
+    } else if (grade >= 70) {
+      return "C";
+    } else if (grade >= 60) {
+      return "D";
+    } else {
+      return "F";
+    }
+  }
+}
+```
+]
+
 
 #pagebreak()
 
@@ -397,6 +742,103 @@ Result: 10.0 / 0.0 = 0.0
 Choose an operation (1-5): 5
 Thank you for using the calculator!
 ```
+
+== Solution
+#if solution [
+```java
+import java.util.Scanner;
+
+public class SimpleCalculator {
+  public static void main(String[] args) {
+    Scanner scanner = new Scanner(System.in);
+    boolean running = true;
+
+    while (running) {
+      // Display menu
+      System.out.println("\n=== Simple Calculator ===");
+      System.out.println("1. Addition (+)");
+      System.out.println("2. Subtraction (-)");
+      System.out.println("3. Multiplication (*)");
+      System.out.println("4. Division (/)");
+      System.out.println("5. Exit");
+      System.out.print("Choose an operation (1-5): ");
+
+      int choice = scanner.nextInt();
+
+      // Exit if user chooses 5
+      if (choice == 5) {
+        System.out.println("Thank you for using the calculator!");
+        running = false;
+        continue;
+      }
+
+      // Get numbers from user
+      System.out.print("Enter first number: ");
+      double num1 = scanner.nextDouble();
+
+      System.out.print("Enter second number: ");
+      double num2 = scanner.nextDouble();
+
+      // Perform operation based on choice
+      double result = 0;
+      String operation = "";
+
+      switch (choice) {
+        case 1:
+          result = add(num1, num2);
+          operation = "+";
+          break;
+        case 2:
+          result = subtract(num1, num2);
+          operation = "-";
+          break;
+        case 3:
+          result = multiply(num1, num2);
+          operation = "*";
+          break;
+        case 4:
+          if (num2 == 0) {
+            System.out.println("Error: Division by zero!");
+            result = 0;
+          } else {
+            result = divide(num1, num2);
+          }
+          operation = "/";
+          break;
+        default:
+          System.out.println("Invalid choice!");
+          continue;
+      }
+
+      // Display result
+      System.out.println("Result: " + num1 + " " + operation + " " + num2 + " = " + result);
+    }
+
+    scanner.close();
+  }
+
+  // Method for addition
+  public static double add(double a, double b) {
+    return a + b;
+  }
+
+  // Method for subtraction
+  public static double subtract(double a, double b) {
+    return a - b;
+  }
+
+  // Method for multiplication
+  public static double multiply(double a, double b) {
+    return a * b;
+  }
+
+  // Method for division
+  public static double divide(double a, double b) {
+    return a / b;
+  }
+}
+```
+]
 
 #pagebreak()
 
@@ -474,6 +916,94 @@ Word Statistics:
 Sentence Statistics:
 - Total number of sentences: 2
 ```
+
+== Solution
+#if solution [
+```java
+import java.util.Scanner;
+
+public class WordCounter {
+  public static void main(String[] args) {
+    Scanner scanner = new Scanner(System.in);
+
+    System.out.println("Enter a sentence or paragraph to analyze:");
+    String text = scanner.nextLine();
+
+    // Initialize counters
+    int totalChars = text.length();
+    int charsWithoutSpaces = 0;
+    int vowelCount = 0;
+    int consonantCount = 0;
+    int wordCount = 0;
+    int sentenceCount = 0;
+    String longestWord = "";
+
+    // Count characters, vowels, and consonants
+    for (int i = 0; i < text.length(); i++) {
+      char c = text.charAt(i);
+
+      // Count characters without spaces
+      if (c != ' ') {
+        charsWithoutSpaces++;
+      }
+
+      // Count vowels and consonants
+      if (Character.isLetter(c)) {
+        char lowerChar = Character.toLowerCase(c);
+        if (isVowel(lowerChar)) {
+          vowelCount++;
+        } else {
+          consonantCount++;
+        }
+      }
+
+      // Count sentences (., !, ?)
+      if (c == '.' || c == '!' || c == '?') {
+        sentenceCount++;
+      }
+    }
+
+    // Count words and find longest word
+    String[] words = text.split("\\s+");
+    wordCount = words.length;
+
+    for (String word : words) {
+      // Remove punctuation from word for comparison
+      String cleanWord = word.replaceAll("[^a-zA-Z]", "");
+
+      if (cleanWord.length() > longestWord.length()) {
+        longestWord = cleanWord;
+      }
+    }
+
+    // Display results
+    System.out.println("\n=== TEXT ANALYSIS REPORT ===");
+    System.out.println("Original text: \"" + text + "\"");
+
+    System.out.println("\nCharacter Statistics:");
+    System.out.println("- Total characters (with spaces): " + totalChars);
+    System.out.println("- Total characters (without spaces): " + charsWithoutSpaces);
+    System.out.println("- Number of vowels: " + vowelCount);
+    System.out.println("- Number of consonants: " + consonantCount);
+
+    System.out.println("\nWord Statistics:");
+    System.out.println("- Total number of words: " + wordCount);
+    System.out.println("- Longest word: \"" + longestWord + "\"");
+
+    System.out.println("\nSentence Statistics:");
+    System.out.println("- Total number of sentences: " + sentenceCount);
+
+    scanner.close();
+  }
+
+  // Check if a character is a vowel
+  public static boolean isVowel(char c) {
+    return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u';
+  }
+}
+```
+]
+
 
 
 = Lab Execution

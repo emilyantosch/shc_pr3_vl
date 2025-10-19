@@ -79,7 +79,7 @@
 #slide[
   - Emily Lucia Antosch, 25 years old
   - Bachelor's degree in Electrical and Information Technology
-  - Currently working as an application developer at NVL
+  - Backend Software Engineer at MOIA
   - Currently doing my Master's degree in Practical Computer Science
   - Email: emilylucia.antosch\@haw-hamburg.de
 
@@ -87,7 +87,7 @@
 ]
 == Course Schedule
 #slide[
-  - Lectures are divided into sessions on Tuesdays and Thursdays.
+  - Lectures are on Wednesday between 15:55 and 19:15.
     - At the beginning, there are many sessions designed to prepare you for the lab.
   - I would ask you to actively participate in the lectures.
   - There will be small questions and tasks that you can answer live and
@@ -439,7 +439,6 @@
       4. Click "Create"
   ]
 ]
-
 #slide[
   #task[
     - Create package

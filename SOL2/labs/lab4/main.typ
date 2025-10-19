@@ -7,6 +7,9 @@
 #import "@preview/codly:1.0.0": *
 #show: codly-init.with()
 
+#let solution = true;
+
+
 #codly(
   languages: (
     java: (
@@ -94,6 +97,129 @@ public class MazeSolver {
     private int endRow = 5, endCol = 5;
 }
 ```
+
+#if solution [
+== Solution
+
+```java
+public class MazeSolver {
+  private char[][] maze;
+  private int startRow, startCol;
+  private int endRow, endCol;
+  private static final char WALL = '#';
+  private static final char PATH = ' ';
+  private static final char VISITED = '.';
+  private static final char SOLUTION = '*';
+
+  public MazeSolver() {
+    // Initialize maze based on the lab image
+    this.maze = new char[][] {
+        {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
+        {'#', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', '#'},
+        {'#', ' ', '#', ' ', '#', ' ', '#', '#', ' ', '#'},
+        {'#', ' ', '#', ' ', ' ', ' ', ' ', '#', ' ', '#'},
+        {'#', ' ', '#', '#', '#', '#', ' ', '#', ' ', '#'},
+        {'#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
+        {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#'}
+    };
+
+    // Mouse starts at top-left corner
+    this.startRow = 1;
+    this.startCol = 1;
+
+    // Cheese is at bottom-right corner
+    this.endRow = 5;
+    this.endCol = 8;
+  }
+
+  // Display the current maze state
+  public void displayMaze() {
+    for (int i = 0; i < maze.length; i++) {
+      for (int j = 0; j < maze[i].length; j++) {
+        System.out.print(maze[i][j] + " ");
+      }
+      System.out.println();
+    }
+    System.out.println();
+  }
+
+  // Check if a position is valid and can be visited
+  private boolean isValid(int row, int col) {
+    // Check boundaries
+    if (row < 0 || row >= maze.length || col < 0 || col >= maze[0].length) {
+      return false;
+    }
+
+    // Check if it's not a wall and not already visited
+    return maze[row][col] == PATH || maze[row][col] == SOLUTION;
+  }
+
+  // Recursive pathfinding method
+  public boolean findPath(int row, int col) {
+    // Base case: reached the cheese!
+    if (row == endRow && col == endCol) {
+      maze[row][col] = SOLUTION;
+      return true;
+    }
+
+    // Check if current position is valid
+    if (!isValid(row, col)) {
+      return false;
+    }
+
+    // Mark current position as part of solution path
+    maze[row][col] = SOLUTION;
+
+    // Try all four directions: up, down, left, right
+    // Try moving up
+    if (findPath(row - 1, col)) {
+      return true;
+    }
+
+    // Try moving down
+    if (findPath(row + 1, col)) {
+      return true;
+    }
+
+    // Try moving left
+    if (findPath(row, col - 1)) {
+      return true;
+    }
+
+    // Try moving right
+    if (findPath(row, col + 1)) {
+      return true;
+    }
+
+    // Backtrack: this path doesn't lead to cheese
+    maze[row][col] = VISITED;
+    return false;
+  }
+
+  // Solve the maze and display the solution
+  public void solve() {
+    System.out.println("=== Maze Pathfinding ===\n");
+    System.out.println("Initial Maze:");
+    displayMaze();
+
+    System.out.println("Finding path from (" + startRow + ", " + startCol +
+                       ") to (" + endRow + ", " + endCol + ")...\n");
+
+    if (findPath(startRow, startCol)) {
+      System.out.println("Path found! (* = solution path, . = tried but failed)");
+      displayMaze();
+    } else {
+      System.out.println("No path found!");
+    }
+  }
+
+  public static void main(String[] args) {
+    MazeSolver solver = new MazeSolver();
+    solver.solve();
+  }
+}
+```
+]
 
 #pagebreak()
 
@@ -192,6 +318,164 @@ private int countNeighbors(int row, int col) {
 }
 ```
 
+#if solution [
+== Solution
+
+```java
+public class GameOfLife {
+  private boolean[][] grid;
+  private int rows;
+  private int cols;
+  private int generation;
+
+  // Constructor
+  public GameOfLife(int rows, int cols) {
+    this.rows = rows;
+    this.cols = cols;
+    this.grid = new boolean[rows][cols];
+    this.generation = 0;
+  }
+
+  // Print the current grid
+  public void printGrid() {
+    System.out.println("Generation " + generation + ":");
+    for (int i = 0; i < rows; i++) {
+      for (int j = 0; j < cols; j++) {
+        System.out.print(grid[i][j] ? "█ " : "· ");
+      }
+      System.out.println();
+    }
+    System.out.println();
+  }
+
+  // Initialize with a glider pattern
+  public void initGlider(int startRow, int startCol) {
+    grid[startRow][startCol + 1] = true;
+    grid[startRow + 1][startCol + 2] = true;
+    grid[startRow + 2][startCol] = true;
+    grid[startRow + 2][startCol + 1] = true;
+    grid[startRow + 2][startCol + 2] = true;
+  }
+
+  // Initialize with a blinker pattern (oscillator)
+  public void initBlinker(int startRow, int startCol) {
+    grid[startRow][startCol] = true;
+    grid[startRow][startCol + 1] = true;
+    grid[startRow][startCol + 2] = true;
+  }
+
+  // Initialize with random pattern
+  public void initRandom(double density) {
+    for (int i = 0; i < rows; i++) {
+      for (int j = 0; j < cols; j++) {
+        grid[i][j] = Math.random() < density;
+      }
+    }
+  }
+
+  // Count live neighbors for a cell
+  private int countNeighbors(int row, int col) {
+    int count = 0;
+
+    // Check all 8 surrounding cells
+    for (int i = -1; i <= 1; i++) {
+      for (int j = -1; j <= 1; j++) {
+        // Skip the cell itself
+        if (i == 0 && j == 0) continue;
+
+        int newRow = row + i;
+        int newCol = col + j;
+
+        // Check boundaries and count live neighbors
+        if (newRow >= 0 && newRow < rows &&
+            newCol >= 0 && newCol < cols &&
+            grid[newRow][newCol]) {
+          count++;
+        }
+      }
+    }
+
+    return count;
+  }
+
+  // Calculate next generation
+  public void nextGeneration() {
+    boolean[][] newGrid = new boolean[rows][cols];
+
+    // Apply Conway's rules to each cell
+    for (int i = 0; i < rows; i++) {
+      for (int j = 0; j < cols; j++) {
+        int neighbors = countNeighbors(i, j);
+
+        if (grid[i][j]) {
+          // Cell is alive
+          // Rule 1 & 3: Cell survives if it has 2 or 3 neighbors
+          newGrid[i][j] = (neighbors == 2 || neighbors == 3);
+        } else {
+          // Cell is dead
+          // Rule 4: Cell becomes alive if it has exactly 3 neighbors
+          newGrid[i][j] = (neighbors == 3);
+        }
+      }
+    }
+
+    // Update grid
+    grid = newGrid;
+    generation++;
+  }
+
+  // Count total living cells
+  public int countLivingCells() {
+    int count = 0;
+    for (int i = 0; i < rows; i++) {
+      for (int j = 0; j < cols; j++) {
+        if (grid[i][j]) count++;
+      }
+    }
+    return count;
+  }
+
+  // Run simulation for specified number of generations
+  public void simulate(int generations, int delay) {
+    for (int i = 0; i < generations; i++) {
+      printGrid();
+      System.out.println("Living cells: " + countLivingCells());
+
+      // Pause between generations
+      try {
+        Thread.sleep(delay);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+
+      nextGeneration();
+    }
+
+    // Print final state
+    printGrid();
+    System.out.println("Living cells: " + countLivingCells());
+  }
+
+  public static void main(String[] args) {
+    // Create a 25x25 grid
+    GameOfLife game = new GameOfLife(25, 25);
+
+    System.out.println("=== Conway's Game of Life ===\n");
+
+    // Initialize with a glider
+    System.out.println("Initializing with Glider pattern...\n");
+    game.initGlider(5, 5);
+
+    // Add a blinker
+    game.initBlinker(10, 15);
+
+    // Run simulation for 30 generations with 500ms delay
+    game.simulate(30, 500);
+  }
+}
+```
+]
+
 #pagebreak()
 
 = Task 3: Simple GUI Calculator
@@ -288,6 +572,201 @@ public class Calculator extends JFrame implements ActionListener {
     }
 }
 ```
+
+#if solution [
+== Solution
+
+```java
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class Calculator extends JFrame implements ActionListener {
+  private JTextField display;
+  private JButton[] numberButtons;
+  private JButton[] operationButtons;
+  private JButton addButton, subButton, mulButton, divButton;
+  private JButton decimalButton, equalsButton, clearButton, deleteButton;
+  private double num1 = 0, num2 = 0, result = 0;
+  private char operator;
+
+  public Calculator() {
+    // Frame setup
+    setTitle("Simple Calculator");
+    setSize(420, 550);
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    setLayout(null);
+    setResizable(false);
+
+    // Display field
+    display = new JTextField();
+    display.setBounds(50, 25, 300, 50);
+    display.setFont(new Font("Arial", Font.BOLD, 24));
+    display.setEditable(false);
+    display.setHorizontalAlignment(JTextField.RIGHT);
+    add(display);
+
+    // Create number buttons (0-9)
+    numberButtons = new JButton[10];
+    for (int i = 0; i < 10; i++) {
+      numberButtons[i] = new JButton(String.valueOf(i));
+      numberButtons[i].addActionListener(this);
+      numberButtons[i].setFont(new Font("Arial", Font.BOLD, 18));
+      numberButtons[i].setFocusable(false);
+    }
+
+    // Create operation buttons
+    addButton = new JButton("+");
+    subButton = new JButton("-");
+    mulButton = new JButton("*");
+    divButton = new JButton("/");
+    decimalButton = new JButton(".");
+    equalsButton = new JButton("=");
+    clearButton = new JButton("C");
+    deleteButton = new JButton("Del");
+
+    operationButtons = new JButton[] {
+        addButton, subButton, mulButton, divButton,
+        decimalButton, equalsButton, clearButton, deleteButton
+    };
+
+    // Add action listeners and formatting to operation buttons
+    for (JButton button : operationButtons) {
+      button.addActionListener(this);
+      button.setFont(new Font("Arial", Font.BOLD, 18));
+      button.setFocusable(false);
+    }
+
+    // Position delete and clear buttons
+    deleteButton.setBounds(50, 90, 145, 50);
+    clearButton.setBounds(205, 90, 145, 50);
+
+    // Create button panel with GridLayout
+    JPanel buttonPanel = new JPanel();
+    buttonPanel.setBounds(50, 150, 300, 300);
+    buttonPanel.setLayout(new GridLayout(4, 4, 10, 10));
+
+    // Add buttons to panel in calculator layout
+    buttonPanel.add(numberButtons[7]);
+    buttonPanel.add(numberButtons[8]);
+    buttonPanel.add(numberButtons[9]);
+    buttonPanel.add(divButton);
+
+    buttonPanel.add(numberButtons[4]);
+    buttonPanel.add(numberButtons[5]);
+    buttonPanel.add(numberButtons[6]);
+    buttonPanel.add(mulButton);
+
+    buttonPanel.add(numberButtons[1]);
+    buttonPanel.add(numberButtons[2]);
+    buttonPanel.add(numberButtons[3]);
+    buttonPanel.add(subButton);
+
+    buttonPanel.add(decimalButton);
+    buttonPanel.add(numberButtons[0]);
+    buttonPanel.add(equalsButton);
+    buttonPanel.add(addButton);
+
+    add(buttonPanel);
+    add(deleteButton);
+    add(clearButton);
+
+    setVisible(true);
+  }
+
+  @Override
+  public void actionPerformed(ActionEvent e) {
+    // Handle number button clicks
+    for (int i = 0; i < 10; i++) {
+      if (e.getSource() == numberButtons[i]) {
+        display.setText(display.getText() + i);
+      }
+    }
+
+    // Handle decimal button
+    if (e.getSource() == decimalButton) {
+      if (!display.getText().contains(".")) {
+        display.setText(display.getText() + ".");
+      }
+    }
+
+    // Handle operation buttons
+    if (e.getSource() == addButton) {
+      num1 = Double.parseDouble(display.getText());
+      operator = '+';
+      display.setText("");
+    }
+
+    if (e.getSource() == subButton) {
+      num1 = Double.parseDouble(display.getText());
+      operator = '-';
+      display.setText("");
+    }
+
+    if (e.getSource() == mulButton) {
+      num1 = Double.parseDouble(display.getText());
+      operator = '*';
+      display.setText("");
+    }
+
+    if (e.getSource() == divButton) {
+      num1 = Double.parseDouble(display.getText());
+      operator = '/';
+      display.setText("");
+    }
+
+    // Handle equals button
+    if (e.getSource() == equalsButton) {
+      num2 = Double.parseDouble(display.getText());
+
+      switch (operator) {
+        case '+':
+          result = num1 + num2;
+          break;
+        case '-':
+          result = num1 - num2;
+          break;
+        case '*':
+          result = num1 * num2;
+          break;
+        case '/':
+          if (num2 != 0) {
+            result = num1 / num2;
+          } else {
+            display.setText("Error");
+            return;
+          }
+          break;
+      }
+
+      display.setText(String.valueOf(result));
+      num1 = result;
+    }
+
+    // Handle clear button
+    if (e.getSource() == clearButton) {
+      display.setText("");
+      num1 = 0;
+      num2 = 0;
+      result = 0;
+    }
+
+    // Handle delete button
+    if (e.getSource() == deleteButton) {
+      String currentText = display.getText();
+      if (currentText.length() > 0) {
+        display.setText(currentText.substring(0, currentText.length() - 1));
+      }
+    }
+  }
+
+  public static void main(String[] args) {
+    // Run on Event Dispatch Thread
+    SwingUtilities.invokeLater(() -> new Calculator());
+  }
+}
+```
+]
 
 #pagebreak()
 
@@ -407,6 +886,223 @@ public class TicTacToe {
 }
 ```
 
+#if solution [
+== Solution
+
+```java
+import java.util.Random;
+import java.util.Scanner;
+
+public class TicTacToe {
+  private char[][] board;
+  private static final char EMPTY = ' ';
+  private static final char PLAYER = 'X';
+  private static final char COMPUTER = 'O';
+  private Random random;
+
+  public TicTacToe() {
+    board = new char[3][3];
+    random = new Random();
+    // Initialize empty board
+    for (int i = 0; i < 3; i++) {
+      for (int j = 0; j < 3; j++) {
+        board[i][j] = EMPTY;
+      }
+    }
+  }
+
+  // Print the current board
+  public void printBoard() {
+    System.out.println("\n  0 1 2");
+    for (int i = 0; i < 3; i++) {
+      System.out.print(i + " ");
+      for (int j = 0; j < 3; j++) {
+        System.out.print(board[i][j]);
+        if (j < 2) System.out.print("|");
+      }
+      System.out.println();
+      if (i < 2) System.out.println("  -----");
+    }
+    System.out.println();
+  }
+
+  // Check if a position is valid and empty
+  public boolean isValidMove(int row, int col) {
+    return row >= 0 && row < 3 && col >= 0 && col < 3 && board[row][col] == EMPTY;
+  }
+
+  // Make a move
+  public void makeMove(int row, int col, char player) {
+    board[row][col] = player;
+  }
+
+  // Check if someone won
+  public boolean checkWin(char player) {
+    // Check rows
+    for (int i = 0; i < 3; i++) {
+      if (board[i][0] == player && board[i][1] == player && board[i][2] == player) {
+        return true;
+      }
+    }
+
+    // Check columns
+    for (int j = 0; j < 3; j++) {
+      if (board[0][j] == player && board[1][j] == player && board[2][j] == player) {
+        return true;
+      }
+    }
+
+    // Check diagonals
+    if (board[0][0] == player && board[1][1] == player && board[2][2] == player) {
+      return true;
+    }
+    if (board[0][2] == player && board[1][1] == player && board[2][0] == player) {
+      return true;
+    }
+
+    return false;
+  }
+
+  // Check if board is full (draw)
+  public boolean isBoardFull() {
+    for (int i = 0; i < 3; i++) {
+      for (int j = 0; j < 3; j++) {
+        if (board[i][j] == EMPTY) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  // Computer makes a move using simple AI
+  public void computerMove() {
+    // Strategy 1: Try to win
+    for (int i = 0; i < 3; i++) {
+      for (int j = 0; j < 3; j++) {
+        if (board[i][j] == EMPTY) {
+          board[i][j] = COMPUTER;
+          if (checkWin(COMPUTER)) {
+            return; // Winning move found
+          }
+          board[i][j] = EMPTY; // Undo test move
+        }
+      }
+    }
+
+    // Strategy 2: Block player from winning
+    for (int i = 0; i < 3; i++) {
+      for (int j = 0; j < 3; j++) {
+        if (board[i][j] == EMPTY) {
+          board[i][j] = PLAYER;
+          if (checkWin(PLAYER)) {
+            board[i][j] = COMPUTER; // Block the player
+            return;
+          }
+          board[i][j] = EMPTY; // Undo test move
+        }
+      }
+    }
+
+    // Strategy 3: Take center if available
+    if (board[1][1] == EMPTY) {
+      board[1][1] = COMPUTER;
+      return;
+    }
+
+    // Strategy 4: Take a corner
+    int[][] corners = {{0, 0}, {0, 2}, {2, 0}, {2, 2}};
+    for (int[] corner : corners) {
+      if (board[corner[0]][corner[1]] == EMPTY) {
+        board[corner[0]][corner[1]] = COMPUTER;
+        return;
+      }
+    }
+
+    // Strategy 5: Take any available position
+    for (int i = 0; i < 3; i++) {
+      for (int j = 0; j < 3; j++) {
+        if (board[i][j] == EMPTY) {
+          board[i][j] = COMPUTER;
+          return;
+        }
+      }
+    }
+  }
+
+  // Play the game
+  public void play() {
+    Scanner scanner = new Scanner(System.in);
+    boolean gameOver = false;
+
+    System.out.println("=== Tic-Tac-Toe ===");
+    System.out.println("You are X, Computer is O");
+    printBoard();
+
+    while (!gameOver) {
+      // Player's turn
+      boolean validMove = false;
+      while (!validMove) {
+        System.out.print("Enter row (0-2): ");
+        int row = scanner.nextInt();
+        System.out.print("Enter column (0-2): ");
+        int col = scanner.nextInt();
+
+        if (isValidMove(row, col)) {
+          makeMove(row, col, PLAYER);
+          validMove = true;
+        } else {
+          System.out.println("Invalid move! Try again.");
+        }
+      }
+
+      printBoard();
+
+      // Check if player won
+      if (checkWin(PLAYER)) {
+        System.out.println("Congratulations! You win!");
+        gameOver = true;
+        break;
+      }
+
+      // Check for draw
+      if (isBoardFull()) {
+        System.out.println("It's a draw!");
+        gameOver = true;
+        break;
+      }
+
+      // Computer's turn
+      System.out.println("Computer's turn...");
+      computerMove();
+      printBoard();
+
+      // Check if computer won
+      if (checkWin(COMPUTER)) {
+        System.out.println("Computer wins! Better luck next time.");
+        gameOver = true;
+        break;
+      }
+
+      // Check for draw
+      if (isBoardFull()) {
+        System.out.println("It's a draw!");
+        gameOver = true;
+        break;
+      }
+    }
+
+    scanner.close();
+  }
+
+  public static void main(String[] args) {
+    TicTacToe game = new TicTacToe();
+    game.play();
+  }
+}
+```
+]
+
 #pagebreak()
 
 = Task 5: Recursive Fractal Tree Generator
@@ -494,6 +1190,168 @@ public class FractalTree extends JPanel {
 // - initial trunk length
 ```
 
+#if solution [
+== Solution
+
+```java
+import javax.swing.*;
+import java.awt.*;
+
+public class FractalTree extends JPanel {
+  private int maxDepth = 10;
+  private double angleSpread = 25.0; // degrees
+  private double lengthFactor = 0.7;
+
+  public FractalTree() {
+    setPreferredSize(new Dimension(800, 600));
+    setBackground(Color.WHITE);
+  }
+
+  @Override
+  protected void paintComponent(Graphics g) {
+    super.paintComponent(g);
+    Graphics2D g2d = (Graphics2D) g;
+
+    // Enable anti-aliasing for smooth lines
+    g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                         RenderingHints.VALUE_ANTIALIAS_ON);
+
+    // Start drawing from bottom center
+    int startX = getWidth() / 2;
+    int startY = getHeight() - 50;
+    int trunkLength = 120;
+
+    // Draw the tree starting with trunk going upward (-90 degrees)
+    drawBranch(g2d, startX, startY, trunkLength, -90, maxDepth);
+  }
+
+  /**
+   * Recursively draw a branch
+   * @param g2d Graphics context
+   * @param x1 Starting x coordinate
+   * @param y1 Starting y coordinate
+   * @param length Length of the branch
+   * @param angle Angle in degrees (0 = right, -90 = up)
+   * @param depth Remaining recursion depth
+   */
+  private void drawBranch(Graphics2D g2d, int x1, int y1,
+                          double length, double angle, int depth) {
+    // Base case: stop when depth reaches 0 or branch too small
+    if (depth == 0 || length < 2) {
+      return;
+    }
+
+    // Calculate end point of current branch using trigonometry
+    int x2 = x1 + (int)(length * Math.cos(Math.toRadians(angle)));
+    int y2 = y1 + (int)(length * Math.sin(Math.toRadians(angle)));
+
+    // Set color based on depth (brown for trunk, green for leaves)
+    if (depth > 3) {
+      // Brown for thicker branches
+      int brownShade = 139 - (maxDepth - depth) * 10;
+      brownShade = Math.max(50, Math.min(139, brownShade));
+      g2d.setColor(new Color(brownShade, 69, 19));
+    } else {
+      // Green for thinner branches (leaves)
+      g2d.setColor(new Color(34, 139, 34));
+    }
+
+    // Set stroke width based on depth
+    int strokeWidth = Math.max(1, depth / 2);
+    g2d.setStroke(new BasicStroke(strokeWidth));
+
+    // Draw the branch
+    g2d.drawLine(x1, y1, x2, y2);
+
+    // Calculate new length for child branches
+    double newLength = length * lengthFactor;
+
+    // Recursively draw left branch (angle - angleSpread)
+    drawBranch(g2d, x2, y2, newLength, angle - angleSpread, depth - 1);
+
+    // Recursively draw right branch (angle + angleSpread)
+    drawBranch(g2d, x2, y2, newLength, angle + angleSpread, depth - 1);
+  }
+
+  // Setters for parameters
+  public void setMaxDepth(int maxDepth) {
+    this.maxDepth = maxDepth;
+    repaint();
+  }
+
+  public void setAngleSpread(double angleSpread) {
+    this.angleSpread = angleSpread;
+    repaint();
+  }
+
+  public void setLengthFactor(double lengthFactor) {
+    this.lengthFactor = lengthFactor;
+    repaint();
+  }
+
+  public static void main(String[] args) {
+    SwingUtilities.invokeLater(() -> {
+      JFrame frame = new JFrame("Recursive Fractal Tree");
+      FractalTree tree = new FractalTree();
+
+      // Create control panel
+      JPanel controlPanel = new JPanel();
+      controlPanel.setLayout(new FlowLayout());
+
+      // Depth slider
+      JLabel depthLabel = new JLabel("Depth: 10");
+      JSlider depthSlider = new JSlider(1, 15, 10);
+      depthSlider.addChangeListener(e -> {
+        int value = depthSlider.getValue();
+        depthLabel.setText("Depth: " + value);
+        tree.setMaxDepth(value);
+      });
+
+      // Angle slider
+      JLabel angleLabel = new JLabel("Angle: 25°");
+      JSlider angleSlider = new JSlider(10, 45, 25);
+      angleSlider.addChangeListener(e -> {
+        int value = angleSlider.getValue();
+        angleLabel.setText("Angle: " + value + "°");
+        tree.setAngleSpread(value);
+      });
+
+      // Length factor slider
+      JLabel lengthLabel = new JLabel("Length: 0.7");
+      JSlider lengthSlider = new JSlider(50, 90, 70);
+      lengthSlider.addChangeListener(e -> {
+        double value = lengthSlider.getValue() / 100.0;
+        lengthLabel.setText("Length: " + String.format("%.2f", value));
+        tree.setLengthFactor(value);
+      });
+
+      // Add controls to panel
+      controlPanel.add(new JLabel("Recursion "));
+      controlPanel.add(depthSlider);
+      controlPanel.add(depthLabel);
+
+      controlPanel.add(new JLabel(" | Branch Angle "));
+      controlPanel.add(angleSlider);
+      controlPanel.add(angleLabel);
+
+      controlPanel.add(new JLabel(" | Shrink Factor "));
+      controlPanel.add(lengthSlider);
+      controlPanel.add(lengthLabel);
+
+      // Setup frame
+      frame.setLayout(new BorderLayout());
+      frame.add(tree, BorderLayout.CENTER);
+      frame.add(controlPanel, BorderLayout.SOUTH);
+      frame.pack();
+      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      frame.setLocationRelativeTo(null);
+      frame.setVisible(true);
+    });
+  }
+}
+```
+]
+
 #pagebreak()
 
 = Task 6: Sudoku Solver with Backtracking (Optional)
@@ -566,6 +1424,149 @@ private boolean isValid(int[][] grid, int row, int col, int num) {
     return true;
 }
 ```
+
+#if solution [
+== Solution
+
+```java
+public class SudokuSolver {
+  private static final int SIZE = 9;
+  private static final int EMPTY = 0;
+
+  // Sample Sudoku puzzle (0 represents empty cells)
+  private int[][] grid = {
+      {5, 3, 0, 0, 7, 0, 0, 0, 0},
+      {6, 0, 0, 1, 9, 5, 0, 0, 0},
+      {0, 9, 8, 0, 0, 0, 0, 6, 0},
+      {8, 0, 0, 0, 6, 0, 0, 0, 3},
+      {4, 0, 0, 8, 0, 3, 0, 0, 1},
+      {7, 0, 0, 0, 2, 0, 0, 0, 6},
+      {0, 6, 0, 0, 0, 0, 2, 8, 0},
+      {0, 0, 0, 4, 1, 9, 0, 0, 5},
+      {0, 0, 0, 0, 8, 0, 0, 7, 9}
+  };
+
+  // Print the grid
+  public void printGrid() {
+    for (int row = 0; row < SIZE; row++) {
+      if (row % 3 == 0 && row != 0) {
+        System.out.println("------+-------+------");
+      }
+
+      for (int col = 0; col < SIZE; col++) {
+        if (col % 3 == 0 && col != 0) {
+          System.out.print("| ");
+        }
+
+        if (grid[row][col] == EMPTY) {
+          System.out.print(". ");
+        } else {
+          System.out.print(grid[row][col] + " ");
+        }
+      }
+      System.out.println();
+    }
+  }
+
+  // Check if placing num at grid[row][col] is valid
+  private boolean isValid(int row, int col, int num) {
+    // Check row
+    for (int x = 0; x < SIZE; x++) {
+      if (grid[row][x] == num) {
+        return false;
+      }
+    }
+
+    // Check column
+    for (int x = 0; x < SIZE; x++) {
+      if (grid[x][col] == num) {
+        return false;
+      }
+    }
+
+    // Check 3x3 box
+    int startRow = row - row % 3;
+    int startCol = col - col % 3;
+    for (int i = 0; i < 3; i++) {
+      for (int j = 0; j < 3; j++) {
+        if (grid[i + startRow][j + startCol] == num) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
+
+  // Find next empty cell
+  private boolean findEmptyCell(int[] cell) {
+    for (int row = 0; row < SIZE; row++) {
+      for (int col = 0; col < SIZE; col++) {
+        if (grid[row][col] == EMPTY) {
+          cell[0] = row;
+          cell[1] = col;
+          return true;
+        }
+      }
+    }
+    return false; // No empty cell found
+  }
+
+  // Solve Sudoku using backtracking
+  public boolean solve() {
+    int[] cell = new int[2];
+
+    // Find next empty cell
+    if (!findEmptyCell(cell)) {
+      return true; // Puzzle solved
+    }
+
+    int row = cell[0];
+    int col = cell[1];
+
+    // Try numbers 1 through 9
+    for (int num = 1; num <= 9; num++) {
+      if (isValid(row, col, num)) {
+        // Place the number
+        grid[row][col] = num;
+
+        // Recursively try to solve the rest
+        if (solve()) {
+          return true;
+        }
+
+        // Backtrack if this number doesn't lead to solution
+        grid[row][col] = EMPTY;
+      }
+    }
+
+    // No valid number found, trigger backtracking
+    return false;
+  }
+
+  // Solve and display
+  public void solveAndDisplay() {
+    System.out.println("=== Sudoku Solver ===\n");
+    System.out.println("Original puzzle:");
+    printGrid();
+
+    System.out.println("\nSolving...\n");
+
+    if (solve()) {
+      System.out.println("Solution found:");
+      printGrid();
+    } else {
+      System.out.println("No solution exists for this puzzle.");
+    }
+  }
+
+  public static void main(String[] args) {
+    SudokuSolver solver = new SudokuSolver();
+    solver.solveAndDisplay();
+  }
+}
+```
+]
 
 = Lab Execution
 If your program is not yet working without issue, we will try to correct this during the course of the lab. With good preparation, this should not be a problem. Every student is required to be able to explain their thought process at the beginning of the lab. By the end of the lab, the task needs to be completed. Of course, we will support you, but your personal commitment must also be clearly recognizable! Julian Moldenhauer, Furkan Yildirim, and Emily Antosch wish you lots of fun and success!
