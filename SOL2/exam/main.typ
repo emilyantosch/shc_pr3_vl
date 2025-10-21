@@ -260,91 +260,64 @@
 = Practical Part: 60min
 
 #task(
-  [Roman to Integer],
+  [Word/Text Analyzer],
   [
-    Roman numerals consist of seven different symbols: I, V, X, L, C, D, and M.
-    #align(center + horizon)[
-      #table(
-        columns: (auto, auto),
-        inset: 10pt,
-        align: horizon,
-        table.header([*Symbol*], [*Value*]),
-        [I], [1],
-        [V], [5],
-        [X], [10],
-        [L], [50],
-        [C], [100],
-        [D], [500],
-        [M], [1000],
-      )
+    Create a program that analyzes a given text and provides various statistics about it.
 
-    ]
-    For example, the number 2 is written as II, as it consists of two ones. The number 12 is represented as XII, which corresponds to X (10) plus II (2). The number 27 is written as XXVII, which is XX (20) plus V (5) plus II (2).
-
-    Roman numerals are normally written from left to right in order from largest to smallest. However, the number 4 is not written as IIII, but as IV. Since the one comes before the five, we subtract it, and thus get four. The same principle applies to the number 9, which is written as IX. There are six cases in which subtraction is applied:
-
-    - I can be placed before V (5) and X (10) to form 4 and 9.
-    - X can be placed before L (50) and C (100) to form 40 and 90.
-    - C can be placed before D (500) and M (1000) to form 400 and 900.
-
-    Write a program that converts a Roman numeral into an integer number!
+    Your program should analyze text and provide the following information:
+    - Count the total number of words
+    - Count the total number of characters (excluding spaces)
+    - Find and return the longest word
+    - Count how many times a specific word appears (case-insensitive)
 
     #tip[
-      You will need to iterate through the string. Use the method ```java String.getChar(int i)```, where i is the index at which you want to read the value. Example:
+      You can use the ```java String.split()``` method to split text into words. Example:
       ```java
-      String s = "Hello";
-      System.out.println("Letter at the first position of " + s + " is " + s.charAt(0) + "."); //Letter at the first position of Hello is H.
+      String text = "Hello world from Java";
+      String[] words = text.split(" ");
+      System.out.println("Number of words: " + words.length); // 4
       ```
+      You can also use ```java String.toLowerCase()``` for case-insensitive comparison and ```java String.replace()``` to remove spaces.
       \
     ]
   ],
   [
     #subtask(points: 3)[
       Create a new project. Give the project a name that contains your student ID number and your name.
-      Create a class with a method that has an appropriate name and parameters as well as a return value.
+      Create a ```java TextAnalyzer``` class with appropriate methods.
     ]
     #subtask(points: 5)[
-      Check the string for invalid character input.
-      Create a variable that contains the value of the Roman numeral in numeric format.
+      Create a method ```java countWords(String text)``` that counts and returns the total number of words in the given text.
     ]
     #subtask(points: 5)[
-      Write a `for` loop that iterates through the given string.
+      Create a method ```java countCharacters(String text)``` that counts and returns the total number of characters, excluding spaces.
     ]
-    #subtask(points: 10)[
-      Build in logic that evaluates the string and decides whether one of the six special cases has occurred.
+    #subtask(points: 7)[
+      Create a method ```java findLongestWord(String text)``` that finds and returns the longest word in the text. If there are multiple words with the same length, return any one of them.
+    ]
+    #subtask(points: 7)[
+      Create a method ```java countWordOccurrences(String text, String word)``` that counts how many times a specific word appears in the text. The comparison should be case-insensitive (e.g., "Hello" and "hello" should be counted as the same word).
     ]
     #subtask(points: 5)[
-      Have the method return a value that indicates the value of the Roman numeral in numeric format.
+      Create a ```java main``` method that demonstrates all the functionality with test cases. Test with at least one sample text that shows all methods working correctly.
     ]
     #subtask(points: 5)[
-      Write a `main` method that runs the method against test input.
-    ]
-    #subtask(points: 4)[
-      When programming your solution, pay attention to the common coding styles that were established in the lecture.
+      Ensure your methods handle edge cases properly (empty strings, null values, single words, etc.) and validate input appropriately.
     ]
     #subtask(points: 3)[
-      Save your project on the external hard drive that you will receive from the exam supervisor. Just ask if you want to save your project. After the project has been saved, there are no further opportunities to make changes.
+      When programming your solution, pay attention to the common coding styles that were established in the lecture (naming conventions, indentation, comments).
     ]
 
   ],
   (
-    (4, [The code has the correct coding style and looks neat.]),
-    (8, [The code works as described and returns a correct answer for correct input.]),
-    (
-      4,
-      [The program is protected against errors from incorrect input. An undefined character leads to an abort of the operation.],
-    ),
-    (
-      4,
-      [The program is protected against errors from incorrect input. Appropriate exception handling has been implemented.],
-    ),
-    (5, [A project with an appropriate name has been created, as well as a class and a method.]),
-    (
-      5,
-      [The method is appropriately named, has parameters and a return value that match the task description.],
-    ),
-    (5, [There is a main method in one of the classes that is executable and tests the code against test input.]),
-    (5, [The project is on the hard drive, is named correctly, and can be opened.]),
+    (5, [Project created with appropriate name containing student ID and name. TextAnalyzer class exists.]),
+    (8, [countWords method implemented correctly and returns accurate word count for various test cases.]),
+    (8, [countCharacters method implemented correctly and excludes spaces properly.]),
+    (8, [findLongestWord method implemented correctly and returns the longest word.]),
+    (8, [countWordOccurrences method implemented correctly with case-insensitive matching.]),
+    (5, [Main method exists and demonstrates all functionality with clear test output.]),
+    (5, [Code includes proper input validation and handles edge cases (null, empty strings).]),
+    (3, [Code follows proper coding style: good naming, indentation, and includes helpful comments.]),
   ),
 )
 

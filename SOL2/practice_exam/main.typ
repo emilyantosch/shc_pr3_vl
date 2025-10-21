@@ -261,91 +261,71 @@
 = Practical Part: 60min
 
 #task(
-  [Roman to Integer],
+  [Contact Book Application],
   [
-    Roman numerals consist of seven different symbols: I, V, X, L, C, D, and M.
-    #align(center + horizon)[
-      #table(
-        columns: (auto, auto),
-        inset: 10pt,
-        align: horizon,
-        table.header([*Symbol*], [*Value*]),
-        [I], [1],
-        [V], [5],
-        [X], [10],
-        [L], [50],
-        [C], [100],
-        [D], [500],
-        [M], [1000],
-      )
+    Create a contact book application that allows users to manage a list of contacts. This task requires implementing multiple classes and demonstrating object-oriented programming principles.
 
-    ]
-    For example, the number 2 is written as II, as it consists of two ones. The number 12 is represented as XII, which corresponds to X (10) plus II (2). The number 27 is written as XXVII, which is XX (20) plus V (5) plus II (2).
+    Your program should support the following operations:
+    - Add a new contact with name, phone number, and email
+    - Delete a contact by name
+    - Search for a contact by name (case-insensitive)
+    - Display all contacts
 
-    Roman numerals are normally written from left to right in order from largest to smallest. However, the number 4 is not written as IIII, but as IV. Since the one comes before the five, we subtract it, and thus get four. The same principle applies to the number 9, which is written as IX. There are six cases in which subtraction is applied:
-
-    - I can be placed before V (5) and X (10) to form 4 and 9.
-    - X can be placed before L (50) and C (100) to form 40 and 90.
-    - C can be placed before D (500) and M (1000) to form 400 and 900.
-
-    Write a program that converts a Roman numeral into an integer number!
+    The application should use proper OOP design with separate ```java Contact``` and ```java ContactBook``` classes.
 
     #tip[
-      You will need to iterate through the string. Use the method ```java String.getChar(int i)```, where i is the index at which you want to read the value. Example:
+      You can use ```java ArrayList<Contact>``` to store contacts. Example:
       ```java
-      String s = "Hello";
-      System.out.println("Letter at the first position of " + s + " is " + s.charAt(0) + "."); //Letter at the first position of Hello is H.
+      import java.util.ArrayList;
+
+      ArrayList<Contact> contacts = new ArrayList<>();
+      contacts.add(new Contact("John", "123-456", "john@email.com"));
       ```
+      For searching, use ```java String.equalsIgnoreCase(String other)``` for case-insensitive comparison.
       \
     ]
   ],
   [
     #subtask(points: 3)[
       Create a new project. Give the project a name that contains your student ID number and your name.
-      Create a class with a method that has an appropriate name and parameters as well as a return value.
+      Create both a ```java Contact``` class and a ```java ContactBook``` class.
     ]
     #subtask(points: 5)[
-      Check the string for invalid character input.
-      Create a variable that contains the value of the Roman numeral in numeric format.
-    ]
-    #subtask(points: 5)[
-      Write a `for` loop that iterates through the given string.
-    ]
-    #subtask(points: 10)[
-      Build in logic that evaluates the string and decides whether one of the six special cases has occurred.
-    ]
-    #subtask(points: 5)[
-      Have the method return a value that indicates the value of the Roman numeral in numeric format.
-    ]
-    #subtask(points: 5)[
-      Write a `main` method that runs the method against test input.
+      Implement the ```java Contact``` class with private attributes for name, phone, and email. Include a constructor that initializes all three attributes and getter methods for each attribute. Override the ```java toString()``` method to provide a readable representation.
     ]
     #subtask(points: 4)[
-      When programming your solution, pay attention to the common coding styles that were established in the lecture.
+      Implement the ```java ContactBook``` class with a private ```java ArrayList<Contact>``` to store contacts. Include a constructor that initializes the empty list.
+    ]
+    #subtask(points: 6)[
+      Create an ```java addContact(String name, String phone, String email)``` method in ContactBook that creates a new Contact object and adds it to the list. Validate that none of the parameters are null or empty before adding.
+    ]
+    #subtask(points: 5)[
+      Create a ```java deleteContact(String name)``` method that removes a contact by name (case-insensitive). Return true if a contact was deleted, false if no matching contact was found.
+    ]
+    #subtask(points: 6)[
+      Create a ```java searchContact(String name)``` method that searches for and returns a contact by name (case-insensitive). Return null if no matching contact is found.
     ]
     #subtask(points: 3)[
-      Save your project on the external hard drive that you will receive from the exam supervisor. Just ask if you want to save your project. After the project has been saved, there are no further opportunities to make changes.
+      Create a ```java displayAllContacts()``` method that prints all contacts in a readable format. Handle the case when the contact book is empty.
+    ]
+    #subtask(points: 5)[
+      Create a ```java main``` method that demonstrates all functionality comprehensively. Add several contacts, test searching, deleting, and displaying. Show clear output for each operation.
+    ]
+    #subtask(points: 3)[
+      When programming your solution, pay attention to proper coding style including naming conventions, encapsulation (private attributes with public methods), and clear code structure.
     ]
 
   ],
   (
-    (4, [The code has the correct coding style and looks neat.]),
-    (8, [The code works as described and returns a correct answer for correct input.]),
-    (
-      4,
-      [The program is protected against errors from incorrect input. An undefined character leads to an abort of the operation.],
-    ),
-    (
-      4,
-      [The program is protected against errors from incorrect input. Appropriate exception handling has been implemented.],
-    ),
-    (5, [A project with an appropriate name has been created, as well as a class and a method.]),
-    (
-      5,
-      [The method is appropriately named, has parameters and a return value that match the task description.],
-    ),
-    (5, [There is a main method in one of the classes that is executable and tests the code against test input.]),
-    (5, [The project is on the hard drive, is named correctly, and can be opened.]),
+    (5, [Project created with appropriate name. Both Contact and ContactBook classes exist and are properly structured.]),
+    (8, [Contact class properly implemented with private attributes, constructor, getters, and toString() override.]),
+    (6, [ContactBook class properly implemented with ArrayList and constructor.]),
+    (8, [addContact method works correctly with proper validation of inputs.]),
+    (6, [deleteContact method works correctly with case-insensitive search and returns appropriate boolean.]),
+    (8, [searchContact method works correctly with case-insensitive matching and returns correct Contact or null.]),
+    (5, [displayAllContacts method works correctly and handles empty contact book gracefully.]),
+    (5, [Main method demonstrates all functionality comprehensively with multiple test cases.]),
+    (3, [Code follows proper OOP principles: encapsulation, good naming, clear structure, and appropriate comments.]),
   ),
 )
 
