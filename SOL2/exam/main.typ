@@ -59,7 +59,7 @@
   grade-scale: (([very good], 0.9), ([good], 0.8), ([satisfactory], 0.7), ([sufficient], 0.6), ([failed], 0.59)),
 )
 
-= Theoretical Part: 45min
+= Theoretical Part: 60min
 
 #task(
   points: 10,
@@ -151,56 +151,68 @@
 #pagebreak()
 #task(
   [Code Completion],
-  points: 6,
+  points: 12,
   [
-    Complete the following ```java Rectangle``` class by filling in the missing code. The class should represent a rectangle with width and height.
+    Complete the following ```java Rectangle``` class by filling in the missing code directly in the gaps. The class should represent a rectangle with width and height.
 
     ```java
     public class Rectangle {
         // TODO: Add private attributes for width and height (both double)
 
 
+
+
         // TODO: Create a constructor that takes width and height as parameters
         // and initializes the attributes
+
+
 
 
         // TODO: Create a getter method for width
 
 
+
+
         // TODO: Create a getter method for height
+
+
 
 
         // TODO: Create a method calculateArea() that returns the area of the rectangle
 
 
+
+
         // TODO: Create a method calculatePerimeter() that returns the perimeter
+
+
 
 
         // TODO: Override the toString() method to return a string in the format:
         // "Rectangle[width=5.0, height=3.0]"
 
+
+
+
     }
     ```
-
-    Write your completed code below:\
-    #box(width: 100%, height: 75%, stroke: color.black)[]
   ],
   [],
   (
-    (1, [Two private double attributes: width and height]),
-    (1, [Constructor with two parameters that initializes both attributes using `this` keyword]),
-    (1, [Two getter methods: getWidth() and getHeight() that return the respective values]),
-    (1, [calculateArea() method returns width * height]),
-    (1, [calculatePerimeter() method returns 2 * (width + height)]),
-    (1, [toString() method properly overridden with @Override annotation and returns formatted string]),
+    (2, [Two private double attributes: width and height]),
+    (2, [Constructor with two parameters that initializes both attributes using `this` keyword]),
+    (2, [Two getter methods: getWidth() and getHeight() that return the respective values]),
+    (2, [calculateArea() method returns width * height]),
+    (2, [calculatePerimeter() method returns 2 * (width + height)]),
+    (2, [toString() method properly overridden with @Override annotation and returns formatted string]),
   ),
 )
 
 #task(
   [Code Debugging],
-  points: 6,
+  points: 12,
   [
-    The following ```java BankAccount``` class contains several errors. Find and explain all the errors in the code below.
+    The following ```java BankAccount``` class contains several errors. Find and explain all the errors in the code below. Note that errors include both syntax errors that would prevent compilation AND violations of OOP principles (such as encapsulation).
 
     ```java
     public class BankAccount {
@@ -225,7 +237,7 @@
         }
 
         public String toString() {
-            return "Account: " + accountNumber + ", Balance: " + balance;
+            "Account: " + accountNumber + ", Balance: " + balance;
         }
     }
     ```
@@ -235,17 +247,17 @@
   ],
   [],
   (
-    (1, [Error 1: balance should be private, not public - violates encapsulation]),
-    (1, [Error 2: Constructor has return type void - constructors must not have a return type]),
-    (1, [Error 3: In constructor, `accountNumber = accountNumber` assigns parameter to itself - should use `this.accountNumber = accountNumber`]),
-    (1, [Error 4: deposit method is missing return type - should be `public void deposit(double amount)`]),
-    (1, [Error 5: withdraw method doesn't assign the result - should be `balance = balance - amount` or `balance -= amount`]),
-    (1, [Error 6 (Bonus): No getter for balance - good practice would include getBalance() method]),
+    (2, [Error 1: balance should be private, not public - violates encapsulation principle]),
+    (2, [Error 2: Constructor has return type void - constructors must not have a return type]),
+    (2, [Error 3: In constructor, `accountNumber = accountNumber` assigns parameter to itself - should use `this.accountNumber = accountNumber`]),
+    (2, [Error 4: deposit method is missing return type - should be `public void deposit(double amount)`]),
+    (2, [Error 5: withdraw method doesn't assign the result - should be `balance = balance - amount` or `balance -= amount`]),
+    (2, [Error 6: toString method is missing return keyword - should be `return "Account: " + ...`]),
   ),
 )
 #pagebreak()
 
-= Practical Part: 45min
+= Practical Part: 60min
 
 #task(
   [Roman to Integer],
