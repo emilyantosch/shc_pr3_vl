@@ -22,8 +22,8 @@
 )
 
 #show: project.with(
-  type: [Klausur],
-  suffix-title: [Objektorientiere Programmierung],
+  type: [Exam],
+  suffix-title: [Object-Oriented Programming],
 
   show-point-distribution-in-tasks: true,
   show-namefield: true,
@@ -36,133 +36,133 @@
   solutions-as-matrix: true,
 
   university: [HAW Hamburg],
-  institute: [SHC - Fakultät TI],
-  seminar: [Objektorientiere Programmierung in Java],
+  institute: [SHC - Faculty TI],
+  seminar: [Object-Oriented Programming in Java],
 
-  task-type: [Aufgabe],
-  extra-task-type: [Extraaufgabe],
+  task-type: [Task],
+  extra-task-type: [Extra Task],
 
-  solution-matrix-task-header: [Aufgabe],
-  solution-matrix-achieved-points-header: [Erreichte Punkte],
+  solution-matrix-task-header: [Task],
+  solution-matrix-achieved-points-header: [Points Achieved],
 
-  distribution-header-point-value: [Punkte],
-  distribution-header-point-grade: [Wert],
+  distribution-header-point-value: [Points],
+  distribution-header-point-grade: [Value],
 
   message: (
     points-sum,
     extrapoints-sum,
-  ) => [Insgesamt sind #points-sum + #extrapoints-sum P. erreichbar. Sie haben #box(line(stroke: purple, length: 1cm)) P. von #points-sum P. erreicht.],
+  ) => [In total, #points-sum + #extrapoints-sum pts. are achievable. You have achieved #box(line(stroke: purple, length: 1cm)) pts. out of #points-sum pts.],
 
-  solutions-title: [Lösungsvorschläge],
-  timefield: time => [Zeit: #time min.],
+  solutions-title: [Solution Proposals],
+  timefield: time => [Time: #time min.],
 
-  grade-scale: (([sehr gut], 0.9), ([gut], 0.8), ([befriedigend], 0.7), ([ausreichend], 0.6), ([n.b.], 0.59)),
+  grade-scale: (([very good], 0.9), ([good], 0.8), ([satisfactory], 0.7), ([sufficient], 0.6), ([failed], 0.59)),
 )
 
-= Theoretischer Teil: 45min
+= Theoretical Part: 45min
 
 #task(
   points: 10,
-  [Grundbegriffe],
+  [Basic Concepts],
   [
-    Erklären Sie die folgenden fünf Grundbegriffe aus der objektorientierten Programmierung und geben Sie jeweils ein Beispiel an:
-    - Attribut
-    - Methode
-    - Klasse
-    - Objekt
-    - Vererbung\
+    Explain the following five basic concepts from object-oriented programming and provide an example for each:
+    - Attribute
+    - Method
+    - Class
+    - Object
+    - Inheritance\
     #box(height: 65%, width: 100%, stroke: color.black)[]
   ],
   [],
   (
-    (2, [Attribut als Variable oder Eigenschaft einer Klasse/Objekt.]),
-    (2, [Methode als Funktion oder Fähigkeit einer Klasse/Objekt.]),
-    (2, [Klasse als Bauplan für ein oder mehr Objekte]),
-    (2, [Objekt als Instanz einer Klasse]),
-    (2, [Vererbung als Möglichkeit, Code zu organisieren. Weitergabe von Methoden und Attributen.]),
+    (2, [Attribute as a variable or property of a class/object.]),
+    (2, [Method as a function or capability of a class/object.]),
+    (2, [Class as a blueprint for one or more objects]),
+    (2, [Object as an instance of a class]),
+    (2, [Inheritance as a way to organize code. Passing on methods and attributes.]),
   ),
 )
 
 #task(
-  [Konzepte der Objektorientieren Programmierung],
+  [Concepts of Object-Oriented Programming],
   [
-    Beschreiben Sie kurz, was die verschiedenen Begriffe und Konzepte in Java bzw. der objektorientieren Programmierung bedeuten.
+    Briefly describe what the various terms and concepts mean in Java or object-oriented programming.
   ],
   [
     #subtask(points: 5)[
-      Definieren Sie den Begriff „Polymorphismus“. Geben Sie ein Beispiel an, das zeigt, wie ein Polymorphismus in Java implementiert wird.\
+      Define the term "polymorphism". Provide an example that shows how polymorphism is implemented in Java.\
       #box(height: 85%, width: 100%, stroke: color.black)[]
     ]
     #subtask(points: 5)[
-      Erklären Sie die Unterschiede zwischen einer abstrakten Klasse und einem Interface in Java. Nennen Sie jeweils ein Beispiel für den Einsatz.\
+      Explain the differences between an abstract class and an interface in Java. Provide an example for each use case.\
       #box(height: 40%, width: 100%, stroke: color.black)[]
     ]
     #subtask(points: 5)[
-      Warum ist es gut, wenn Daten gekapselt werden? Und wie wird diese Datenkapselung erzeugt? Erklären Sie dies und geben Sie ein Beispiel.\
+      Why is it good when data is encapsulated? And how is this data encapsulation created? Explain this and provide an example.\
       #box(height: 45%, width: 100%, stroke: color.black)[]
     ]
   ],
   (
     (
       5,
-      [Eine Methode in unterschiedlichen Klassen mit unterschiedlichen Implementierungen existieren kann, während sie den gleichen Methodennamen und die gleiche Signatur trägt. Überladen und Überschreiben.],
+      [A method can exist in different classes with different implementations while having the same method name and signature. Overloading and overriding.],
     ),
     (
       5,
-      [Eine abstrakte Klasse ist eine Klasse, die nicht instanziiert werden kann. Ein Interface ist eine Sammlung aus abstrakten Methoden.],
+      [An abstract class is a class that cannot be instantiated. An interface is a collection of abstract methods.],
     ),
-    (5, [Klarheit und Struktur, Sicherheit, Wartbarkeit. Kapselung mittels `private`, sowie Getter und Setter.]),
+    (5, [Clarity and structure, security, maintainability. Encapsulation using `private`, as well as getters and setters.]),
   ),
 )
 
 #task(
   points: 16,
-  [Wahr oder Falsch],
+  [True or False],
   [
-    Entscheiden Sie bei den folgenden Aussagen, ob Sie richtig oder falsch sind:
+    Decide whether the following statements are true or false:
     #table(
       columns: (auto, auto, auto),
       inset: 10pt,
       align: horizon,
-      table.header([*Frage*], [*Wahr*], [*Falsch*]),
-      [Eine Klasse kann von mehreren anderen Klassen erben.], [], [],
-      [Vererbung und Komposition sind zwei Worte für die selbe Sache.], [], [],
-      [Eine Referenz auf ein Objekt muss immer von genau der selben Klasse sein wie das Objekt selbst.], [], [],
-      [Mit ```java public Auto()``` definieren Sie einen Konstruktor für die Klasse ```java Auto```.], [], [],
-      [Eine Klasse kann mehrere Interfaces implementieren.], [], [],
-      [Mit dem Schlüsselwort ```java impl``` können Sie definieren, dass eine Klasse ein Interface implementiert.],
+      table.header([*Question*], [*True*], [*False*]),
+      [A class can inherit from multiple other classes.], [], [],
+      [Inheritance and composition are two words for the same thing.], [], [],
+      [A reference to an object must always be of exactly the same class as the object itself.], [], [],
+      [With ```java public Auto()``` you define a constructor for the class ```java Auto```.], [], [],
+      [A class can implement multiple interfaces.], [], [],
+      [With the keyword ```java impl``` you can define that a class implements an interface.],
       [],
       [],
 
-      [Mit dem Ausdruck ```java let number : i32 = 0;``` definieren Sie eine Variable mit dem Namen ```java number``` und dem Wert `0`.],
+      [With the expression ```java let number : i32 = 0;``` you define a variable with the name ```java number``` and the value `0`.],
       [],
       [],
 
-      [Der Hauptvorteil der Datenkapselung ist es, dass Sie Daten vor unerlaubten Zugriff schützen.], [], [],
+      [The main advantage of data encapsulation is that you protect data from unauthorized access.], [], [],
     )
   ],
   [],
   (
-    (2, [Falsch]),
-    (2, [Falsch]),
-    (2, [Falsch]),
-    (2, [Wahr]),
-    (2, [Wahr]),
-    (2, [Falsch]),
-    (2, [Wahr]),
+    (2, [False]),
+    (2, [False]),
+    (2, [False]),
+    (2, [True]),
+    (2, [True]),
+    (2, [False]),
+    (2, [True]),
   ),
 )
 
 #pagebreak()
 #task(
-  [Beschreibung eines bestehenden Programms],
+  [Description of an Existing Program],
   points: 10,
   [
 
-    In dem folgenden Programmcode wird ein einfaches Bibliothekssystem erzeugt. Beschreiben Sie, welche Funktionen mit dem Code abgedeckt werden. Welche Klassen und Methoden sind definiert?
-    Fällt Ihnen ein, wie Sie das Programm erweitern könnten?\
+    The following program code creates a simple library system. Describe which functions are covered by the code. Which classes and methods are defined?
+    Can you think of how you could extend the program?\
     #box(width: 100%, height: 87%, stroke: color.black)[]
-    1. Die Klasse ```java Book```
+    1. The class ```java Book```
     ```java
     public class Book {
         private String title;
@@ -190,29 +190,29 @@
         public void borrow() {
             if (!isBorrowed) {
                 isBorrowed = true;
-                System.out.println("Das Buch '" + title + "' wurde ausgeliehen.");
+                System.out.println("The book '" + title + "' has been borrowed.");
             } else {
-                System.out.println("Das Buch '" + title + "' ist bereits ausgeliehen.");
+                System.out.println("The book '" + title + "' is already borrowed.");
             }
         }
 
         public void returnBook() {
             if (isBorrowed) {
                 isBorrowed = false;
-                System.out.println("Das Buch '" + title + "' wurde zurückgegeben.");
+                System.out.println("The book '" + title + "' has been returned.");
             } else {
-                System.out.println("Das Buch '" + title + "' war nicht ausgeliehen.");
+                System.out.println("The book '" + title + "' was not borrowed.");
             }
         }
 
         public String toString() {
-            return "Buch: " + title + " von " + author + (isBorrowed ? " (ausgeliehen)" : " (verfügbar)");
+            return "Book: " + title + " by " + author + (isBorrowed ? " (borrowed)" : " (available)");
         }
     }
     ```
 
     #v(90%)
-    2. Die Klasse ```java Library```
+    2. The class ```java Library```
 
     ```java
     import java.util.ArrayList;
@@ -226,14 +226,14 @@
 
         public void addBook(Book book) {
             books.add(book);
-            System.out.println("Das Buch '" + book.getTitle() + "' wurde der Bibliothek hinzugefügt.");
+            System.out.println("The book '" + book.getTitle() + "' has been added to the library.");
         }
 
         public void listBooks() {
             if (books.isEmpty()) {
-                System.out.println("Die Bibliothek enthält keine Bücher.");
+                System.out.println("The library contains no books.");
             } else {
-                System.out.println("Liste der Bücher in der Bibliothek:");
+                System.out.println("List of books in the library:");
                 for (Book book : books) {
                     System.out.println(book);
                 }
@@ -247,7 +247,7 @@
                     return;
                 }
             }
-            System.out.println("Das Buch '" + title + "' wurde nicht gefunden.");
+            System.out.println("The book '" + title + "' was not found.");
         }
 
         public void returnBook(String title) {
@@ -257,12 +257,12 @@
                     return;
                 }
             }
-            System.out.println("Das Buch '" + title + "' wurde nicht gefunden.");
+            System.out.println("The book '" + title + "' was not found.");
         }
     }
     ```
     #v(90%)
-    3. Die Klasse ```java Main```
+    3. The class ```java Main```
     ```java
     import java.util.Scanner;
 
@@ -272,41 +272,41 @@
             Scanner scanner = new Scanner(System.in);
             boolean running = true;
 
-            // Beispielbücher hinzufügen
-            library.addBook(new Book("Der Herr der Ringe", "J.R.R. Tolkien"));
-          library.addBook(new Book("Harry Potter und der Stein der Weisen", "J.K. Rowling"));
+            // Add sample books
+            library.addBook(new Book("The Lord of the Rings", "J.R.R. Tolkien"));
+          library.addBook(new Book("Harry Potter and the Philosopher's Stone", "J.K. Rowling"));
             library.addBook(new Book("1984", "George Orwell"));
 
             while (running) {
-                System.out.println("\nBibliothekssystem:");
-                System.out.println("1. Bücher anzeigen");
-                System.out.println("2. Buch ausleihen");
-                System.out.println("3. Buch zurückgeben");
-                System.out.println("4. Beenden");
-                System.out.print("Wählen Sie eine Option: ");
+                System.out.println("\nLibrary System:");
+                System.out.println("1. Display books");
+                System.out.println("2. Borrow book");
+                System.out.println("3. Return book");
+                System.out.println("4. Exit");
+                System.out.print("Select an option: ");
                 int choice = scanner.nextInt();
-                scanner.nextLine(); // Eingabezeile leeren
+                scanner.nextLine(); // Clear input line
 
                 switch (choice) {
                     case 1:
                         library.listBooks();
                         break;
                     case 2:
-                        System.out.print("Titel des auszuleihenden Buches: ");
+                        System.out.print("Title of the book to borrow: ");
                         String borrowTitle = scanner.nextLine();
                         library.borrowBook(borrowTitle);
                         break;
                     case 3:
-                        System.out.print("Titel des zurückzugebenden Buches: ");
+                        System.out.print("Title of the book to return: ");
                         String returnTitle = scanner.nextLine();
                         library.returnBook(returnTitle);
                         break;
                     case 4:
                         running = false;
-                        System.out.println("Programm beendet.");
+                        System.out.println("Program terminated.");
                         break;
                     default:
-                        System.out.println("Ungültige Option. Bitte erneut versuchen.");
+                        System.out.println("Invalid option. Please try again.");
                         break;
                 }
             }
@@ -317,27 +317,27 @@
   ],
   [],
   (
-    (2, [Override von `toString`]),
-    (2, [Datenkapselung mittels `private` und Getter und Setter]),
-    (2, [`ArrayList` statt normalem Array.]),
-    (2, [`Scanner` wird als Eingabe über die Kommandozeile verwendet.]),
-    (2, [Erweiterungen: Abstrakte-Klassen, Exceptions, Benutzerverwaltung]),
+    (2, [Override of `toString`]),
+    (2, [Data encapsulation using `private` and getters and setters]),
+    (2, [`ArrayList` instead of a normal array.]),
+    (2, [`Scanner` is used for input via the command line.]),
+    (2, [Extensions: Abstract classes, exceptions, user management]),
   ),
 )
 #pagebreak()
 
-= Praktischer Teil: 45min
+= Practical Part: 45min
 
 #task(
-  [Römisch zu Ganzzahl],
+  [Roman to Integer],
   [
-    Die römischen Ziffern bestehen aus sieben verschiedenen Symbolen: I, V, X, L, C, D und M.
+    Roman numerals consist of seven different symbols: I, V, X, L, C, D, and M.
     #align(center + horizon)[
       #table(
         columns: (auto, auto),
         inset: 10pt,
         align: horizon,
-        table.header([*Symbol*], [*Wert*]),
+        table.header([*Symbol*], [*Value*]),
         [I], [1],
         [V], [5],
         [X], [10],
@@ -348,72 +348,72 @@
       )
 
     ]
-    Zum Beispiel wird die Zahl 2 als II geschrieben, da es zwei Einsen sind. Die Zahl 12 wird als XII dargestellt, was X (10) plus II (2) entspricht. Die Zahl 27 wird als XXVII geschrieben, was XX (20) plus V (5) plus II (2) ist.
+    For example, the number 2 is written as II, as it consists of two ones. The number 12 is represented as XII, which corresponds to X (10) plus II (2). The number 27 is written as XXVII, which is XX (20) plus V (5) plus II (2).
 
-    Römische Ziffern werden normalerweise von links nach rechts in der Reihenfolge von der größten zur kleinsten Zahl geschrieben. Allerdings wird die Zahl 4 nicht als IIII geschrieben, sondern als IV. Da die Eins vor der Fünf steht, subtrahieren wir sie, und so erhalten wir vier. Das gleiche Prinzip gilt für die Zahl 9, die als IX geschrieben wird. Es gibt sechs Fälle, in denen Subtraktion angewendet wird:
+    Roman numerals are normally written from left to right in order from largest to smallest. However, the number 4 is not written as IIII, but as IV. Since the one comes before the five, we subtract it, and thus get four. The same principle applies to the number 9, which is written as IX. There are six cases in which subtraction is applied:
 
-    - I kann vor V (5) und X (10) stehen, um 4 und 9 zu bilden.
-    - X kann vor L (50) und C (100) stehen, um 40 und 90 zu bilden.
-    - C kann vor D (500) und M (1000) stehen, um 400 und 900 zu bilden.
+    - I can be placed before V (5) and X (10) to form 4 and 9.
+    - X can be placed before L (50) and C (100) to form 40 and 90.
+    - C can be placed before D (500) and M (1000) to form 400 and 900.
 
-    Schreiben Sie ein Programm, welches Ihnen eine römische Zahl in eine ganze (numerische/integer) Zahl umrechnet!
+    Write a program that converts a Roman numeral into an integer number!
 
     #tip[
-      Sie werden durch den String iterieren müssen. Nutzen Sie dafür die Methode ```java String.getChar(int i)```, wobei hier i der Index ist, an dem Sie den Wert auslesen möchten. Beispiel:
+      You will need to iterate through the string. Use the method ```java String.getChar(int i)```, where i is the index at which you want to read the value. Example:
       ```java
-      String s = "Hallo";
-      System.out.println("Buchstabe an der ersten Stelle von " + s + " ist " + s.charAt(0) + "."); //Buchstabe an der ersten Stelle von Hallo ist H.
+      String s = "Hello";
+      System.out.println("Letter at the first position of " + s + " is " + s.charAt(0) + "."); //Letter at the first position of Hello is H.
       ```
       \
     ]
   ],
   [
     #subtask(points: 3)[
-      Legen Sie ein neues Projekt an. Geben Sie dabei dem Projekt einen Namen, der Ihre Matrikelnummer und Ihren Namen enthält.
-      Erstellen Sie eine Klasse mit einer Methode, die einen entsprechenden Namen und Parameter sowie Rückgabewert enthält.
+      Create a new project. Give the project a name that contains your student ID number and your name.
+      Create a class with a method that has an appropriate name and parameters as well as a return value.
     ]
     #subtask(points: 5)[
-      Überprüfen Sie den String auf eine ungültige Eingabe von Zeichen.
-      Legen Sie eine Variable an, die den Wert der römischen Zahl im numerischen Format enthält.
+      Check the string for invalid character input.
+      Create a variable that contains the value of the Roman numeral in numeric format.
     ]
     #subtask(points: 5)[
-      Schreiben Sie eine `for`-Schleife, die durch den gegebenen String iteriert.
+      Write a `for` loop that iterates through the given string.
     ]
     #subtask(points: 10)[
-      Bauen Sie eine Logik ein, die den String auswertet und entscheidet, ob einer der sechs Sonderfälle eingetreten ist.
+      Build in logic that evaluates the string and decides whether one of the six special cases has occurred.
     ]
     #subtask(points: 5)[
-      Lassen Sie sich von der Methode einen Wert zurückgeben, der dem Wert der römischen Zahl im numerischen Format angibt.
+      Have the method return a value that indicates the value of the Roman numeral in numeric format.
     ]
     #subtask(points: 5)[
-      Schreiben Sie eine `main`-Methode, welche die Methode gegen Testinput laufen lässt.
+      Write a `main` method that runs the method against test input.
     ]
     #subtask(points: 4)[
-      Achten Sie bei der Programmierung Ihrer Lösung auf die gängigen Coding Styles, die in der Vorlesung festgelegt worden sind.
+      When programming your solution, pay attention to the common coding styles that were established in the lecture.
     ]
     #subtask(points: 3)[
-      Legen Sie Ihr Projekt auf der externen Festplatte ab, die Sie von der Klausuraufsicht zur Verfügung gestellt bekommen. Fragen Sie einfach, falls Sie Ihr Projekt ablegen möchten. Nachdem das Projekt abgelegt worden ist, gibt es keine weiteren Möglichkeiten, Änderungen zu machen.
+      Save your project on the external hard drive that you will receive from the exam supervisor. Just ask if you want to save your project. After the project has been saved, there are no further opportunities to make changes.
     ]
 
   ],
   (
-    (4, [Der Code hat den richtigen Coding Style und sieht ordentlich aus.]),
-    (8, [Der Code funktioniert wie beschrieben und gibt bei richtigem Input eine richtige Antwort zurück.]),
+    (4, [The code has the correct coding style and looks neat.]),
+    (8, [The code works as described and returns a correct answer for correct input.]),
     (
       4,
-      [Das Programm ist gegen Fehler durch falsche Eingaben gesichert. Ein nicht definiertes Zeichen führt zu einem Abbruch der Operation.],
+      [The program is protected against errors from incorrect input. An undefined character leads to an abort of the operation.],
     ),
     (
       4,
-      [Das Programm ist gegen Fehler durch falsche Eingaben gesichert. Es wurde ein entsprechendes Exception Handling implementiert.],
+      [The program is protected against errors from incorrect input. Appropriate exception handling has been implemented.],
     ),
-    (5, [Es ist ein Projekt mit entsprechendem Namen, sowie eine Klasse und eine Methode angelegt.]),
+    (5, [A project with an appropriate name has been created, as well as a class and a method.]),
     (
       5,
-      [Die Methode ist entsprechend benannt, hat Parameter und Rückgabewert, die mit der Aufgabenstellung zusammenpassen.],
+      [The method is appropriately named, has parameters and a return value that match the task description.],
     ),
-    (5, [Es gibt eine main-Methode in einer der Klassen, die ausführbar ist und den Code gegen Testinput testet.]),
-    (5, [Das Projekt ist auf der Festplatte, ist richtig benannt und kann geöffnet werden.]),
+    (5, [There is a main method in one of the classes that is executable and tests the code against test input.]),
+    (5, [The project is on the hard drive, is named correctly, and can be opened.]),
   ),
 )
 
