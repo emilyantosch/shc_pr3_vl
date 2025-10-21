@@ -67,18 +67,18 @@
   [
     Explain the following five concepts from object-oriented programming and provide an example for each:
     - Class
+    - Object
     - Inheritance
-    - Constructor
-    - Encapsulation
+    - Composition
     - Method Overriding\
     #box(height: 65%, width: 100%, stroke: color.black)[]
   ],
   [],
   (
     (2, [Class is a blueprint or template that defines the structure and behavior of objects, containing attributes and methods.]),
+    (2, [Object is an instance of a class that has its own state and behavior, created using the class definition.]),
     (2, [Inheritance is a mechanism that allows a class to inherit properties and methods from another class, enabling code reuse and establishing an is-a relationship.]),
-    (2, [Constructor is a special method that is automatically called when an object is created, used to initialize the object's attributes.]),
-    (2, [Encapsulation is the practice of hiding internal data and implementation details by using access modifiers like private, and providing controlled access through public methods.]),
+    (2, [Composition is a design principle where a class contains instances of other classes as attributes, establishing a has-a relationship and promoting modularity.]),
     (2, [Method Overriding occurs when a subclass provides its own implementation of a method that is already defined in its parent class, allowing specialized behavior.]),
   ),
 )
