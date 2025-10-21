@@ -65,21 +65,21 @@
   points: 10,
   [Basic Concepts],
   [
-    Explain the following five basic concepts from object-oriented programming and provide an example for each:
-    - Attribute
-    - Method
-    - Class
-    - Object
-    - Inheritance\
+    Explain the following five concepts from object-oriented programming and provide an example for each:
+    - Encapsulation
+    - Polymorphism
+    - Constructor
+    - Interface
+    - Abstract Class\
     #box(height: 65%, width: 100%, stroke: color.black)[]
   ],
   [],
   (
-    (2, [Attribute as a variable or property of a class/object.]),
-    (2, [Method as a function or capability of a class/object.]),
-    (2, [Class as a blueprint for one or more objects]),
-    (2, [Object as an instance of a class]),
-    (2, [Inheritance as a way to organize code. Passing on methods and attributes.]),
+    (2, [Encapsulation is the principle of bundling data and methods that operate on that data within a class, while hiding internal implementation details through access modifiers.]),
+    (2, [Polymorphism allows objects of different classes to be treated through a common interface, enabling methods to behave differently based on the object type.]),
+    (2, [Constructor is a special method called when creating an object instance, used to initialize the object's state and allocate resources.]),
+    (2, [Interface is a contract that defines a set of abstract methods that implementing classes must provide, enabling abstraction and multiple inheritance of type.]),
+    (2, [Abstract Class is a class that cannot be instantiated and may contain both abstract methods (without implementation) and concrete methods (with implementation).]),
   ),
 )
 
