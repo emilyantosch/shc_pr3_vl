@@ -310,11 +310,11 @@
 
   ],
   (
-    (5, [Project created with appropriate name containing student ID and name. TextAnalyzer class exists.]),
-    (8, [countWords method implemented correctly and returns accurate word count for various test cases.]),
-    (8, [countCharacters method implemented correctly and excludes spaces properly.]),
-    (8, [findLongestWord method implemented correctly and returns the longest word.]),
-    (8, [countWordOccurrences method implemented correctly with case-insensitive matching.]),
+    (3, [Project created with appropriate name containing student ID and name. TextAnalyzer class exists.]),
+    (5, [countWords method implemented correctly and returns accurate word count for various test cases.]),
+    (5, [countCharacters method implemented correctly and excludes spaces properly.]),
+    (7, [findLongestWord method implemented correctly and returns the longest word.]),
+    (7, [countWordOccurrences method implemented correctly with case-insensitive matching.]),
     (5, [Main method exists and demonstrates all functionality with clear test output.]),
     (5, [Code includes proper input validation and handles edge cases (null, empty strings).]),
     (3, [Code follows proper coding style: good naming, indentation, and includes helpful comments.]),
