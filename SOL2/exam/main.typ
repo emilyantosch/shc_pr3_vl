@@ -66,20 +66,20 @@
   [Basic Concepts],
   [
     Explain the following five concepts from object-oriented programming and provide an example for each:
-    - Encapsulation
-    - Polymorphism
+    - Class
+    - Inheritance
     - Constructor
-    - Interface
-    - Abstract Class\
+    - Encapsulation
+    - Method Overriding\
     #box(height: 65%, width: 100%, stroke: color.black)[]
   ],
   [],
   (
-    (2, [Encapsulation is the principle of bundling data and methods that operate on that data within a class, while hiding internal implementation details through access modifiers.]),
-    (2, [Polymorphism allows objects of different classes to be treated through a common interface, enabling methods to behave differently based on the object type.]),
-    (2, [Constructor is a special method called when creating an object instance, used to initialize the object's state and allocate resources.]),
-    (2, [Interface is a contract that defines a set of abstract methods that implementing classes must provide, enabling abstraction and multiple inheritance of type.]),
-    (2, [Abstract Class is a class that cannot be instantiated and may contain both abstract methods (without implementation) and concrete methods (with implementation).]),
+    (2, [Class is a blueprint or template that defines the structure and behavior of objects, containing attributes and methods.]),
+    (2, [Inheritance is a mechanism that allows a class to inherit properties and methods from another class, enabling code reuse and establishing an is-a relationship.]),
+    (2, [Constructor is a special method that is automatically called when an object is created, used to initialize the object's attributes.]),
+    (2, [Encapsulation is the practice of hiding internal data and implementation details by using access modifiers like private, and providing controlled access through public methods.]),
+    (2, [Method Overriding occurs when a subclass provides its own implementation of a method that is already defined in its parent class, allowing specialized behavior.]),
   ),
 )
 
