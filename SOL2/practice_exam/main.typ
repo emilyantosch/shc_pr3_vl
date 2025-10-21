@@ -59,7 +59,7 @@
   grade-scale: (([very good], 0.9), ([good], 0.8), ([satisfactory], 0.7), ([sufficient], 0.6), ([failed], 0.59)),
 )
 
-= Theoretical Part: 45min
+= Theoretical Part: 60min
 
 #task(
   points: 10,
@@ -150,178 +150,115 @@
 
 #pagebreak()
 #task(
-  [Description of an Existing Program],
-  points: 10,
+  [Code Completion],
+  points: 12,
   [
-
-    The following program code creates a simple library system. Describe which functions are covered by the code. Which classes and methods are defined?
-    Can you think of how you could extend the program?\
-    #box(width: 100%, height: 87%, stroke: color.black)[]
-    1. The class ```java Book```
-    ```java
-    public class Book {
-        private String title;
-        private String author;
-        private boolean isBorrowed;
-
-        public Book(String title, String author) {
-            this.title = title;
-            this.author = author;
-            this.isBorrowed = false;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public String getAuthor() {
-            return author;
-        }
-
-        public boolean isBorrowed() {
-            return isBorrowed;
-        }
-
-        public void borrow() {
-            if (!isBorrowed) {
-                isBorrowed = true;
-                System.out.println("The book '" + title + "' has been borrowed.");
-            } else {
-                System.out.println("The book '" + title + "' is already borrowed.");
-            }
-        }
-
-        public void returnBook() {
-            if (isBorrowed) {
-                isBorrowed = false;
-                System.out.println("The book '" + title + "' has been returned.");
-            } else {
-                System.out.println("The book '" + title + "' was not borrowed.");
-            }
-        }
-
-        public String toString() {
-            return "Book: " + title + " by " + author + (isBorrowed ? " (borrowed)" : " (available)");
-        }
-    }
-    ```
-
-    #v(90%)
-    2. The class ```java Library```
+    Complete the following ```java Circle``` class by filling in the missing code directly in the gaps. The class should represent a circle with a radius. Use ```java Math.PI``` for π.
 
     ```java
-    import java.util.ArrayList;
+    public class Circle {
+        // TODO: Add a private attribute for radius (double)
 
-    public class Library {
-        private ArrayList<Book> books;
 
-        public Library() {
-            books = new ArrayList<>();
-        }
 
-        public void addBook(Book book) {
-            books.add(book);
-            System.out.println("The book '" + book.getTitle() + "' has been added to the library.");
-        }
 
-        public void listBooks() {
-            if (books.isEmpty()) {
-                System.out.println("The library contains no books.");
-            } else {
-                System.out.println("List of books in the library:");
-                for (Book book : books) {
-                    System.out.println(book);
-                }
-            }
-        }
+        // TODO: Create a constructor that takes radius as a parameter
+        // and initializes the attribute
 
-        public void borrowBook(String title) {
-            for (Book book : books) {
-                if (book.getTitle().equalsIgnoreCase(title)) {
-                    book.borrow();
-                    return;
-                }
-            }
-            System.out.println("The book '" + title + "' was not found.");
-        }
 
-        public void returnBook(String title) {
-            for (Book book : books) {
-                if (book.getTitle().equalsIgnoreCase(title)) {
-                    book.returnBook();
-                    return;
-                }
-            }
-            System.out.println("The book '" + title + "' was not found.");
-        }
-    }
-    ```
-    #v(90%)
-    3. The class ```java Main```
-    ```java
-    import java.util.Scanner;
 
-    public class Main {
-        public static void main(String[] args) {
-            Library library = new Library();
-            Scanner scanner = new Scanner(System.in);
-            boolean running = true;
 
-            // Add sample books
-            library.addBook(new Book("The Lord of the Rings", "J.R.R. Tolkien"));
-          library.addBook(new Book("Harry Potter and the Philosopher's Stone", "J.K. Rowling"));
-            library.addBook(new Book("1984", "George Orwell"));
+        // TODO: Create a getter method for radius
 
-            while (running) {
-                System.out.println("\nLibrary System:");
-                System.out.println("1. Display books");
-                System.out.println("2. Borrow book");
-                System.out.println("3. Return book");
-                System.out.println("4. Exit");
-                System.out.print("Select an option: ");
-                int choice = scanner.nextInt();
-                scanner.nextLine(); // Clear input line
 
-                switch (choice) {
-                    case 1:
-                        library.listBooks();
-                        break;
-                    case 2:
-                        System.out.print("Title of the book to borrow: ");
-                        String borrowTitle = scanner.nextLine();
-                        library.borrowBook(borrowTitle);
-                        break;
-                    case 3:
-                        System.out.print("Title of the book to return: ");
-                        String returnTitle = scanner.nextLine();
-                        library.returnBook(returnTitle);
-                        break;
-                    case 4:
-                        running = false;
-                        System.out.println("Program terminated.");
-                        break;
-                    default:
-                        System.out.println("Invalid option. Please try again.");
-                        break;
-                }
-            }
-            scanner.close();
-        }
+
+
+        // TODO: Create a setter method for radius that validates the radius is positive
+
+
+
+
+        // TODO: Create a method calculateArea() that returns the area (π × r²)
+
+
+
+
+        // TODO: Create a method calculateCircumference() that returns the circumference (2 × π × r)
+
+
+
+
+        // TODO: Override the toString() method to return a string in the format:
+        // "Circle[radius=5.0]"
+
+
+
+
     }
     ```
   ],
   [],
   (
-    (2, [Override of `toString`]),
-    (2, [Data encapsulation using `private` and getters and setters]),
-    (2, [`ArrayList` instead of a normal array.]),
-    (2, [`Scanner` is used for input via the command line.]),
-    (2, [Extensions: Abstract classes, exceptions, user management]),
+    (2, [Private double attribute: radius]),
+    (2, [Constructor with one parameter that initializes radius using `this` keyword]),
+    (2, [Getter method: getRadius() that returns the radius value]),
+    (2, [Setter method: setRadius() that validates radius > 0 before setting]),
+    (2, [calculateArea() method returns Math.PI * radius * radius]),
+    (2, [calculateCircumference() method returns 2 * Math.PI * radius]),
+  ),
+)
+
+#task(
+  [Code Debugging],
+  points: 12,
+  [
+    The following ```java Student``` class contains several errors. Find and explain all the errors in the code below. Note that errors include both syntax errors that would prevent compilation AND violations of OOP principles (such as encapsulation).
+
+    ```java
+    public class Student {
+        String name;
+        private int studentId;
+        private double gpa;
+
+        public Student(String name, int studentId) {
+            this.name = name;
+            this.studentId = studentId
+        }
+
+        public void setGpa(double gpa) {
+            gpa = gpa;
+        }
+
+        public int getStudentId() {
+            return this.studentId;
+        }
+
+        public static String getStudentInfo() {
+            return "Student: " + name + ", ID: " + studentId + ", GPA: " + gpa;
+        }
+
+        public void displayInfo() {
+            System.out.println(getStudentInfo());
+        }
+    }
+    ```
+
+    List all errors you found and explain what is wrong:\
+    #box(width: 100%, height: 60%, stroke: color.black)[]
+  ],
+  [],
+  (
+    (2, [Error 1: name attribute has no access modifier (package-private) - violates encapsulation, should be private]),
+    (2, [Error 2: Constructor missing semicolon after `this.studentId = studentId`]),
+    (2, [Error 3: Constructor doesn't initialize gpa attribute - all attributes should be initialized]),
+    (2, [Error 4: In setGpa, `gpa = gpa` assigns parameter to itself - should use `this.gpa = gpa`]),
+    (2, [Error 5: getStudentInfo() is static but tries to access instance variables (name, studentId, gpa) - static methods cannot access instance variables directly]),
+    (2, [Error 6: Missing getter methods for name and gpa - breaks encapsulation principle of providing access to private data]),
   ),
 )
 #pagebreak()
 
-= Practical Part: 45min
+= Practical Part: 60min
 
 #task(
   [Roman to Integer],
