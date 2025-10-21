@@ -129,7 +129,7 @@
       [Two methods with the same name and parameters but different return types can coexist in the same class.], [], [],
       [The protected access modifier allows access from any class in the same package.], [], [],
       [An abstract class must contain at least one abstract method.], [], [],
-      [Interface methods are public and abstract by default (before Java 8).], [], [],
+      [Interface methods are public and abstract by default.], [], [],
       [A class that implements an interface must provide implementations for all interface methods.], [], [],
       [The ```java super``` keyword can be used to access private members of the parent class.], [], [],
       [A static method can access instance variables directly without an object reference.], [], [],
