@@ -90,28 +90,28 @@
   ],
   [
     #subtask(points: 5)[
-      Define the term "polymorphism". Provide an example that shows how polymorphism is implemented in Java.\
+      Define the term "polymorphism". Explain the difference between compile-time and runtime polymorphism, and provide an example for each.\
       #box(height: 85%, width: 100%, stroke: color.black)[]
     ]
     #subtask(points: 5)[
-      Explain the differences between an abstract class and an interface in Java. Provide an example for each use case.\
+      Explain what static methods and static attributes are in Java. How do they differ from instance methods and attributes? Provide an example.\
       #box(height: 40%, width: 100%, stroke: color.black)[]
     ]
     #subtask(points: 5)[
-      Why is it good when data is encapsulated? And how is this data encapsulation created? Explain this and provide an example.\
+      Explain the differences between an abstract class and an interface in Java. When would you use one over the other? Provide an example for each.\
       #box(height: 45%, width: 100%, stroke: color.black)[]
     ]
   ],
   (
     (
       5,
-      [A method can exist in different classes with different implementations while having the same method name and signature. Overloading and overriding.],
+      [Polymorphism allows objects to take many forms. Compile-time polymorphism is achieved through method overloading (same method name, different parameters). Runtime polymorphism is achieved through method overriding (subclass provides specific implementation of parent method).],
     ),
     (
       5,
-      [An abstract class is a class that cannot be instantiated. An interface is a collection of abstract methods.],
+      [Static methods and attributes belong to the class rather than instances. They are shared across all objects and can be accessed without creating an instance. Instance members are unique to each object.],
     ),
-    (5, [Clarity and structure, security, maintainability. Encapsulation using `private`, as well as getters and setters.]),
+    (5, [Abstract classes can have both abstract and concrete methods, can have constructors, and support single inheritance. Interfaces contain only abstract methods (before Java 8), support multiple inheritance, and define contracts. Use abstract classes for shared code, interfaces for contracts.]),
   ),
 )
 

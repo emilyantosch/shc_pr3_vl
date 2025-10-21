@@ -90,28 +90,28 @@
   ],
   [
     #subtask(points: 5)[
-      Define the term "polymorphism". Provide an example that shows how polymorphism is implemented in Java.\
+      Explain how inheritance works in Java and what role the `super` keyword plays. Provide an example showing the use of `super` in both constructors and methods.\
       #box(height: 85%, width: 100%, stroke: color.black)[]
     ]
     #subtask(points: 5)[
-      Explain the differences between an abstract class and an interface in Java. Provide an example for each use case.\
+      Explain the difference between method overloading and method overriding. When is each used, and what are the rules for each? Provide examples.\
       #box(height: 40%, width: 100%, stroke: color.black)[]
     ]
     #subtask(points: 5)[
-      Why is it good when data is encapsulated? And how is this data encapsulation created? Explain this and provide an example.\
+      Describe the three main access modifiers in Java: public, private, and protected. How do they control visibility, and when should each be used? Provide examples.\
       #box(height: 45%, width: 100%, stroke: color.black)[]
     ]
   ],
   (
     (
       5,
-      [A method can exist in different classes with different implementations while having the same method name and signature. Overloading and overriding.],
+      [Inheritance allows a subclass to inherit attributes and methods from a parent class. The `super` keyword refers to the parent class and is used to call parent constructors (super()) or access parent methods (super.method()). This enables code reuse and specialization.],
     ),
     (
       5,
-      [An abstract class is a class that cannot be instantiated. An interface is a collection of abstract methods.],
+      [Method overloading occurs in the same class with methods having the same name but different parameters (compile-time polymorphism). Method overriding occurs in subclasses providing a different implementation of a parent method with the same signature (runtime polymorphism).],
     ),
-    (5, [Clarity and structure, security, maintainability. Encapsulation using `private`, as well as getters and setters.]),
+    (5, [Public members are accessible everywhere. Private members are only accessible within the same class. Protected members are accessible within the same class, subclasses, and the same package. Use private for encapsulation, protected for inheritance, and public for interfaces.]),
   ),
 )
 
