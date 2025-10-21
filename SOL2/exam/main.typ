@@ -150,173 +150,97 @@
 
 #pagebreak()
 #task(
-  [Description of an Existing Program],
-  points: 10,
+  [Code Completion],
+  points: 6,
   [
+    Complete the following ```java Rectangle``` class by filling in the missing code. The class should represent a rectangle with width and height.
 
-    The following program code creates a simple library system. Describe which functions are covered by the code. Which classes and methods are defined?
-    Can you think of how you could extend the program?\
-    #box(width: 100%, height: 87%, stroke: color.black)[]
-    1. The class ```java Book```
     ```java
-    public class Book {
-        private String title;
-        private String author;
-        private boolean isBorrowed;
+    public class Rectangle {
+        // TODO: Add private attributes for width and height (both double)
 
-        public Book(String title, String author) {
-            this.title = title;
-            this.author = author;
-            this.isBorrowed = false;
-        }
 
-        public String getTitle() {
-            return title;
-        }
+        // TODO: Create a constructor that takes width and height as parameters
+        // and initializes the attributes
 
-        public String getAuthor() {
-            return author;
-        }
 
-        public boolean isBorrowed() {
-            return isBorrowed;
-        }
+        // TODO: Create a getter method for width
 
-        public void borrow() {
-            if (!isBorrowed) {
-                isBorrowed = true;
-                System.out.println("The book '" + title + "' has been borrowed.");
-            } else {
-                System.out.println("The book '" + title + "' is already borrowed.");
-            }
-        }
 
-        public void returnBook() {
-            if (isBorrowed) {
-                isBorrowed = false;
-                System.out.println("The book '" + title + "' has been returned.");
-            } else {
-                System.out.println("The book '" + title + "' was not borrowed.");
-            }
-        }
+        // TODO: Create a getter method for height
 
-        public String toString() {
-            return "Book: " + title + " by " + author + (isBorrowed ? " (borrowed)" : " (available)");
-        }
+
+        // TODO: Create a method calculateArea() that returns the area of the rectangle
+
+
+        // TODO: Create a method calculatePerimeter() that returns the perimeter
+
+
+        // TODO: Override the toString() method to return a string in the format:
+        // "Rectangle[width=5.0, height=3.0]"
+
     }
     ```
 
-    #v(90%)
-    2. The class ```java Library```
-
-    ```java
-    import java.util.ArrayList;
-
-    public class Library {
-        private ArrayList<Book> books;
-
-        public Library() {
-            books = new ArrayList<>();
-        }
-
-        public void addBook(Book book) {
-            books.add(book);
-            System.out.println("The book '" + book.getTitle() + "' has been added to the library.");
-        }
-
-        public void listBooks() {
-            if (books.isEmpty()) {
-                System.out.println("The library contains no books.");
-            } else {
-                System.out.println("List of books in the library:");
-                for (Book book : books) {
-                    System.out.println(book);
-                }
-            }
-        }
-
-        public void borrowBook(String title) {
-            for (Book book : books) {
-                if (book.getTitle().equalsIgnoreCase(title)) {
-                    book.borrow();
-                    return;
-                }
-            }
-            System.out.println("The book '" + title + "' was not found.");
-        }
-
-        public void returnBook(String title) {
-            for (Book book : books) {
-                if (book.getTitle().equalsIgnoreCase(title)) {
-                    book.returnBook();
-                    return;
-                }
-            }
-            System.out.println("The book '" + title + "' was not found.");
-        }
-    }
-    ```
-    #v(90%)
-    3. The class ```java Main```
-    ```java
-    import java.util.Scanner;
-
-    public class Main {
-        public static void main(String[] args) {
-            Library library = new Library();
-            Scanner scanner = new Scanner(System.in);
-            boolean running = true;
-
-            // Add sample books
-            library.addBook(new Book("The Lord of the Rings", "J.R.R. Tolkien"));
-          library.addBook(new Book("Harry Potter and the Philosopher's Stone", "J.K. Rowling"));
-            library.addBook(new Book("1984", "George Orwell"));
-
-            while (running) {
-                System.out.println("\nLibrary System:");
-                System.out.println("1. Display books");
-                System.out.println("2. Borrow book");
-                System.out.println("3. Return book");
-                System.out.println("4. Exit");
-                System.out.print("Select an option: ");
-                int choice = scanner.nextInt();
-                scanner.nextLine(); // Clear input line
-
-                switch (choice) {
-                    case 1:
-                        library.listBooks();
-                        break;
-                    case 2:
-                        System.out.print("Title of the book to borrow: ");
-                        String borrowTitle = scanner.nextLine();
-                        library.borrowBook(borrowTitle);
-                        break;
-                    case 3:
-                        System.out.print("Title of the book to return: ");
-                        String returnTitle = scanner.nextLine();
-                        library.returnBook(returnTitle);
-                        break;
-                    case 4:
-                        running = false;
-                        System.out.println("Program terminated.");
-                        break;
-                    default:
-                        System.out.println("Invalid option. Please try again.");
-                        break;
-                }
-            }
-            scanner.close();
-        }
-    }
-    ```
+    Write your completed code below:\
+    #box(width: 100%, height: 75%, stroke: color.black)[]
   ],
   [],
   (
-    (2, [Override of `toString`]),
-    (2, [Data encapsulation using `private` and getters and setters]),
-    (2, [`ArrayList` instead of a normal array.]),
-    (2, [`Scanner` is used for input via the command line.]),
-    (2, [Extensions: Abstract classes, exceptions, user management]),
+    (1, [Two private double attributes: width and height]),
+    (1, [Constructor with two parameters that initializes both attributes using `this` keyword]),
+    (1, [Two getter methods: getWidth() and getHeight() that return the respective values]),
+    (1, [calculateArea() method returns width * height]),
+    (1, [calculatePerimeter() method returns 2 * (width + height)]),
+    (1, [toString() method properly overridden with @Override annotation and returns formatted string]),
+  ),
+)
+
+#task(
+  [Code Debugging],
+  points: 6,
+  [
+    The following ```java BankAccount``` class contains several errors. Find and explain all the errors in the code below.
+
+    ```java
+    public class BankAccount {
+        public double balance;
+        private String accountNumber;
+
+        public void BankAccount(String accountNumber, double initialBalance) {
+            accountNumber = accountNumber;
+            balance = initialBalance;
+        }
+
+        public String getAccountNumber() {
+            return this.accountNumber;
+        }
+
+        public deposit(double amount) {
+            balance = balance + amount;
+        }
+
+        public void withdraw(double amount) {
+            balance - amount;
+        }
+
+        public String toString() {
+            return "Account: " + accountNumber + ", Balance: " + balance;
+        }
+    }
+    ```
+
+    List all errors you found and explain what is wrong:\
+    #box(width: 100%, height: 60%, stroke: color.black)[]
+  ],
+  [],
+  (
+    (1, [Error 1: balance should be private, not public - violates encapsulation]),
+    (1, [Error 2: Constructor has return type void - constructors must not have a return type]),
+    (1, [Error 3: In constructor, `accountNumber = accountNumber` assigns parameter to itself - should use `this.accountNumber = accountNumber`]),
+    (1, [Error 4: deposit method is missing return type - should be `public void deposit(double amount)`]),
+    (1, [Error 5: withdraw method doesn't assign the result - should be `balance = balance - amount` or `balance -= amount`]),
+    (1, [Error 6 (Bonus): No getter for balance - good practice would include getBalance() method]),
   ),
 )
 #pagebreak()
