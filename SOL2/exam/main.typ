@@ -22,8 +22,8 @@
 )
 
 #show: project.with(
-  type: [Klausur],
-  suffix-title: [Objektorientiere Programmierung],
+  type: [Exam],
+  suffix-title: [Object-Oriented Programming],
 
   show-point-distribution-in-tasks: true,
   show-namefield: true,
@@ -36,384 +36,288 @@
   solutions-as-matrix: true,
 
   university: [HAW Hamburg],
-  institute: [SHC - Fakultät TI],
-  seminar: [Objektorientiere Programmierung in Java],
+  institute: [SHC - Faculty TI],
+  seminar: [Object-Oriented Programming in Java],
 
-  task-type: [Aufgabe],
-  extra-task-type: [Extraaufgabe],
+  task-type: [Task],
+  extra-task-type: [Extra Task],
 
-  solution-matrix-task-header: [Aufgabe],
-  solution-matrix-achieved-points-header: [Erreichte Punkte],
+  solution-matrix-task-header: [Task],
+  solution-matrix-achieved-points-header: [Points Achieved],
 
-  distribution-header-point-value: [Punkte],
-  distribution-header-point-grade: [Wert],
+  distribution-header-point-value: [Points],
+  distribution-header-point-grade: [Value],
 
   message: (
     points-sum,
     extrapoints-sum,
-  ) => [Insgesamt sind #points-sum + #extrapoints-sum P. erreichbar. Sie haben #box(line(stroke: purple, length: 1cm)) P. von #points-sum P. erreicht.],
+  ) => [In total, #points-sum + #extrapoints-sum pts. are achievable. You have achieved #box(line(stroke: purple, length: 1cm)) pts. out of #points-sum pts.],
 
-  solutions-title: [Lösungsvorschläge],
-  timefield: time => [Zeit: #time min.],
+  solutions-title: [Solution Proposals],
+  timefield: time => [Time: #time min.],
 
-  grade-scale: (([sehr gut], 0.9), ([gut], 0.8), ([befriedigend], 0.7), ([ausreichend], 0.6), ([n.b.], 0.59)),
+  grade-scale: (([very good], 0.9), ([good], 0.8), ([satisfactory], 0.7), ([sufficient], 0.6), ([failed], 0.59)),
 )
 
-= Theoretischer Teil: 45min
+= Theoretical Part: 60min
 
 #task(
   points: 10,
-  [Grundbegriffe],
+  [Basic Concepts],
   [
-    Erklären Sie die folgenden fünf Grundbegriffe aus der objektorientierten Programmierung und geben Sie jeweils ein Beispiel an:
-    - Attribut
-    - Methode
-    - Klasse
-    - Objekt
-    - Vererbung\
+    Explain the following five concepts from object-oriented programming and provide an example for each:
+    - Class
+    - Object
+    - Inheritance
+    - Composition
+    - Method Overriding\
     #box(height: 65%, width: 100%, stroke: color.black)[]
   ],
   [],
   (
-    (2, [Attribut als Variable oder Eigenschaft einer Klasse/Objekt.]),
-    (2, [Methode als Funktion oder Fähigkeit einer Klasse/Objekt.]),
-    (2, [Klasse als Bauplan für ein oder mehr Objekte]),
-    (2, [Objekt als Instanz einer Klasse]),
-    (2, [Vererbung als Möglichkeit, Code zu organisieren. Weitergabe von Methoden und Attributen.]),
+    (2, [Class is a blueprint or template that defines the structure and behavior of objects, containing attributes and methods.]),
+    (2, [Object is an instance of a class that has its own state and behavior, created using the class definition.]),
+    (2, [Inheritance is a mechanism that allows a class to inherit properties and methods from another class, enabling code reuse and establishing an is-a relationship.]),
+    (2, [Composition is a design principle where a class contains instances of other classes as attributes, establishing a has-a relationship and promoting modularity.]),
+    (2, [Method Overriding occurs when a subclass provides its own implementation of a method that is already defined in its parent class, allowing specialized behavior.]),
   ),
 )
 
 #task(
-  [Konzepte der Objektorientieren Programmierung],
+  [Concepts of Object-Oriented Programming],
   [
-    Beschreiben Sie kurz, was die verschiedenen Begriffe und Konzepte in Java bzw. der objektorientieren Programmierung bedeuten.
+    Briefly describe what the various terms and concepts mean in Java or object-oriented programming.
   ],
   [
     #subtask(points: 5)[
-      Definieren Sie den Begriff „Polymorphismus“. Geben Sie ein Beispiel an, das zeigt, wie ein Polymorphismus in Java implementiert wird.\
+      Define the term "polymorphism". Explain the difference between compile-time and runtime polymorphism, and provide an example for each.\
       #box(height: 85%, width: 100%, stroke: color.black)[]
     ]
     #subtask(points: 5)[
-      Erklären Sie die Unterschiede zwischen einer abstrakten Klasse und einem Interface in Java. Nennen Sie jeweils ein Beispiel für den Einsatz.\
+      Explain what static methods and static attributes are in Java. How do they differ from instance methods and attributes? Provide an example.\
       #box(height: 40%, width: 100%, stroke: color.black)[]
     ]
     #subtask(points: 5)[
-      Warum ist es gut, wenn Daten gekapselt werden? Und wie wird diese Datenkapselung erzeugt? Erklären Sie dies und geben Sie ein Beispiel.\
+      Explain the differences between an abstract class and an interface in Java. When would you use one over the other? Provide an example for each.\
       #box(height: 45%, width: 100%, stroke: color.black)[]
     ]
   ],
   (
     (
       5,
-      [Eine Methode in unterschiedlichen Klassen mit unterschiedlichen Implementierungen existieren kann, während sie den gleichen Methodennamen und die gleiche Signatur trägt. Überladen und Überschreiben.],
+      [Polymorphism allows objects to take many forms. Compile-time polymorphism is achieved through method overloading (same method name, different parameters). Runtime polymorphism is achieved through method overriding (subclass provides specific implementation of parent method).],
     ),
     (
       5,
-      [Eine abstrakte Klasse ist eine Klasse, die nicht instanziiert werden kann. Ein Interface ist eine Sammlung aus abstrakten Methoden.],
+      [Static methods and attributes belong to the class rather than instances. They are shared across all objects and can be accessed without creating an instance. Instance members are unique to each object.],
     ),
-    (5, [Klarheit und Struktur, Sicherheit, Wartbarkeit. Kapselung mittels `private`, sowie Getter und Setter.]),
+    (5, [Abstract classes can have both abstract and concrete methods, can have constructors, and support single inheritance. Interfaces contain only abstract methods (before Java 8), support multiple inheritance, and define contracts. Use abstract classes for shared code, interfaces for contracts.]),
   ),
 )
 
 #task(
   points: 16,
-  [Wahr oder Falsch],
+  [True or False],
   [
-    Entscheiden Sie bei den folgenden Aussagen, ob Sie richtig oder falsch sind:
+    Decide whether the following statements are true or false:
     #table(
       columns: (auto, auto, auto),
       inset: 10pt,
       align: horizon,
-      table.header([*Frage*], [*Wahr*], [*Falsch*]),
-      [Eine Klasse kann von mehreren anderen Klassen erben.], [], [],
-      [Vererbung und Komposition sind zwei Worte für die selbe Sache.], [], [],
-      [Eine Referenz auf ein Objekt muss immer von genau der selben Klasse sein wie das Objekt selbst.], [], [],
-      [Mit ```java public Auto()``` definieren Sie einen Konstruktor für die Klasse ```java Auto```.], [], [],
-      [Eine Klasse kann mehrere Interfaces implementieren.], [], [],
-      [Mit dem Schlüsselwort ```java impl``` können Sie definieren, dass eine Klasse ein Interface implementiert.],
-      [],
-      [],
-
-      [Mit dem Ausdruck ```java let number : i32 = 0;``` definieren Sie eine Variable mit dem Namen ```java number``` und dem Wert `0`.],
-      [],
-      [],
-
-      [Der Hauptvorteil der Datenkapselung ist es, dass Sie Daten vor unerlaubten Zugriff schützen.], [], [],
+      table.header([*Question*], [*True*], [*False*]),
+      [In Java, a class can inherit from multiple other classes.], [], [],
+      [Static methods can be overridden in subclasses.], [], [],
+      [A constructor must have the same name as the class.], [], [],
+      [Private methods are inherited by subclasses but cannot be accessed.], [], [],
+      [An interface can contain concrete (implemented) methods.], [], [],
+      [The ```java this``` keyword refers to the current instance of a class.], [], [],
+      [Abstract classes can be instantiated directly.], [], [],
+      [Method overloading is an example of compile-time polymorphism.], [], [],
     )
   ],
   [],
   (
-    (2, [Falsch]),
-    (2, [Falsch]),
-    (2, [Falsch]),
-    (2, [Wahr]),
-    (2, [Wahr]),
-    (2, [Falsch]),
-    (2, [Wahr]),
+    (2, [False]),
+    (2, [False]),
+    (2, [True]),
+    (2, [True]),
+    (2, [True]),
+    (2, [True]),
+    (2, [False]),
+    (2, [True]),
   ),
 )
 
 #pagebreak()
 #task(
-  [Beschreibung eines bestehenden Programms],
-  points: 10,
+  [Code Completion],
+  points: 12,
   [
-
-    In dem folgenden Programmcode wird ein einfaches Bibliothekssystem erzeugt. Beschreiben Sie, welche Funktionen mit dem Code abgedeckt werden. Welche Klassen und Methoden sind definiert?
-    Fällt Ihnen ein, wie Sie das Programm erweitern könnten?\
-    #box(width: 100%, height: 87%, stroke: color.black)[]
-    1. Die Klasse ```java Book```
-    ```java
-    public class Book {
-        private String title;
-        private String author;
-        private boolean isBorrowed;
-
-        public Book(String title, String author) {
-            this.title = title;
-            this.author = author;
-            this.isBorrowed = false;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public String getAuthor() {
-            return author;
-        }
-
-        public boolean isBorrowed() {
-            return isBorrowed;
-        }
-
-        public void borrow() {
-            if (!isBorrowed) {
-                isBorrowed = true;
-                System.out.println("Das Buch '" + title + "' wurde ausgeliehen.");
-            } else {
-                System.out.println("Das Buch '" + title + "' ist bereits ausgeliehen.");
-            }
-        }
-
-        public void returnBook() {
-            if (isBorrowed) {
-                isBorrowed = false;
-                System.out.println("Das Buch '" + title + "' wurde zurückgegeben.");
-            } else {
-                System.out.println("Das Buch '" + title + "' war nicht ausgeliehen.");
-            }
-        }
-
-        public String toString() {
-            return "Buch: " + title + " von " + author + (isBorrowed ? " (ausgeliehen)" : " (verfügbar)");
-        }
-    }
-    ```
-
-    #v(90%)
-    2. Die Klasse ```java Library```
+    Complete the following ```java Rectangle``` class by filling in the missing code directly in the gaps. The class should represent a rectangle with width and height.
 
     ```java
-    import java.util.ArrayList;
+    public class Rectangle {
+        // TODO: Add private attributes for width and height (both double)
 
-    public class Library {
-        private ArrayList<Book> books;
 
-        public Library() {
-            books = new ArrayList<>();
-        }
 
-        public void addBook(Book book) {
-            books.add(book);
-            System.out.println("Das Buch '" + book.getTitle() + "' wurde der Bibliothek hinzugefügt.");
-        }
 
-        public void listBooks() {
-            if (books.isEmpty()) {
-                System.out.println("Die Bibliothek enthält keine Bücher.");
-            } else {
-                System.out.println("Liste der Bücher in der Bibliothek:");
-                for (Book book : books) {
-                    System.out.println(book);
-                }
-            }
-        }
+        // TODO: Create a constructor that takes width and height as parameters
+        // and initializes the attributes
 
-        public void borrowBook(String title) {
-            for (Book book : books) {
-                if (book.getTitle().equalsIgnoreCase(title)) {
-                    book.borrow();
-                    return;
-                }
-            }
-            System.out.println("Das Buch '" + title + "' wurde nicht gefunden.");
-        }
 
-        public void returnBook(String title) {
-            for (Book book : books) {
-                if (book.getTitle().equalsIgnoreCase(title)) {
-                    book.returnBook();
-                    return;
-                }
-            }
-            System.out.println("Das Buch '" + title + "' wurde nicht gefunden.");
-        }
-    }
-    ```
-    #v(90%)
-    3. Die Klasse ```java Main```
-    ```java
-    import java.util.Scanner;
 
-    public class Main {
-        public static void main(String[] args) {
-            Library library = new Library();
-            Scanner scanner = new Scanner(System.in);
-            boolean running = true;
 
-            // Beispielbücher hinzufügen
-            library.addBook(new Book("Der Herr der Ringe", "J.R.R. Tolkien"));
-          library.addBook(new Book("Harry Potter und der Stein der Weisen", "J.K. Rowling"));
-            library.addBook(new Book("1984", "George Orwell"));
+        // TODO: Create a getter method for width
 
-            while (running) {
-                System.out.println("\nBibliothekssystem:");
-                System.out.println("1. Bücher anzeigen");
-                System.out.println("2. Buch ausleihen");
-                System.out.println("3. Buch zurückgeben");
-                System.out.println("4. Beenden");
-                System.out.print("Wählen Sie eine Option: ");
-                int choice = scanner.nextInt();
-                scanner.nextLine(); // Eingabezeile leeren
 
-                switch (choice) {
-                    case 1:
-                        library.listBooks();
-                        break;
-                    case 2:
-                        System.out.print("Titel des auszuleihenden Buches: ");
-                        String borrowTitle = scanner.nextLine();
-                        library.borrowBook(borrowTitle);
-                        break;
-                    case 3:
-                        System.out.print("Titel des zurückzugebenden Buches: ");
-                        String returnTitle = scanner.nextLine();
-                        library.returnBook(returnTitle);
-                        break;
-                    case 4:
-                        running = false;
-                        System.out.println("Programm beendet.");
-                        break;
-                    default:
-                        System.out.println("Ungültige Option. Bitte erneut versuchen.");
-                        break;
-                }
-            }
-            scanner.close();
-        }
+
+
+        // TODO: Create a getter method for height
+
+
+
+
+        // TODO: Create a method calculateArea() that returns the area of the rectangle
+
+
+
+
+        // TODO: Create a method calculatePerimeter() that returns the perimeter
+
+
+
+
+        // TODO: Override the toString() method to return a string in the format:
+        // "Rectangle[width=5.0, height=3.0]"
+
+
+
+
     }
     ```
   ],
   [],
   (
-    (2, [Override von `toString`]),
-    (2, [Datenkapselung mittels `private` und Getter und Setter]),
-    (2, [`ArrayList` statt normalem Array.]),
-    (2, [`Scanner` wird als Eingabe über die Kommandozeile verwendet.]),
-    (2, [Erweiterungen: Abstrakte-Klassen, Exceptions, Benutzerverwaltung]),
+    (2, [Two private double attributes: width and height]),
+    (2, [Constructor with two parameters that initializes both attributes using `this` keyword]),
+    (2, [Two getter methods: getWidth() and getHeight() that return the respective values]),
+    (2, [calculateArea() method returns width * height]),
+    (2, [calculatePerimeter() method returns 2 * (width + height)]),
+    (2, [toString() method properly overridden with @Override annotation and returns formatted string]),
+  ),
+)
+
+#task(
+  [Code Debugging],
+  points: 12,
+  [
+    The following ```java BankAccount``` class contains several errors. Find and explain all the errors in the code below. Note that errors include both syntax errors that would prevent compilation AND violations of OOP principles (such as encapsulation).
+
+    ```java
+    public class BankAccount {
+        public double balance;
+        private String accountNumber;
+
+        public void BankAccount(String accountNumber, double initialBalance) {
+            accountNumber = accountNumber;
+            balance = initialBalance;
+        }
+
+        public String getAccountNumber() {
+            return this.accountNumber;
+        }
+
+        public deposit(double amount) {
+            balance = balance + amount;
+        }
+
+        public void withdraw(double amount) {
+            balance - amount;
+        }
+
+        public String toString() {
+            "Account: " + accountNumber + ", Balance: " + balance;
+        }
+    }
+    ```
+
+    List all errors you found and explain what is wrong:\
+    #box(width: 100%, height: 60%, stroke: color.black)[]
+  ],
+  [],
+  (
+    (2, [Error 1: balance should be private, not public - violates encapsulation principle]),
+    (2, [Error 2: Constructor has return type void - constructors must not have a return type]),
+    (2, [Error 3: In constructor, `accountNumber = accountNumber` assigns parameter to itself - should use `this.accountNumber = accountNumber`]),
+    (2, [Error 4: deposit method is missing return type - should be `public void deposit(double amount)`]),
+    (2, [Error 5: withdraw method doesn't assign the result - should be `balance = balance - amount` or `balance -= amount`]),
+    (2, [Error 6: toString method is missing return keyword - should be `return "Account: " + ...`]),
   ),
 )
 #pagebreak()
 
-= Praktischer Teil: 45min
+= Practical Part: 60min
 
 #task(
-  [Römisch zu Ganzzahl],
+  [Word/Text Analyzer],
   [
-    Die römischen Ziffern bestehen aus sieben verschiedenen Symbolen: I, V, X, L, C, D und M.
-    #align(center + horizon)[
-      #table(
-        columns: (auto, auto),
-        inset: 10pt,
-        align: horizon,
-        table.header([*Symbol*], [*Wert*]),
-        [I], [1],
-        [V], [5],
-        [X], [10],
-        [L], [50],
-        [C], [100],
-        [D], [500],
-        [M], [1000],
-      )
+    Create a program that analyzes a given text and provides various statistics about it.
 
-    ]
-    Zum Beispiel wird die Zahl 2 als II geschrieben, da es zwei Einsen sind. Die Zahl 12 wird als XII dargestellt, was X (10) plus II (2) entspricht. Die Zahl 27 wird als XXVII geschrieben, was XX (20) plus V (5) plus II (2) ist.
-
-    Römische Ziffern werden normalerweise von links nach rechts in der Reihenfolge von der größten zur kleinsten Zahl geschrieben. Allerdings wird die Zahl 4 nicht als IIII geschrieben, sondern als IV. Da die Eins vor der Fünf steht, subtrahieren wir sie, und so erhalten wir vier. Das gleiche Prinzip gilt für die Zahl 9, die als IX geschrieben wird. Es gibt sechs Fälle, in denen Subtraktion angewendet wird:
-
-    - I kann vor V (5) und X (10) stehen, um 4 und 9 zu bilden.
-    - X kann vor L (50) und C (100) stehen, um 40 und 90 zu bilden.
-    - C kann vor D (500) und M (1000) stehen, um 400 und 900 zu bilden.
-
-    Schreiben Sie ein Programm, welches Ihnen eine römische Zahl in eine ganze (numerische/integer) Zahl umrechnet!
+    Your program should analyze text and provide the following information:
+    - Count the total number of words
+    - Count the total number of characters (excluding spaces)
+    - Find and return the longest word
+    - Count how many times a specific word appears (case-insensitive)
 
     #tip[
-      Sie werden durch den String iterieren müssen. Nutzen Sie dafür die Methode ```java String.getChar(int i)```, wobei hier i der Index ist, an dem Sie den Wert auslesen möchten. Beispiel:
+      You can use the ```java String.split()``` method to split text into words. Example:
       ```java
-      String s = "Hallo";
-      System.out.println("Buchstabe an der ersten Stelle von " + s + " ist " + s.charAt(0) + "."); //Buchstabe an der ersten Stelle von Hallo ist H.
+      String text = "Hello world from Java";
+      String[] words = text.split(" ");
+      System.out.println("Number of words: " + words.length); // 4
       ```
+      You can also use ```java String.toLowerCase()``` for case-insensitive comparison and ```java String.replace()``` to remove spaces.
       \
     ]
   ],
   [
     #subtask(points: 3)[
-      Legen Sie ein neues Projekt an. Geben Sie dabei dem Projekt einen Namen, der Ihre Matrikelnummer und Ihren Namen enthält.
-      Erstellen Sie eine Klasse mit einer Methode, die einen entsprechenden Namen und Parameter sowie Rückgabewert enthält.
+      Create a new project. Give the project a name that contains your student ID number and your name.
+      Create a ```java TextAnalyzer``` class with appropriate methods.
     ]
     #subtask(points: 5)[
-      Überprüfen Sie den String auf eine ungültige Eingabe von Zeichen.
-      Legen Sie eine Variable an, die den Wert der römischen Zahl im numerischen Format enthält.
+      Create a method ```java countWords(String text)``` that counts and returns the total number of words in the given text.
     ]
     #subtask(points: 5)[
-      Schreiben Sie eine `for`-Schleife, die durch den gegebenen String iteriert.
+      Create a method ```java countCharacters(String text)``` that counts and returns the total number of characters, excluding spaces.
     ]
-    #subtask(points: 10)[
-      Bauen Sie eine Logik ein, die den String auswertet und entscheidet, ob einer der sechs Sonderfälle eingetreten ist.
+    #subtask(points: 7)[
+      Create a method ```java findLongestWord(String text)``` that finds and returns the longest word in the text. If there are multiple words with the same length, return any one of them.
+    ]
+    #subtask(points: 7)[
+      Create a method ```java countWordOccurrences(String text, String word)``` that counts how many times a specific word appears in the text. The comparison should be case-insensitive (e.g., "Hello" and "hello" should be counted as the same word).
     ]
     #subtask(points: 5)[
-      Lassen Sie sich von der Methode einen Wert zurückgeben, der dem Wert der römischen Zahl im numerischen Format angibt.
+      Create a ```java main``` method that demonstrates all the functionality with test cases. Test with at least one sample text that shows all methods working correctly.
     ]
     #subtask(points: 5)[
-      Schreiben Sie eine `main`-Methode, welche die Methode gegen Testinput laufen lässt.
-    ]
-    #subtask(points: 4)[
-      Achten Sie bei der Programmierung Ihrer Lösung auf die gängigen Coding Styles, die in der Vorlesung festgelegt worden sind.
+      Ensure your methods handle edge cases properly (empty strings, null values, single words, etc.) and validate input appropriately.
     ]
     #subtask(points: 3)[
-      Legen Sie Ihr Projekt auf der externen Festplatte ab, die Sie von der Klausuraufsicht zur Verfügung gestellt bekommen. Fragen Sie einfach, falls Sie Ihr Projekt ablegen möchten. Nachdem das Projekt abgelegt worden ist, gibt es keine weiteren Möglichkeiten, Änderungen zu machen.
+      When programming your solution, pay attention to the common coding styles that were established in the lecture (naming conventions, indentation, comments).
     ]
 
   ],
   (
-    (4, [Der Code hat den richtigen Coding Style und sieht ordentlich aus.]),
-    (8, [Der Code funktioniert wie beschrieben und gibt bei richtigem Input eine richtige Antwort zurück.]),
-    (
-      4,
-      [Das Programm ist gegen Fehler durch falsche Eingaben gesichert. Ein nicht definiertes Zeichen führt zu einem Abbruch der Operation.],
-    ),
-    (
-      4,
-      [Das Programm ist gegen Fehler durch falsche Eingaben gesichert. Es wurde ein entsprechendes Exception Handling implementiert.],
-    ),
-    (5, [Es ist ein Projekt mit entsprechendem Namen, sowie eine Klasse und eine Methode angelegt.]),
-    (
-      5,
-      [Die Methode ist entsprechend benannt, hat Parameter und Rückgabewert, die mit der Aufgabenstellung zusammenpassen.],
-    ),
-    (5, [Es gibt eine main-Methode in einer der Klassen, die ausführbar ist und den Code gegen Testinput testet.]),
-    (5, [Das Projekt ist auf der Festplatte, ist richtig benannt und kann geöffnet werden.]),
+    (3, [Project created with appropriate name containing student ID and name. TextAnalyzer class exists.]),
+    (5, [countWords method implemented correctly and returns accurate word count for various test cases.]),
+    (5, [countCharacters method implemented correctly and excludes spaces properly.]),
+    (7, [findLongestWord method implemented correctly and returns the longest word.]),
+    (7, [countWordOccurrences method implemented correctly with case-insensitive matching.]),
+    (5, [Main method exists and demonstrates all functionality with clear test output.]),
+    (5, [Code includes proper input validation and handles edge cases (null, empty strings).]),
+    (3, [Code follows proper coding style: good naming, indentation, and includes helpful comments.]),
   ),
 )
 
