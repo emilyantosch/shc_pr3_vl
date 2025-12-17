@@ -159,40 +159,19 @@
     public class Rectangle {
         // TODO: Add private attributes for width and height (both double)
 
-
-
-
         // TODO: Create a constructor that takes width and height as parameters
         // and initializes the attributes
 
-
-
-
         // TODO: Create a getter method for width
-
-
-
 
         // TODO: Create a getter method for height
 
-
-
-
         // TODO: Create a method calculateArea() that returns the area of the rectangle
-
-
-
 
         // TODO: Create a method calculatePerimeter() that returns the perimeter
 
-
-
-
         // TODO: Override the toString() method to return a string in the format:
         // "Rectangle[width=5.0, height=3.0]"
-
-
-
 
     }
     ```
@@ -202,9 +181,9 @@
     (2, [Two private double attributes: width and height]),
     (2, [Constructor with two parameters that initializes both attributes using `this` keyword]),
     (2, [Two getter methods: getWidth() and getHeight() that return the respective values]),
-    (2, [calculateArea() method returns width * height]),
-    (2, [calculatePerimeter() method returns 2 * (width + height)]),
-    (2, [toString() method properly overridden with @Override annotation and returns formatted string]),
+    (2, [calculatePerimeter() method returns $2 * ("width" + "height")$]),
+    (2, [calculateArea() method returns $"width" * "height"$]),
+    (2, [toString() method properly overridden with `@Override` annotation and returns formatted string]),
   ),
 )
 
@@ -320,4 +299,3 @@
     (3, [Code follows proper coding style: good naming, indentation, and includes helpful comments.]),
   ),
 )
-
