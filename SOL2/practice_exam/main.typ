@@ -1,9 +1,9 @@
 #import "@preview/grape-suite:3.1.0": colors, exercise
-#import "@preview/gentle-clues:1.0.0": *
+#import "@preview/gentle-clues:1.2.0": *
 #import exercise: project, subtask, task
 #import colors: *
 
-#import "@preview/codly:1.0.0": *
+#import "@preview/codly:1.3.0": *
 #show: codly-init.with()
 
 #codly(
@@ -36,8 +36,8 @@
   solutions-as-matrix: true,
 
   university: [HAW Hamburg],
-  institute: [SHC - Faculty TI],
-  seminar: [Object-Oriented Programming in Java],
+  institute: [Faculty TI],
+  seminar: [SO2 - Object-Oriented Programming in Java],
 
   task-type: [Task],
   extra-task-type: [Extra Task],
@@ -71,15 +71,78 @@
     - Constructor
     - Interface
     - Abstract Class\
-    #box(height: 65%, width: 100%, stroke: color.black)[]
+    #box(height: 65%, width: 100%, stroke: color.black)[
+      1. Encapsulation is the principle of bundling data and methods that operate on that data within a class, while hiding internal implementation details through access modifiers.
+      ```java
+        private double balance;
+
+        public double getBalance() {
+          return balance;
+        }
+
+        public void setBalance(double balance) {
+          this.balance = balance;
+        }
+      ```
+      2. Polymorphism allows objects of different classes to be treated through a common interface, enabling methods to behave differently based on the object type.
+      ```java
+        class Animal {
+          public void makeSound() {
+            System.out.println("...");
+          }
+        };
+        class Cat extends Animal {
+          public void sleep() {
+            System.out.println("Purr");
+
+          }
+        }
+      ```
+      3. Constructor is a special method called when creating an object instance, used to initialize the object's state and allocate resources.
+      ```java
+        class Animal {
+          private double height;
+          public Animal(double height) {
+            this.height = height;
+          }
+        };
+      ```
+      4. Interface is a contract that defines a set of abstract methods that implementing classes must provide, enabling abstraction and multiple inheritance of type.
+      ```java
+        interface Resizeable {
+          void resize(double factor);
+        };
+      ```
+      5. Abstract Class is a class that cannot be instantiated and may contain both abstract methods (without implementation) and concrete methods (with implementation).
+      ```java
+        abstract class Animal {
+          public abstract void makeSound();
+        };
+      ```
+    ]
   ],
   [],
   (
-    (2, [Encapsulation is the principle of bundling data and methods that operate on that data within a class, while hiding internal implementation details through access modifiers.]),
-    (2, [Polymorphism allows objects of different classes to be treated through a common interface, enabling methods to behave differently based on the object type.]),
-    (2, [Constructor is a special method called when creating an object instance, used to initialize the object's state and allocate resources.]),
-    (2, [Interface is a contract that defines a set of abstract methods that implementing classes must provide, enabling abstraction and multiple inheritance of type.]),
-    (2, [Abstract Class is a class that cannot be instantiated and may contain both abstract methods (without implementation) and concrete methods (with implementation).]),
+    (
+      2,
+      [Encapsulation is the principle of bundling data and methods that operate on that data within a class, while hiding internal implementation details through access modifiers.],
+    ),
+    (
+      2,
+      [Polymorphism allows objects of different classes to be treated through a common interface, enabling methods to behave differently based on the object type.],
+    ),
+    (
+      2,
+      [Constructor is a special method called when creating an object instance, used to initialize the object's state and allocate resources.],
+    ),
+    (
+      2,
+      [Interface is a contract that defines a set of abstract methods that implementing classes must provide, enabling abstraction and multiple inheritance of type.],
+    ),
+    (
+      2,
+      [Abstract Class is a class that cannot be instantiated and may contain both abstract methods (without implementation) and concrete methods (with implementation).],
+    ),
   ),
 )
 
@@ -91,15 +154,88 @@
   [
     #subtask(points: 5)[
       Explain how inheritance works in Java and what role the `super` keyword plays. Provide an example showing the use of `super` in both constructors and methods.\
-      #box(height: 85%, width: 100%, stroke: color.black)[]
+      #box(height: 85%, width: 100%, stroke: color.black)[
+        *Inheritance* allows a subclass to inherit attributes and methods from a parent class using the `extends` keyword. The subclass can reuse and extend the functionality of the parent class.
+
+        The *`super` keyword* refers to the parent class and is used to:
+        - Call the parent class constructor: `super()`
+        - Access parent class methods: `super.methodName()`
+
+        ```java
+        class Animal {
+            protected String name;
+
+            public Animal(String name) {
+                this.name = name;
+            }
+
+            public void makeSound() {
+                System.out.println("Some sound");
+            }
+        }
+
+        class Dog extends Animal {
+            private String breed;
+
+            public Dog(String name, String breed) {
+                super(name);  // Call parent constructor
+                this.breed = breed;
+            }
+
+            @Override
+            public void makeSound() {
+                super.makeSound();  // Call parent method
+                System.out.println("Woof!");
+            }
+        }
+        ```
+      ]
     ]
     #subtask(points: 5)[
       Explain the difference between method overloading and method overriding. When is each used, and what are the rules for each? Provide examples.\
-      #box(height: 40%, width: 100%, stroke: color.black)[]
+      #box(height: 40%, width: 100%, stroke: color.black)[
+        *Method Overloading* (compile-time polymorphism):
+        - Same class, same method name, *different parameters*
+        - Return type can be different
+        ```java
+        public int add(int a, int b) { return a + b; }
+        public double add(double a, double b) { return a + b; }
+        ```
+
+        *Method Overriding* (runtime polymorphism):
+        - Subclass provides different implementation of parent method
+        - *Same signature* (name, parameters, return type)
+        - Use `@Override` annotation
+        ```java
+        class Animal { public void speak() { System.out.println("..."); } }
+        class Cat extends Animal {
+            @Override
+            public void speak() { System.out.println("Meow"); }
+        }
+        ```
+      ]
     ]
     #subtask(points: 5)[
       Describe the three main access modifiers in Java: public, private, and protected. How do they control visibility, and when should each be used? Provide examples.\
-      #box(height: 45%, width: 100%, stroke: color.black)[]
+      #box(height: 45%, width: 100%, stroke: color.black)[
+        *`public`*: Accessible from *anywhere* (any class, any package).
+        - Use for: APIs, methods meant to be called externally
+        ```java
+        public void displayInfo() { ... }
+        ```
+
+        *`private`*: Accessible only *within the same class*.
+        - Use for: Internal data, encapsulation of attributes
+        ```java
+        private double balance;  // Only accessible via getters/setters
+        ```
+
+        *`protected`*: Accessible within the *same class, same package, and subclasses* (even in different packages).
+        - Use for: Members that subclasses need to access
+        ```java
+        protected String name;  // Subclasses can access directly
+        ```
+      ]
     ]
   ],
   (
@@ -111,7 +247,10 @@
       5,
       [Method overloading occurs in the same class with methods having the same name but different parameters (compile-time polymorphism). Method overriding occurs in subclasses providing a different implementation of a parent method with the same signature (runtime polymorphism).],
     ),
-    (5, [Public members are accessible everywhere. Private members are only accessible within the same class. Protected members are accessible within the same class, subclasses, and the same package. Use private for encapsulation, protected for inheritance, and public for interfaces.]),
+    (
+      5,
+      [Public members are accessible everywhere. Private members are only accessible within the same class. Protected members are accessible within the same class, subclasses, and the same package. Use private for encapsulation, protected for inheritance, and public for interfaces.],
+    ),
   ),
 )
 
@@ -125,14 +264,17 @@
       inset: 10pt,
       align: horizon,
       table.header([*Question*], [*True*], [*False*]),
-      [In Java, a subclass constructor must call a superclass constructor either explicitly or implicitly.], [], [],
-      [Two methods with the same name and parameters but different return types can coexist in the same class.], [], [],
-      [The protected access modifier allows access from any class in the same package.], [], [],
-      [An abstract class must contain at least one abstract method.], [], [],
-      [Interface methods are public and abstract by default.], [], [],
-      [A class that implements an interface must provide implementations for all interface methods.], [], [],
-      [The ```java super``` keyword can be used to access private members of the parent class.], [], [],
-      [A static method can access instance variables directly without an object reference.], [], [],
+      [In Java, a subclass constructor must call a superclass constructor either explicitly or implicitly.], [x], [],
+      [Two methods with the same name and parameters but different return types can coexist in the same class.],
+      [],
+      [x],
+
+      [The protected access modifier allows access from any class in the same package.], [x], [],
+      [An abstract class must contain at least one abstract method.], [], [x],
+      [Interface methods are public and abstract by default.], [x], [],
+      [A concrete class that implements an interface must provide implementations for all interface methods.], [x], [],
+      [The ```java super``` keyword can be used to access private members of the parent class.], [], [x],
+      [A static method can access instance variables directly without an object reference.], [], [x],
     )
   ],
   [],
@@ -158,42 +300,41 @@
     ```java
     public class Circle {
         // TODO: Add a private attribute for radius (double)
-
-
-
+        private double radius;
 
         // TODO: Create a constructor that takes radius as a parameter
         // and initializes the attribute
-
-
-
+        public Circle(double radius) {
+          this.radius = radius;
+        }
 
         // TODO: Create a getter method for radius
-
-
-
+        public double getRadius() {
+          return radius;
+        }
 
         // TODO: Create a setter method for radius that validates the radius is positive
-
-
-
+        public void setRadius(double radius) {
+          if (radius > 0.0) {
+            this.radius = radius;
+          }
+        }
 
         // TODO: Create a method calculateArea() that returns the area (π × r²)
-
-
-
+        public double calculateArea() {
+          return Math.PI * radius * radius;
+        }
 
         // TODO: Create a method calculateCircumference() that returns the circumference (2 × π × r)
-
-
-
+        public double calculateCircumference() {
+          return 2 * Math.PI * radius;
+        }
 
         // TODO: Override the toString() method to return a string in the format:
         // "Circle[radius=5.0]"
-
-
-
-
+        public String toString() {
+          return "Circle[radius=" + radius + "]"
+        }
     }
     ```
   ],
@@ -246,14 +387,27 @@
     List all errors you found and explain what is wrong:\
     #box(width: 100%, height: 60%, stroke: color.black)[]
   ],
-  [],
+  [
+    - Error 1: name attribute has no access modifier (package-private) - violates encapsulation, should be private
+    - Error 2: Constructor missing semicolon after `this.studentId = studentId`
+    - Error 3: Constructor doesn't initialize `gpa` attribute - all attributes should be initialized
+    - Error 4: In `setGpa`, `gpa = gpa` assigns parameter to itself - should use `this.gpa = gpa`
+    - Error 5: `getStudentInfo()` is static but tries to access instance variables (`name`, `studentId`, `gpa`) - static methods cannot access instance variables directly
+    - Error 6: Missing getter methods for `name` and `gpa` - breaks encapsulation principle of providing access to private data
+  ],
   (
     (2, [Error 1: name attribute has no access modifier (package-private) - violates encapsulation, should be private]),
     (2, [Error 2: Constructor missing semicolon after `this.studentId = studentId`]),
     (2, [Error 3: Constructor doesn't initialize gpa attribute - all attributes should be initialized]),
     (2, [Error 4: In setGpa, `gpa = gpa` assigns parameter to itself - should use `this.gpa = gpa`]),
-    (2, [Error 5: getStudentInfo() is static but tries to access instance variables (name, studentId, gpa) - static methods cannot access instance variables directly]),
-    (2, [Error 6: Missing getter methods for name and gpa - breaks encapsulation principle of providing access to private data]),
+    (
+      2,
+      [Error 5: getStudentInfo() is static but tries to access instance variables (name, studentId, gpa) - static methods cannot access instance variables directly],
+    ),
+    (
+      2,
+      [Error 6: Missing getter methods for name and gpa - breaks encapsulation principle of providing access to private data],
+    ),
   ),
 )
 #pagebreak()
@@ -317,7 +471,10 @@
 
   ],
   (
-    (3, [Project created with appropriate name. Both Contact and ContactBook classes exist and are properly structured.]),
+    (
+      3,
+      [Project created with appropriate name. Both Contact and ContactBook classes exist and are properly structured.],
+    ),
     (5, [Contact class properly implemented with private attributes, constructor, getters, and toString() override.]),
     (4, [ContactBook class properly implemented with ArrayList and constructor.]),
     (6, [addContact method works correctly with proper validation of inputs.]),
@@ -328,4 +485,3 @@
     (3, [Code follows proper OOP principles: encapsulation, good naming, clear structure, and appropriate comments.]),
   ),
 )
-
