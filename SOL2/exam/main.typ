@@ -1,9 +1,9 @@
 #import "@preview/grape-suite:3.1.0": colors, exercise
-#import "@preview/gentle-clues:1.0.0": *
+#import "@preview/gentle-clues:1.3.0": *
 #import exercise: project, subtask, task
 #import colors: *
 
-#import "@preview/codly:1.0.0": *
+#import "@preview/codly:1.3.0": *
 #show: codly-init.with()
 
 #codly(
@@ -23,21 +23,21 @@
 
 #show: project.with(
   type: [Exam],
-  suffix-title: [Object-Oriented Programming],
+  suffix-title: [Software Construction 2],
 
   show-point-distribution-in-tasks: true,
   show-namefield: true,
   show-timefield: true,
 
-  max-time: 90,
+  max-time: 120,
   show-lines: true,
 
-  show-solutions: true,
+  show-solutions: false,
   solutions-as-matrix: true,
 
   university: [HAW Hamburg],
-  institute: [SHC - Faculty TI],
-  seminar: [Object-Oriented Programming in Java],
+  institute: [EMI],
+  seminar: [SO2],
 
   task-type: [Task],
   extra-task-type: [Extra Task],
@@ -58,6 +58,14 @@
 
   grade-scale: (([very good], 0.9), ([good], 0.8), ([satisfactory], 0.7), ([sufficient], 0.6), ([failed], 0.59)),
 )
+= Notice
+
+- Please write your name and matriculation number on the top of the paper.
+- You may use a cheat sheet of either 2 double-sided A4 paper or 4 one-sided A4 paper. No sticky notes allowed!
+- You have 120 minutes of time for the exam.
+- If you have further questions, please take it up to the staff.
+
+#pagebreak()
 
 = Theoretical Part: 60min
 
@@ -75,11 +83,23 @@
   ],
   [],
   (
-    (2, [Class is a blueprint or template that defines the structure and behavior of objects, containing attributes and methods.]),
+    (
+      2,
+      [Class is a blueprint or template that defines the structure and behavior of objects, containing attributes and methods.],
+    ),
     (2, [Object is an instance of a class that has its own state and behavior, created using the class definition.]),
-    (2, [Inheritance is a mechanism that allows a class to inherit properties and methods from another class, enabling code reuse and establishing an is-a relationship.]),
-    (2, [Composition is a design principle where a class contains instances of other classes as attributes, establishing a has-a relationship and promoting modularity.]),
-    (2, [Method Overriding occurs when a subclass provides its own implementation of a method that is already defined in its parent class, allowing specialized behavior.]),
+    (
+      2,
+      [Inheritance is a mechanism that allows a class to inherit properties and methods from another class, enabling code reuse and establishing an is-a relationship.],
+    ),
+    (
+      2,
+      [Composition is a design principle where a class contains instances of other classes as attributes, establishing a has-a relationship and promoting modularity.],
+    ),
+    (
+      2,
+      [Method Overriding occurs when a subclass provides its own implementation of a method that is already defined in its parent class, allowing specialized behavior.],
+    ),
   ),
 )
 
@@ -90,7 +110,7 @@
   ],
   [
     #subtask(points: 5)[
-      Define the term "polymorphism". Explain the difference between compile-time and runtime polymorphism, and provide an example for each.\
+      Define the term "polymorphism" and provide an example for each type in Java.\
       #box(height: 85%, width: 100%, stroke: color.black)[]
     ]
     #subtask(points: 5)[
@@ -111,7 +131,10 @@
       5,
       [Static methods and attributes belong to the class rather than instances. They are shared across all objects and can be accessed without creating an instance. Instance members are unique to each object.],
     ),
-    (5, [Abstract classes can have both abstract and concrete methods, can have constructors, and support single inheritance. Interfaces contain only abstract methods (before Java 8), support multiple inheritance, and define contracts. Use abstract classes for shared code, interfaces for contracts.]),
+    (
+      5,
+      [Abstract classes can have both abstract and concrete methods, can have constructors, and support single inheritance. Interfaces contain only abstract methods (before Java 8), support multiple inheritance, and define contracts. Use abstract classes for shared code, interfaces for contracts.],
+    ),
   ),
 )
 
@@ -159,19 +182,33 @@
     public class Rectangle {
         // TODO: Add private attributes for width and height (both double)
 
+
         // TODO: Create a constructor that takes width and height as parameters
         // and initializes the attributes
 
+
+
+
         // TODO: Create a getter method for width
+
+
 
         // TODO: Create a getter method for height
 
+
+
         // TODO: Create a method calculateArea() that returns the area of the rectangle
+
+
 
         // TODO: Create a method calculatePerimeter() that returns the perimeter
 
+
+
         // TODO: Override the toString() method to return a string in the format:
         // "Rectangle[width=5.0, height=3.0]"
+
+
 
     }
     ```
@@ -186,7 +223,7 @@
     (2, [toString() method properly overridden with `@Override` annotation and returns formatted string]),
   ),
 )
-
+#pagebreak()
 #task(
   [Code Debugging],
   points: 12,
@@ -228,9 +265,15 @@
   (
     (2, [Error 1: balance should be private, not public - violates encapsulation principle]),
     (2, [Error 2: Constructor has return type void - constructors must not have a return type]),
-    (2, [Error 3: In constructor, `accountNumber = accountNumber` assigns parameter to itself - should use `this.accountNumber = accountNumber`]),
+    (
+      2,
+      [Error 3: In constructor, `accountNumber = accountNumber` assigns parameter to itself - should use `this.accountNumber = accountNumber`],
+    ),
     (2, [Error 4: deposit method is missing return type - should be `public void deposit(double amount)`]),
-    (2, [Error 5: withdraw method doesn't assign the result - should be `balance = balance - amount` or `balance -= amount`]),
+    (
+      2,
+      [Error 5: withdraw method doesn't assign the result - should be `balance = balance - amount` or `balance -= amount`],
+    ),
     (2, [Error 6: toString method is missing return keyword - should be `return "Account: " + ...`]),
   ),
 )
@@ -257,6 +300,7 @@
       System.out.println("Number of words: " + words.length); // 4
       ```
       You can also use ```java String.toLowerCase()``` for case-insensitive comparison and ```java String.replace()``` to remove spaces.
+      For finding the length of a string, use the ```java length()``` method on a string.
       \
     ]
   ],

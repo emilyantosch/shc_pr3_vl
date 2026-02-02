@@ -56,7 +56,7 @@
   solutions-title: [Solution Proposals],
   timefield: time => [Time: #time min.],
 
-  grade-scale: (([very good], 0.9), ([good], 0.8), ([satisfactory], 0.7), ([sufficient], 0.6), ([failed], 0.59)),
+  grade-scale: (([very good], 0.9), ([good], 0.8), ([satisfactory], 0.7), ([sufficient], 0.5), ([failed], 0.49)),
 )
 
 = Theoretical Part: 60min
