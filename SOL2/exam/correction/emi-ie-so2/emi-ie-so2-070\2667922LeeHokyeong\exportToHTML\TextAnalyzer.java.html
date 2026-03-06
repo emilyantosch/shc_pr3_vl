@@ -1,0 +1,95 @@
+<html>
+<head>
+<title>TextAnalyzer.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #7a7e85;}
+.s1 { color: #bcbec4;}
+.s2 { color: #cf8e6d;}
+.s3 { color: #bcbec4;}
+.s4 { color: #6aab73;}
+.s5 { color: #2aacb8;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+TextAnalyzer.java</font>
+</center></td></tr></table>
+<pre><span class="s0">/* 2667922 Hokyeong Lee 
+ * SO2 Practical Part Task F 
+ * * Sorry, my answer is not complete as I ran out of time...:_( 
+ */</span>
+<span class="s2">import </span><span class="s1">java</span><span class="s3">.</span><span class="s1">util</span><span class="s3">.</span><span class="s1">Arrays</span><span class="s3">;</span>
+
+<span class="s2">public class </span><span class="s1">TextAnalyzer </span><span class="s3">{</span>
+    <span class="s2">private </span><span class="s1">String text</span><span class="s3">;</span>
+    <span class="s2">private </span><span class="s1">String words</span><span class="s3">;</span>
+
+    <span class="s0">// Constructor</span>
+    <span class="s0">// incl. handling of edge cases</span>
+    <span class="s2">public </span><span class="s1">TextAnalyzer</span><span class="s3">(</span><span class="s1">String text</span><span class="s3">, </span><span class="s1">String words</span><span class="s3">) {</span>
+        <span class="s2">this</span><span class="s3">.</span><span class="s1">text </span><span class="s3">= (</span><span class="s1">text </span><span class="s3">== </span><span class="s2">null</span><span class="s3">)? </span><span class="s4">&quot;UNKNOWN&quot; </span><span class="s3">: </span><span class="s1">text</span><span class="s3">.</span><span class="s1">trim</span><span class="s3">();</span>
+        <span class="s2">this</span><span class="s3">.</span><span class="s1">words </span><span class="s3">= (</span><span class="s1">words </span><span class="s3">== </span><span class="s2">null</span><span class="s3">)? </span><span class="s4">&quot;UNKNOWN&quot; </span><span class="s3">: </span><span class="s1">words</span><span class="s3">.</span><span class="s1">trim</span><span class="s3">();</span>
+        <span class="s2">if </span><span class="s3">(</span><span class="s2">this</span><span class="s3">.</span><span class="s1">text</span><span class="s3">.</span><span class="s1">isEmpty</span><span class="s3">()) {</span>
+            <span class="s2">this</span><span class="s3">.</span><span class="s1">text </span><span class="s3">= </span><span class="s4">&quot;UNKNOWN&quot;</span><span class="s3">;</span>
+        <span class="s3">}</span>
+        <span class="s2">if </span><span class="s3">(</span><span class="s2">this</span><span class="s3">.</span><span class="s1">words</span><span class="s3">.</span><span class="s1">isEmpty</span><span class="s3">()) {</span>
+            <span class="s2">this</span><span class="s3">.</span><span class="s1">words </span><span class="s3">= </span><span class="s4">&quot;UNKNOWN&quot;</span><span class="s3">;</span>
+        <span class="s3">}</span>
+    <span class="s3">}</span>
+
+    <span class="s0">// Methods</span>
+    <span class="s0">// 1. Count and return the total number of words</span>
+    <span class="s2">public int </span><span class="s1">countWords</span><span class="s3">(</span><span class="s1">String text</span><span class="s3">) {</span>
+        <span class="s2">return </span><span class="s1">text</span><span class="s3">.</span><span class="s1">split</span><span class="s3">(</span><span class="s4">&quot; &quot;</span><span class="s3">).</span><span class="s1">length</span><span class="s3">;</span>
+    <span class="s3">}</span>
+
+    <span class="s0">// 2. Count and return the total number of characters</span>
+    <span class="s2">public </span><span class="s1">String countCharacters</span><span class="s3">(</span><span class="s1">String text</span><span class="s3">) {</span>
+        <span class="s2">int </span><span class="s1">counter </span><span class="s3">= </span><span class="s5">0</span><span class="s3">;</span>
+        <span class="s2">char</span><span class="s3">[] </span><span class="s1">characters</span><span class="s3">;</span>
+
+        <span class="s2">for </span><span class="s3">(</span><span class="s2">int </span><span class="s1">i </span><span class="s3">= </span><span class="s5">0 </span><span class="s3">; </span><span class="s1">i </span><span class="s3">&lt; </span><span class="s1">characters</span><span class="s3">.</span><span class="s1">length</span><span class="s3">; </span><span class="s1">i</span><span class="s3">++) {</span>
+            <span class="s1">counter</span><span class="s3">++;</span>
+        <span class="s3">}</span>
+
+        <span class="s2">return </span><span class="s1">counter</span><span class="s3">;</span>
+    <span class="s3">}</span>
+
+    <span class="s0">// 3. Find and return the longest word</span>
+    <span class="s2">public </span><span class="s1">String findLongestWord</span><span class="s3">(</span><span class="s1">String text</span><span class="s3">) {</span>
+        <span class="s1">String</span><span class="s3">[] </span><span class="s1">words </span><span class="s3">= </span><span class="s1">text</span><span class="s3">.</span><span class="s1">trim</span><span class="s3">();</span>
+        <span class="s0">// include loop to find the longest word here</span>
+        
+        <span class="s0">// return the word found to be the longest</span>
+        <span class="s2">return </span><span class="s1">longestWord</span><span class="s3">;</span>
+    <span class="s3">}</span>
+
+    <span class="s0">// 4. Count how many times a specific word appears</span>
+    <span class="s2">public int </span><span class="s1">countWordOccurrences</span><span class="s3">(</span><span class="s1">String text</span><span class="s3">, </span><span class="s1">String word</span><span class="s3">) {</span>
+        <span class="s2">int </span><span class="s1">counter </span><span class="s3">= </span><span class="s5">0</span><span class="s3">;</span>
+
+        <span class="s2">return </span><span class="s1">counter</span><span class="s3">;</span>
+    <span class="s3">}</span>
+
+    <span class="s0">// Main Method</span>
+    <span class="s2">public static void </span><span class="s1">main</span><span class="s3">(</span><span class="s1">String</span><span class="s3">[] </span><span class="s1">args</span><span class="s3">) {</span>
+        <span class="s1">TextAnalyzer analyzer </span><span class="s3">= </span><span class="s2">new </span><span class="s1">TextAnalyzer</span><span class="s3">(</span><span class="s4">&quot;Hello world from Java&quot;</span><span class="s3">);</span>
+
+        <span class="s0">// Test 1 for counting words</span>
+        <span class="s1">System</span><span class="s3">.</span><span class="s1">out</span><span class="s3">.</span><span class="s1">println</span><span class="s3">(</span><span class="s1">analyzer</span><span class="s3">.</span><span class="s1">countWords</span><span class="s3">());</span>
+
+        <span class="s0">// Test 2 for counting characters</span>
+        <span class="s1">System</span><span class="s3">.</span><span class="s1">out</span><span class="s3">.</span><span class="s1">println</span><span class="s3">(</span><span class="s1">analyzer</span><span class="s3">.</span><span class="s1">countCharacters</span><span class="s3">());</span>
+
+        <span class="s0">// Test 3 for counting occurrences of words</span>
+        <span class="s1">System</span><span class="s3">.</span><span class="s1">out</span><span class="s3">.</span><span class="s1">println</span><span class="s3">(</span><span class="s1">analyzer</span><span class="s3">.</span><span class="s1">countWordOccurrences</span><span class="s3">());</span>
+
+    <span class="s3">}</span>
+
+<span class="s3">}</span>
+</pre>
+</body>
+</html>

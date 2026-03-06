@@ -98,6 +98,8 @@
           }
         }
       ```
+    ]
+    #box(height: 100%, width: 100%, stroke: color.black)[
       3. Constructor is a special method called when creating an object instance, used to initialize the object's state and allocate resources.
       ```java
         class Animal {
@@ -120,6 +122,7 @@
         };
       ```
     ]
+
   ],
   [],
   (
@@ -385,15 +388,17 @@
     ```
 
     List all errors you found and explain what is wrong:\
-    #box(width: 100%, height: 60%, stroke: color.black)[]
-  ],
-  [
+    #box(width: 100%, height: 60%, stroke: color.black)[
+
     - Error 1: name attribute has no access modifier (package-private) - violates encapsulation, should be private
     - Error 2: Constructor missing semicolon after `this.studentId = studentId`
     - Error 3: Constructor doesn't initialize `gpa` attribute - all attributes should be initialized
     - Error 4: In `setGpa`, `gpa = gpa` assigns parameter to itself - should use `this.gpa = gpa`
     - Error 5: `getStudentInfo()` is static but tries to access instance variables (`name`, `studentId`, `gpa`) - static methods cannot access instance variables directly
     - Error 6: Missing getter methods for `name` and `gpa` - breaks encapsulation principle of providing access to private data
+    ]
+  ],
+  [
   ],
   (
     (2, [Error 1: name attribute has no access modifier (package-private) - violates encapsulation, should be private]),
