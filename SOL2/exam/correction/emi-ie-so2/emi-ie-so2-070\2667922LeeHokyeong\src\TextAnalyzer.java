@@ -5,76 +5,76 @@
  */
 
 public class TextAnalyzer {
-    // Attributes
-    private String text;
-    private String words;
+  // Attributes
+  private String text;
+  private String words;
 
-    // Constructor
-    // incl. handling of edge cases
-    public TextAnalyzer(String text, String words) {
-        this.text = (text == null)? "UNKNOWN" : text.trim();
-        this.words = (words == null)? "UNKNOWN" : words.trim();
+  // Constructor
+  // incl. handling of edge cases
+  public TextAnalyzer(String text, String words) {
+    this.text = (text == null) ? "UNKNOWN" : text.trim();
+    this.words = (words == null) ? "UNKNOWN" : words.trim();
 
-        if (this.text.isEmpty()) {
-            this.text = "UNKNOWN";
-        }
-        if (this.words.isEmpty()) {
-            this.words = "UNKNOWN";
-        }
+    if (this.text.isEmpty()) {
+      this.text = "UNKNOWN";
+    }
+    if (this.words.isEmpty()) {
+      this.words = "UNKNOWN";
+    }
+  }
+
+  // Methods
+  // 1. Count and return the total number of words
+  public int countWords(String text) {
+    return text.split(" ").length;
+  }
+
+  // 2. Count and return the total number of characters
+  public String countCharacters(String text) {
+    int counter = 0;
+    char[] characters = text.getChars();
+
+    // a loop to count the characters
+    for (int i = 0; i < characters.length; i++) {
+      counter++;
     }
 
-    // Methods
-    // 1. Count and return the total number of words
-    public int countWords(String text) {
-        return text.split(" ").length;
-    }
+    return counter;
+  }
 
-    // 2. Count and return the total number of characters
-    public String countCharacters(String text) {
-        int counter = 0;
-        char[] characters = text.getChars();
+  // 3. Find and return the longest word
+  public String findLongestWord(String text) {
+    String[] words = text.trim();
 
-        // a loop to count the characters
-        for (int i = 0 ; i < characters.length; i++) {
-            counter++;
-        }
+    // include loop to find the longest word here
 
-        return counter;
-    }
+    // return the word found to be the longest
 
-    // 3. Find and return the longest word
-    public String findLongestWord(String text) {
-        String[] words = text.trim();
+    return longestWord;
+  }
 
-        // include loop to find the longest word here
+  // 4. Count how many times a specific word appears
+  public int countWordOccurrences(String text, String word) {
+    int counter = 0;
 
-        // return the word found to be the longest
+    // include functions to count the word happenings
 
-        return longestWord;
-    }
+    return counter;
+  }
 
-    // 4. Count how many times a specific word appears
-    public int countWordOccurrences(String text, String word) {
-        int counter = 0;
+  // Main Method
+  public static void main(String[] args) {
+    TextAnalyzer analyzer = new TextAnalyzer("Hello world from Java");
 
-        // include functions to count the word happenings
+    // Test 1 for counting words
+    System.out.println(analyzer.countWords());
 
-        return counter;
-    }
+    // Test 2 for counting characters
+    System.out.println(analyzer.countCharacters());
 
-    // Main Method
-    public static void main(String[] args) {
-        TextAnalyzer analyzer = new TextAnalyzer("Hello world from Java");
+    // Test 3 for counting occurrences of words
+    System.out.println(analyzer.countWordOccurrences());
 
-        // Test 1 for counting words
-        System.out.println(analyzer.countWords());
-
-        // Test 2 for counting characters
-        System.out.println(analyzer.countCharacters());
-
-        // Test 3 for counting occurrences of words
-        System.out.println(analyzer.countWordOccurrences());
-
-    }
+  }
 
 }
