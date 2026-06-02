@@ -1,13 +1,13 @@
-#import "@preview/touying:0.5.2": *
+#import "@preview/touying:0.7.0": *
 #import themes.university: *
 
-#import "@preview/fletcher:0.5.1" as flechter: diagram, node, edge
+#import "@preview/fletcher:0.5.8" as flechter: diagram, edge, node
 
-#import "@preview/tiaoma:0.2.1"
+#import "@preview/tiaoma:0.3.0"
 
-#import "@preview/gentle-clues:1.0.0": *
-#import "@preview/pinit:0.2.0": *
-#import "@preview/codly:1.0.0": *
+#import "@preview/gentle-clues:1.3.1": *
+#import "@preview/pinit:0.2.2": *
+#import "@preview/codly:1.3.0": *
 #show: codly-init.with()
 
 #import "@preview/numbly:0.1.0": numbly
@@ -129,7 +129,7 @@
 
 == Use of AI in this lecture
 #slide[
-  #heading(numbering: none)[Opportunities]
+  #heading(numbering: none, depth: 2)[Opportunities]
   #let left = [
     - *Breaking Down Complex Concepts*
       - Simplify intricate ideas into easy-to-understand language
@@ -156,8 +156,9 @@
     left, right,
   )
 ]
+
 #slide[
-  #heading(numbering: none)[Challenges]
+  #heading(numbering: none, depth: 2)[Challenges]
   - *Hallucinations and Inaccuracy*: AI models can sometimes generate incorrect or misleading information (often called "hallucinations"), requiring careful verification of the provided answers.
     - This is especially problematic when learning something new where you may not have the expertise to identify errors.
   - *Lack of Contextual Understanding*: AI may struggle with nuanced concepts or the specific context of your learning goals.
@@ -168,7 +169,7 @@
 ]
 
 #slide[
-  #heading(numbering: none)[AI in the exam]
+  #heading(numbering: none, depth: 2)[AI in the exam]
   #align(center + horizon)[
     Please remember that the use of AI is not permitted during the exam. There is a zero-tolerance-policy regarding cheating. *Please keep in mind that your are the person solving the problems and not the AI!*
   ]
@@ -176,9 +177,9 @@
 
 == Moodle
 #slide[
-  #heading(numbering: none)[Lecture Material]
-  - Lecture material can be found at: #link("moodle.haw-hamburg.de")
-  - Enrollment key: db_2025
+  #heading(numbering: none, depth: 2)[Lecture Material]
+  - Lecture material can be found at: #link("https://moodle.haw-hamburg.de/course/view.php?id=9944")
+  - Enrollment key: db_2026
   - The slides are also the script.
   - *Thus your notes are essential!*
 ]
@@ -200,14 +201,9 @@
   - Assignments are published before laboratory
   - Each laboratory consists of two parts:
   1. Upfront assignments
-    - Submitting the solutions by Saturday 23:59 before the lab date!
+    - Solutions will be worked through in the lab themselves.
     - Failure to do so will have consequences.
-    - Only one submission per team of two
     - No re-submission after a laboratory
-    - Submit only PDF-files
-  #example[
-    Solution of lab on 05.05.2025 must be submitted by the 03.05.2024 23:59 via Moodle.
-  ]
   2. Presentation of solutions to the lecturers and the group.
 ]
 
@@ -227,14 +223,13 @@
   - Joint lab with all three lab groups
   - Attendance is mandatory!
   - Bring your own device *with a working PostgreSQL database*!
-  - There's an installation guide on it in the Moodle room. If you find yourself being lost despite that, shoot me an email! There's also lots of good instructions online.
 ]
 
 == Important people in this lecture
 #slide[
   - Emily Antosch: Lecture #link("mailto:emilylucia.antosch@haw-hamburg.de")
-  - Julian Moldenhauer: Lab #link("mailto:julian.moldenhauer@haw-hamburg.de")
-  - Furkan Yildirim: Lab #link("mailto:furkan.yildirim@haw-hamburg.de")
+  - Felix Köpcke: Lab #link("mailto:felix.koepcke@haw-hamburg.de")
+  - Liesbet Roose: Lab #link("mailto:liesbet.roose@haw-hamburg.de")
 ]
 
 == Focus of these lectures
@@ -329,11 +324,11 @@
 == In essence: DB vs DBMS
 #slide[
   #let body = [
-    #heading(numbering: none)[In Essence]
+    #heading(numbering: none, depth: 2)[In Essence]
     - A database manages data logically and physically
     - A DBMS offers tools for managing, editing and evaluating data
 
-    #heading(numbering: none)[Database Examples]
+    #heading(numbering: none, depth: 2)[Database Examples]
     - Customer Relationship Management (CRM) (keeping track of your customers)
     - Controlling and Accounting (managing your finances)
     - Merchandise Management System (organizing your products)
@@ -351,13 +346,13 @@
 == Difference between data and information
 #slide[
   #let data = [
-    #heading(numbering: none)[Data]
+    #heading(numbering: none, depth: 2)[Data]
     - Data is raw, uncategorised facts such as numbers, text or images.
     - More often than not, data does not make sense on its own and requires some form
       of context.
   ]
   #let information = [
-    #heading(numbering: none)[Information]
+    #heading(numbering: none, depth: 2)[Information]
     - Information is born when data is given context, meaning and/or relevance.
     - Information is able to actively serve us by providing insight in how decisions
       should be made.
@@ -422,13 +417,13 @@
 
 == Database vs. Excel: What are they best used for?
 #slide[
-  #heading(numbering: none)[Databases are good for:]
+  #heading(numbering: none, depth: 2)[Databases are good for:]
   - Larger datasets (databases can handle a lot more data than Excel)
   - Organization/structure (databases are stricter about how data is organized)
   - Collaborative work (databases are better for teams working together)
   - Preparing data for analysis in other software
 
-    #heading(numbering: none)[Excel is good for:]
+    #heading(numbering: none, depth: 2)[Excel is good for:]
   - Smaller datasets (Excel can slow down with large datasets)
   - Manually entering data
   - Flexible structure (Excel is more forgiving about how data is organized)

@@ -1,16 +1,16 @@
-#import "@preview/touying:0.5.2": *
+#import "@preview/touying:0.7.0": *
 #import themes.university: *
 
-#import "@preview/fletcher:0.5.1" as flechter: diagram, node, edge
-#import "@preview/wrap-it:0.1.0": wrap-content
+#import "@preview/fletcher:0.5.8" as flechter: diagram, edge, node
 
-#import "@preview/gentle-clues:1.0.0": *
-#import "@preview/pinit:0.2.0": *
-#import "@preview/codly:1.0.0": *
+#import "@preview/tiaoma:0.3.0"
+
+#import "@preview/gentle-clues:1.3.1": *
+#import "@preview/pinit:0.2.2": *
+#import "@preview/codly:1.3.0": *
 #show: codly-init.with()
 
 #import "@preview/numbly:0.1.0": numbly
-
 #set heading(numbering: numbly("{1}.", default: "1.1"))
 
 #set align(left + top)
