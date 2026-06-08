@@ -1,0 +1,132 @@
+:root {
+  color: #1f2937;
+  background: #f3f4f6;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  border: 0;
+  border-radius: 0.5rem;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+  padding: 0.6rem 0.9rem;
+}
+
+button:hover {
+  background: #1d4ed8;
+}
+
+button.secondary {
+  background: #6b7280;
+}
+
+button.secondary:hover {
+  background: #4b5563;
+}
+
+button.danger {
+  background: #dc2626;
+}
+
+button.danger:hover {
+  background: #b91c1c;
+}
+
+input[type='text'],
+.add-form input,
+.edit-input {
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  padding: 0.6rem 0.75rem;
+}
+
+.app {
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 3rem 1rem;
+}
+
+.todo-card {
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 20px 50px rgb(15 23 42 / 10%);
+  max-width: 760px;
+  padding: 2rem;
+  width: 100%;
+}
+
+.todo-card h1 {
+  margin-top: 0;
+}
+
+.add-form {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: 1fr auto;
+  margin-bottom: 1rem;
+}
+
+.error {
+  background: #fee2e2;
+  border: 1px solid #fecaca;
+  border-radius: 0.5rem;
+  color: #991b1b;
+  padding: 0.75rem;
+}
+
+.empty-state {
+  color: #6b7280;
+}
+
+.todo-list {
+  display: grid;
+  gap: 0.75rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.todo {
+  align-items: center;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: auto 1fr auto auto auto;
+  padding: 0.75rem;
+}
+
+.todo.done span {
+  color: #6b7280;
+  text-decoration: line-through;
+}
+
+.edit-input {
+  width: 100%;
+}
+
+@media (max-width: 640px) {
+  .add-form,
+  .todo {
+    grid-template-columns: 1fr;
+  }
+
+  .todo input[type='checkbox'] {
+    justify-self: start;
+  }
+}
