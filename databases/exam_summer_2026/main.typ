@@ -65,6 +65,21 @@
 #set heading(numbering: none)
 #set text(font: "Roboto")
 
+#block(
+  width: 100%,
+  inset: 8pt,
+  radius: 4pt,
+  stroke: 1pt + black,
+)[
+  *Exam rules*
+
+  - Cheat sheet: 2 double-sided A4 papers or 4 single-sided A4 papers.
+  - No stickies attached to the cheat sheet.
+  - Write your name on the paper.
+  - If you have a question during the exam, ask.
+  - Use your own A4 papers that you brought. If you need more, ask staff.
+]
+
 #task(
   [
     Explain Database Terms
@@ -240,20 +255,14 @@
   [
     #subtask(points: 6)[
       Write a query that returns the names and emails of customers who have at least one order with status `shipped`.
-
-      #box(height: 35%, width: 100%, stroke: color.black)[]
     ]
 
     #subtask(points: 8)[
       Write a query that returns the total revenue per product category. Revenue is `quantity * unit_price`. Return `category` and `revenue`.
-
-      #box(height: 45%, width: 100%, stroke: color.black)[]
     ]
 
     #subtask(points: 8)[
       Write a query that returns all customers who have never placed an order.
-
-      #box(height: 45%, width: 100%, stroke: color.black)[]
     ]
   ],
   (
@@ -296,32 +305,24 @@
       Draw or describe the ER model. Include the required entity types, relationships, and cardinalities. Write cardinalities explicitly if your drawing is ambiguous.
 
       *Grading checklist*: entities (4 P), required attributes and identifiers (3 P), cardinalities (3 P), handling repeated admissions and treatments (2 P).
-
-      #box(height: 70%, width: 100%, stroke: color.black)[]
     ]
 
     #subtask(points: 14)[
       Transform your ER model into a relational model. Write every relation as `Table(attribute, attribute, ...)`, mark primary keys with `(PK)` and foreign keys with `(FK)`.
 
       *Grading checklist*: correct tables (4 P), primary keys (3 P), foreign keys (4 P), optional values and uniqueness constraints (2 P), no unnecessary duplicated department/doctor/patient data (1 P).
-
-      #box(height: 76%, width: 100%, stroke: color.black)[]
     ]
 
     #subtask(points: 10)[
       Write PostgreSQL ```sql CREATE TABLE``` statements for `Admission` and `Treatment`. Include primary keys, foreign keys, and constraints for dates or required values where appropriate.
 
       *Grading checklist*: syntactically valid DDL (2 P), PKs (2 P), FKs (3 P), ```sql NOT NULL```/optional values handled correctly (2 P), useful date constraint (1 P).
-
-      #box(height: 68%, width: 100%, stroke: color.black)[]
     ]
 
     #subtask(points: 8)[
       Write a SQL query that returns all currently admitted patients with their attending doctor's name and department name. A patient is currently admitted if ```sql discharge_date IS NULL```.
 
       *Grading checklist*: correct joins (4 P), filter for current admissions (2 P), selected output columns and aliases are understandable (2 P).
-
-      #box(height: 46%, width: 100%, stroke: color.black)[]
     ]
   ],
   (
