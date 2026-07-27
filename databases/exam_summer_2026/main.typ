@@ -35,15 +35,15 @@
   max-time: 90,
   show-lines: true,
 
-  show-solutions: true,
+  show-solutions: false,
   solutions-as-matrix: true,
 
   university: [HAW Hamburg],
   institute: [HAW - EMI IE4],
   seminar: [Databases],
 
-  task-type: [Tasks],
-  extra-task-type: [Extra tasks],
+  task-type: [Task],
+  extra-task-type: [Extra task],
 
   solution-matrix-task-header: [Task],
   solution-matrix-achieved-points-header: [Achieved Points],
@@ -54,7 +54,7 @@
   message: (
     points-sum,
     extrapoints-sum,
-  ) => [In total, you can achieve #points-sum + #extrapoints-sum points. You have achieved #box(line(stroke: purple, length: 1cm)) P. of #points-sum points.],
+  ) => [In total, you can achieve #(points-sum + extrapoints-sum) points. You have achieved #box(line(stroke: purple, length: 1cm)) P. of #(points-sum + extrapoints-sum) points.],
 
   solutions-title: [Suggestion for the Solution],
   timefield: time => [Time: #time min.],
@@ -67,25 +67,35 @@
 
 #block(
   width: 100%,
-  inset: 8pt,
+  inset: 12pt,
   radius: 4pt,
   stroke: 1pt + black,
 )[
-  *Exam rules*
+  #align(center)[#text(size: 18pt, weight: "bold")[Exam Rules]]
 
-  - Cheat sheet: 2 double-sided A4 papers or 4 single-sided A4 papers.
-  - No stickies attached to the cheat sheet.
-  - Write your name on the paper.
-  - If you have a question during the exam, ask.
-  - Use your own A4 papers that you brought. If you need more, ask staff.
+  *Name:* #box(line(length: 4cm)) #h(1cm) *Matriculation number:* #box(line(length: 4cm))
+
+  1. Do not cheat.
+  2. Write your full name and matriculation number on the exam and each extra sheet.
+  3. You may use two double-sided A4 cheat sheets or four single-sided A4 cheat sheets.
+  4. Do not attach sticky notes to the cheat sheets.
+  5. If you need extra sheets, place them on your table before the exam starts.
+  6. Ask the exam supervisor before you use the restroom.
+  7. Use your floor's restroom only when it is vacant.
+  8. After the first student leaves the exam early, the remaining students cannot use the restroom.
+  9. Stay until the exam ends so that other students can use the restroom.
+  10. Hand in the exam and all extra sheets.
 ]
 
+#pagebreak()
+
 #task(
+  points: 10,
   [
     Explain Database Terms
   ],
   [
-    Explain the following five terms in 2-3 sentences each and give one concrete database example for each term.
+    For each term, write 2-3 sentences. Include one concrete database example in these sentences.
 
     - Primary key
     - Foreign key
@@ -102,7 +112,7 @@
     ),
     (
       2,
-      [Foreign key: attribute that references a key in another table and connects related rows. Example: `Enrollment.student_id` references `Student.student_id`.],
+      [Foreign key: attribute that references a key in the same table or another table. Example: `Enrollment.student_id` references `Student.student_id`.],
     ),
     (
       2,
@@ -114,18 +124,19 @@
     ),
     (
       2,
-      [SQL query: statement used to ask the database for data or change data. Example: `SELECT name FROM Student;` returns student names.],
+      [SQL query: statement that requests data from a database. Example: `SELECT name FROM Student;` returns student names.],
     ),
   ),
 )
 
 
 #task(
+  points: 16,
   [
     Multiple Choice: True or False
   ],
   [
-    For each statement, mark exactly one column. For every correct answer, you receive 2 points. For every wrong answer, 2 points are deducted. If you leave a row empty or mark both columns, you receive 0 points for that row.
+    For each statement, mark exactly one column. Each correct answer gives 2 points. Each wrong answer deducts 2 points. An empty row or two marks give 0 points for that row. The total score for this task cannot be negative.
 
     #table(
       columns: (1fr, auto, auto),
@@ -162,7 +173,7 @@
     Normalization and SQL Constraints
   ],
   [
-    A small library stores book loans in one table:
+    A small library uses one table and one row for each book in a loan. A loan can contain multiple books. Each `loan_id` identifies one member, loan date, and due date. Each `member_id` identifies one member name and email address. Each `book_id` identifies one title, author name, and genre. The `return_date` applies to one book in one loan.
 
     ```sql
     CREATE TABLE library_loans (
@@ -183,23 +194,23 @@
   ],
   [
     #subtask(points: 6)[
-      Identify three functional dependencies that are visible in the table. Use the form
+      Identify three functional dependencies from the table description. Use this form:
       ```sql
       A -> B, C
       ```
-      (`A` describes `B` and `C`)
+      `A` functionally determines `B` and `C`.
     ]
 
     #subtask(points: 6)[
-      Name two concrete anomalies or redundancies that can occur in this table. For each one, refer to specific columns from the schema.
+      Describe two distinct anomalies or data redundancies. For each one, name the applicable schema columns.
     ]
 
     #subtask(points: 14)[
-      Decompose the table into relations in 3NF. Write relation schemas with primary keys underlined using `(PK)` and foreign keys marked with `(FK)`. You do not need SQL syntax in this subtask.
+      Decompose the table into 3NF relations. Mark primary-key attributes with `(PK)` and foreign-key attributes with `(FK)`. Do not write SQL in this subtask.
     ]
 
     #subtask(points: 8)[
-      Write SQL `CREATE TABLE` statements for two of your relations. Each statement must include a primary key and at least one useful constraint. At least one statement must include a foreign key.
+      Write SQL `CREATE TABLE` statements for two relations from your 3NF design. Each statement must include a primary key and one other constraint. At least one statement must include a foreign key.
     ]
   ],
   (
@@ -218,7 +229,7 @@
     (
       14,
       [
-        Expected structure: ```sql Member(member_id PK, member_name, member_email)```, ```sql Book(book_id PK, book_title, author_name, genre)```, ```sql Loan(loan_id PK, loan_date, due_date, member_id FK)```, and ```sql LoanItem(loan_id PK/FK, book_id PK/FK, return_date)```. Award points for correct keys, FKs, decomposition, and removal of partial dependencies.
+        Expected structure: ```sql Member(member_id (PK), member_name, member_email)```, ```sql Book(book_id (PK), book_title, author_name, genre)```, ```sql Loan(loan_id (PK), loan_date, due_date, member_id (FK))```, and ```sql LoanItem(loan_id (PK, FK), book_id (PK, FK), return_date)```. Award points for correct keys, foreign keys, decomposition, and removal of partial dependencies.
       ],
     ),
     (
@@ -245,19 +256,19 @@
     Loan(loan_id, member_id, book_id, loan_date, return_date)
     ```
 
-    Primary keys are the first listed attributes. `Loan.member_id` references `Member.member_id`. `Loan.book_id` references `Book.book_id`.
+    The first attribute in each relation is its primary key. `Loan.member_id` references `Member.member_id`. `Loan.book_id` references `Book.book_id`.
   ],
   [
     #subtask(points: 6)[
-      Write a query that returns the names and emails of members who have at least one open loan. A loan is open if `return_date IS NULL`.
+      Return the name and email of each member who has an open loan. Return each member once. A loan is open when `return_date IS NULL`.
     ]
 
     #subtask(points: 8)[
-      Write a query that returns the total number of loans per book genre. Return `genre` and `loan_count`.
+      Return the total number of loans for each book genre that has at least one loan. Return `genre` and `loan_count`.
     ]
 
     #subtask(points: 8)[
-      Write a query that returns all members who have never borrowed a book.
+      Return `member_id`, `name`, and `email` for each member who has never borrowed a book.
     ]
   ],
   (
@@ -286,14 +297,18 @@
 
 #task(
   [
-    Optimized Design Task: Course Registration System
+    Database Design: Course Registration System
   ],
   [
     Design a database for the following restricted course registration scenario.
 
-    A university has departments. Each department has a unique name and offers courses. Each course belongs to exactly one department and has a course code. Lecturers work for exactly one department. A course can be offered multiple times, for example in different semesters. Each course offering has a semester, a year, and exactly one lecturer. Students can enroll in course offerings. An enrollment has an enrollment date, a status, and an optional grade. A student has a name, email address, and matriculation number. Email addresses and matriculation numbers are unique when known, but email addresses may be missing.
+    A university has departments. Each department has a unique name and offers courses. Each course has a globally unique course code and a title. Each course belongs to exactly one department. Each lecturer has a name and works for exactly one department.
 
-    Use surrogate integer IDs where useful. You may add attributes if needed, but the required information above must be represented.
+    A course can have multiple offerings, such as offerings in different semesters. Each course offering has one course, one semester, one year, and exactly one lecturer.
+
+    Students can enroll in course offerings. Each student has a name and a unique matriculation number. A student email address is optional and unique when present. An enrollment has an enrollment date, a status, and an optional grade. The valid status values are `active`, `completed`, and `withdrawn`.
+
+    Use surrogate integer IDs where useful. You may add attributes, but your design must contain all specified information.
   ],
   [
     #subtask(points: 12)[
@@ -303,21 +318,21 @@
     ]
 
     #subtask(points: 14)[
-      Transform your ER model into a relational model. Write every relation as `Table(attribute, attribute, ...)`, mark primary keys with `(PK)` and foreign keys with `(FK)`.
+      Transform your ER model into a relational model. Write each relation as `Table(attribute, attribute, ...)`. Mark primary keys with `(PK)` and foreign keys with `(FK)`. Mark unique attributes with `(UNIQUE)` and optional attributes with `(OPTIONAL)`.
 
       *Grading checklist*: correct tables (4 P), primary keys (3 P), foreign keys (4 P), optional values and uniqueness constraints (2 P), no unnecessary duplicated department/lecturer/student data (1 P).
     ]
 
     #subtask(points: 10)[
-      Write PostgreSQL ```sql CREATE TABLE``` statements for `CourseOffering` and `Enrollment`. Include primary keys, foreign keys, and constraints for required values where appropriate.
+      Write PostgreSQL `CREATE TABLE` statements for `CourseOffering` and `Enrollment`. Include primary keys, foreign keys, and constraints for all required values.
 
       *Grading checklist*: syntactically valid DDL (2 P), PKs (2 P), FKs (3 P), ```sql NOT NULL```/optional values handled correctly (2 P), useful status or year constraint (1 P).
     ]
 
     #subtask(points: 8)[
-      Write a SQL query that returns all currently enrolled students with their course title and lecturer name. A student is currently enrolled if ```sql status = 'active'```.
+      Return one row for each active enrollment. Include the student name, course title, and lecturer name. An enrollment is active when `status = 'active'`.
 
-      *Grading checklist*: correct joins (4 P), filter for current enrollments (2 P), selected output columns and aliases are understandable (2 P).
+      *Grading checklist*: correct joins (4 P), filter for active enrollments (2 P), selected output columns and aliases are understandable (2 P).
     ]
   ],
   (
@@ -330,7 +345,7 @@
     (
       14,
       [
-        Expected model: `Department(department_id PK, name UNIQUE)`, `Lecturer(lecturer_id PK, department_id FK, name, email UNIQUE)`, `Course(course_id PK, department_id FK, course_code UNIQUE, title, credits)`, `CourseOffering(offering_id PK, course_id FK, lecturer_id FK, semester, year)`, `Student(student_id PK, name, email UNIQUE NULL, matriculation_no UNIQUE)`, `Enrollment(student_id PK/FK, offering_id PK/FK, enrollment_date, status, grade)`. Equivalent normalized designs are acceptable.
+        Expected model: `Department(department_id (PK), name (UNIQUE))`, `Lecturer(lecturer_id (PK), department_id (FK), name)`, `Course(course_id (PK), department_id (FK), course_code (UNIQUE), title)`, `CourseOffering(offering_id (PK), course_id (FK), lecturer_id (FK), semester, year)`, `Student(student_id (PK), name, email (UNIQUE, OPTIONAL), matriculation_no (UNIQUE))`, `Enrollment(student_id (PK, FK), offering_id (PK, FK), enrollment_date, status, grade (OPTIONAL))`. Equivalent normalized designs are acceptable.
       ],
     ),
     (
