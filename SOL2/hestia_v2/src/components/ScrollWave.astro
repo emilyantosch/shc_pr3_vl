@@ -1,0 +1,51 @@
+<svg class="scroll-wave" viewBox="0 0 1000 1000" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+  <path d="M 850 0 C 850 100, 80 100, 80 250 S 920 400, 920 500 S 80 650, 80 750 S 850 900, 850 1000" fill="none" stroke="var(--color-footer-purple)" stroke-width="5" vector-effect="non-scaling-stroke" stroke-linecap="round" />
+</svg>
+
+<style>
+  .scroll-wave {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    pointer-events: none;
+    z-index: -1;
+    opacity: .45;
+    clip-path: inset(0 0 var(--wave-hidden, 100%) 0);
+  }
+  @media (max-width: 760px) {
+    .scroll-wave { opacity: .25; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-wave { clip-path: none; }
+  }
+</style>
+
+<script>
+  const wave = document.querySelector<SVGSVGElement>('.scroll-wave')!;
+  const main = document.querySelector<HTMLElement>('#main')!;
+  const hero = main.querySelector<HTMLElement>('.hero')!;
+  const footer = main.querySelector<HTMLElement>('.footer')!;
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  let frame = 0;
+
+  function draw() {
+    frame = 0;
+    const top = hero.offsetTop + hero.offsetHeight;
+    const height = Math.max(1, footer.offsetTop - top);
+    wave.style.top = `${top}px`;
+    wave.style.height = `${height}px`;
+    const visible = Math.max(0, Math.min(height, innerHeight * .8 - main.getBoundingClientRect().top - top));
+    wave.style.setProperty('--wave-hidden', `${100 * (1 - visible / height)}%`);
+  }
+
+  function scheduleDraw() {
+    if (!frame && !reducedMotion.matches) frame = requestAnimationFrame(draw);
+  }
+
+  // Accordions, loaded images, and responsive layouts can all change the route.
+  new ResizeObserver(draw).observe(main);
+  window.addEventListener('scroll', scheduleDraw, { passive: true });
+  window.addEventListener('resize', scheduleDraw);
+  reducedMotion.addEventListener('change', draw);
+  draw();
+</script>

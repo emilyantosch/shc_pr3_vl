@@ -1,5 +1,4 @@
-#import "@preview/touying:0.7.0": *
-#import themes.university: *
+#import "@preview/touying:0.7.4": *
 
 #import "@preview/fletcher:0.5.8" as flechter: diagram, edge, node
 
@@ -11,64 +10,20 @@
 #show: codly-init.with()
 
 #import "@preview/numbly:0.1.0": numbly
+#import "../../SOL2/hestia/theme.typ": *
+#set text(lang: "en")
 #set heading(numbering: numbly("{1}.", default: "1.1"))
 
-#set align(left + top)
-
-#show raw: it => {
-  show regex("pin\d"): it => pin(eval(it.text.slice(3)))
-  it
-}
-#let pinit-rect-from(height: 2em, pos: bottom, fill: rgb(0, 180, 255), point-pin, body) = {
-  pinit-point-from(
-    fill: fill,
-    pin-dx: 0em,
-    pin-dy: if pos == bottom { 0em } else { -0.6em },
-    body-dx: 0pt,
-    body-dy: if pos == bottom { -1.7em } else { -1.6em },
-    offset-dx: 0em,
-    offset-dy: if pos == bottom { 1.2em + height } else { -0.6em - height },
-    point-pin,
-    rect(
-      inset: 0.5em,
-      stroke: (bottom: 0.12em + fill),
-      {
-        set text(fill: fill)
-        body
-      },
-    ),
-  )
-}
-#show: university-theme.with(
-  aspect-ratio: "16-9",
+#show: hestia-theme.with(
+  compact: true,
+  image-source: source => read(source, encoding: none),
   config-info(
+    short-title: [Databases · Lecture 8],
     title: [Databases],
     subtitle: [Lecture 8 - Views and Transactions],
     author: [Emily Lucia Antosch],
     date: datetime.today().display("[day].[month].[year]"),
     institution: [HAW Hamburg],
-  ),
-)
-
-#set text(lang: "en", font: "Roboto", size: 22pt)
-
-#codly(
-  languages: (
-    sql: (
-      name: text(font: "JetBrainsMono NFM", " SQL", weight: "bold"),
-      icon: text(font: "JetBrainsMono NFM", "\u{e76e}", weight: "bold"),
-      color: rgb("#2563eb"),
-    ),
-    java: (
-      name: text(font: "JetBrainsMono NFM", " Java", weight: "bold"),
-      icon: text(font: "JetBrainsMono NFM", "\u{e738}", weight: "bold"),
-      color: rgb("#CE412B"),
-    ),
-    c: (
-      name: text(font: "JetBrainsMono NFM", " C", weight: "bold"),
-      icon: text(font: "JetBrainsMono NFM", "\u{e61e}", weight: "bold"),
-      color: rgb("#5612EC"),
-    ),
   ),
 )
 

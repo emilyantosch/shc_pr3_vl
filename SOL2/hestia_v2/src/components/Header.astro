@@ -1,0 +1,21 @@
+---
+import Action from './Action.astro';
+const { blog = false } = Astro.props;
+const github = 'https://github.com/emilyantosch/hestia';
+---
+
+  <header class="site-header shell">
+    <nav class="nav-pill flex items-center justify-between" aria-label="Primary navigation">
+      <a class="brand flex items-center gap-2.5" href="/" aria-label="Hestia home"><img class="theme-logo" src="/20250925_logo_light_rotated_rev01.png" width="54" height="32" alt="" /><span>hestia</span></a>
+      <div class="desktop-nav flex items-center">
+        <a href="/#why-hestia" aria-label="Why Hestia">Why<span class="nav-detail"> Hestia</span></a><a href="/#how-it-works" aria-label="How it works">How<span class="nav-detail"> it works</span></a><a href="/#our-story" aria-label="Our story"><span class="nav-detail">Our </span>story</a><a href="/blog/" aria-current={blog ? 'page' : undefined}>Blog</a>
+      </div>
+      <div class="flex items-center gap-3">
+        <button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false">
+          <svg class="theme-icon-sun" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="3.5"/><path d="M10 1.5v2M10 16.5v2M1.5 10h2M16.5 10h2M4 4l1.4 1.4M14.6 14.6 16 16M16 4l-1.4 1.4M5.4 14.6 4 16"/></svg>
+          <svg class="theme-icon-moon" viewBox="0 0 20 20" aria-hidden="true"><path d="M16.5 12.8A7 7 0 0 1 7.2 3.5a7 7 0 1 0 9.3 9.3Z"/></svg>
+        </button>
+        <Action href={github} class="nav-action">Get Hestia</Action>
+      </div>
+    </nav>
+  </header>

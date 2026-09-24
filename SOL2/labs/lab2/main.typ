@@ -1,29 +1,6 @@
-#import "@preview/grape-suite:3.1.0": exercise, german-dates
+#import "../../hestia/lab.typ": lab-theme, memo, solution
 
-#import "@preview/gentle-clues:1.0.0": *
-#set text(lang: "en")
-
-#import "@preview/codly:1.0.0": *
-#show: codly-init.with()
-
-#let solution = true;
-
-#codly(
-  languages: (
-    java: (
-      name: text(font: "JetBrainsMono NFM", " Java", weight: "bold"),
-      icon: text(font: "JetBrainsMono NFM", "\u{e738}", weight: "bold"),
-      color: rgb("#CE412B"),
-    ),
-    c: (
-      name: text(font: "JetBrainsMono NFM", " C", weight: "bold"),
-      icon: text(font: "JetBrainsMono NFM", "\u{e61e}", weight: "bold"),
-      color: rgb("#5612EC"),
-    ),
-  ),
-)
-
-#show: exercise.project.with(
+#show: lab-theme.with(
   title: "Lab 2 - Encapsulation, Methods, Arrays, and Static Variables",
   university: [HAW Hamburg],
   institute: [TI],
@@ -35,9 +12,7 @@
     The exercises build from enhancing the Lab 1 name management system to creating grade calculators
     and bank account simulators, emphasizing proper class design, data protection, and modular programming principles.
   ],
-  show-outline: true,
   author: "Emily Antosch & Furkan Yildirim & Julian Moldenhauer",
-  show-solutions: false,
 )
 
 #memo[
@@ -47,6 +22,8 @@
   #heading(numbering: none)[General Information]
   The following tasks are to be worked on in fixed teams of two. Each team member must be able to explain all solutions. Please submit only one solution for each team of two. The submission must be a PDF file in our Moodle room with the name and matriculation number. Solutions must be in digital format with intermediate steps and detailed explanations (no handwritten scans). You can use any tool or drawing program of your choice to create the diagrams. If you have questions or need support, use the forum in our Moodle room and help each other.
 ]
+
+#pagebreak()
 
 = Task 1: Enhanced Name Management System
 
@@ -130,8 +107,8 @@ persons[1] = new Person("Jane", "Smith");
 persons[2] = new Person("Bob", "Johnson");
 ```
 
-== Solution
 #if solution [
+== Solution
 *Person.java:*
 ```java
 public class Person {
@@ -389,8 +366,8 @@ public static double calculateAverage(int[] grades) {
 }
 ```
 
-== Solution
 #if solution [
+== Solution
 ```java
 import java.util.Scanner;
 
@@ -589,8 +566,8 @@ public class BankAccount {
 }
 ```
 
-== Solution
 #if solution [
+== Solution
 *BankAccount.java:*
 ```java
 public class BankAccount {
@@ -772,8 +749,8 @@ for (int i = 0; i < numbers.length; i++) {
 }
 ```
 
-== Solution
 #if solution [
+== Solution
 ```java
 import java.util.Random;
 import java.util.Scanner;
@@ -952,8 +929,8 @@ public class Student {
 }
 ```
 
-== Solution
 #if solution [
+== Solution
 *Student.java:*
 ```java
 public class Student {
@@ -1248,8 +1225,8 @@ public class Inventory {
 }
 ```
 
-== Solution
 #if solution [
+== Solution
 *Item.java:*
 ```java
 public class Item {

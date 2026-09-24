@@ -1,48 +1,18 @@
-#import "@preview/touying:0.5.2": *
-#import themes.university: *
-
-#import "@preview/fletcher:0.5.1" as flechter: diagram, edge, node
-
-#import "@preview/gentle-clues:1.0.0": *
-#import "@preview/pinit:0.2.0": *
-#import "@preview/codly:1.0.0": *
+#import "@preview/touying:0.7.4": *
+#import "@preview/codly:1.3.0": *
 #show: codly-init.with()
-
 #import "@preview/numbly:0.1.0": numbly
+#import "../hestia/theme.typ": *
+#import "diagrams.typ": diagram
 
-#set text(lang: "en", font: "Roboto")
+#set text(lang: "en")
 #set heading(numbering: numbly("{1}.", default: "1.1"))
 
-#set align(left + top)
-
-#show raw: it => {
-  show regex("pin\d"): it => pin(eval(it.text.slice(3)))
-  it
-}
-#let pinit-rect-from(height: 2em, pos: bottom, fill: rgb(0, 180, 255), point-pin, body) = {
-  pinit-point-from(
-    fill: fill,
-    pin-dx: 0em,
-    pin-dy: if pos == bottom { 0em } else { -0.6em },
-    body-dx: 0pt,
-    body-dy: if pos == bottom { -1.7em } else { -1.6em },
-    offset-dx: 0em,
-    offset-dy: if pos == bottom { 1.2em + height } else { -0.6em - height },
-    point-pin,
-    rect(
-      inset: 0.5em,
-      stroke: (bottom: 0.12em + fill),
-      {
-        set text(fill: fill)
-        body
-      },
-    ),
-  )
-}
-#show: university-theme.with(
-  aspect-ratio: "16-9",
+#show: hestia-theme.with(
+  compact: true,
   config-info(
-    title: [Object-Oriented Programming in Java],
+    title: [Object-Oriented\ Programming in Java],
+    short-title: [Java · Lecture 4],
     subtitle: [Lecture 4 - Class Libraries],
     author: [Emily Lucia Antosch],
     date: datetime.today().display("[day].[month].[year]"),
@@ -50,164 +20,97 @@
   ),
 )
 
-#codly(
-  languages: (
-    java: (
-      name: text(font: "JetBrainsMono NFM", " Java", weight: "bold"),
-      icon: text(font: "JetBrainsMono NFM", "\u{e738}", weight: "bold"),
-      color: rgb("#CE412B"),
-    ),
-    c: (
-      name: text(font: "JetBrainsMono NFM", " C", weight: "bold"),
-      icon: text(font: "JetBrainsMono NFM", "\u{e61e}", weight: "bold"),
-      color: rgb("#5612EC"),
-    ),
-  ),
-)
+// Codly uses grid rows; vertical inset controls code line spacing.
+#show raw.where(block: true): it => {
+  codly(inset: (x: .32em, y: .22em))
+  it
+}
 
 #title-slide(authors: [Emily Lucia Antosch])
-
-#outline(depth: 1)
+#outline-slide()
 
 = Introduction
-
-== Where Are We Currently?
+== Where Are We Now?
 #slide[
-  - Last time we dealt with classes and objects.
-  - You can now
-    - write simple classes in Java,
-    - create objects from classes, use attributes and call methods and
-    - use class variables and class methods.
-  - Today we continue with *Class Libraries*.
-]
-
-#slide[
-  1. Imperative Concepts
-  2. Classes and Objects
-  3. *Class Library*
-  4. Inheritance
-  5. Interfaces
-  6. Graphical User Interfaces
-  7. Exception Handling
-  8. Input and Output
-  9. Multithreading (Parallel Computing)
+  #diagram("roadmap", height: 190pt)
 ]
 
 == The Goal of This Chapter
 #slide[
-  - You apply strings, for example, for formatted output of data.
-  - You organize similar data in fields, matrices and lists.
-  - You convert strings to numerical values and apply mathematical functions to
-    numerical values.
+  - Create, compare, and format strings.
+  - Organize data in arrays, matrices, and lists.
+  - Convert text to numbers and use mathematical functions.
 ]
 
 = Strings
-== Strings
+== Strings: C and Java
 #slide[
-  - Strings in C
-    - Variables: Pointer to array of primitive data type `char`
-    - Memory size managed by programmer
-    - Data type has no methods
-  - Strings in Java:
-    - Strings are objects of class String.
-    - Variables reference objects
-    - Memory size managed by object
-    - Data type provides methods
-]
-
-#slide[
-  #figure(
-    image("../assets/img/slides_4/2024_10_16_strings_c_java_rev01.png"),
-    caption: [Strings: Differences between C and Java],
-  )
+  #diagram("strings-c-java", height: 280pt)
 ]
 
 == Creating Strings
 #slide[
-  - Creation also using the `new` operator:
-  ```java
-  String name = new String("Lena");
-  ```
-  - Alternatively by assigning a literal:
+  Prefer a literal. Use `new` when you need a distinct String object.
   ```java
   String name = "Lena";
+  String copy = new String("Lena");
   ```
-  - Assignment of a literal also possible after creation:
+  Reassignment changes the reference, not the original String.
   ```java
-  String name = new String("Lena");
   name = "Birgit";
   ```
 ]
 
-== Strings as Immutable
+== Strings Are Immutable
 #slide[
-  #memo[
-    - As in many object-oriented languages:
-      - Objects of class String are immutable.
-      - Their value cannot be modified after creation.
-      - For multi-stage construction, the StringBuilder class exists
-  ]
+  #diagram("immutable", height: 210pt)
 ]
 
 #slide[
-  #question[What output does the following program produce?]
-  #text(size: 16pt)[
-
+  #question[What will this print?]
+  #text(17pt)[
     ```java
-    public static void main(String[] args) {
-        String lena1 = new String("Lena");
-        String lena2 = lena1;
+    String lena1 = new String("Lena");
+    String lena2 = lena1;
+    System.out.println(lena1 + " / " + lena2);
+    System.out.println(lena1 == lena2);
 
-        System.out.println("lena1: " + lena1 + "\nlena2: " + lena2);
-        System.out.println("References equal: " + (lena1 == lena2));
-
-        lena2 += " B.";
-        System.out.println("\nlena1: " + lena1 + "\nlena2: " + lena2);
-        System.out.println("References equal: " + (lena1 == lena2));
-    }
+    lena2 += " B.";
+    System.out.println(lena1 + " / " + lena2);
+    System.out.println(lena1 == lena2);
     ```
   ]
 ]
 
 #slide[
-  - For illustration
-
   ```java
   String lena1 = new String("Lena");
   String lena2 = lena1;
   ```
-
-  #figure(
-    image("../assets/img/slides_4/2024_10_16_string_immut_objects_rev01.png"),
-    caption: [Reference to string],
-  )
+  #diagram("strings-shared", height: 180pt)
+  `lena1 == lena2` → `true`
 ]
 
 #slide[
   ```java
   lena2 += " B.";
   ```
-  #figure(
-    image("../assets/img/slides_4/2024_10_16_string_immut_two_objects_rev01.png"),
-    caption: [Changing the string leads to new object],
-  )
+  #diagram("strings-changed", height: 190pt)
+  `lena1 == lena2` → `false`
 ]
 
 == String Concatenation
 #slide[
-  - Strings can be concatenated using the plus operator:
+  Use `+` to concatenate text; `+=` reassigns the result.
   ```java
   String name = "Lena " + "or " + "then ";
-    name = name + "after all " + "again ";
-    name += "Birgit?";
+  name = name + "after all " + "again ";
+  name += "Birgit?";
   ```
-  - Implicit conversion of other data types to a String object:
-    - Evaluation of plus operators from left to right
-    - Conversion to String if the other operand is not of type String
 ]
 
 #slide[
-  #question[What will be output?]
+  #question[What will this print?]
   ```java
   int a = 20;
   int b = 22;
@@ -216,48 +119,40 @@
   ```
 ]
 
-== `toString()` Method
+#slide[
+  #diagram("concatenation", height: 220pt)
+]
+
+== The `toString()` Method
+#slide[
+  #diagram("to-string", height: 190pt)
+]
+
+#slide[
+  #task[Create a Person class with `toString()`. Test its implicit call in console output.]
+]
+
+#slide[
+  #text(18pt)[
+    ```java
+    public class Person {
+        String firstName, surname;
+
+        public Person(String firstName, String surname) {
+            this.firstName = firstName;
+            this.surname = surname;
+        }
+
+        public String toString() {
+            return firstName + " " + surname;
+        }
+    }
+    ```
+  ]
+]
+
 #slide[
   ```java
-  public String toString() {
-        // Method body
-        // Return of an object of type String
-    }
-  ```
-  - Method header prescribed
-  - Method body freely programmable
-  - Returns a String for objects that should describe the object
-  - Is called during implicit conversion of an object to a String
-]
-
-#slide[
-  #task[Let's try this out!
-    - Create a Person class and implement the `toString()` method
-  ]
-  - Check the implicit call using console output.
-]
-
-#slide[
-  #text(size: 22pt)[
-    ```
-    public class Person {
-          String firstName, surname;
-
-          public Person(String firstName, String surname) {
-              this.firstName = firstName;
-              this.surname = surname;
-          }
-
-          public String toString() {
-              return firstName + " " + surname;
-          }
-      }
-    ```
-  ]
-]
-
-#slide[
-  ```
   Person lena = new Person("Lena", "Jensen");
   String name = "Name: " + lena;
   System.out.println(lena);
@@ -267,21 +162,12 @@
 
 == String Methods
 #slide[
-  - Additional methods include, for example:
-    - Length of the string
-    - Character at specific position (First character has index 0!)
-    - Replace specific character
-    - Search for specific character or substring
-    - Split string
-    - Conversion to lowercase or uppercase
-    - Comparison of two strings
-    - And several more!
+  #diagram("string-methods", height: 280pt)
+  `charAt(0)` returns the first character. Indices start at zero.
 ]
 
 #slide[
-  #task[
-    - Replace "Humbug" with "Hamburg".
-  ]
+  #task[Replace “Humbug” with “Hamburg”.]
   ```java
   String hamburg = "Welcome to Humbug!";
   hamburg = hamburg.replace("Humbug", "Hamburg");
@@ -290,300 +176,187 @@
 ]
 
 #slide[
-  #question[What will be output?]
-  ```java
-  String upper = "Welcome to Hamburg!";
-  String lower = "welcome to hamburg!";
+  #question[What will this print?]
+  #text(18pt)[
+    ```java
+    String upper = "Welcome to Hamburg!";
+    String lower = "welcome to hamburg!";
 
-  System.out.println(lower.equals(upper));
-  System.out.println(lower.equals(upper.toLowerCase()));
-  System.out.println(lower.equalsIgnoreCase(upper));
-  ```
+    System.out.println(lower.equals(upper));
+    System.out.println(lower.equals(upper.toLowerCase()));
+    System.out.println(lower.equalsIgnoreCase(upper));
+    ```
+  ]
+  `equals` compares contents; `==` compares references.
 ]
 
 == String Formatting
 #slide[
-  - Often asked:
-    - Can you also adjust the format of the string during output? *Yes, of course!*
-
-  - Class method `format()`:
-    - Creates a formatted string
-    - No output to console occurs.
-    - Syntax (almost) identical to printf() from C/C++
+  #diagram("formatting", height: 230pt)
+  Java format strings use syntax similar to C’s `printf`.
 ]
 
 #slide[
-  #question[What will be output?]
-
-  ```java
+  #question[What will this print?]
+  #text(18pt)[
+    ```java
+    import java.util.Locale;
+    // Inside main():
     double wind = 21.4532;
-    String weather = String.format("%s %d: %.1f km/h", "Station", 7, wind);
+    String weather = String.format(Locale.US,
+        "%s %d: %.1f km/h", "Station", 7, wind);
     System.out.println(weather);
-  ```
-  #pause
-  - *Output:* Station 7: 21.5 km/h
-]
-
-#slide[
-  - Format specifications:
-
-  ```java %[ArgumentNo.] [Flags] [MinimumNumberCharacters] [.Precision] Format```
-
-  #text(size: 20pt)[
-    #align(center + horizon)[
-      #figure(
-        grid(
-          columns: (auto, auto),
-          gutter: 30pt,
-          table(
-            columns: (auto, auto),
-            inset: 7pt,
-            align: left + horizon,
-            fill: (_, y) => if calc.odd(y) { green.lighten(90%) },
-            table.header([*Format*], [*Meaning*]),
-            [`f,e,g`], [float],
-            [`d`], [Integer],
-            [`o`], [Octal],
-            [`x, X`], [Hexadecimal],
-            [`s`], [String],
-            [`t`], [time],
-            [`b`], [boolean],
-          ),
-          table(
-            columns: (auto, auto),
-            inset: 10pt,
-            align: left + horizon,
-            fill: (_, y) => if calc.odd(y) { green.lighten(90%) },
-            table.header([*Flag*], [*Meaning*]),
-            [`-`], [Left Alignment],
-            [`+`], [Print Prefix],
-            [`0`], [Fill empty space with 0],
-            [`,`], [Add commas for thousands],
-            [`(`], [Add parentheses for negative numbers],
-          ),
-        ),
-        caption: [Formats and Flags],
-      )
-    ]
+    ```
   ]
+  #pause
+  *Output:* `Station 7: 21.5 km/h`
 ]
 
 #slide[
-  #text(size: 22pt)[
-    #question[What will be the output?]
+  #diagram("format-parts", height: 200pt)
+]
+
+#slide[
+  #set text(size: 19pt)
+  #grid(columns: (1fr, 1fr), gutter: 24pt,
+    table(
+      columns: (auto, 1fr), inset: 9pt,
+      fill: (_, y) => if calc.odd(y) { palette.surface },
+      table.header([*Conversion*], [*Meaning*]),
+      [`f`, `e`, `g`], [Floating point],
+      [`d`], [Decimal integer],
+      [`o`], [Octal integer],
+      [`x`, `X`], [Hexadecimal integer],
+      [`s`], [String],
+      [`t`, `T` + suffix], [Date / time],
+      [`b`], [Boolean],
+    ),
+    table(
+      columns: (auto, 1fr), inset: 9pt,
+      fill: (_, y) => if calc.odd(y) { palette.surface },
+      table.header([*Flag*], [*Meaning*]),
+      [`-`], [Left-align],
+      [`+`], [Always show sign],
+      [`0`], [Pad with zeros],
+      [`,`], [Group thousands],
+      [`(`], [Parentheses for negatives],
+    ),
+  )
+]
+
+#slide[
+  #question[How do width and precision affect the output?]
+  #text(18pt)[
     ```java
     double wind = 21.4532;
-    System.out.println(String.format("%2.2f km/h", wind));
-    System.out.println(String.format("%8.2f km/h", wind));
-    System.out.println(String.format("%08.2f km/h", wind));
+    System.out.println(String.format(Locale.US, "%2.2f km/h", wind));
+    System.out.println(String.format(Locale.US, "%8.2f km/h", wind));
+    System.out.println(String.format(Locale.US, "%08.2f km/h", wind));
     ```
-    #pause
-    - Output:
-      - 21.45 km/h
-      - 21.45 km/h
-      - 00021.45 km/h
-  ]
-]
-
-
-#slide[
-  #memo[
-    - Minimum number of characters:
-      - Includes decimal places as well as the comma
-      - Does not cut off any digits before the decimal point
   ]
 ]
 
 #slide[
-  #question[
-    - What do you notice?
-  ]
-  ```java
-  double wind = 21.4532;
-  System.out.println(String.format("%2.2f km/h", wind));
-  ```
-  - Output: 21.45 km/h
-    #pause
-  - Above in output "German decimal comma" instead of "English point"
-  - Specified by localization
+  #diagram("format-width", height: 270pt)
+]
+
+== Formatting and Locale
+#slide[
+  #diagram("locales", height: 220pt)
 ]
 
 #slide[
-  #example[
+  #text(18pt)[
     ```java
-      double wind = 21.4532;
-      System.out.println(String.format(Locale.US, "%2.2f km/h", wind));
-      System.out.println(String.format(Locale.GERMAN, "%2.2f km/h", wind));
+    double wind = 21.4532;
+    System.out.println(String.format(Locale.US, "%.2f km/h", wind));
+    System.out.println(String.format(Locale.GERMAN, "%.2f km/h", wind));
     ```
-    - Output: 21.45 km/h 21.45 km/h
   ]
+  *Output:*
+  ```text
+  21.45 km/h
+  21,45 km/h
+  ```
 ]
 
 = Arrays
-== Arrays
+== Arrays: C and Java
 #slide[
-  - Arrays in C:
-    - Variables: Pointer to first element of the array in memory
-    - Memory size managed by programmer
-    - Data type has no methods
-
-  - Arrays in Java:
-    - Arrays are objects.
-    - Variables reference objects
-    - Memory size managed by object
-    - Data type provides methods
-]
-
-#slide[
-  #figure(
-    image("../assets/img/slides_4/2024_10_16_arrays_c_java_rev01.png"),
-    caption: [Arrays in Java and C],
-  )
+  #diagram("arrays-c-java", height: 280pt)
 ]
 
 == Creating Arrays
 #slide[
-  - Collection of elements with the same data type
-  - Data type becomes array through square brackets (e.g. `int[]`, `String[]`)
-  - Array classes are separate (additional) data types
-
-  - Declaration:
-    - Does not require specification of length
-    - Variable can reference arrays of any length
-    - Declaration does not create object, but reference variable
+  #diagram("array-creation", height: 190pt)
+  Use brackets after the type: `int[] filter`, not `int filter[]`.
 ]
 
+== Creation with `new`
 #slide[
-  ```java
-  int[] filter;
-  ```
-  #memo[- Brackets after variable names allowed, but not recommended (Why?)]
-  ```java
-  int filter[];
-  ```
-]
-
-== Creation: Dynamic Declaration
-#slide[
-  - Create array object using new operator
-  - Number of fields in square brackets
-  - Note: No round "constructor brackets" after data type
-  - Values in array are initialized with 0, 0.0, false or null
-
-  ```java
-  int[] filter = new int[];
-  ```
-  #figure(
-    image("../assets/img/slides_4/2024_10_16_filter_array_empty_rev01.png"),
-    caption: [Creation of an array],
-  )
-]
-
-
-== Creation: Assigning Elements
-#slide[
-  - Access to array element via index in square brackets
-  - First element has index 0
-
   ```java
   int[] filter = new int[3];
-    filter[0] = 1;
-    filter[1] = 2;
-    filter[2] = 1;
   ```
-
-  #figure(
-    image("../assets/img/slides_4/2024_10_16_filter_array_filled_single_rev01.png"),
-    caption: [Assigning values through index access],
-  )
+  #diagram("array-empty", height: 150pt)
+  Default elements: `0`, `0.0`, `false`, `'\u0000'`, or `null`, depending on type.
 ]
 
-== Creation: Static Declaration
+== Assigning Elements
 #slide[
-  - You can assign values to an array already when creating the object.
-  - Values in curly braces and separated by commas
-  - Allowed with and without use of the new operator
+  ```java
+  int[] filter = new int[3];
+  filter[0] = 1;
+  filter[1] = 2;
+  filter[2] = 1;
+  ```
+  #diagram("array-filled", height: 130pt)
+]
 
+== Array Initializers
+#slide[
+  These alternatives create the same contents:
   ```java
   int[] filter = {1, 2, 1};
+  ```
+  ```java
   int[] filter = new int[] {1, 2, 1};
   ```
-
-  #figure(
-    image("../assets/img/slides_4/2024_10_16_filter_array_filled_single_rev01.png"),
-    caption: [Filling during declaration],
-  )
+  #diagram("array-filled", height: 140pt)
 ]
 
-== Properties: Array Classes
+== Array Length and Indices
 #slide[
-  - Arrays are objects of the corresponding class:
-    - Arrays have methods.
-    - Number of elements via instance variable length
+  #question[Which values does the loop store?]
+  ```java
+  int[] filter = new int[3];
+  for (int i = 0; i < filter.length; i++) {
+      filter[i] = i * i;
+  }
+  ```
+  #diagram("array-question", height: 110pt)
+]
 
-  #question[Which array is created by the code?]
+#slide[
+  #diagram("array-bounds", height: 260pt)
+  `filter[-1]` and `filter[3]` are outside this array.
+]
 
-  #text(size: 22pt)[
-
+== Arrays of Objects
+#slide[
+  #text(18pt)[
     ```java
-    int[] filter = new int[3];
-      for (int i = 0; i < filter.length; i++) {
-          filter[i] = i * i;
-      }
+    Person[] friends = new Person[3];
+    friends[0] = new Person("Lena", "Jensen");
+    friends[1] = new Person("Birgit", "Meyer");
+    friends[2] = new Person("Jan", "Schmidt");
     ```
   ]
-
-  #figure(
-    image("../assets/img/slides_4/2024_10_16_filter_array_question_rev01.png"),
-    caption: [Filling through `for` loop],
-  )
+  #diagram("friends", height: 200pt)
 ]
 
+== Array References
 #slide[
-  - Indices:
-    - When accessing element, checks whether index is in allowed range
-    - More in chapter on exceptions and error handling
-
-    #example[
-      Examples of allowed and disallowed indices:
-      ```java
-      int[] filter = new int[3];
-      filter[0] = -1;
-      filter[2] = 4;
-      filter[-1] = 1;
-      filter[3] = 2;
-      ```
-    ]
-    #figure(
-      image("../assets/img/slides_4/2024_10_16_filter_array_index_rev01.png"),
-      caption: [Indices of array `filter`],
-    )
-]
-
-#slide[
-  - Arrays can be declared for any data types (including custom classes)
-  - Objects must be of the same type (or subtype, more on this with inheritance)
-  - Not the objects stored, but references to the objects
-
-  ```java
-  Person[] friends = new Person[3];
-  friends[0] = new Person("Lena");
-  friends[1] = new Person("Birgit");
-  friends[2] = new Person("Jan");
-  ```
-
-  #figure(
-    image("../assets/img/slides_4/2024_10_16_friends_array_classes_rev01.png"),
-    caption: [Arrays of objects],
-  )
-]
-
-== Questions
-#slide[
-  #question[
-    What will be output?
-  ]
-
+  #question[What will this print?]
   ```java
   int[] a = {1, 2, 3, 4, 5};
   int[] b = a;
@@ -594,8 +367,12 @@
 ]
 
 #slide[
-  #question[What will be output?]
+  #diagram("array-alias", height: 230pt)
+  *Output:* `3`, then `0`.
+]
 
+#slide[
+  #question[What will this print?]
   ```java
   int[] a = {1, 2, 3, 4, 5};
   int[] b = {1, 2, 3, 4, 5};
@@ -604,48 +381,48 @@
 ]
 
 #slide[
-  #question[What will be output?]
-  #text(size: 18pt)[
+  #diagram("arrays-separate", height: 260pt)
+]
 
+== Returning Arrays
+#slide[
+  #question[What will this print?]
+  #text(17pt)[
     ```java
-    public class ArrayDemo {
-          static int[] createSortedArray(int a, int b) {
-              if (a < b) {
-                  return new int[] {a, b};
-              } else {
-                  return new int[] {b, a};
-              }
-          }
+    static int[] createSortedArray(int a, int b) {
+        if (a < b) {
+            return new int[] {a, b};
+        } else {
+            return new int[] {b, a};
+        }
+    }
 
-          public static void main(String[] args) {
-              System.out.println( createSortedArray(7, 4)[1] );
-          }
-      }
+    public static void main(String[] args) {
+        System.out.println(createSortedArray(7, 4)[1]);
+    }
     ```
   ]
 ]
 
+== Sorting an Array
 #slide[
   #task[
-    - Write a method that sorts the elements of an `int[]` array in ascending order.
-    - Test the method using the array `{10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 7}`.
+    Write a method that sorts an `int[]` in ascending order.
+    Test it with `{10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 7}`.
   ]
-
 ]
 
 #slide[
-  #text(size: 18pt)[
+  #text(17pt)[
     ```java
     public static void sort(int[] a) {
         int i = 0;
-        while (i <= a.length - 2) {
-            if (a[i] > a[i+1]) {
-                // Swap elements and shift index to left element
+        while (i < a.length - 1) {
+            if (a[i] > a[i + 1]) {
                 int temp = a[i];
-                a[i] = a[i+1];
-                a[i+1] = temp;
-                if (i > 0)
-                    i--;
+                a[i] = a[i + 1];
+                a[i + 1] = temp;
+                if (i > 0) i--;
             } else {
                 i++;
             }
@@ -656,52 +433,47 @@
 ]
 
 = Multidimensional Arrays
-== Multidimensional Arrays
+== Arrays of Arrays
 #slide[
-  - Multidimensional arrays are "arrays of arrays".
-  - Example: `int[][]` is array whose elements are of data type `int[]`.
-
-  Dynamic declaration:
   ```java
-    int[][] filter = new int[3][4];
+  int[][] filter = {
+      {1, 2, 3}, {4, 5, 6}, {7, 8, 9}
+  };
   ```
-  Static declaration:
-  ```java
-    int[][] filter = {{1,2,3}, {4,5,6}, {7,8,9}};
-  ```
-
-  #figure(
-    image("../assets/img/slides_4/2024_10_16_filter_array_dim_rev01.png"),
-    caption: [Multidimensional array],
-  )
 ]
 
 #slide[
-  #question[What will be output?]
+  #diagram("matrix", height: 290pt)
+]
 
+#slide[
   ```java
-   int[][] a = {{1,2}, {3,4}, {5,6}};
+  int[][] filter = new int[3][4];
+  ```
+  #diagram("matrix-zero", height: 240pt)
+]
 
+#slide[
+  #question[What will this print?]
+  ```java
+  int[][] a = {{1, 2}, {3, 4}, {5, 6}};
   System.out.println(a.length);
   System.out.println(a[2].length);
-
   System.out.println(a[1][1]);
   System.out.println(a[2][0]);
   ```
-
-]
-#slide[
-  #figure(
-    image("../assets/img/slides_4/2024_10_16_a_array_question_dim_rev01.png"),
-    caption: [Multidimensional arrays with values],
-  )
 ]
 
 #slide[
-  #question[What will be output?]
+  #diagram("matrix-values", height: 270pt)
+  *Output:* `3`, `2`, `4`, `5`.
+]
 
+== Row References and Copied Values
+#slide[
+  #question[What will this print?]
   ```java
-  int[][] a = {{1,2}, {3,4}, {5,6}};
+  int[][] a = {{1, 2}, {3, 4}, {5, 6}};
   int[] b = a[0];
   int c = b[1];
 
@@ -712,84 +484,76 @@
 ]
 
 #slide[
-  #figure(
-    image("../assets/img/slides_4/2024_10_16_a_b_c_array_question_rev01.png"),
-    caption: [Complex multidimensional arrays],
-  )
+  #diagram("matrix-alias", height: 290pt)
+]
+
+== Jagged Arrays
+#slide[
+  #task[Use a `for` loop to create three rows with lengths 1, 2, and 3.]
+  ```java
+  int[][] a = new int[3][];
+  ```
 ]
 
 #slide[
-  - Multidimensional arrays do not have to be rectangular
-  - Example: Assign own array to each row of a two-dimensional array
-
-  #task[Create a triangle matrix using a `for` loop!]
-
-  #pause
-
-  #text(size: 18pt)[
-    ```java
-    int[][] a = new int[3][];
-    	for (int i = 0; i < a.length; i++) {
-    	    a[i] = new int[i + 1];
-    	}
-    ```
-  ]
+  ```java
+  int[][] a = new int[3][];
+  for (int i = 0; i < a.length; i++) {
+      a[i] = new int[i + 1];
+  }
+  ```
 ]
+
 #slide[
-  #figure(
-    image("../assets/img/slides_4/2024_10_17_triangle_array_rev01.png"),
-    caption: [Multidimensional array in the shape of a triangle],
-  )
+  #diagram("triangle", height: 280pt)
 ]
 
 = Lists
-== ArrayList
+== Array vs. ArrayList
 #slide[
-  - Arrays: Size cannot be changed after creation ("semi-dynamic")
-  - Lists: Elements can be added or removed ("dynamic")
-    - Data type of elements to be stored in angle brackets (see below: String)
+  #diagram("list-growth", height: 260pt)
 ]
 
+== Creating an ArrayList
 #slide[
-  #text(size: 18pt)[
+  The type in angle brackets specifies the element type.
+  #text(18pt)[
     ```java
+    import java.util.ArrayList;
+
     public class ArrayListDemo {
-    	    public static void main(String[] args) {
-    	        ArrayList<String> names = new ArrayList<String>();
-    	        names.add("Lena");
-    	        names.add("Birgit");
-    	        names.add("Jan");
-    	        names.add(new String("Jan"));
-    	    }
-    	}
+        public static void main(String[] args) {
+            ArrayList<String> names = new ArrayList<>();
+            names.add("Lena");
+            names.add("Birgit");
+            names.add("Jan");
+            names.add(new String("Jan"));
+        }
+    }
     ```
   ]
+  Lists allow duplicates. This list has four elements.
+]
+
+== ArrayList Methods
+#slide[
+  #diagram("list-methods", height: 260pt)
 ]
 
 #slide[
-  - Examples:
-    - Number of elements (`size()`)
-    - Access to elements (`get()`)
-    - Query whether specific element is in list (`contains()`)
-    - Remove element from list (`remove()`)
-]
-
-#slide[
-  #text(size: 18pt)[
-
+  #text(18pt)[
     ```java
-    ArrayList<String> names = new ArrayList<String>();
-    	String birgit = "Birgit";
-    	names.add("Lena");
-    	names.add(birgit);
+    ArrayList<String> names = new ArrayList<>();
+    String birgit = "Birgit";
+    names.add("Lena");
+    names.add(birgit);
 
-    	for (int i = 0; i < names.size(); i++) {
-    	    System.out.println(names.get(i));
-    	}
-
-    	if (names.contains(birgit)) {
-    	    names.remove(birgit);
-    	}
+    for (int i = 0; i < names.size(); i++) {
+        System.out.println(names.get(i));
+    }
+    if (names.contains(birgit)) {
+        names.remove(birgit);
+    }
     ```
   ]
 ]
@@ -797,173 +561,133 @@
 = foreach Loop
 == foreach Loop
 #slide[
+  Use foreach when you need every element, but not its index.
   ```java
-  for (DataType Variable : IterationObject) {
-      Statements
+  for (DataType element : arrayOrList) {
+      // Use element
   }
   ```
-
-  - Motivation:
-    - Sometimes every element e.g. of an array or a list is needed
-    - But: Position within the array or list is not needed
-    - Therefore no loop counter as index needed
 ]
 
 #slide[
-  - Loop iterates through array (or list) from first to last element:
-  - On first pass, variable has the value of the 1st element
-  - On second pass, variable has the value of the 2nd element and so on
-  - On last pass, variable has the value of the last element
-]
-
-#slide[
-  #question[What will be output?]
+  #question[What will this print?]
   ```java
   int[] a = {7, 1, 3, 8};
-
-  	for (int element : a) {
-  	    System.out.println("Element: " + element);
-  	}
+  for (int element : a) {
+      System.out.println("Element: " + element);
+  }
   ```
-  #figure(image("../assets/img/slides_4/2024_10_16_foreach_rev01.png"), caption: [Result of foreach loop])
 ]
 
+#slide[
+  #diagram("foreach", height: 230pt)
+  For primitive elements, the loop variable receives a copy of each value.
+]
+
+== Task: Average
 #slide[
   #task[
-    - Create the following using a foreach loop:
-    - Method that returns the average of the numbers contained in an array
-    - Program that uses the method
+    Use foreach to calculate the average of a non-empty `double[]`.
+    Write a program that calls the method.
   ]
 ]
 
 #slide[
-  #text(size: 20pt)[
-    ```java
-    static double average(double[] numbers) {
-    	    double sum = 0.0;
+  ```java
+  static double average(double[] numbers) {
+      double sum = 0.0;
+      for (double number : numbers) {
+          sum += number;
+      }
+      return sum / numbers.length;
+  }
+  ```
+  Precondition: `numbers` is non-null and non-empty.
+]
 
-    	    for(double number : numbers) {
-    	        sum += number;
-    	    }
-    	    return sum / numbers.length;
-    	}
-
-    	public static void main(String[] args) {
-    	    double[] a = {1.43, 2, .2, 6.32, 7.1, 8.1};
-    	    System.out.println("Average = " + average(a));
-    	}
-    ```
-  ]
+#slide[
+  ```java
+  public static void main(String[] args) {
+      double[] a = {1.43, 2, .2, 6.32, 7.1, 8.1};
+      System.out.println("Average = " + average(a));
+  }
+  ```
 ]
 
 = Wrapper Classes & `Math` Class
 == Wrapper Classes
 #slide[
-  - Primitive data types:
-    - Store value (e.g. integer) directly
-    - Have no methods
-
-  - Wrapper classes:
-    - "Wrap" primitive data types into classes
-    - Provide methods (e.g. for integers)
-
-  #text(size: 20pt)[
-    #align(center + horizon)[
-      #figure(
-        table(
-          columns: (auto, auto),
-          inset: 10pt,
-          align: left + horizon,
-          fill: (_, y) => if calc.odd(y) { green.lighten(90%) },
-          table.header([*Primitive*], [*Wrapper Class*]),
-          [`boolean`], [Boolean],
-          [`byte`], [Byte],
-          [`short`], [Short],
-          [`int`], [Integer],
-          [`long`], [Long],
-          [`char`], [Character],
-          [`float`], [Float],
-          [`double`], [Double],
-        ),
-        caption: [Formats and Flags],
-      )
-    ]
+  Wrappers represent primitive values as objects and provide conversion methods.
+  #v(12pt)
+  #text(20pt)[
+    #table(
+      columns: (1fr, 1fr, 1fr, 1fr), inset: 10pt,
+      fill: (_, y) => if calc.odd(y) { palette.surface },
+      table.header([*Primitive*], [*Wrapper*], [*Primitive*], [*Wrapper*]),
+      [`boolean`], [`Boolean`], [`long`], [`Long`],
+      [`byte`], [`Byte`], [`char`], [`Character`],
+      [`short`], [`Short`], [`float`], [`Float`],
+      [`int`], [`Integer`], [`double`], [`Double`],
+    )
   ]
+  Generic types require reference types: `ArrayList<Integer>`, not `ArrayList<int>`.
+]
+
+== Numbers and Strings
+#slide[
+  #diagram("conversions", height: 230pt)
 ]
 
 #slide[
-  #text(size: 22pt)[
-    - Convert primitive data types to String
-    ```java
-    	int a = 7;
-    	Integer b = new Integer(a);
-    	String c = b.toString();
-    ```
-    - Shorter alternative via class method:
-    ```java
-    	String a = Integer.toString(7);
-    ```
-    - Convert String to primitive data types:
-    ```java
-    	String a = "7";
-    	int b = Integer.parseInt(a);
-    ```
-  ]
+  ```java
+  int a = 7;
+  Integer b = Integer.valueOf(a);
+  String c = b.toString();
+  ```
+  Or use the class method directly:
+  ```java
+  String text = Integer.toString(7);
+  int number = Integer.parseInt(text);
+  ```
+]
+
+== Boxing and Unboxing
+#slide[
+  #diagram("boxing", height: 270pt)
 ]
 
 #slide[
-  #text(size: 22pt)[
-    - Conversions:
-      - Boxing: Conversion of primitive data type to object of wrapper class
-      - Unboxing: Conversion of object of wrapper class to primitive data type
-    ```java
-    	Integer object = new Integer(24); //Boxing of int value
-    	int noObject = object.intValue(); //Unboxing of object
-    ```
+  *Explicit conversion*
+  ```java
+  Integer object = Integer.valueOf(24);
+  int value = object.intValue();
+  ```
+  *Automatic conversion*
+  ```java
+  Integer object = 24;
+  int value = object;
+  ```
+]
 
-    - Autoboxing: Automatic conversions (both directions)
-    ```java
-    	Integer object = 24; //Automatic boxing of int value
-    	int noObject = object; //Automatic unboxing of object
-    ```
-  ]
+== The `Math` Class
+#slide[
+  #diagram("math-methods", height: 250pt)
 ]
 
 #slide[
-  #figure(
-    image("../assets/img/slides_4/2024_10_16_wrapper_conversion_rev01.png"),
-    caption: [Type conversion with wrapper classes],
-  )
-]
-
-== `Math` Class
-#slide[
-  - Mathematical constants: Euler's number e, pi $pi$
-  - Mathematical functions (as class methods), e.g.:
-    - Trigonometric functions
-    - Rounding
-    - Absolute value
-    - Exponential function and logarithm
-    - Maximum and minimum
-    - Roots
-    - Random numbers
-    #example[
-      ```java
-      double angleDeg = 127.5;
-      double angleRad = Math.toRadians(angleDeg);
-      System.out.printf("cos(%.2f) = %.2f\n", angleRad, Math.cos(angleRad));
-      ```
-    ]
+  Trigonometric methods use radians.
+  ```java
+  double angleDeg = 127.5;
+  double angleRad = Math.toRadians(angleDeg);
+  System.out.printf("cos(%.2f) = %.2f\n",
+      angleRad, Math.cos(angleRad));
+  ```
 ]
 
 = License Notice
 == Attribution
 #slide[
-  - This work is shared under the CC BY-NC-SA 4.0 License and the respective Public
-    License
-  - #link("https://creativecommons.org/licenses/by-nc-sa/4.0/")
-  - This work is based off of the work Prof. Dr. Marc Hensel.
-  - Some of the images and texts, as well as the layout were changed.
-  - The base material was supplied in private, therefore the link to the source
-    cannot be shared with the audience.
+  - Shared under #link("https://creativecommons.org/licenses/by-nc-sa/4.0/")[CC BY-NC-SA 4.0] and the applicable public license.
+  - Based on teaching material by Prof. Dr. Marc Hensel.
+  - Text, diagrams, and layout adapted. Original material supplied privately; no public source link is available.
 ]

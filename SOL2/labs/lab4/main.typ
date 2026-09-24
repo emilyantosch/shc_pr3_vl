@@ -1,31 +1,6 @@
-#import "@preview/grape-suite:3.1.0": exercise, german-dates
-#import "@preview/gentle-clues:1.0.0": *
+#import "../../hestia/lab.typ": lab-theme, memo, tip, solution
 
-#import "@preview/gentle-clues:1.0.0": *
-#set text(lang: "en")
-
-#import "@preview/codly:1.0.0": *
-#show: codly-init.with()
-
-#let solution = true;
-
-
-#codly(
-  languages: (
-    java: (
-      name: text(font: "JetBrainsMono NFM", " Java", weight: "bold"),
-      icon: text(font: "JetBrainsMono NFM", "\u{e738}", weight: "bold"),
-      color: rgb("#CE412B"),
-    ),
-    c: (
-      name: text(font: "JetBrainsMono NFM", " C", weight: "bold"),
-      icon: text(font: "JetBrainsMono NFM", "\u{e61e}", weight: "bold"),
-      color: rgb("#5612EC"),
-    ),
-  ),
-)
-
-#show: exercise.project.with(
+#show: lab-theme.with(
   title: "Lab 4 - Advanced Algorithms: Recursion, Backtracking, and GUI Programming",
   university: [HAW Hamburg],
   institute: [TI],
@@ -37,9 +12,7 @@
     fractal generation, and culminate with an optional Sudoku solver, emphasizing problem decomposition, visual programming,
     and advanced data structure manipulation.
   ],
-  show-outline: true,
   author: "Emily Antosch & Furkan Yildirim & Julian Moldenhauer",
-  show-solutions: false,
 )
 
 #memo[
@@ -49,6 +22,8 @@
   #heading(numbering: none)[General Information]
   The following tasks are to be worked on in fixed teams of two. Each team member must be able to explain all solutions. Please submit only one solution for each team of two. The submission must be a PDF file in our Moodle room with the name and matriculation number. Solutions must be in digital format with intermediate steps and detailed explanations (no handwritten scans). You can use any tool or drawing program of your choice to create the diagrams. If you have questions or need support, use the forum in our Moodle room and help each other.
 ]
+
+#pagebreak()
 
 = Task 1: Maze Pathfinding with Recursion
 

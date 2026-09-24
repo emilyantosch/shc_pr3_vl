@@ -1,0 +1,29 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Action from '../components/Action.astro';
+---
+
+<Layout title="Blog — Hestia" description="Notes on building Hestia, an offline-first file manager that keeps your folders and adds tags.">
+  <Header blog />
+  <main id="main" class="blog shell">
+    <h1>Blog</h1>
+    <article id="a-home-without-a-move" aria-labelledby="post-title">
+      <h2 id="post-title">A home without<br />a move.</h2>
+      <p>A document can belong to a project, a client, and a list of things to finish. A folder makes you choose one place. Making copies gives you another problem: knowing which one to keep.</p>
+      <p>Hestia takes a different approach. Your files stay in their original folders. It indexes those folders and lets you add tags, so the same file can turn up in different contexts without being duplicated.</p>
+      <h3>Start with what you have</h3>
+      <p>Choose a folder to watch. Add words you will remember: a project name, a topic, or a person. Filter by filename or tag, and use thumbnails to recognize what you need.</p>
+      <h3>Keep it close</h3>
+      <p>Hestia is offline-first. Your library stays on your machine, and finding your files does not depend on an internet connection.</p>
+      <p>The project is in early development. You can follow its progress, read the setup instructions, or contribute on GitHub.</p>
+      <Action href="https://github.com/emilyantosch/hestia" color="green">Follow the project</Action>
+    </article>
+  </main>
+  <footer class="footer">
+    <div class="footer-bottom shell flex flex-wrap items-center justify-between gap-6">
+      <a class="brand" href="/" aria-label="Hestia home">hestia</a>
+      <a href="/">Back to Hestia ↗</a>
+    </div>
+  </footer>
+</Layout>

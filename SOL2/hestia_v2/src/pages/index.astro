@@ -1,0 +1,98 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Action from '../components/Action.astro';
+import Header from '../components/Header.astro';
+import ScrollWave from '../components/ScrollWave.astro';
+
+// Preserve the destination from the original Hestia landing page.
+const github = 'https://github.com/emilyantosch/hestia';
+const questions = [
+  ['Will Hestia move my files?', 'No. Your files stay in their original folders. Hestia indexes what is already there and adds tags, so you can find the same file in different contexts without making copies.'],
+  ['Can I use it offline?', 'Yes. Hestia is offline-first. Your library is indexed on your machine, so finding and organizing your files does not depend on an internet connection.'],
+  ['What can I organize?', 'Documents, photos, audio, videos, notes, and other files in your watched folders. Use tags to connect them by project, topic, or whatever makes sense to you.'],
+  ['Is Hestia ready to download?', 'Hestia is in early development. The project on GitHub has the current source, setup instructions, and development updates.'],
+  ['Can I help build Hestia?', 'Absolutely. Visit the project on GitHub to explore the code, report an issue, or contribute an improvement. Hestia grows from the everyday needs of the people using it.'],
+];
+---
+
+<Layout>
+  <Header />
+
+  <main id="main" class="wave-page">
+    <ScrollWave />
+    <section class="hero text-center" aria-labelledby="hero-title">
+      <div class="shell hero-copy">
+        <h1 id="hero-title" aria-label="The file manager for everyday">
+          <span aria-hidden="true">The file manager</span><br />
+          <span class="hero-ending" aria-hidden="true">for <span class="hero-flip">
+            <span class="flip-word">everyday</span>
+            <span class="flip-word">busy people</span>
+            <span class="flip-word">power users</span>
+            <span class="flip-word">you</span>
+          </span></span>
+        </h1>
+        <Action href={github}>Meet your new file manager</Action>
+      </div>
+      <div class="hero-illustration"><img src="/images/file-friends.png" alt="Three playful characters bringing documents and colorful tags together in one big green folder." width="2172" height="724" fetchpriority="high" /></div>
+
+    </section>
+
+    <section id="why-hestia" class="section shell" aria-labelledby="why-title">
+      <div class="section-intro text-center"><h2 id="why-title">Keep your folders.<br />Lose the chaos.</h2></div>
+      <div class="feature-split">
+        <article class="paper-card">
+          <h3>One file.<br />So many ways<br />to find it.</h3>
+          <p>A photo can be a holiday memory, a little inspiration, and part of your next project. Why make it live in just one box?</p>
+          <p>Add the words that make sense to you. Hestia brings related files together, wherever their folders happen to be.</p>
+          <Action href="#how-it-works" color="green">See how it works</Action>
+        </article>
+        <div class="tag-playground" aria-label="Interactive example of organizing a file with tags">
+          <span class="handdrawn-star star-one" aria-hidden="true">✳</span>
+          <span class="tag-thread thread-one" aria-hidden="true"></span><span class="tag-thread thread-two" aria-hidden="true"></span>
+          <div class="illustrated-file" aria-hidden="true"><span class="file-corner"></span><svg viewBox="0 0 180 150"><circle cx="127" cy="37" r="18" fill="#f5e211"/><path d="m10 129 52-70 38 42 25-26 45 54Z" fill="#8ed462"/><path d="m10 129 52-70 38 42-20 28Z" fill="#2ba0ff"/></svg><span>that-little-adventure.jpg</span></div>
+          <button class="play-tag tag-memory" data-tag="Memories" aria-pressed="true"><i></i>Memories<span>−</span></button>
+          <button class="play-tag tag-project" data-tag="Next project" aria-pressed="true"><i></i>Next project<span>−</span></button>
+          <button class="play-tag tag-inspiration" data-tag="Inspiration" aria-pressed="false"><i></i>Inspiration<span>+</span></button>
+          <span class="handdrawn-star star-two" aria-hidden="true">✧</span>
+          <span class="sr-only" id="tag-status" aria-live="polite">2 tags. Still one file, in its original folder.</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="how-it-works" class="section shell how-section" aria-labelledby="how-title">
+      <div class="how-intro"><h2 id="how-title">A fresh start.<br />No big move.</h2><span class="doodle-arrow" aria-hidden="true">↳</span></div>
+      <div class="steps">
+        <details class="step" name="workflow" open><summary><span class="step-number">01</span><h3>Bring your folders</h3><span class="expand-icon"></span></summary><div class="step-body"><p>Choose a folder you want Hestia to watch. It builds an index around your files while your folder structure stays exactly as it is.</p><span class="inline-tag">Documents</span><span class="inline-tag">Pictures</span><span class="inline-tag">That other folder</span></div></details>
+        <details class="step" name="workflow"><summary><span class="step-number">02</span><h3>Add your own meaning</h3><span class="expand-icon"></span></summary><div class="step-body"><p>Tag files by project, person, topic, or mood. Give a file as many tags as you like, without duplicating it or choosing just one place.</p><span class="inline-tag">Work in progress</span><span class="inline-tag">Good ideas</span></div></details>
+        <details class="step" name="workflow"><summary><span class="step-number">03</span><h3>Find your familiar things</h3><span class="expand-icon"></span></summary><div class="step-body"><p>Filter by filename or tag, then recognize what you need with visual thumbnails. Files from different folders come together in one view.</p><span class="inline-tag">Aha. There it is.</span></div></details>
+      </div>
+    </section>
+
+    <section id="our-story" class="section shell story-section" aria-labelledby="story-title">
+      <div class="story-art"><img src="/images/quiet-corner.png" alt="A person enjoying a quiet moment beside a friendly house filled with carefully organized files." width="1024" height="1024" loading="lazy" /></div>
+      <article class="paper-card story-card"><h2 id="story-title">Your files.<br />Your space.<br />Your business.</h2><p>Some things should stay close to home. Hestia is offline-first, keeping your library on your machine and ready when you need it.</p><p>It started with a simple wish: an easier way to find documents, sounds, and all the other things we collect. So we’re building it.</p><Action href={github} color="green">Follow the project</Action></article>
+    </section>
+
+    <section id="questions" class="section shell faq-section" aria-labelledby="faq-title"><div><h2 id="faq-title">A few good<br />questions.</h2></div><div class="faq-list">{questions.map(([question, answer]) => <details class="faq"><summary>{question}<span class="expand-icon"></span></summary><p>{answer}</p></details>)}</div></section>
+
+    <footer class="footer">
+      <div class="shell">
+        <div class="footer-cta text-center"><span class="footer-spark" aria-hidden="true">✳</span><h2>Make room for<br />what matters.</h2><Action href={github}>Explore Hestia on GitHub</Action></div>
+        <div class="footer-bottom flex flex-wrap items-center justify-between gap-6"><a class="brand" href="#">hestia</a><div class="flex items-center gap-6"><a href="/blog/">Blog</a><a href={github}>GitHub ↗</a><a href={`${github}/issues`}>Say hello ↗</a><a href="#">Back to top ↑</a></div></div>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    const tagButtons = document.querySelectorAll<HTMLButtonElement>('[data-tag]');
+    tagButtons.forEach(button => button.addEventListener('click', () => {
+      const selected = button.getAttribute('aria-pressed') !== 'true';
+      button.setAttribute('aria-pressed', String(selected));
+      const sign = button.querySelector('span');
+      if (sign) sign.textContent = selected ? '−' : '+';
+      const count = [...tagButtons].filter(tag => tag.getAttribute('aria-pressed') === 'true').length;
+      const status = document.querySelector('#tag-status');
+      if (status) status.textContent = `${count} ${count === 1 ? 'tag' : 'tags'}. Still one file, in its original folder.`;
+    }));
+  </script>
+</Layout>

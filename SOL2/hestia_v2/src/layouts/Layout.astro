@@ -1,0 +1,47 @@
+---
+import '@fontsource-variable/inter';
+import '../styles/global.css';
+const {
+  title = 'Hestia — The file manager for everyday',
+  description = 'Give every file a place to belong. Hestia is an offline-first, tag-based file manager that works with the folders you already have.',
+} = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#f5f1e4" />
+    <link rel="icon" href="/20250925_logo_light_rotated_rev01.png" type="image/png" />
+    <script is:inline>
+      const root = document.documentElement;
+      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)');
+      let savedTheme;
+      try { savedTheme = localStorage.getItem('hestia-theme'); } catch {}
+      function applyTheme(dark) {
+        root.dataset.theme = dark ? 'hestia-dark' : 'hestia';
+        document.querySelector('meta[name="theme-color"]').content = dark ? '#171a15' : '#f5f1e4';
+        document.querySelector('link[rel="icon"]').href = `/20250925_logo_${dark ? 'dark' : 'light'}_rotated_rev01.png`;
+        document.querySelector('.theme-toggle')?.setAttribute('aria-pressed', String(dark));
+      }
+      applyTheme(savedTheme ? savedTheme === 'hestia-dark' : systemTheme.matches);
+      document.addEventListener('DOMContentLoaded', () => {
+        applyTheme(root.dataset.theme === 'hestia-dark');
+        document.querySelector('.theme-toggle').addEventListener('click', () => {
+          applyTheme(root.dataset.theme !== 'hestia-dark');
+          savedTheme = root.dataset.theme;
+          try { localStorage.setItem('hestia-theme', savedTheme); } catch {}
+        });
+      });
+      systemTheme.addEventListener('change', event => {
+        if (!savedTheme) applyTheme(event.matches);
+      });
+    </script>
+    <title>{title}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <slot />
+  </body>
+</html>

@@ -1,509 +1,461 @@
-#import "@preview/touying:0.5.2": *
-#import themes.university: *
-
-#import "@preview/fletcher:0.5.8" as flechter: diagram, edge, node
-
-#import "@preview/cetz:0.4.1"
-
-#import "@preview/tiaoma:0.2.1"
-
-#import "@preview/gentle-clues:1.0.0": *
-#import "@preview/pinit:0.2.0": *
-#import "@preview/codly:1.0.0": *
+#import "@preview/touying:0.7.4": *
+#import "diagrams.typ": diagram
+#import "@preview/tiaoma:0.3.0"
+#import "@preview/gentle-clues:1.3.1": *
+#import "@preview/pinit:0.2.2": *
+#import "@preview/codly:1.3.0": *
 #show: codly-init.with()
-
 #import "@preview/numbly:0.1.0": numbly
+#import "../hestia/theme.typ": *
 
-#set text(lang: "en", font: "Roboto")
+#set text(lang: "en")
 #set heading(numbering: numbly("{1}.", default: "1.1"))
 
-#set align(left + top)
-
-#show raw: it => {
-  show regex("pin\d"): it => pin(eval(it.text.slice(3)))
-  it
-}
-#let pinit-rect-from(height: 2em, pos: bottom, fill: rgb(0, 180, 255), point-pin, body) = {
-  pinit-point-from(
-    fill: fill,
-    pin-dx: 0em,
-    pin-dy: if pos == bottom { 0em } else { -0.6em },
-    body-dx: 0pt,
-    body-dy: if pos == bottom { -1.7em } else { -1.6em },
-    offset-dx: 0em,
-    offset-dy: if pos == bottom { 1.2em + height } else { -0.6em - height },
-    point-pin,
-    rect(inset: 0.5em, stroke: (bottom: 0.12em + fill), {
-      set text(fill: fill)
-      body
-    }),
-  )
-}
-#show: university-theme.with(aspect-ratio: "16-9", config-info(
-  title: [Object-Oriented Programming in Java],
-  subtitle: [Lecture 1 - Organization and Introduction],
+#show: hestia-theme.with(config-info(
+  title: [Object-Oriented\ Programming in Java],
+  short-title: [Java · Lecture 1],
+  subtitle: [Lecture 1 — Organization and Introduction],
   author: [Emily Lucia Antosch],
   date: datetime.today().display("[day].[month].[year]"),
   institution: [HAW Hamburg],
 ))
 
-#codly(languages: (
-  java: (
-    name: text(font: "JetBrainsMono NFM", " Java", weight: "bold"),
-    icon: text(font: "JetBrainsMono NFM", "\u{e738}", weight: "bold"),
-    color: rgb("#CE412B"),
-  ),
-  c: (
-    name: text(font: "JetBrainsMono NFM", " C", weight: "bold"),
-    icon: text(font: "JetBrainsMono NFM", "\u{e61e}", weight: "bold"),
-    color: rgb("#5612EC"),
-  ),
-))
-
 #title-slide(authors: [Emily Lucia Antosch])
 
-#outline(depth: 1)
+#slide[
+  #text(34pt, weight: "semibold")[Today's route]
+  #v(16pt)
+  #set outline.entry(fill: none)
+  #show outline.entry: it => block(inset: (y: 6pt), it)
+  #outline(title: none, depth: 1)
+]
 
 = Organization
 
-== The Goal of This Chapter
-
+== What you'll know
 #slide[
-  - I want to introduce myself to you and discuss the course structure of this module.
-  - You will get an overview of the prerequisites for this module and will be able to
-    meet them.
-  - You will know how to reach me.
+  #v(12pt)
+  + *How the course works*\ Lectures, labs, preparation, and the exam.
+  + *What you need*\ Prior knowledge and the software to install.
+  + *How to reach me*\ Introductions and contact details.
 ]
 
-== About Me
+== About me
 #slide[
-  - Emily Lucia Antosch, 25 years old
-  - Bachelor's degree in Electrical and Information Technology
-  - Backend Software Engineer at MOIA
-  - Currently doing my Master's degree in Practical Computer Science
-  - Email: emilylucia.antosch\@haw-hamburg.de
+  #grid(
+    columns: (1fr, 1fr),
+    gutter: 36pt,
+    [
+      #text(32pt, weight: "semibold")[Emily Lucia Antosch]
+      #v(8pt)
+      Backend Software Engineer\ at MOIA · 25 years old
+    ],
+    [
+      #text(22pt)[
+        *B.Sc.* Electrical and Information Technology
 
-  #info[I'm rather new with teaching at university, so please be lenient with me!]
-]
-== Course Schedule
-#slide[
-  - Lectures are on Wednesday between 15:55 and 19:15.
-    - At the beginning, there are many sessions designed to prepare you for the lab.
-  - I would ask you to actively participate in the lectures.
-  - There will be small questions and tasks that you can answer live and
-    code along with.
-
-  #memo[If you don't understand something, please ask immediately! I'm more than happy to repeat any part of the lecture!]
-]
-
-== Laboratory Sessions
-#slide[
-  - There will be *4 labs* throughout the semester.
-  - *Successful participation in the labs is mandatory* for taking the exam.
-  - You will work in *teams of two*.
-  - Lab selection happens in *myHAW*.
-
-  #warning[Without successful lab participation, you cannot take the exam!]
+        *M.Sc. in progress*\ Practical Computer Science
+      ]
+    ],
+  )
+  #v(20pt)
+  #text(23pt)[#link("mailto:emilylucia.antosch@haw-hamburg.de")[emilylucia.antosch\@haw-hamburg.de]]
+  #v(12pt)
+  #info[I'm new to university teaching. Please be patient with me.]
 ]
 
-== Lab Preparation and Participation
+== Course schedule
 #slide[
-  - Each lab requires you to *prepare the tasks beforehand*.
-  - If you struggle with some tasks:
-    - You still need to understand what you did and what the task entails.
-    - Lab lecturers will help you complete tasks you couldn't finish.
-
-  #memo[Preparation is key! Come to the lab with questions, not blank pages.]
+  #text(38pt, weight: "semibold")[Wednesdays · 15:55–19:15]
+  #v(16pt)
+  - The early sessions prepare you for the labs.
+  - Take part in short questions and code-along exercises.
+  #v(12pt)
+  #memo[Ask as soon as something is unclear. I'm happy to explain it again.]
 ]
 
-== Lab Presentations
+== Laboratory sessions
 #slide[
-  - You must *present at least two tasks* during the semester to your lab class.
-  - Important points:
-    - You do *not* have full authority over which tasks you present.
-    - *Don't wait* until the last lab to present both tasks.
-    - Be prepared to present any task you've worked on.
-
-  #tip[Start presenting early in the semester to reduce pressure later!]
+  #grid(
+    columns: (1fr, 1fr),
+    gutter: 28pt,
+    stack(spacing: 12pt, text(62pt, fill: palette.green)[4], [labs this semester]),
+    stack(spacing: 12pt, text(62pt, fill: palette.green)[2], [people per team]),
+  )
+  #v(28pt)
+  #warning[Successful lab participation is mandatory. Without it, you cannot take the exam.]
 ]
 
-== Lecture Focus
+== Prepare before each lab
 #slide[
-  - We want to build upon your prior knowledge.
-  - By the end of the lecture, you should be able to create simple programs in Java.
-  - Also, we want to look at mastering object-oriented programming paradigm and be able to highlight the differences to other programming paradigms.
-  - You can also read about the exact content outside of the lecture in the module handbook.
+  - There will be detailed instructions coming from the lab lecturers soon!
+  - You will work through some tasks at home, and some tasks will be done in session.
+  - If you get stuck, be ready to explain your approach and what the task asks for.
+  - Lab lecturers will help you finish the parts you could not complete.
+  #v(12pt)
+  #memo[Bring questions, not blank pages.]
 ]
 
-== Prerequisites
+== Present your work
 #slide[
-  - You will need an installation of the *Java SDK*.
-    - For this, I have written a guide that you can find in the Moodle room.
-  - Additionally, the lecture will use the tool *JetBrains IntelliJ*.
-    - This is, in my opinion, a very good and simple IDE for beginners.
+  #text(32pt, weight: "semibold")[Present at least two tasks this semester.]
+  #v(16pt)
+  - You may not get to choose which tasks you present.
+  - Be ready to present any task you have worked on.
+  #v(12pt)
+  #tip[Start early. Don't leave both presentations until the last lab.]
+]
+
+== What we'll build on
+#slide[
+  - Use your prior programming knowledge to write simple Java programs.
+  - Learn object-oriented programming and compare it with other paradigms.
+  #v(28pt)
+  #text(22pt, fill: palette.muted)[The module handbook contains the full course description.]
+]
+
+== Set up your tools
+#two-column-slide[
+  #text(32pt, weight: "semibold")[Java SDK]
+  #v(14pt)
+  Install the Java development tools.
+
+  The setup guide is in the Moodle room.
+][
+  #text(32pt, weight: "semibold")[IntelliJ IDEA]
+  #v(14pt)
+  We'll use JetBrains' IDE throughout the course.
+
+  I recommend it for beginners.
 ]
 
 = Introduction
-== The Goal of This Chapter
+
+== What you'll learn
 #slide[
-  - You will be able to apply your existing knowledge from previous lectures to new content.
-  - You will understand the fundamental concepts of object-oriented programming and understand the difference from programming in C.
-  - We will create a simple program in the IntelliJ IDEA development environment and execute it.
+  + *Connect old and new concepts*\ Build on your previous programming lectures.
+  + *Think in objects*\ Understand classes and how this approach differs from C.
+  + *Run a Java program*\ Create and execute a program in IntelliJ IDEA.
 ]
 
-== Topic Overview: Fundamentals
+== Start with the fundamentals
 #slide[
-  The first lectures focus on the following principles:
-  1. Imperative Concepts
-  2. Classes and Objects
-  3. Class Library
-  4. Inheritance
-  5. Interfaces
+  #enum(
+    [*Imperative concepts*],
+    [*Classes and objects*],
+    [*Class library*],
+    [*Inheritance*],
+    [*Interfaces*],
+  )
 ]
 
-== Topic Overview: Advanced Concepts
+== Then extend the toolkit
 #slide[
-  From the fundamentals, we then want to derive further concepts:
-  6. Graphical User Interfaces
-  7. Exception Handling
-  8. Input and Output
-  9. Multithreading (Parallel Computing)
+  #enum(
+    start: 6,
+    [*Graphical user interfaces*],
+    [*Exception handling*],
+    [*Input and output*],
+    [*Multithreading* — parallel computing],
+  )
 ]
 
-
-== Objects and Classes
+== Objects and classes
 #slide[
-  In the real world, things are often determined and described by their properties:
-  - A car has properties such as
-    - a manufacturer
-    - a color
-    - fuel consumption
-
-  #idea[Using object-oriented programming, we can apply this intuitive
-    approach to programming as well!]
+  #grid(
+    columns: 1,
+    rows: (auto, 1fr, auto),
+    gutter: 12pt,
+    [We describe things through their properties.],
+    align(center + horizon, diagram("car")),
+    idea[Object-oriented programming brings this way of thinking into code.],
+  )
 ]
 
 #slide[
-  #question[What properties could you use to describe a person, for example? How
-    might this fit into the programming context?]
+  #question[Which properties describe a person? Which would a program need?]
+  #v(18pt)
   #pause
-  - For students:
-    - Name, address, student ID number
-  - For programs/websites:
-    - Username, password, join date
+  #grid(
+    columns: (1fr, 1fr),
+    gutter: 36pt,
+    [*Student record*\ Name, address, student ID], [*Website account*\ Username, password, join date],
+  )
 ]
 
 #slide[
-  - To create multiple similar objects from this similar blueprint,
-    a class is created:
-    - It contains all the properties we just defined in variables.
-    - From it, completely different objects can be created that have these properties filled in differently.
-  #example[From the *Student* class, for example, the two students *Max* and *Ines* can be created, who both have different names and their own student ID number.]
+  #text(32pt, weight: "semibold")[One blueprint. Many objects.]
+  #v(16pt)
+  - A *class* defines the properties as variables.
+  - Each *object* has its own values for those properties.
+  #v(12pt)
+  #example[The *Student* class can describe both *Max* and *Ines*: different names, different student IDs.]
+]
+
+#diagram-slide[
+  #figure(diagram("class-objects"), caption: [One class describes multiple objects])
 ]
 
 #slide[
-  #align(center + horizon)[
-    #figure(
-      diagram(
-        spacing: (100mm, 40mm),
-        node-stroke: luma(80%),
-        node((0.5, 0), [*Person Class*], name: <d>),
-        node((0, 1), [*Ines*], name: <n>),
-        node((1, 1), [*Max*], name: <e>),
-        edge(<d>, ((), "|-", (0, 0.5)), ((), "-|", <n>), <n>, "-|>"),
-        edge(<d>, ((), "|-", (0, 0.5)), ((), "-|", <e>), <e>, "-|>"),
-        edge(
-          <e>,
-          "<|-|>",
-          <n>,
-          stroke: teal,
-          label: text(teal)[Same class, different object],
-          left,
-        ),
-        edge(
-          (rel: (-25pt, 0pt), to: <n>),
-          <d>,
-          "-|>",
-          bend: 40deg,
-          stroke: orange,
-          text(orange)[Object of the class],
-          label-angle: auto,
-        ),
-      ),
-      caption: [Relationship between classes and objects of that class],
-    )
-  ]
+  A class brings variables and functions together.
+  #v(22pt)
+  #grid(
+    columns: (1fr, 2fr),
+    column-gutter: 32pt,
+    row-gutter: 22pt,
+    [*Attributes*], [Variables that store the object's data.],
+    [*State*], [The current values of those attributes.],
+    [*Methods*], [Functions that read or change those values.],
+  )
+]
+
+#diagram-slide[
+  *UML class diagrams* describe attributes and methods.
+][
+  #figure(diagram("attributes-methods"), caption: [A UML class diagram for Person])
+]
+
+== Data encapsulation
+#diagram-slide[
+  Methods control access to an object's attributes.
+][
+  #figure(diagram("encapsulation"), caption: [Access data through the class's methods])<data-encapsulation>
 ]
 
 #slide[
-  - Variables and functions are thus combined into a class.
-    - A set of variables is defined.
-    - For these variables, functions are introduced that can read and modify them.
-
-  #memo[
-    - Variables are called *attributes*.
-    - The values of these variables describe the *state* of the object.
-    - Functions are called *methods*.
-  ]
+  #text(32pt, weight: "semibold")[Protect the object's state.]
+  #v(24pt)
+  - Encapsulated data is not directly accessible to every part of the program.
+  - Methods can check values before changing an attribute.
+  - This prevents invalid state and unintended access.
 ]
 
 #slide[
-  - So-called UML class diagrams can be used to describe classes with their *attributes* and *methods*.
-  #align(center + horizon)[
-    #figure(
-      image("../assets/img/slides_01/20250730_attributes_methods_rev01.png", height: 70%),
-      caption: [UML Class Diagram],
-    )
-  ]
-]
-
-== Data Encapsulation
-#slide[
-  - Data can be encapsulated using attributes and methods of classes.
-
-  #align(center + horizon)[
-    #figure(
-      image("./../assets/img/slides_01/20250730_data_encapsulation_rev01.png", height: 70%),
-      caption: [Data encapsulation through classes],
-    )<data-encapsulation>
-  ]
-]
-
-#slide[
-  - Data can be encapsulated using attributes and methods of classes.
-    - Not all parts of the program can access encapsulated data, which increases security.
-    - Additionally, attributes can be protected from erroneous values this way.
-]
-
-#slide[
-  #question[Where do the differences lie in comparison to the C programming language?]
+  #question[How does this differ from a struct in C?]
+  #v(18pt)
   #pause
-  - The data structure (i.e., the *struct*) must be made public for access to the elements.
-  - The data is not protected.
-  - There is no association between the data and the functions.
+  - Direct field access requires the struct definition to be visible.
+  - A public struct does not protect its data.
+  - The data and the functions are not combined into a class.
 ]
 
 == Inheritance
-#slide[
-  - Through inheritance, new classes can be created from other classes.
-    - The methods and attributes of the base class are inherited and extended with additional code.
-    - No duplicated code.
-  #figure(image("../assets/img/slides_01/20250812_inheritance_rev01.png", height: 53%))
+#diagram-slide[
+  Derive a new class from a base class: reuse its attributes and methods, then extend it without duplicating code.
+][
+  #figure(diagram("inheritance"))
 ]
 
 == Composition
-#slide[
-  - Classes can also be composed of other classes.
-  - This is called *composition*.
-  - For example, the *House* class would be composed of
-    *Windows*, *Walls*, and *Doors*.
-  #figure(
-    image("../assets/img/slides_01/20250812_composition_rev01.png", height: 50%),
-    caption: [Composition of a given class],
-  )
+#diagram-slide[
+  Build classes from other classes: a *House* contains *Windows*, *Walls*, and *Doors*.
+][
+  #figure(diagram("composition"), caption: [Composition is a strong whole–part relationship])
 ]
 
-== Program Execution in Java
-
+== Program execution in Java
 #slide[
-  1. At program startup, a special *main* method is executed in the _main object_.
-  2. In this method, objects are created and the *references* to these
-    objects are stored in variables.
-  3. These variables can then be used to access the respective object.
-  4. Objects in the program can then create additional objects and
-    call methods.
-  5. As soon as the *main* method is finished, the program ends.
+  + Execution starts in the static *main* method.
+  + It creates objects and stores their *references* in variables.
+  + Use those references to access the objects.
+  + Objects can create other objects and call their methods.
+  + In our single-threaded example, execution ends when *main* returns.
+]
 
-  #figure(
-    image("../assets/img/slides_01/20250730_program_execution_references_rev01.png", height: 80%),
-    caption: [References in the lifetime of a program],
-  )
+#diagram-slide[
+  #figure(diagram("references"), caption: [References connect objects during execution])
 ]
 
 = The Java Programming Language
+
 == Java vs. C
-#slide[
-  #task[Let's first write a few simple tasks in the programming language
-    C:
-    - Sum of numbers 1 to n using a *for* loop.
-    - Maximum of two numbers using an *if* statement.
-    - Determine the maximum of two numbers using the *getMax()* function.
+#callout-slide[
+  #task[
+    Write these in *C*:
+    - Sum the numbers 1 to n with a *for* loop.
+    - Find the larger of two numbers with *if*.
+    - Put that comparison in a *getMax()* function.
   ]
 ]
 
-#slide[
-  - I have good news: You could have executed this code in Java without any problems!
-  - The *syntax*, i.e., the keywords and structure of the language, is very close
-    to C and C++!
-  - Therefore, we want to continue building on your prior knowledge.
-
-  #figure(
-    image("../assets/img/slides_01/2024_10_04_java_origin_rev01.png", height: 40%),
-    caption: [The influences on the Java programming language],
-  )
+#diagram-slide[
+  Java's control flow and syntax will look familiar from C and C++. We'll build on what you already know.
+][
+  #figure(diagram("java-origins"), caption: [Influences on the Java programming language])
 ]
 
 == Compilation
-#slide[
-  1. Development
-    - Source code is written on the PC.
-    - Compiler compiles source code into *bytecode*.
-  2. Execution
-    - Bytecode is executed on the *JVM* (Java Virtual Machine).
-    - Execution does not require recompilation for each target platform.
+#two-column-slide[
+  #text(32pt, weight: "semibold")[1. Develop]
+  #v(18pt)
+  Write source code on your PC.
+
+  The compiler turns it into *bytecode*.
+][
+  #text(32pt, weight: "semibold")[2. Execute]
+  #v(18pt)
+  The *JVM* (Java Virtual Machine) runs the bytecode.
+
+  No recompilation for each target platform.
 ]
 
-#slide[
-  #align(left + horizon)[
-    #figure(
-      image("../assets/img/slides_01/20250812_jvm_bytecode_rev01(2).png"),
-      caption: [Program execution with the JVM],
-    )
-  ]
+#diagram-slide[
+  #figure(diagram("jvm"), caption: [Compile once; run bytecode on each platform's JVM])
 ]
 
-#slide[
-  - Differences in other programming languages that are compiled or interpreted:
-    - *Compiled languages* must be recompiled for each target platform.
-    - *Interpreted languages* must be interpreted by their own interpreter on the
-      target platform itself.
+#two-column-slide[
+  #text(32pt, weight: "semibold")[Compiled]
+  #v(18pt)
+  Recompile the source for each target platform.
+][
+  #text(32pt, weight: "semibold")[Interpreted]
+  #v(18pt)
+  Run the source with an interpreter on the target platform.
 ]
 
-#slide[
-  #align(left + horizon)[
-
-    #figure(
-      image("../assets/img/slides_01/20250812_source_code_interpreter_rev01(1).png"),
-      caption: [Execution of compiled languages],
-    )
-  ]
+#diagram-slide[
+  #figure(diagram("interpreted"), caption: [Execution of interpreted languages])
 ]
-#slide[
-  #align(left + horizon)[
 
-    #figure(
-      image("../assets/img/slides_01/20250812_source_code_compiler_rev01.png"),
-      caption: [Execution of interpreted languages],
-    )
-  ]
-
+#diagram-slide[
+  #figure(diagram("compiled"), caption: [Execution of compiled languages])
 ]
 
 == Properties of Java
 #slide[
-  #question[If you could develop a new language, what would be important to you? What
-    would you change about C/C++?]
+  #question[What would you want from a new language? What would you change about C/C++?]
+  #v(14pt)
   #pause
-  - Java
-    - Object-oriented language (i.e., classes, objects, and inheritance)
-    - Platform-independent (via *JVM*)
-    - Strongly typed (fixed types like *int* and *String*)
-    - Robust (i.e., Garbage Collector)
+  - *Object-oriented* — classes, objects, inheritance
+  - *Platform-independent* — the JVM
+  - *Strongly typed* — types such as int and String
+  - *Automatic memory management* — the garbage collector
 ]
 
-#slide[
-  #question[Which is the better programming language: C or Java?]
+#callout-slide[
+  #text(font: "Libertinus Serif", size: 48pt)[Which is the better language?]
+  #v(22pt)
+  #text(40pt, fill: palette.green)[C or Java?]
 ]
 
 = The First Program
-== IDE
-#slide[
-  - I would recommend IntelliJ IDEA from JetBrains as an IDE.
-    - This tool will also be used in the exam.
-    - The IDE also includes the Java JDK, which you need for programming.
+
+== Your development environment
+#sidebar-slide[
+  *IntelliJ IDEA* is the IDE we'll use in class and in the exam.
+
+  It can set up the Java JDK you need to program.
+
+  #link("https://www.jetbrains.com/idea/download/?section=windows")[Download IntelliJ IDEA] or scan the code. Choose the Community Edition.
+][
   #align(center + horizon)[
     #tiaoma.barcode("https://www.jetbrains.com/idea/download/?section=windows", "QRCode", options: (scale: 3.0))
   ]
-  - Choose the Community Edition at #link("https://www.jetbrains.com/idea/download/?section=windows"),
-    or scan the QR code.
+]
+
+#diagram-slide[
+  #figure(diagram("toolchain"), caption: [The structure of the Java Toolchain])
 ]
 
 #slide[
-  #align(left + horizon)[
-    #figure(
-      image("../assets/img/slides_01/20250812_jre_jdk_rev01.png"),
-      caption: [The structure of the Java Toolchain],
+  #task[
+    *Prepare:* choose a directory for your files and open IntelliJ IDEA.
+
+    + Select *File > New > Project*.
+    + Give the project a name and location.
+    + Choose *Java*, *IntelliJ*, and the appropriate *JDK*.
+    + Click *Create*.
+  ]
+]
+
+#slide[
+  #task[
+    #grid(
+      columns: (1fr, 1fr),
+      gutter: 32pt,
+      [
+        *Create a package*
+        + Right-click *src*.
+        + Select *New > Package*.
+        + Enter a name.
+      ],
+      [
+        *Create a class*
+        + Right-click the package.
+        + Select *New > Java Class*.
+      ],
     )
   ]
 ]
 
-#slide[
-  #task[
-    - Preparation:
-      1. First open a directory where you will store the programming files.
-      2. Open IntelliJ IDEA.
-    - Create project:
-      1. Select File > New > Project.
-      2. Assign a name and a location.
-      3. Choose Java and IntelliJ and the appropriate JDK
-      4. Click "Create"
-  ]
-]
-#slide[
-  #task[
-    - Create package
-      1. Right-click on src
-      2. Select New > Package
-      3. Enter name
-    - Create class
-      1. Right-click on package
-      2. Choose New > Java Class
-  ]
-]
-
-== The First Program
-#slide[
-  #align(left + horizon)[
-
-    ```java
-    public static void main(String[] args){
-      System.out.println("Hello World!");
-    }
-    ```
-    #idea[Enter the code into the file you just created. If you're already that far,
-      feel free to code along!]
-  ]
+== The first program
+#code-slide[
+  #v(22pt)
+  ```java
+  public static void main(String[] args) {
+    System.out.println("Hello World!");
+  }
+  ```
+  #v(18pt)
+  #idea[Enter this method inside the class you just created. Ready already? Code along.]
 ]
 
 == Applications in Java
 #slide[
-  - A Java file can be executed if it has a public (*public*) class: ```java public class MyApplication {...}``` \
-  - The class must also have the same name as the file, for example `MyApplication.java`
-  - The class has the method: ```java public static void main(String[] args)``` \
+  #grid(
+    columns: (1fr, 2fr),
+    column-gutter: 30pt,
+    row-gutter: 24pt,
+    [*Public class*], [```java public class MyApplication {...}```],
+    [*Matching filename*], [`MyApplication.java`],
+    [*Entry point*], [```java public static void main(String[] args)```],
+  )
 ]
 
-#slide[
-  //#align(left + horizon)[
+#code-slide[
   #v(3.5em)
   ```java
-    public class pin1MyApplipin3cationpin2 {
-      public static void pin4mapin5in(String[] args) {
-        System.out.println("Hello World!");
+  public class pin1MyApplipin3cationpin2 {
+    public static void pin4mapin5in(String[] args) {
+      System.out.println("Hello World!");
     }
   }
   ```
   #pause
   #pinit-rect-from(3, pos: top)[This name is freely selectable.]
   #pause
-  #pinit-rect-from(5, pos: bottom, fill: rgb(180, 10, 10))[This method must always be called main.]
+  #pinit-rect-from(5, pos: bottom, fill: palette.instance)[This method must always be called main.]
 ]
 
 = Literature
-== Literature Recommendations
-#slide[
-  - Some books that might help you during the course:
-    - D. Abts: Grundkurs JAVA, Springer-Vieweg
-    - H.-P. Habelitz: Programmieren lernen mit Java, Rheinwerk Computing
+
+== Read further
+#two-column-slide[
+  #text(20pt, fill: palette.muted)[D. Abts]
+  #v(14pt)
+  #text(32pt, weight: "semibold")[Grundkurs JAVA]
+  #v(14pt)
+  Springer-Vieweg
+][
+  #text(20pt, fill: palette.muted)[H.-P. Habelitz]
+  #v(14pt)
+  #text(32pt, weight: "semibold")[Programmieren lernen mit Java]
+  #v(14pt)
+  Rheinwerk Computing
 ]
 
 = License Notice
+
 == Attribution
 #slide[
-  - This work is shared under the CC BY-NC-SA 4.0 License and the respective Public
-    License
-  - #link("https://creativecommons.org/licenses/by-nc-sa/4.0/")
-  - This work is based off of the work Prof. Dr. Marc Hensel.
-  - Some of the images and texts, as well as the layout were changed.
-  - The base material was supplied in private, therefore the link to the source
-    cannot be shared with the audience.
+  *CC BY-NC-SA 4.0* and its Public License\
+  #link("https://creativecommons.org/licenses/by-nc-sa/4.0/")
+  #v(22pt)
+  Based on material by *Prof. Dr. Marc Hensel*.\
+  Some images, text, and the layout have been changed.
+  #v(16pt)
+  #text(
+    22pt,
+    fill: palette.muted,
+  )[The source material was supplied privately. Its link cannot be shared with the audience.]
 ]

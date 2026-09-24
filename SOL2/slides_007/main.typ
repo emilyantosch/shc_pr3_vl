@@ -1,49 +1,18 @@
-#import "@preview/touying:0.5.2": *
-#import themes.university: *
-
-#import "@preview/fletcher:0.5.1" as flechter: diagram, edge, node
-#import "@preview/wrap-it:0.1.0": wrap-content
-
-#import "@preview/gentle-clues:1.0.0": *
-#import "@preview/pinit:0.2.0": *
-#import "@preview/codly:1.0.0": *
+#import "@preview/touying:0.7.4": *
+#import "@preview/codly:1.3.0": *
 #show: codly-init.with()
-
 #import "@preview/numbly:0.1.0": numbly
+#import "../hestia/theme.typ": *
+#import "diagrams.typ": diagram
 
-#set text(lang: "en", font: "Roboto", size: 18pt)
+#set text(lang: "en")
 #set heading(numbering: numbly("{1}.", default: "1.1"))
 
-#set align(left + top)
-
-#show raw: it => {
-  show regex("pin\d"): it => pin(eval(it.text.slice(3)))
-  it
-}
-#let pinit-rect-from(height: 2em, pos: bottom, fill: rgb(0, 180, 255), point-pin, body) = {
-  pinit-point-from(
-    fill: fill,
-    pin-dx: 0em,
-    pin-dy: if pos == bottom { 0em } else { -0.6em },
-    body-dx: 0pt,
-    body-dy: if pos == bottom { -1.7em } else { -1.6em },
-    offset-dx: 0em,
-    offset-dy: if pos == bottom { 1.2em + height } else { -0.6em - height },
-    point-pin,
-    rect(
-      inset: 0.5em,
-      stroke: (bottom: 0.12em + fill),
-      {
-        set text(fill: fill)
-        body
-      },
-    ),
-  )
-}
-#show: university-theme.with(
-  aspect-ratio: "16-9",
+#show: hestia-theme.with(
+  compact: true,
   config-info(
-    title: [Object-Oriented Programming in Java],
+    title: [Object-Oriented\ Programming in Java],
+    short-title: [Java · Lecture 7],
     subtitle: [Lecture 7 - Graphical User Interfaces],
     author: [Emily Lucia Antosch],
     date: datetime.today().display("[day].[month].[year]"),
@@ -51,881 +20,498 @@
   ),
 )
 
-#codly(
-  languages: (
-    java: (
-      name: text(font: "JetBrainsMono NFM", " Java", weight: "bold"),
-      icon: text(font: "JetBrainsMono NFM", "\u{e738}", weight: "bold"),
-      color: rgb("#CE412B"),
-    ),
-    c: (
-      name: text(font: "JetBrainsMono NFM", " C", weight: "bold"),
-      icon: text(font: "JetBrainsMono NFM", "\u{e61e}", weight: "bold"),
-      color: rgb("#5612EC"),
-    ),
-  ),
-)
+// Codly lays out grid rows: vertical inset controls code line spacing.
+#show raw.where(block: true): it => {
+  codly(inset: (x: .32em, y: .22em))
+  it
+}
 
 #title-slide(authors: [Emily Lucia Antosch])
-
-#outline(depth: 1)
+#outline-slide()
 
 = Introduction
-== Where Are We Currently?
+== From Contracts to User Interfaces
 #slide[
-  - The last lecture was about interfaces and abstract classes
-  - You can now
-    - use abstract classes to structure your code more precisely,
-    - implement interfaces to represent properties of classes,
-    - assign classes and objects with an order using `Comparable`,
-  - Today we continue with *graphical user interfaces*.
+  #diagram("roadmap", height: 190pt)
 ]
 
+== What You Will Build
 #slide[
-  1. Imperative Concepts
-  2. Classes and Objects
-  3. Class Library
-  4. Inheritance
-  5. Interfaces
-  6. *Graphical User Interfaces*
-  7. Exception Handling
-  8. Input and Output
-  9. Multithreading (Parallel Computing)
-]
-
-== The Goal of This Chapter
-#slide[
-  - You create graphical user interfaces with e.g. menus, buttons and text fields.
-  - You draw diagrams from simple geometric shapes (e.g. lines, circles).
-  - You respond to events (e.g. pressing a button) by connecting graphical elements with methods to be executed on user input.
-  - You use the Observer pattern so that objects of any data type can react to events.
+  #diagram("goals", height: 190pt)
 ]
 
 = Basic Structure
-== Graphical UI
+== Read a Graphical Interface
 #slide[
-  #text(size: 18pt)[
-    #question[
-      - What types of elements do you see?
-      - How do the elements react? Do elements interact with each other?
-    ]
+  #question[Which controls do you recognize? How does one control affect another?]
+  #diagram("explorer", height: 210pt)
+]
+
+== AWT and Swing
+#slide[
+  #diagram("toolkits", height: 230pt)
+  #text(18pt)[Swing uses AWT events, graphics and top-level windows.]
+]
+
+== Anatomy of a Frame
+#slide[
+  #diagram("frame", height: 260pt)
+]
+
+== Components Form a Tree
+#slide[
+  #diagram("hierarchy", height: 270pt)
+]
+
+= Creating Graphical User Interfaces
+== Create, Configure, Show
+#slide[
+  #diagram("startup", height: 120pt)
+  #text(18pt)[
+    Swing components are created and updated on the *event dispatch thread (EDT)*.
+    The following examples omit imports (`javax.swing.*`, `java.awt.*`, `java.awt.event.*`).
   ]
-  #figure(
-    image("../assets/img/slides_7/2024_10_25_windows_explorer_rev01.png", height: 50%),
-    caption: [Windows 7 Explorer],
+]
+
+== A Minimal Window
+#slide[
+  #text(20pt)[
+    ```java
+    public class HelloWorld {
+        public HelloWorld() {
+            JFrame frame = new JFrame("GUI example");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setVisible(true);
+        }
+        public static void main(String[] args) {
+            SwingUtilities.invokeLater(HelloWorld::new);
+        }
+    }
+    ```
+    Use the same EDT startup pattern for the later GUI classes.
+  ]
+]
+
+== Size and Position
+#slide[
+  #question[What happens without EXIT_ON_CLOSE? Why call setVisible(true)?]
+  #task[Make the frame 400 × 300 pixels. Place its top-left corner at (50, 50).]
+  #text(18pt)[Inspect JFrame's methods. Set size and location before showing the frame.]
+]
+
+#slide[
+  #grid(columns: (1fr, 1fr), gutter: 22pt,
+    [
+      #text(18pt)[
+        ```java
+        frame.setSize(400, 300);
+        frame.setLocation(50, 50);
+        frame.setVisible(true);
+        ```
+        A new JFrame is initially hidden. The default close operation hides it; it does not exit the application.
+      ]
+    ],
+    [#diagram("geometry", height: 260pt)],
   )
 ]
 
+== Menus Are Components Too
 #slide[
-  #text(size: 18pt)[
-    - Graphical user interface: Graphical user interface (GUI)
-    - Class libraries AWT and Swing already included in the Java SDK
-
-    - Abstract Window Toolkit (AWT):
-      - Already introduced with Java 1.0
-      - Only basic interface elements to support as many operating systems as possible ("Lowest common denominator")
-      - Uses the native elements ("widgets") of the operating system
-      - Originally full of design errors, as it was created under great pressure in just under two months
-
-    - Swing:
-      - Extension of AWT
-      - No more direct addressing of window functions of the current platform
-      - Complete control over display elements
-  ]
+  #task[Add File → Open, Save, Exit and Help → Help, About.]
+  #diagram("menu-tree", height: 215pt)
 ]
 
+== Build the Menu Bar
 #slide[
-  #text(size: 18pt)[
-    - Base element: Frame
-    - Contains window bar with title and control elements (e.g. "Close")
-    - Contains area where elements can be placed (Content pane)
-    - Can additionally contain menu bar
-
-    #figure(
-      image("../assets/img/slides_7/2024_10_25_window_frame_aufbau_rev01.png", height: 50%),
-      caption: [Structure of a frame],
-    )
-  ]
-]
-
-#slide[
-  #text(size: 18pt)[
-    - Elements are added hierarchically.
-    - For elements that contain other elements, the layout can be specified.
-    #figure(
-      image("../assets/img/slides_7/2024_10_25_window_frame_hierarchie_rev01.png", height: 70%),
-      caption: [Hierarchy of a window],
-    )
-  ]
-]
-
-
-= Creating Graphical User Interfaces
-== Simple Program
-
-#slide[
-  #text(size: 18pt)[
-    - Executable main() method creates object of the class
-    - Class creates frame with graphical interface in constructor
-    - Specify "Close Operation" so that application terminates when window is closed
-
+  #text(20pt)[
     ```java
-    	public class HelloWorld {
-    	    public HelloWorld() {
-    	        JFrame frame = new JFrame("GUI example");
-    	        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    	        frame.setVisible(true);
-    	    }
-
-    	    public static void main(String[] args) {
-    	        new HelloWorld();
-    	    }
-    	}
+    JMenuBar menuBar = new JMenuBar();
+    frame.setJMenuBar(menuBar);
+    JMenu menuFile = new JMenu("File");
+    menuBar.add(menuFile);
+    menuFile.add(new JMenuItem("Open"));
+    menuFile.add(new JMenuItem("Save"));
+    menuFile.addSeparator();
+    menuFile.add(new JMenuItem("Exit"));
     ```
+    Add the Help menu in the same way, then show the frame.
+    Menu items need listeners before they perform an action.
   ]
 ]
 
 #slide[
-
-  #text(size: 18pt)[
-    #question[
-      - What happens if the "Close Operation" is not set to "Exit on close"?
-      - Why do you have to explicitly display the window via setVisible(true)?
-    ]
-    #let left = [
-      - And it doesn't look really nice:
-        - The window is too small!
-        - The window "sticks" in the upper left corner!
-    ]
-    #let right = figure(image("../assets/img/slides_7/2024_10_25_window_frame_mini_rev01.png", height: 20%))
-    #grid(
-      columns: (60%, 40%),
-      gutter: 0.25em,
-      left, right,
-    )
-
-    #task[
-      - Enlarge it to 400 x 300 pixels (width x height).
-      - Place it 50 pixels from the left and top edge respectively.
-      - Hint: Display the methods of frame.
-    ]
-  ]
+  #diagram("menu-output", height: 260pt)
 ]
 
-
+== JLabel: Text, Images and Borders
 #slide[
-  #text(size: 18pt)[
-    #let body = [
-      - Corrected size and position:
-
-      ```java
-      	public class HelloWorld {
-      	    public HelloWorld() {
-      	        JFrame frame = new JFrame("GUI example");
-      	        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-             frame.setSize(400, 300);
-      	        frame.setLocation(50, 50);
-      	        frame.setVisible(true);
-      	    }
-
-      	    public static void main(String[] args) {
-      	        new HelloWorld();
-      	    }
-      	}
-      ```
-    ]
-    #let fig = figure(image("../assets/img/slides_7/2024_10_25_window_frame_empty_rev01.png"))
-    #grid(
-      columns: (70%, 30%),
-      gutter: 0.25em,
-      body, fig,
-    )
-
-  ]
+  #diagram("labels", height: 240pt)
+  #text(18pt)[Recreate this window with two non-editable labels. Supply your own `icon.png`.]
 ]
 
-
+== Configure the Labels
 #slide[
-  #text(size: 18pt)[
-
-    #let body = [
-      - Klassen:
-        - JMenuBar: Menu bar
-        - JMenu: Menu in menu bar (e.g. File, Help)
-        - JMenuItem: Entry in a menu (e.g. New, Save as)
-
-      - Add the following menus to our program:
-        - Menu File with menu items Open, Save and Exit
-        - Menu Help with menu items Help and About
-
-      #tip[
-        - Elements are usually added via add().
-        - The menu bar is added via setJMenuBar().
-      ]
-    ]
-    #let fig = figure(image("../assets/img/slides_7/2024_10_25_window_frame_tree_rev01.png"))
-    #grid(
-      columns: (70%, 30%),
-      gutter: 0.25em,
-      body, fig,
-    )
+  #text(20pt)[
+    ```java
+    frame.setLayout(new GridLayout(2, 1));
+    ImageIcon image = new ImageIcon("icon.png");
+    JLabel label1 = new JLabel("Icon", image, JLabel.CENTER);
+    label1.setHorizontalTextPosition(JLabel.CENTER);
+    label1.setVerticalTextPosition(JLabel.BOTTOM);
+    JLabel label2 = new JLabel("Right-aligned text");
+    label2.setHorizontalAlignment(JLabel.RIGHT);
+    label2.setBorder(BorderFactory.createEtchedBorder(
+        Color.RED, Color.ORANGE));
+    frame.add(label1);
+    frame.add(label2);
+    ```
+    `frame.add(...)` forwards to the content pane. Set the frame size before showing it.
   ]
 ]
 
-#slide[
-  #text(size: 13pt)[
-    #let body = [
-      ```java
-      public MenuBar() {
-          JFrame frame = new JFrame("Menu bar example");
-          // Set frame properties ...
-
-          JMenuBar menuBar = new JMenuBar();   // Create menu bar and add to frame
-          frame.setJMenuBar(menuBar);
-
-          JMenu menuFile = new JMenu("File");  // Create menu "File"
-          menuBar.add(menuFile);
-          menuFile.add(new JMenuItem("Open"));
-          menuFile.add(new JMenuItem("Save"));
-          menuFile.addSeparator();
-          menuFile.add(new JMenuItem("Exit"));
-
-          JMenu menuHelp = new JMenu("Help");  // Create menu "Help"
-          menuBar.add(menuHelp);
-          menuHelp.add(new JMenuItem("About"));
-
-          frame.setVisible(true);
-      }
-      ```
-    ]
-    #let fig = [
-      #figure(image("../assets/img/slides_7/2024_10_25_window_frame_file_menu_rev01.png"))
-      #figure(image("../assets/img/slides_7/2024_10_25_window_frame_help_menu_rev01.png"))
-    ]
-    #grid(
-      columns: (70%, 30%),
-      gutter: 0.25em,
-      body, fig,
-    )
-
-  ]
-]
-
-#slide[
-  #text(size: 18pt)[
-    #let body = [
-      - Class JLabel displays non-editable text
-        - Can be aligned horizontally and vertically (e.g. centered)
-        - Can draw borders
-        - Can also display images
-
-      - Let's create the window shown on the right:
-        - Load image via new ImageIcon()
-        - Border via BorderFactory.createEtchedBorder()
-        - Add label to content pane via add()
-        - Layout via frame.setLayout(new GridLayout(2, 1))
-    ]
-    #let fig = [
-      #figure(image("../assets/img/slides_7/2024_10_25_window_frame_lena_rev01.png"))
-    ]
-    #grid(
-      columns: (70%, 30%),
-      gutter: 0.25em,
-      body, fig,
-    )
-  ]
-]
-
-#slide[
-  #text(size: 12pt)[
-    #let body = [
-      ```java
-      // Create frame and set properties
-      JFrame frame = new JFrame("Label example");
-      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      frame.setSize(400, 300);
-      frame.setLocation(50, 50);
-      frame.setLayout(new GridLayout(2, 1));  // 2 rows, 1 column
-
-      // Create labels
-      ImageIcon image = new ImageIcon("folien07_gui/Lena100.jpg");
-      JLabel label1 = new JLabel("Lena", image, JLabel.CENTER);
-      label1.setHorizontalTextPosition(JLabel.CENTER);
-      label1.setVerticalTextPosition(JLabel.BOTTOM);
-
-      JLabel label2 = new JLabel("Horizontal alignment right");
-      label2.setHorizontalAlignment(JLabel.RIGHT);
-      label2.setBorder(BorderFactory.createEtchedBorder(Color.RED, Color.ORANGE));
-
-      // Add labels to content pane
-      Container contentPane = frame.getContentPane();
-      contentPane.add(label1);
-      contentPane.add(label2);
-
-      frame.setVisible(true);
-      ```
-    ]
-    #let fig = [
-      #figure(image("../assets/img/slides_7/2024_10_25_window_frame_lena_rev01.png"))
-    ]
-    #grid(
-      columns: (70%, 30%),
-      gutter: 0.25em,
-      body, fig,
-    )
-  ]
-]
 = Layout
-== Layout-Manager
+== Choose a Layout Manager
 #slide[
-  #text(size: 18pt)[
-
-    - Define the arrangement of GUI elements
-
-    - Various layout managers defined, e.g.:
-      - BoxLayout:
-        - Elements on top of each other ("vertical") or next to each other ("horizontal")
-      - GridLayout:
-        - Elements placed in uniform grid
-        - All cells have the same size
-      - FlowLayout:
-        - Elements placed in row like horizontal BoxLayout
-        - However, line break as soon as a line is "full"
-  ]
+  #diagram("layouts", height: 285pt)
 ]
 
+== BoxLayout: Stack Components
 #slide[
-  #text(size: 17pt)[
-    #let body = [
-      ```java
-      	// Create frame and set properties
-      	JFrame frame = new JFrame("Layout example");
-      	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      	frame.setLocation(50, 50);
-
-      	// Create contents
-      	Container contentPane = frame.getContentPane();
-      	contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-      	contentPane.add(new JButton("Ready"));
-      	contentPane.add(new JButton("Set"));
-      	contentPane.add(new JButton("Go"));
-      	contentPane.add(new JButton("los!"));
-
-      	frame.pack();
-      	frame.setVisible(true);
-      ```
-    ]
-    #let fig = [
-      #figure(image("../assets/img/slides_7/2024_10_25_window_frame_vertical_buttons_rev01.png"))
-    ]
-    #grid(
-      columns: (70%, 30%),
-      gutter: 0.25em,
-      body, fig,
-    )
-  ]
-]
-
-#slide[
-  #text(size: 18pt)[
-
-    - Horizontal BoxLayout:
+  #text(20pt)[
     ```java
-    	contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
+    Container contentPane = frame.getContentPane();
+    contentPane.setLayout(
+        new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+    contentPane.add(new JButton("Ready"));
+    contentPane.add(new JButton("Set"));
+    contentPane.add(new JButton("Go"));
+    contentPane.add(new JButton("Again"));
+    frame.pack();
+    frame.setVisible(true);
     ```
-    #figure(image("../assets/img/slides_7/2024_10_25_window_frame_horizontal_buttons_rev01.png"))
-
-    - GridLayout:
-    ```java
-    	contentPane.setLayout(new GridLayout(2, 2));
-    ```
-    #figure(image("../assets/img/slides_7/2024_10_25_window_frame_grid_buttons_rev01.png"))
+    `pack()` sizes the window from its components' preferred sizes.
   ]
 ]
 
+== Change the Arrangement
 #slide[
-  #text(size: 18pt)[
-    - Elements can be grouped in objects of class JPanel.
-    - Each JPanel object has its own layout manager.
+  #text(20pt)[
+    Horizontal row:
+    ```java
+    contentPane.setLayout(
+        new BoxLayout(contentPane, BoxLayout.X_AXIS));
+    ```
+    Equal-sized cells:
+    ```java
+    contentPane.setLayout(new GridLayout(2, 2));
+    ```
+    Rows that wrap:
+    ```java
+    contentPane.setLayout(new FlowLayout());
+    ```
+  ]
+]
 
-      #question[
-        - Which elements does the shown window contain?
-        - Via which objects and layout managers are these arranged?
+== Combine Layouts with JPanel
+#slide[
+  #question[Which components and layout managers produce this window?]
+  #diagram("nested-layout", height: 210pt)
+]
+
+#slide[
+  #diagram("nested-annotated", height: 260pt)
+]
+
+== Build the Inner Panels
+#slide[
+  #text(20pt)[
+    ```java
+    JPanel panel1 = new JPanel();
+    panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
+    panel1.add(new JButton("Right"));
+    panel1.add(new JButton("top"));
+
+    JPanel panel2 = new JPanel();
+    panel2.setLayout(new BoxLayout(panel2, BoxLayout.X_AXIS));
+    panel2.add(new JButton("Left"));
+    panel2.add(new JButton("bottom"));
+    ```
+  ]
+]
+
+== Place the Panels in the Frame
+#slide[
+  #text(20pt)[
+    ```java
+    frame.setLayout(new GridLayout(2, 2));
+    frame.add(new JLabel("Top left", JLabel.CENTER));
+    frame.add(panel1);
+    frame.add(panel2);
+    frame.add(new JLabel("Bottom right", JLabel.CENTER));
+    frame.pack();
+    frame.setVisible(true);
+    ```
+    Each panel has its own layout manager.
+  ]
+]
+
+= Drawing
+== Swing Controls When Painting Happens
+#slide[
+  #diagram("painting", height: 240pt)
+  #text(18pt)[`repaint()` schedules a paint; it does not call `paintComponent()` immediately.]
+]
+
+== Override paintComponent()
+#slide[
+  #grid(columns: (1fr, 1fr), gutter: 22pt,
+    [
+      #text(18pt)[
+        ```java
+        class MyPaintPanel
+                extends JPanel {
+            @Override
+            protected void paintComponent(
+                    Graphics g) {
+                super.paintComponent(g);
+                // Draw here.
+            }
+        }
+        ```
       ]
+    ],
+    [#diagram("paint-uml", height: 245pt)],
+  )
+]
 
-      #figure(image("../assets/img/slides_7/2024_10_25_window_frame_groups_rev01.png"))
+== Drawing Commands Use Pixel Coordinates
+#slide[
+  #text(20pt)[
+    Inside `paintComponent()`, after the call to `super`:
+    ```java
+    g.setColor(Color.BLACK);
+    g.drawRect(25, 50, 100, 30);
+    g.drawString("JPanel", 55, 70);
+    g.drawRect(25, 120, 100, 30);
+    g.drawString("MyPaintPanel", 40, 140);
+    g.drawLine(75, 80, 75, 120);
+    g.fillPolygon(new int[]{70, 75, 80},
+                  new int[]{90, 80, 90}, 3);
+    g.setColor(Color.RED);
+    g.fillRect(202, 70, 12, 42);
+    g.fillOval(200, 120, 16, 16);
+    ```
   ]
 ]
 
+== Give the Drawing a Preferred Size
 #slide[
-  #text(size: 13pt)[
-    #let body = [
-      ```java
-      JFrame frame = new JFrame("Layout example");
-
-      JPanel panel1 = new JPanel();
-      panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
-      panel1.add(new JButton("Right"));
-      panel1.add(new JButton("top"));
-
-      JPanel panel2 = new JPanel();
-      panel2.setLayout(new BoxLayout(panel2, BoxLayout.X_AXIS));
-      panel2.add(new JButton("Left"));
-      panel2.add(new JButton("bottom"));
-
-      Container contentPane = frame.getContentPane();
-      contentPane.setLayout(new GridLayout(2, 2));
-      contentPane.add(new JLabel("Top left", JLabel.CENTER));
-      contentPane.add(panel1);
-      contentPane.add(panel2);
-      contentPane.add(new JLabel("Bottom right", JLabel.CENTER));
-
-      frame.pack();
-      frame.setVisible(true);
-      ```
-    ]
-    #let fig = figure(image("../assets/img/slides_7/2024_10_25_window_frame_group_jframe_rev01.png"))
-    #grid(
-      columns: (70%, 30%),
-      gutter: 0.25em,
-      body, fig,
-    )
-  ]
-]
-= Zeichnen
-== Zeichnen
-#slide[
-  #text(size: 18pt)[
-    #let body = [
-      - Class JPanel as drawing surface:
-        - Can draw freely on panel.
-
-      - Drawing method:
-        - System executes paintComponent() method for drawing
-        - Is automatically called when window changes
-        - Method receives parameter of type Graphics (graphics context)
-        - Graphics has methods for drawing (texts, lines, rectangles, arcs, ...)
-
-      - Explicit redrawing:
-        - Redrawing can also be initiated via repaint() method.
-        - This internally calls paintComponent().
-    ]
-    #let fig = figure(image("../assets/img/slides_7/2024_10_25_window_frame_jpanel_uml_rev01.png"))
-    #grid(
-      columns: (75%, 25%),
-      gutter: 0.25em,
-      body, fig,
-    )
-  ]
+  #grid(columns: (1.2fr, 1fr), gutter: 22pt,
+    [
+      #text(18pt)[
+        In `MyPaintPanel`:
+        ```java
+        @Override
+        public Dimension getPreferredSize() {
+            return new Dimension(300, 200);
+        }
+        ```
+        In the frame's setup:
+        ```java
+        frame.add(new MyPaintPanel());
+        frame.pack();
+        frame.setVisible(true);
+        ```
+      ]
+    ],
+    [#diagram("painted-output", height: 250pt)],
+  )
 ]
 
+== Task: Draw a Traffic Light
 #slide[
-  #text(size: 18pt)[
-    #let body = [
-      - Okay, so there is JPanel with the paintComponent() method.
-      - What is drawn is what is in paintComponent().
-      - But how can you add drawing commands to this method?!
-
-      - Solution:
-        - Derive from JPanel and override paintComponent().
-        - This results in: Panel class with freely definable drawing method
-
-      ```java
-      	class MyPaintPanel extends JPanel {
-      	    public void paintComponent(Graphics g) {
-      	        super.paintComponent(g);
-      	        // Code for own drawings ...
-      	    }
-      	}
-      ```
-    ]
-    #let fig = figure(image("../assets/img/slides_7/2024_10_25_window_frame_jpanel_uml_inherit_rev01.png"))
-    #grid(
-      columns: (75%, 25%),
-      gutter: 0.25em,
-      body, fig,
-    )
-  ]
-]
-
-#slide[
-  #text(size: 13pt)[
-    #let body = [
-      ```java
-      class MyPaintPanel extends JPanel {
-          public Dimension getPreferredSize() {
-              return new Dimension(300, 200);
-          }
-
-          public void paintComponent(Graphics g) {
-              super.paintComponent(g);
-
-              g.setColor(Color.BLACK);
-              g.drawRect(25, 50, 100, 30);	// Super class
-              g.drawString("JPanel", 55, 70);
-              g.drawRect(25, 120, 100, 30);	// Sub class
-              g.drawString("MyPaintPanel", 40, 140);
-              g.drawLine(75, 80, 75, 120);	// Arrow
-              g.fillPolygon(new int[]{70, 75, 80}, new int[]{90, 80, 90}, 3);
-
-              g.setColor(Color.RED);
-              g.fillRect(202, 70, 12, 42);
-              g.fillOval(200, 120, 16, 16);
-          }
-      }
-      ```
-    ]
-    #let fig = figure(image("../assets/img/slides_7/2024_10_25_window_frame_jpanel_uml_example_rev01.png"))
-    #grid(
-      columns: (75%, 25%),
-      gutter: 0.25em,
-      body, fig,
-    )
-  ]
-]
-
-#slide[
-  #text(size: 16pt)[
-    #let body = [
-      - Integration into graphical interface:
-
-      ```java
-      public class PaintPanel {
-      	    public PaintPanel() {
-      	        JFrame frame = new JFrame("Panel example");
-      	        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      	        frame.setLocation(50, 50);
-
-      	        frame.add(new MyPaintPanel());
-      	        frame.pack();
-      	        frame.setVisible(true);
-      	    }
-
-      	    public static void main(String[] args) {
-      	        new PaintPanel();
-      	    }
-      	}
-      ```
-    ]
-    #let fig = figure(image("../assets/img/slides_7/2024_10_25_window_frame_jpanel_uml_example_rev01.png"))
-    #grid(
-      columns: (75%, 25%),
-      gutter: 0.25em,
-      body, fig,
-    )
-  ]
-]
-
-#slide[
-  #text(size: 18pt)[
-    #task[
-      - Discover your artistic streak!
-      - Create a program that displays a traffic light.
-    ]
-    #figure(image("../assets/img/slides_7/2024_10_25_window_frame_ampel_rev01.png"))
-  ]
+  #task[Draw a traffic light with rectangles and circles. Choose one of the two states.]
+  #diagram("traffic-lights", height: 210pt)
 ]
 
 = Buttons & Events
-== Task
-
+== A Click Changes State
 #slide[
-  #text(size: 18pt)[
+  #diagram("color-window", height: 265pt)
+]
 
-    - Our goal is the following application:
-      - Window with three buttons and one panel
-      - Selection of buttons color the panel red, blue or in random color
-
-    #figure(image("../assets/img/slides_7/2024_10_29_button_color_rev01.png"), caption: [Buttons that change a color])
-
-    - We need for this:
-      - Buttons as elements
-      - Possibility to react to pressed button
-  ]
+== Build the Interface First
+#slide[
+  #task[Create three buttons and a panel. Arrange them in four equal rows.]
+  #diagram("color-components", height: 215pt)
 ]
 
 #slide[
-  #text(size: 18pt)[
-    #task[
-      - First create the GUI with its elements.
-    ]
-
-    #figure(image("../assets/img/slides_7/2024_10_29_button_color_explain_rev01.png"))
-  ]
-]
-
-#slide[
-  #text(size: 13pt)[
-    - Creating elements of class JButton:
+  #text(20pt)[
+    Fields of `ButtonEvent`:
     ```java
-    	public class ButtonEvent {
-    	    public ButtonEvent() {
-    	        JFrame frame = new JFrame("Button example");
-    	        // Set frame properties ...
-
-    	        // Create and layout contents
-    	        frame.setLayout(new GridLayout(4, 1));  // 4 rows, 1 column
-    	        Container contentPane = frame.getContentPane();
-    	        contentPane.add(new JButton("Change color to red"));
-    	        contentPane.add(new JButton("Change color to blue"));
-    	        contentPane.add(new JButton("Change to random color"));
-    	        contentPane.add(new JPanel());
-    	        frame.pack();
-    	        frame.setVisible(true);
-    	    }
-
-    	    public static void main(String[] args) {
-    	        new ButtonEvent();
-    	    }
-    	}
+    private JPanel panel;
+    private JButton buttonRed, buttonBlue, buttonRandom;
+    ```
+    In its constructor, after creating the frame:
+    ```java
+    frame.setLayout(new GridLayout(4, 1));
+    frame.add(buttonRed = new JButton("Change color to red"));
+    frame.add(buttonBlue = new JButton("Change color to blue"));
+    frame.add(buttonRandom = new JButton("Change to random color"));
+    frame.add(panel = new JPanel());
+    frame.pack();
+    frame.setVisible(true);
     ```
   ]
 ]
 
+== Register Once, React Many Times
 #slide[
-  #text(size: 18pt)[
-    - But how can we react when a button is pressed?
-
-    - Involved objects:
-      - Button with state (e.g. "not pressed", "pressed")
-      - Object that should be notified when the button changes
-    - Basic approach:
-      - Registration:
-        - Object "tells the button" that it wants to be notified of changes
-        - Button remembers (e.g. in list) which objects should be notified
-      - Button is pressed:
-        - Button notifies objects in the list that its state has changed
-  ]
+  #diagram("event-sequence", height: 275pt)
 ]
 
+== Observer: Depend on a Contract
 #slide[
-  #text(size: 18pt)[
-    - Possible implementation:
-      - Button: Method register() to add observers to the list
-      - Observer: Method notify() that button object calls for notification
-
-    #figure(image("../assets/img/slides_7/2024_10_29_button_event_diagram_rev01.png", height: 70%))
-  ]
+  #diagram("observer", height: 260pt)
+  #text(18pt)[`update()` is a conceptual callback here, not Java's `Object.notify()`.]
 ]
 
-
+== Swing's Observer Contract
 #slide[
-  #text(size: 18pt)[
-
-    - Buuuuuut:
-      - JButton cannot know classes we created.
-      - Therefore cannot know if we implemented method notify().
-    - Solution:
-      - Observers implement a defined interface
-      - Button doesn't need to know the observer's class, only the interface
-
-    #figure(
-      image("../assets/img/slides_7/2024_10_29_observer_interface_rev01.png", height: 50%),
-      caption: [Interface `Observer`],
-    )
-  ]
+  #task[Make ButtonEvent implement ActionListener. Register this object with all three buttons.]
+  #diagram("action-listener", height: 215pt)
 ]
 
+== Register the Listener
 #slide[
-  #text(size: 18pt)[
-    - Approach is also called Observer pattern
-    - More than one observer can register.
-    - In Swing, names of interface and methods chosen differently:
-
-    #figure(image("../assets/img/slides_7/20250813_jbutton_al_co_rev01.png", height: 70%), caption: [Observer pattern])
-  ]
-]
-
-#slide[
-  #text(size: 18pt)[
-    #task[
-      - Executable class implements interface ActionListener
-      - Object of executable class registers itself with the buttons
-    ]
-
-    #figure(image("../assets/img/slides_7/2024_10_29_button_color_noexplain_rev01.png"))
-  ]
-]
-
-#slide[
-  #text(size: 14pt)[
-
-    - Excerpt from source code:
+  #text(20pt)[
     ```java
-    	public class ButtonEvent implements ActionListener {
-    	    private JPanel panel;
-    	    private JButton buttonRed, buttonBlue, buttonRandom;
-
-    	    public ButtonEvent() {
-    	        // ...
-
-    	        // Buttons with event handling
-    	        buttonRed = new JButton("Change color to red");
-    	        buttonBlue = new JButton("Change color to blue");
-    	        buttonRandom = new JButton("Change to random color");
-
-    	        buttonRed.addActionListener(this);
-    	        buttonBlue.addActionListener(this);
-    	        buttonRandom.addActionListener(this);
-    	        // ...
-    	    }
-    	}
-    ```
-  ]
-]
-
-#slide[
-  #text(size: 15pt)[
-    - Reaction to events (excerpt from source code):
-      - Button identified via `getSource()` method of event object
-    ```java
-    	public class ButtonEvent implements ActionListener {
-    	    public void actionPerformed(ActionEvent event) {
-    	        if (event.getSource() == buttonRed) {
-    	            panel.setBackground(Color.RED);
-    	        } else if (event.getSource() == buttonBlue) {
-    	            panel.setBackground(Color.BLUE);
-    	        } else if (event.getSource() == buttonRandom) {
-    	            Random random = new Random();
-    	            float red = random.nextFloat();
-    	            float green = random.nextFloat();
-    	            float blue = random.nextFloat();
-    	            Color color = new Color(red, green, blue);
-    	            panel.setBackground(color);
-    	        }
-    	    }
-    	}
-    ```
-  ]
-]
-
-#slide[
-  #text(size: 14pt)[
-    - Alternatively (find out in actionPerformed() which button was pressed):
-    - Connect buttons with a string, e.g.:
-    ```java
-    	buttonRed.setActionCommand("Change color to red");
-    	buttonBlue.setActionCommand("Change color to blue");
-    	buttonRandom.setActionCommand("Change to random color");
-    ```
-    - Query and use string in `actionPerformed()` method:
-    ```java
-    	public void actionPerformed(ActionEvent event) {
-    	    String actionCommand = event.getActionCommand();
-
-    	    if (actionCommand.equals("Change color to red")) {
-    	        // ...
-    	    } else if (actionCommand.equals("Change color to blue")) {
-    	        // ...
-    	    } else if (actionCommand.equals("Change to random color")) {
-    	        // ...
-    	    }
-    	}
-    ```
-  ]
-]
-
-#slide[
-  #text(size: 14pt)[
-    - Define new `ActionListener` with `actionPerformed()` method inline
-
-    ```java
-    public class ButtonEvent2 {
-        private JPanel panel;
-
-        public ButtonEvent2() {
-            // ...
-            buttonRed.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent event) {
-                    panel.setBackground(Color.RED);
-                }
-            });
-
-            // ...
+    public class ButtonEvent implements ActionListener {
+        // Fields and constructor as before.
+        @Override
+        public void actionPerformed(ActionEvent event) {
+            // Choose the panel's new color.
         }
+    }
+    ```
+    In the constructor, after creating the buttons:
+    ```java
+    buttonRed.addActionListener(this);
+    buttonBlue.addActionListener(this);
+    buttonRandom.addActionListener(this);
+    ```
+  ]
+]
 
-        public static void main(String[] args) {
-            new ButtonEvent2();
+== Identify the Action
+#slide[
+  #diagram("dispatch", height: 230pt)
+]
+
+== Respond to the Event Source
+#slide[
+  #text(20pt)[
+    ```java
+    @Override
+    public void actionPerformed(ActionEvent event) {
+        if (event.getSource() == buttonRed) {
+            panel.setBackground(Color.RED);
+        } else if (event.getSource() == buttonBlue) {
+            panel.setBackground(Color.BLUE);
+        } else if (event.getSource() == buttonRandom) {
+            java.util.Random random = new java.util.Random();
+            panel.setBackground(new Color(random.nextFloat(),
+                random.nextFloat(), random.nextFloat()));
         }
+    }
+    ```
+    Callbacks run on the EDT. Keep them short so the interface stays responsive.
+  ]
+]
+
+== Alternative: Command Strings
+#slide[
+  #text(20pt)[
+    In the constructor:
+    ```java
+    buttonRed.setActionCommand("red");
+    buttonBlue.setActionCommand("blue");
+    buttonRandom.setActionCommand("random");
+    ```
+    In `actionPerformed()`:
+    ```java
+    String command = event.getActionCommand();
+    if ("red".equals(command)) {
+        panel.setBackground(Color.RED);
+    } else if ("blue".equals(command)) {
+        panel.setBackground(Color.BLUE);
+    } else if ("random".equals(command)) {
+        // Set a random color as before.
     }
     ```
   ]
 ]
+
+== Alternative: One Listener per Button
 #slide[
-  #text(size: 18pt)[
-    - All Swing components can register the following observers:
-      - Component listener: Changes in size, position or visibility
-      - Focus listener: Component gains or loses keyboard focus
-      - Key listener: Keyboard events (only when component has keyboard focus)
-      - Mouse listener: Mouse clicks, pressing, releasing and mouse movements
-      - Mouse motion listener: Changes in cursor position over the component
-      - Mouse wheel listener: Changes of mouse wheel over the component
+  #text(20pt)[
+    Anonymous class inside the constructor:
+    ```java
+    buttonRed.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent event) {
+            panel.setBackground(Color.RED);
+        }
+    });
+    ```
+    The enclosing class no longer needs to implement `ActionListener`.
+    No source check: this listener belongs only to the red button.
   ]
 ]
 
-= Simple Dialogs
-== Simple Dialogs
+== More Events, More Listener Interfaces
 #slide[
-  #text(size: 13pt)[
-    #let body = [
-      - Examples for dialogs via JOptionPane:
-      ```java
-      public class MessageDialogs {
-          public MessageDialogs() {
-              // Create and show frame
-              JFrame frame = new JFrame("Message dialog example");
-              frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-              frame.setSize(400, 300);
-              frame.setLocationByPlatform(true);
-              frame.setVisible(true);
+  #diagram("listeners", height: 290pt)
+]
 
-              // Display dialogs
-              JOptionPane.showMessageDialog(frame, "This is a plain message.", "Message",
-                  JOptionPane.PLAIN_MESSAGE);
-              JOptionPane.showMessageDialog(frame, "This is an information message.", "Message",
-                  JOptionPane.INFORMATION_MESSAGE);
-              JOptionPane.showMessageDialog(frame, "This is a warning.", "Message",
-                  JOptionPane.WARNING_MESSAGE);
-          }
+= Simple Dialogs
+== JOptionPane: A Ready-Made Dialog
+#slide[
+  #diagram("dialog", height: 270pt)
+]
 
-          public static void main(String[] args) {
-              new MessageDialogs();
-          }
-      }
-      ```
-    ]
-    #let fig = figure(image("../assets/img/slides_7/2024_10_29_simple_dialog_rev01.png"))
-    #grid(
-      columns: (70%, 30%),
-      gutter: 0.25em,
-      body, fig,
-    )
-
+== Choose a Message Type
+#slide[
+  #text(20pt)[
+    After showing the parent frame, on the EDT:
+    ```java
+    JOptionPane.showMessageDialog(frame,
+        "This is a plain message.", "Message",
+        JOptionPane.PLAIN_MESSAGE);
+    JOptionPane.showMessageDialog(frame,
+        "This is an information message.", "Message",
+        JOptionPane.INFORMATION_MESSAGE);
+    JOptionPane.showMessageDialog(frame,
+        "This is a warning.", "Message",
+        JOptionPane.WARNING_MESSAGE);
+    ```
+    Each call waits until its dialog is dismissed.
   ]
 ]
 
 = Suggestions
-== Ideas for Experimenting
-
+== Match a Control to the Task
 #slide[
-  #text(size: 18pt)[
-    - Some additional GUI elements:
-      - Text fields via `JTextField`, `JPasswordField` and `JTextArea`
-      - Selection boxes via `JCheckBox`
-      - Lists via `JComboBox` and `JList`
-      - Tooltips via method `setToolTipText()`
-      - File selection via `JFileChooser`
-  ]
+  #diagram("controls", height: 260pt)
 ]
 
 = License Notice
-
 == Attribution
-
-- This work is shared under the CC BY-NC-SA 4.0 License and the respective Public
-  License
-- #link("https://creativecommons.org/licenses/by-nc-sa/4.0/")
-- This work is based off of the work Prof. Dr. Marc Hensel.
-- Some of the images and texts, as well as the layout were changed.
-- The base material was supplied in private, therefore the link to the source
-  cannot be shared with the audience.
+#slide[
+  #text(18pt)[
+    - Shared under #link("https://creativecommons.org/licenses/by-nc-sa/4.0/")[CC BY-NC-SA 4.0].
+    - Based on teaching material by Prof. Dr. Marc Hensel, supplied privately.
+    - Text, diagrams and layout adapted; the private source cannot be linked.
+  ]
+]

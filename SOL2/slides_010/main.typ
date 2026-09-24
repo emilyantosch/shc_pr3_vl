@@ -1,49 +1,18 @@
-#import "@preview/touying:0.5.2": *
-#import themes.university: *
-
-#import "@preview/fletcher:0.5.1" as flechter: diagram, edge, node
-#import "@preview/wrap-it:0.1.0": wrap-content
-
-#import "@preview/gentle-clues:1.0.0": *
-#import "@preview/pinit:0.2.0": *
-#import "@preview/codly:1.0.0": *
+#import "@preview/touying:0.7.4": *
+#import "@preview/codly:1.3.0": *
 #show: codly-init.with()
-
 #import "@preview/numbly:0.1.0": numbly
+#import "../hestia/theme.typ": *
+#import "diagrams.typ": diagram
 
-#set text(lang: "de", font: "Roboto", size: 18pt)
+#set text(lang: "en")
 #set heading(numbering: numbly("{1}.", default: "1.1"))
 
-#set align(left + top)
-
-#show raw: it => {
-  show regex("pin\d"): it => pin(eval(it.text.slice(3)))
-  it
-}
-#let pinit-rect-from(height: 2em, pos: bottom, fill: rgb(0, 180, 255), point-pin, body) = {
-  pinit-point-from(
-    fill: fill,
-    pin-dx: 0em,
-    pin-dy: if pos == bottom { 0em } else { -0.6em },
-    body-dx: 0pt,
-    body-dy: if pos == bottom { -1.7em } else { -1.6em },
-    offset-dx: 0em,
-    offset-dy: if pos == bottom { 1.2em + height } else { -0.6em - height },
-    point-pin,
-    rect(
-      inset: 0.5em,
-      stroke: (bottom: 0.12em + fill),
-      {
-        set text(fill: fill)
-        body
-      },
-    ),
-  )
-}
-#show: university-theme.with(
-  aspect-ratio: "16-9",
+#show: hestia-theme.with(
+  compact: true,
   config-info(
-    title: [Object-Oriented Programming in Java],
+    title: [Object-Oriented\ Programming in Java],
+    short-title: [Java · Lecture 10],
     subtitle: [Lecture 10 - Parallel Computing],
     author: [Emily Lucia Antosch],
     date: datetime.today().display("[day].[month].[year]"),
@@ -51,172 +20,81 @@
   ),
 )
 
-#codly(
-  languages: (
-    java: (
-      name: text(font: "JetBrainsMono NFM", " Java", weight: "bold"),
-      icon: text(font: "JetBrainsMono NFM", "\u{e738}", weight: "bold"),
-      color: rgb("#CE412B"),
-    ),
-    c: (
-      name: text(font: "JetBrainsMono NFM", " C", weight: "bold"),
-      icon: text(font: "JetBrainsMono NFM", "\u{e61e}", weight: "bold"),
-      color: rgb("#5612EC"),
-    ),
-  ),
-)
+// Codly uses grid rows: vertical inset controls code line spacing.
+#show raw.where(block: true): it => {
+  codly(inset: (x: .32em, y: .22em))
+  it
+}
 
 #title-slide(authors: [Emily Lucia Antosch])
-
-#outline(depth: 1)
+#outline-slide()
 
 = Introduction
-== Where are we now?
+== From I/O to Concurrent Tasks
 #slide[
-  - In the last lecture, we dealt with output and input
-  - You can now
-    - send and format output to the console in the right channel,
-    - request input from the user
-    - and read files in Java.
-  - Today we continue with *parallel computing*.
+  #diagram("roadmap", height: 180pt)
 ]
 
+== Create, Coordinate, Protect
 #slide[
-  1. Imperative Konzepte
-  2. Klassen und Objekte
-  3. Klassenbibliothek
-  4. Vererbung
-  5. Schnittstellen
-  6. Graphical User Interfaces
-  7. Exception Handling
-  8. Input and Output
-  9. *Multithreading (Parallel Computing)*
+  #diagram("goals", height: 240pt)
+  #text(18pt)[Examples use platform threads. Swing examples omit imports from javax.swing and java.awt.]
 ]
 
-== The goal of this chapter
-
-- You execute program code simultaneously in concurrent execution threads (threads).
-- You modify the states of active threads to generate the required functionality.
-- You synchronize threads and objects to prevent erroneous data states due to incorrect execution orders.
-
-= Parallel processing
-== Scrambled eggs and pudding
-
+= Parallel Processing
+== Scrambled Eggs and Pudding: One Cook
 #slide[
-  #text(size: 18pt)[
-
-    - You make scrambled eggs and pudding.
-    - Possible sequence:
-    #figure(image("../assets/img/slides_10/20250813_scrambled_egg_serial_rev01.png", height: 40%))
-
-    #question[
-      - What could the sequence look like if four of you are cooking?
-      - Constraint: There is only one stove burner
-    ]
-  ]
+  #diagram("cooking-serial", height: 210pt)
+  #question[How would four cooks share the work with only one burner?]
 ]
 
+== Four Cooks, One Burner
 #slide[
-  #text(size: 18pt)[
-
-    - Possible sequence
-    - Resource conflict: stove burner
-
-    #figure(image("../assets/img/slides_10/20250813_scrambled_egg_parallel_rev01.png", height: 80%))
-
-  ]
+  #diagram("cooking-parallel", height: 285pt)
+  #text(18pt)[Prepare in parallel; use the burner in sequence. Arrows show prerequisites, not durations.]
 ]
 
-
+== What Limits Parallel Work?
 #slide[
-  #text(size: 18pt)[
-    - Task is divided into subtasks that can be executed in parallel
-    - Results of subtasks must be exchanged
-
-    - Problems:
-      - Dependencies: Subtasks need results of other subtasks
-      - Resource conflict: Subtasks need the same resource
-      - Communication overhead: Exchange of results requires resources and time
-
-    - Tasks cannot be parallelized arbitrarily or automatically.
-  ]
+  #diagram("constraints", height: 265pt)
+  #text(18pt)[More threads do not automatically make a program faster.]
 ]
 
+== Separate Stacks, Shared Objects
 #slide[
-  #text(size: 18pt)[
-    - Terms:
-      - Thread (English for "thread"): Execution thread within a program
-      - Multithreading: Multiple (parallel) execution threads within a program
-
-    - Memory:
-      - Threads share the memory area of the program:
-      - Therefore share variables and objects
-      - Can communicate efficiently (but unsafely!) via variables and objects
-    - But: Each thread has its own call stack of called methods
-  ]
+  #diagram("memory", height: 275pt)
+  #text(18pt)[A thread is an execution path within a process. Shared objects allow communication—and conflicting access.]
 ]
 
+== Which Threads Already Exist?
 #slide[
-  #text(size: 18pt)[
-    #question[
-      - Small riddle in between:
-      - We have already learned about at least one parallel thread. Which one?
-    ]
-    #pause
-    - Answer:
-      - Garbage Collector (free memory of unreferenced objects)
-
-    - Note:
-      - Java programs create a main thread on startup
-      - Set main() as the bottom method on the call stack
-      - If needed, additionally a thread for the Garbage Collector is started
-      - Program terminates as soon as the last associated thread has terminated
-  ]
+  #question[Besides main, which background work does the JVM perform?]
+]
+#slide[
+  #diagram("jvm-threads", height: 255pt)
+  #text(18pt)[A worker can outlive main(). Daemon threads do not keep the JVM alive.]
 ]
 
+== Concurrency Is Not Always Parallelism
 #slide[
-  #text(size: 18pt)[
-    - Allocates computing time (i.e. processors or processor cores) to programs and threads
-    - Waiting times of other threads or programs are used
-
-    - Pseudo-parallelism:
-      - If there are more parallel execution threads than processors or processor cores
-      - Scheduler distributes computing time in slices:
-        - Execution in temporal alternation
-        - Impression that things are processed in parallel
-  ]
+  #diagram("scheduling", height: 275pt)
 ]
 
-= Class-based threads
-== Class Thread
-
+= Class-Based Threads
+== start() Creates Concurrency; run() Contains Work
 #slide[
-  #text(size: 18pt)[
-
-    - Threads are created by objects of the Thread class:
-    - Method `start()` creates and starts parallel execution thread
-    - Method `run()` contains code to be executed in execution thread
-    - Execution thread is terminated as soon as `run()` is terminated
-
-    #figure(image("../assets/img/slides_10/20250813_thread_comp_rev01.png", height: 65%))
-  ]
+  #diagram("thread-api", height: 240pt)
 ]
 
+== Object Creation Is Not Thread Start
 #slide[
-  #text(size: 18pt)[
-
-    - Illustration
-    #figure(image("../assets/img/slides_10/20250813_runnable_thread_class_rev01.png", height: 85%))
-  ]
+  #diagram("fork", height: 240pt)
 ]
 
+== Start an Empty Thread
 #slide[
-  #text(size: 13pt)[
-    #task[
-      - Let's implement this:
-      - Write a program that creates an additional thread.
-    ]
-
+  #text(20pt)[
+    #task[Create and start an additional thread.]
     ```java
     public class RunThread1 {
         public static void main(String[] args) {
@@ -227,83 +105,63 @@
         }
     }
     ```
-    #question[
-      - But you can't see anything from the thread!
-        - The run() method of the Thread class is "empty".
-        - How can we make the thread output text to the console?
-    ]
-  ]
-]
-#slide[
-  #text(size: 18pt)[
-    - Approach:
-      - The actual work takes place in the run() method.
-      - The run() method of the Thread class is "empty".
-
-    - Derive your own Thread class from Thread and override run()
-
-    #figure(image("../assets/img/slides_10/20250813_runnable_thread_inherit_rev01.png", height: 65%))
+    Why does the worker print nothing? No task was supplied to run().
   ]
 ]
 
+== Extend Thread and Override run()
 #slide[
-  #text(size: 15pt)[
-    #task[
-      - Generate console output in an additional thread.
-    ]
+  #diagram("inheritance", height: 250pt)
+  #task[Make the worker print a message. Call start(), not run().]
+]
 
+== A Thread Subclass
+#slide[
+  #text(19pt)[
     ```java
     public class PrintThread extends Thread {
+        @Override
         public void run() {
             System.out.println("Hooray, I'm running in parallel!");
         }
     }
-
+    ```
+    ```java
     public class RunThread2 {
         public static void main(String[] args) {
             PrintThread thread = new PrintThread();
-            System.out.println("Object created");
             thread.start();
             System.out.println("Thread started");
         }
     }
     ```
+    Separate files: PrintThread.java and RunThread2.java. Which message appears first?
   ]
 ]
 
-= Interface-based threads
-== Interface Runnable
-
+= Interface-Based Threads
+== Separate the Task from Its Execution
 #slide[
-  #text(size: 18pt)[
-
-    - Alternative to deriving from Thread:
-      - Own class implements interface `Runnable` with `run()` method
-      - Runnable object is passed to Thread object: No inheritance required
-
-    - Responsibilities:
-      - Runnable object contains what should be executed
-      - Thread object contains everything needed for concurrency
-
-    #figure(image("../assets/img/slides_10/20250813_runnable_thread__rev01.png", height: 55%))
-  ]
+  #diagram("runnable", height: 275pt)
+  #text(18pt)[Implementing Runnable leaves your class free to extend another class.]
 ]
 
+== Implement Runnable
 #slide[
-  #text(size: 16pt)[
+  #text(20pt)[
     ```java
     public class PrintRunnable implements Runnable {
+        @Override
         public void run() {
             System.out.println("Hooray, I'm running in parallel!");
         }
     }
-
+    ```
+    ```java
     public class InterfaceBased {
         public static void main(String[] args) {
-            PrintRunnable runnable = new PrintRunnable();
-            Thread thread = new Thread(runnable);
-
-            System.out.println("Objects created");
+            PrintRunnable task = new PrintRunnable();
+            Thread thread = new Thread(task);
             thread.start();
             System.out.println("Thread started");
         }
@@ -311,180 +169,143 @@
     ```
   ]
 ]
+
+== Two Counters: The Worker
 #slide[
-  #text(size: 13pt)[
-
-    #question[
-      - What is output?
-    ]
-
+  #text(20pt)[
     ```java
     class CounterRunnable implements Runnable {
         private int counter;
+        @Override
         public void run() {
-            while (counter < 10)
-                System.out.println("\t\t\tThread counter: " + counter++);
-            System.out.println("\t\t\tExiting run()");
+            while (counter < 10) {
+                System.out.println("Thread counter: " + counter++);
+            }
+            System.out.println("Exiting run()");
         }
     }
+    ```
+    This counter belongs to the Runnable object.
+  ]
+]
+
+== Two Counters: The Main Thread
+#slide[
+  #text(20pt)[
+    ```java
     public class Counters {
         private static int counter;
         public static void main(String[] args) {
             new Thread(new CounterRunnable()).start();
-            while (counter < 10)
+            while (counter < 10) {
                 System.out.println("Main counter: " + counter++);
+            }
             System.out.println("Exiting main()");
         }
     }
     ```
+    Predict the output. These are two separate counter fields, not shared state.
   ]
 ]
 
+== One Possible Interleaving
 #slide[
-  #text(size: 18pt)[
-    #let body = [
+  #diagram("counter-output", height: 285pt)
+  #text(18pt)[Neither thread is guaranteed to finish first. The worker can continue after main returns.]
+]
 
-      - Methods `run()` and `main()` count to 9
-      - Unpredictable who finishes first
+= Thread States and Waiting
+== Think Like a Thread
+#slide[
+  #question[Which states and transitions do you need when the CPU is busy, a lock is held, or another thread has not finished?]
+]
 
-      - Example output (right):
-        - `main` thread finished first
-        - Thread with `run()` continues running
-    ]
-    #let fig = figure(image("../assets/img/slides_10/2024_11_07_thread_counter_rev01.png"))
-    #grid(
-      columns: (60%, 40%),
-      gutter: 0.25em,
-      body, fig,
-    )
+== Java Thread.State
+#slide[
+  #diagram("states", height: 290pt)
+]
+
+== Ready and Running Are Both RUNNABLE
+#slide[
+  #diagram("scheduler", height: 270pt)
+]
+
+== sleep() Pauses the Calling Thread
+#slide[
+  #diagram("sleep", height: 260pt)
+  #text(18pt)[Milliseconds are a long value. Timing depends on the scheduler; it is not an exact deadline.]
+]
+
+== Handle Interruption
+#slide[
+  #text(20pt)[
+    ```java
+    public static void main(String[] args) {
+        Thread worker = new Thread(new PrintRunnable());
+        worker.start();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            return;
+        }
+        System.out.println("Main is ready again");
+    }
+    ```
+    Main sleeps, not worker. Restore the interrupt flag when you cannot propagate the exception.
   ]
 ]
 
-= States and selected methods
-== Thread states
-
+== Task: Blink a Window
 #slide[
-  #text(size: 18pt)[
-    #question[
-      - Imagine you were a thread:
-        - What states could you reasonably take?
-        - What state transitions would make sense?
-    ]
-
-    - Don't forget the following:
-      - What happens when there are more threads than processors?
-      - What should you do when waiting for input?
-  ]
+  #task[Alternate the background between yellow and light gray about every 750 ms.]
+  #diagram("blink", height: 220pt)
 ]
 
+== Keep Swing Updates on the Event Dispatch Thread
 #slide[
-  #text(size: 18pt)[
-
-    - New: Java object created, but not yet started as a thread
-    - Runnable: Ready to be executed. Waiting for processor.
-    - Running: Has processor and is currently being executed
-    - Blocked: Is not executed and would not be even with a free processor
-    - Terminated: Thread terminated. Java object still exists!
-
-    #figure(image("../assets/img/slides_10/20250813_runnable_scheduler_new_to_end_rev01.png", height: 63%))
-  ]
+  #diagram("gui-threads", height: 265pt)
+  #text(18pt)[Never sleep on the EDT. A Swing Timer is simpler for real GUI animation; this exercise demonstrates a worker thread.]
 ]
 
+== Build the Window on the EDT
 #slide[
-  #text(size: 16pt)[
-
-    - Assigns computing time to threads (i.e. Runnable becomes Running)
-    - Withdraws processor from threads again (i.e. Running becomes Runnable):
-      - Required if more threads than processors exist
-      - Idea: Threads receive computing time alternately
-
-    - Control of behavior:
-      - Scheduler is not controllable
-      - No guarantee that threads receive computing time alternately
-      - `setPriority()` sets priority, but no guarantee how scheduler considers it
-      - "The scheduler is a diva!"
-
-    #figure(image("../assets/img/slides_10/20250813_runnable_scheduler_rev01.png", height: 40%))
-  ]
-]
-
-#slide[
-  #text(size: 18pt)[
-    #let body = [
-      - Put running thread in blocked state for a certain time
-      - Pass waiting time in milliseconds as parameter (data type long)
-
-      - Early wake-up:
-        - Thread can be "woken up" prematurely by interrupt() method
-        - Throws exception of type InterruptedException
-
-      ```java
-      MyThread thread = new MyThread();
-      thread.start();
-      try {
-          Thread.sleep(1000);
-      } catch (InterruptedException e) {
-          e.printStackTrace();
-      }
-      ```
-    ]
-    #let fig = figure(image("../assets/img/slides_10/20250813_running_to_blocked_sleep_rev01.png"))
-    #grid(
-      columns: (80%, 20%),
-      gutter: 0.25em,
-      body, fig,
-    )
-  ]
-]
-
-#slide[
-  #text(size: 13pt)[
-
-    - Make the window blink (every 0.75 s alternating between yellow and light gray):
+  #text(19pt)[
     ```java
     public class FlashLight {
         private boolean isLightOn;
-        private JFrame frame;
-        private FlashLight() {
-            frame = new JFrame("Flashing light");
+        private final JFrame frame = new JFrame("Flashing light");
+        public FlashLight() {
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(300, 250);
+            frame.getContentPane().setBackground(Color.LIGHT_GRAY);
             frame.setVisible(true);
         }
         public void switchLight() {
             isLightOn = !isLightOn;
-            if (isLightOn)
-                frame.getContentPane().setBackground(Color.YELLOW);
-            else
-                frame.getContentPane().setBackground(Color.LIGHT_GRAY);
-        }
-        public static void main(String[] args) {
-            FlashLight flashLight = new FlashLight();
+            frame.getContentPane().setBackground(
+                isLightOn ? Color.YELLOW : Color.LIGHT_GRAY);
         }
     }
     ```
   ]
 ]
+
+== A Worker Schedules the Color Change
 #slide[
-  #text(size: 14pt)[
-
-    - Required for blinking:
-      - Thread that calls the switchLight() method every 0.75 s
-
+  #text(19pt)[
     ```java
     class FlashThread extends Thread {
-        private FlashLight flashLight;
-
-        public FlashThread(FlashLight flashLight) {
-            this.flashLight = flashLight;
-        }
-
+        private final FlashLight light;
+        FlashThread(FlashLight light) { this.light = light; }
         public void run() {
-            while (true) {
-                flashLight.switchLight();
+            while (!isInterrupted()) {
+                SwingUtilities.invokeLater(light::switchLight);
                 try {
                     Thread.sleep(750);
                 } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    return;
                 }
             }
         }
@@ -493,68 +314,57 @@
   ]
 ]
 
+== Start the Window and Worker
 #slide[
-  #text(size: 18pt)[
-    - Creation and starting of the thread in FlashLight:
+  #text(20pt)[
+    Add this method to FlashLight:
     ```java
     public static void main(String[] args) {
-        FlashLight flashLight = new FlashLight();
-        FlashThread thread = new FlashThread(flashLight);
-        thread.start();
+        SwingUtilities.invokeLater(() -> {
+            FlashLight light = new FlashLight();
+            new FlashThread(light).start();
+        });
     }
     ```
-
-    #figure(image("../assets/img/slides_10/2024_11_11_flashlight_rev01.png", height: 50%))
+    The lambda runs on the EDT. Closing this demo window exits the application.
   ]
 ]
 
+== join() Waits for Another Thread to Finish
 #slide[
-  #text(size: 18pt)[
+  #diagram("join", height: 240pt)
+]
 
-    #let body = [
-      - Make running thread wait for the end of another thread
-
-      - Example:
-        - Waits at `thread.join()` until `thread` terminates
-        - Only then console output occurs
-
-      ```java
-      public static void main(String[] args) {
-          MyThread thread = new MyThread();
-          thread.start();
-          thread.join();
-          System.out.println("We have joined!");
-      }
-      ```
-      - Maximum waiting time:
-        - Maximum waiting time can be specified as parameter (data type `long`)
-        - What is this needed for? (After all, you don't wait for no reason)
-
-    ]
-    #let fig = figure(image("../assets/img/slides_10/20250813_running_to_blocked_rev01.png"))
-    #grid(
-      columns: (80%, 20%),
-      gutter: 0.5em,
-      body, fig,
-    )
+== Continue Only After the Worker Ends
+#slide[
+  #text(20pt)[
+    ```java
+    public static void main(String[] args)
+            throws InterruptedException {
+        Thread worker = new Thread(new PrintRunnable());
+        worker.start();
+        worker.join();
+        System.out.println("We have joined!");
+    }
+    ```
+    join(ms) limits the wait; check isAlive() afterwards. A timeout does not stop the worker.
   ]
 ]
 
+== A Sleepy Worker
 #slide[
-  #text(size: 15pt)[
-    #question[
-      - What does this thread do?
-    ]
-
+  #text(18pt)[
     ```java
     public class SleepyThread extends Thread {
+        @Override
         public void run() {
             for (int i = 0; i < 5; i++) {
                 System.out.println("I'm sooo tired ...");
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    Thread.currentThread().interrupt();
+                    return;
                 }
             }
             System.out.println("Okay, I'm awake again.");
@@ -564,18 +374,15 @@
   ]
 ]
 
+== Predict the Output with and Without join()
 #slide[
-  #text(size: 15pt)[
-    - It continues:
-      - What output is produced?
-      - What output would be produced without the line sleepy.join()?
-      - What output would be produced with sleepy.join(1500)?
+  #text(19pt)[
     ```java
     public class JoinThreads {
-        public static void main(String[] args) throws InterruptedException {
+        public static void main(String[] args)
+                throws InterruptedException {
             SleepyThread sleepy = new SleepyThread();
             sleepy.start();
-
             while (sleepy.isAlive()) {
                 System.out.println("Wake up!");
                 Thread.sleep(400);
@@ -585,26 +392,28 @@
         }
     }
     ```
+    Compare join(), no join(), and join(1500). Which thread waits?
   ]
 ]
 
-= Synchronization
-== Synchronization
+== Three Waiting Behaviors
 #slide[
-  #text(size: 13pt)[
-    - Class represents a bank account with methods for deposits and withdrawals
-    - Account movements in parallel via threads (e.g. ATM, counter, direct debit)
+  #diagram("join-variants", height: 245pt)
+  #text(18pt)[The combined sleep and timed join make the interval roughly 1900 ms while sleepy is still alive, not exactly 1500 ms.]
+]
 
+= Synchronization
+== Shared Account, Concurrent Updates
+#slide[
+  #text(18pt)[
     ```java
     public class Account {
         private double balance;
-
         public void deposit(double amount) {
             double newBalance = balance + amount;
             if (newBalance > balance)
                 balance = newBalance;
         }
-
         public void withdraw(double amount) {
             double newBalance = balance - amount;
             if (newBalance >= 0.0)
@@ -612,89 +421,39 @@
         }
     }
     ```
-    - What happened here?!
-      - You withdraw 50 € while 50 € is credited as a transfer.
-      - Afterwards there are 50 € less than before in the account.
-
-  ]
-]
-#slide[
-  #text(size: 18pt)[
-    - Cause:
-      - Threads simultaneously execute methods deposit() and withdraw()
-      - Both methods access variable balance.
-
-    #figure(image("../assets/img/slides_10/2024_11_11_deposit_withdraw_thread_rev01.png", height: 50%))
-
+    Starting at €5000, two threads deposit and withdraw €50. Could the balance end at €4950?
+    Teaching model only: real money needs decimal or integer units and input validation.
   ]
 ]
 
+== A Lost Update
 #slide[
-  #text(size: 15pt)[
-    - Two threads share a variable.
-      - Race Condition: Result of the program depends on access order
-
-    - When does the result depend on which thread is "faster"?
-      - Both threads read the variable
-      - One thread reads, one thread writes to the variable
-      - Both threads write to the variable
-
-    - Answer:
-      - Race condition when at least one thread writes
-
-    #text(size: 20pt)[
-      #align(center + horizon)[
-        #figure(
-          table(
-            columns: (auto, auto, auto),
-            inset: 10pt,
-            align: left + horizon,
-            fill: (_, y) => if calc.odd(y) { green.lighten(90%) },
-            table.header([*Thread 1*], [*Thread 2*], [*Race Condition*]),
-            [`read`], [`read`], [None, both threads read the same data],
-            [`read`], [`write`], [Thread 1 may read value before _or_ after thread 2 writes],
-            [`write`], [`write`], [Last-written value remains],
-          ),
-          caption: [Formats and Flags],
-        )
-      ]
-    ]
-  ]
+  #diagram("lost-update", height: 295pt)
 ]
 
+== Conflicting Access to Shared State
 #slide[
-  #text(size: 18pt)[
-    - Keyword `synchronized` for methods:
-      - Object is locked as soon as a thread enters a synchronized method
-      - Object is released again when thread leaves the method
-
-    - Synchronized methods (mutual exclusion):
-      - Object locked: Threads cannot enter synchronized methods. (All synchronized methods are locked, not just the one currently being executed!)
-      - Threads wait in blocked state until the object is released again.
-
-    - Non-synchronized methods:
-      - Threads can enter non-synchronized methods when object is locked.
-
-    #task[
-      - Help your bank:
-        - Ensure that nothing goes wrong with deposits and withdrawals.
-    ]
-  ]
+  #diagram("access", height: 285pt)
+  #text(18pt)[A race condition makes correctness depend on timing. Unsynchronized conflicting accesses to a shared field form a data race.]
 ]
 
+== synchronized Uses the Object's Monitor
 #slide[
-  #text(size: 16pt)[
-    Synchronization via `synchronized`:
+  #diagram("monitor", height: 230pt)
+  #task[Protect both account methods with the same monitor.]
+]
+
+== Protect the Whole Read–Check–Write
+#slide[
+  #text(19pt)[
     ```java
     public class Account {
         private double balance;
-
         public synchronized void deposit(double amount) {
             double newBalance = balance + amount;
             if (newBalance > balance)
                 balance = newBalance;
         }
-
         public synchronized void withdraw(double amount) {
             double newBalance = balance - amount;
             if (newBalance >= 0.0)
@@ -702,16 +461,27 @@
         }
     }
     ```
+    Unlocking makes writes visible to the next thread that acquires the same monitor.
   ]
+]
+
+== Serialize Updates, Not the Whole Program
+#slide[
+  #diagram("safe-update", height: 240pt)
+]
+
+== The Monitor Belongs to the Object
+#slide[
+  #diagram("monitor-scope", height: 270pt)
+  #text(18pt)[Unsynchronized methods do not acquire the monitor and can still run. Protect every access to shared mutable state.]
 ]
 
 = License Notice
 == Attribution
 #slide[
-  - This work is shared under the CC BY-NC-SA 4.0 License and the respective Public License
-  - link("https://creativecommons.org/licenses/by-nc-sa/4.0/")
-  - This work is based off of the work Prof. Dr. Marc Hensel.
-  - Some of the images and texts, as well as the layout were changed.
-  - The base material was supplied in private, therefore the link to the source
-    cannot be shared with the audience.
+  #text(18pt)[
+    - Shared under #link("https://creativecommons.org/licenses/by-nc-sa/4.0/")[CC BY-NC-SA 4.0].
+    - Based on teaching material by Prof. Dr. Marc Hensel, supplied privately.
+    - Text, diagrams and layout adapted; the private source cannot be linked.
+  ]
 ]
